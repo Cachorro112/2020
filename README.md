@@ -1,8 +1,5 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/Cachorro112/2020"><img src="![postcard](https://github.com/user-attachments/assets/014a4ec2-ab5a-40a9-9414-beece5c226ee)
-" alt="2020" width="200"></a>
-  <br>
   2020
   <br>
 </h1>
