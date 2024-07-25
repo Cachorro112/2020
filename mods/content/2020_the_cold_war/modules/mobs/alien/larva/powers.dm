@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva/proc/check_can_infest(mob/living/M)
+/mob/living/alien/larva/proc/check_can_infest(mob/living/M)
 	if(!src)
 		return 0
 	if(!istype(loc, /turf))
@@ -17,7 +17,7 @@
 		return 0
 	return 1
 
-/mob/living/carbon/alien/larva/verb/attach_host()
+/mob/living/alien/larva/verb/attach_host()
 
 	set name = "Attach to host"
 	set desc = "Burrow into a prone victim and begin drinking their blood."
@@ -27,7 +27,7 @@
 		return
 
 	var/list/choices = list()
-	for(var/mob/living/carbon/human/H in view(1,src))
+	for(var/mob/living/human/H in view(1,src))
 		if(isxenomorph(H))
 			continue
 		if(src.Adjacent(H) && H.lying)
@@ -37,7 +37,7 @@
 		to_chat(src, "<span class='danger'>There are no viable hosts within range.</span>")
 		return
 
-	var/mob/living/carbon/human/H = input(src,"Who do you wish to infest?") as null|anything in choices
+	var/mob/living/human/H = input(src,"Who do you wish to infest?") as null|anything in choices
 
 	if(!H || !src || !H.lying) return
 
@@ -56,7 +56,7 @@
 	holder.SetName(src.name)
 	E.embed(holder,0,"\The [src] burrows deeply into \the [H]'s [E.name]!")
 
-/mob/living/carbon/alien/larva/verb/release_host()
+/mob/living/alien/larva/verb/release_host()
 	set category = "Abilities"
 	set name = "Release Host"
 	set desc = "Release your host."
@@ -69,7 +69,7 @@
 		to_chat(src, "You are not inside a host.")
 		return
 
-	var/mob/living/carbon/human/H = loc.loc
+	var/mob/living/human/H = loc.loc
 
 	if(!istype(H))
 		to_chat(src, "You are not inside a host.")
@@ -85,11 +85,11 @@
 
 	leave_host()
 
-/mob/living/carbon/alien/larva/proc/leave_host()
+/mob/living/alien/larva/proc/leave_host()
 	if(!loc || !loc.loc)
 		to_chat(src, "You are not inside a host.")
 		return
-	var/mob/living/carbon/human/H = loc.loc
+	var/mob/living/human/H = loc.loc
 	if(!istype(H))
 		to_chat(src, "You are not inside a host.")
 		return

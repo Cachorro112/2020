@@ -1,5 +1,5 @@
 // Alien larva are quite simple.
-/mob/living/carbon/alien/Life()
+/mob/living/alien/Life()
 
 	set invisibility = 0
 	set background = 1
@@ -14,7 +14,7 @@
 	//Status updates, death etc.
 	update_icons()
 
-/mob/living/carbon/alien/handle_mutations_and_radiation()
+/mob/living/alien/handle_mutations_and_radiation()
 
 	// Currently both Dionaea and larvae like to eat radiation, so I'm defining the
 	// rad absorbtion here. This will need to be changed if other baby aliens are added.
@@ -30,7 +30,7 @@
 	adjustToxLoss(-(rads))
 	return
 
-/mob/living/carbon/alien/handle_regular_status_updates()
+/mob/living/alien/handle_regular_status_updates()
 
 	if(status_flags & GODMODE)	return 0
 
@@ -82,7 +82,7 @@
 
 	return 1
 
-/mob/living/carbon/alien/handle_regular_hud_updates()
+/mob/living/alien/handle_regular_hud_updates()
 	update_sight()
 	if (healths)
 		if(stat != DEAD)
@@ -121,7 +121,7 @@
 
 	return 1
 
-/mob/living/carbon/alien/handle_environment(datum/gas_mixture/environment)
+/mob/living/alien/handle_environment(datum/gas_mixture/environment)
 	// Both alien subtypes survive in vaccum and suffer in high temperatures,
 	// so I'll just define this once, for both (see radiation comment above)
 	if(!environment) return
@@ -134,7 +134,7 @@
 	else
 		if (fire) fire.icon_state = "fire0"
 
-/mob/living/carbon/alien/handle_fire()
+/mob/living/alien/handle_fire()
 	if(..())
 		return
 	bodytemperature += BODYTEMP_HEATING_MAX //If you're on fire, you heat up!

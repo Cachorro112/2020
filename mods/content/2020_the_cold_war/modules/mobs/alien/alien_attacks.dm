@@ -1,8 +1,8 @@
 //can't equip anything
-/mob/living/carbon/alien/attack_ui(slot_id)
+/mob/living/alien/attack_ui(slot_id)
 	return
 
-/mob/living/carbon/alien/attack_hand(mob/living/carbon/M as mob)
+/mob/living/alien/attack_hand(mob/living/carbon/M as mob)
 
 	..()
 

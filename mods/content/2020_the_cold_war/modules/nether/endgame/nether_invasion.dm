@@ -29,10 +29,6 @@
 	if(SSevac.evacuation_controller?.cancel_evacuation())
 		priority_announcement.Announce("The evacuation has been aborted due to the shuttle being missed.")
 
-	// Disable Nar-Sie.
-	var/decl/special_role/cultist/cult = GET_DECL(/decl/special_role/cultist)
-	cult.allow_narsie = 0
-
 	PlayerSet()
 	SSskybox.change_skybox("narsie", new_use_stars = FALSE, new_use_overmap_details = FALSE)
 

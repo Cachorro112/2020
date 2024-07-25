@@ -44,10 +44,6 @@
 
 	flick("tim_maia",jumpscare)
 
-	// Disable Nar-Sie. ONLY TIM MAIA
-	var/decl/special_role/cultist/cult = GET_DECL(/decl/special_role/cultist)
-	cult.allow_narsie = 0
-
 	PlayerSet()
 	SSskybox.change_skybox("narsie", new_use_stars = FALSE, new_use_overmap_details = FALSE)
 

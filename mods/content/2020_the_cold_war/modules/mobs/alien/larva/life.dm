@@ -1,12 +1,12 @@
 #define MIN_LARVA_BLOOD_DRINK 0.5
 
-/mob/living/carbon/alien/larva/Life()
+/mob/living/alien/larva/Life()
 	. = ..()
 	if (stat != DEAD)
 		update_progression()
 
 //Larvae regenerate health and nutrition from plasma and alien weeds.
-/mob/living/carbon/alien/larva/handle_environment(datum/gas_mixture/environment)
+/mob/living/alien/larva/handle_environment(datum/gas_mixture/environment)
 
 	if(!environment) return
 
@@ -19,7 +19,7 @@
 
 // Maybe not the -best- place but it's semiappropriate and fitting.
 // Drink the blood of your host!
-/mob/living/carbon/alien/larva/handle_chemicals_in_body()
+/mob/living/alien/larva/handle_chemicals_in_body()
 	if(!loc)
 		return
 	if(!istype(loc, /obj/item/holder))

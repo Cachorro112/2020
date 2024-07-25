@@ -1,3 +1,4 @@
+//This is wrong, i will fix it.
 /datum/controller/subsystem/ticker
 	if(pregame_timeleft == 60 SECONDS)
 		var/list/hints = list(

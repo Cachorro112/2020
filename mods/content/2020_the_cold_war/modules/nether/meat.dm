@@ -42,9 +42,8 @@
 		"Run!",
 		"Raping the Slave.",
 		"I am your sun!",
-		"If LIES are everywhere, then how to make a MATTER of conscience?
-"
-	)
+		"If LIES are everywhere, then how to make a MATTER of conscience?"
+		)
 
 	var/static/list/overdose_messages = list(
 		"THE SIGNAL THE SIGNAL THE SIGNAL THE SIGNAL",

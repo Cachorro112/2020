@@ -1,4 +1,5 @@
-/mob/living/carbon/alien
+//TODO: Return the classic Alien to 2020
+/mob/living/alien
 	name = "alien"
 	desc = "What IS that?"
 	icon = 'icons/mob/alien.dmi'
@@ -14,7 +15,7 @@
 	var/death_msg = "lets out a waning guttural screech, green blood bubbling from its maw."
 	var/instance_num
 
-/mob/living/carbon/alien/New()
+/mob/living/alien/New()
 
 	verbs += /mob/living/proc/ventcrawl
 	verbs += /mob/living/proc/hide
@@ -31,11 +32,11 @@
 
 	..()
 
-/mob/living/carbon/alien/u_equip(obj/item/W as obj)
+/mob/living/alien/u_equip(obj/item/W as obj)
 	return
 
-/mob/living/carbon/alien/restrained()
+/mob/living/alien/restrained()
 	return 0
 
-/mob/living/carbon/alien/show_inv(mob/user as mob)
+/mob/living/alien/show_inv(mob/user as mob)
 	return //Consider adding cuffs and hats to this, for the sake of fun.

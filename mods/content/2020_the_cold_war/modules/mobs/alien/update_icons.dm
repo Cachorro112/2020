@@ -1,3 +1,3 @@
-/mob/living/carbon/alien/regenerate_icons()
+/mob/living/alien/regenerate_icons()
 	overlays.Cut()
 	update_icons()

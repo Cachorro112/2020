@@ -3,26 +3,24 @@
 	desc = "A horror beyond human comprehension."
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/horror.dmi'
 	speak_emote = list("roars")
-	emote_hear = list("roars")
-	emote_see = list("wraps its arms around itsown body", "look around slowly", "stands still")
-	speak_chance = 2.5
-	turns_per_move = 5
 	see_in_dark = 10
 	response_harm = "pokes"
-	max_health = 100
+	max_health = 90
 	natural_weapon = /obj/item/natural_weapon/claws/strong
 	heat_damage_per_tick = null
 	cold_damage_per_tick = null
 	faction = "nether"
-	move_to_delay = 3
-	speed = 1
+	base_movement_delay = 3
 	bleed_colour = COLOR_BLOOD_HUMAN
-	break_stuff_probability = 25
-	pry_time = 5 SECONDS
-	can_pry = TRUE
-	pry_desc = "clawing"
 	base_animal_type = /mob/living/simple_animal/hostile/nether
-//	butchery_data = /decl/butchery_data/humanoid
+	ai = /datum/mob_controller/aggressive
+	butchery_data = /decl/butchery_data/animal/nether
+
+/mob/living/simple_animal/hostile/nether/get_pry_desc()
+	return "clawing"
+
+/mob/living/simple_animal/hostile/nether/get_door_pry_time()
+	return 5 SECONDS
 
 /mob/living/simple_animal/hostile/nether/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj || Proj.nodamage)
@@ -94,19 +92,11 @@
 	desc = "A horror beyond human comprehension. resamble a worm covered in blood and meat."
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/worm.dmi'
 	speak_emote = list("chitter")
-	emote_hear = list("chitter")
-	emote_see = list("swing it's tail", "open and close it's mouth", "tramble")
-	turns_per_move = 3
-	see_in_dark = 10
 	response_harm = "bites"
-	max_health = 40
+	max_health = 35
 	natural_weapon = /obj/item/natural_weapon/bite/weak
 	heat_damage_per_tick = null
 	cold_damage_per_tick = null
 	faction = "nether"
-	move_to_delay = 2
-	speed = 2
-	break_stuff_probability = 0
-	can_pry = TRUE
-	base_animal_type = /mob/living/simple_animal/hostile/nether
-//	butchery_data = /decl/butchery_data/animal/small
+	base_movement_delay = 3
+

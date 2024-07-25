@@ -1,9 +1,9 @@
-/mob/living/carbon/alien/larva/Stat()
+/mob/living/alien/larva/Stat()
 	. = ..()
 	if(. && statpanel("Status"))
 		stat("Growth", "[round(amount_grown)]/[max_grown]")
 
-/mob/living/carbon/alien/larva/verb/evolve()
+/mob/living/alien/larva/verb/evolve()
 
 	set name = "Moult"
 	set desc = "Moult your skin and become an adult."
@@ -13,7 +13,7 @@
 		return
 
 	if(!adult_form)
-		verbs -= /mob/living/carbon/alien/larva/verb/evolve
+		verbs -= /mob/living/alien/larva/verb/evolve
 		return
 
 	if(handcuffed)
@@ -29,7 +29,7 @@
 	if(!new_species || !adult_form )
 		return
 
-	var/mob/living/carbon/human/adult = new adult_form(get_turf(src))
+	var/mob/living/human/adult = new adult_form(get_turf(src))
 	adult.set_species(new_species)
 
 	transfer_languages(src, adult)
@@ -53,13 +53,13 @@
 		adult.add_language(L.name)
 	qdel(src)
 
-/mob/living/carbon/alien/larva/proc/update_progression()
+/mob/living/alien/larva/proc/update_progression()
 	if(amount_grown < max_grown)
 		amount_grown++
 	return
 
 
-/mob/living/carbon/alien/larva/proc/confirm_evolution()
+/mob/living/alien/larva/proc/confirm_evolution()
 
 	to_chat(src, "<span class='notice'><b>You are growing into a beautiful alien! It is time to choose a caste.</b></span>")
 	to_chat(src, "<span class='notice'>There are three to choose from:</span>")

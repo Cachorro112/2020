@@ -5,8 +5,5 @@
 /datum/job
 	required_language = /decl/language/human/english
 
-/obj/effect/overmap/visitable/ship/ss13/generate_skybox()
-	return overlay_image('mods/content/2020_the_cold_war/icons/effects/misc/plasma_giant.dmi', "plasma_giant", null, RESET_COLOR)
-
-/obj/effect/overmap/visitable/sector/asteroid/generate_skybox()
+/obj/effect/overmap/visitable/generate_skybox()
 	return overlay_image('mods/content/2020_the_cold_war/icons/effects/misc/plasma_giant.dmi', "plasma_giant", null, RESET_COLOR)

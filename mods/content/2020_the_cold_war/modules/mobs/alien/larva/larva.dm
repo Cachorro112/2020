@@ -1,4 +1,4 @@
-/mob/living/carbon/alien/larva
+/mob/living/alien/larva
 	name = "alien larva"
 	real_name = "alien larva"
 
@@ -16,14 +16,14 @@
 	var/can_namepick_as_adult = 0
 	var/adult_name
 
-/mob/living/carbon/alien/larva/New()
+/mob/living/alien/larva/New()
 	..()
 	time_of_birth = world.time
 	add_language(LANGUAGE_XENOPHAGE) //Bonus language.
 	internal_organs |= new /obj/item/organ/internal/xeno/hivenode(src)
 	create_reagents(100)
 
-/mob/living/carbon/alien/larva/update_icons()
+/mob/living/alien/larva/update_icons()
 
 	var/state = 0
 	if(amount_grown > max_grown*0.75)

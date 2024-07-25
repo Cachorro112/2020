@@ -24,7 +24,7 @@
 	var/deployed = 0
 
 /decl/special_role/ert/peacekeeper/create_default(var/mob/source)
-	var/mob/living/carbon/human/M = ..()
+	var/mob/living/human/M = ..()
 	if(istype(M))
 		M.set_age(rand(25,45))
 
