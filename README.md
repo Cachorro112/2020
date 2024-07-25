@@ -1,8 +1,9 @@
 <h1 align="center">
   <br>
-  <a href="https://github.com/NebulaSS13/Nebula"><img src="https://avatars1.githubusercontent.com/u/61128341" alt="Nebula 13" width="200"></a>
+  <a href="https://github.com/Cachorro112/2020"><img src="![postcard](https://github.com/user-attachments/assets/014a4ec2-ab5a-40a9-9414-beece5c226ee)
+" alt="2020" width="200"></a>
   <br>
-  Nebula 13
+  2020
   <br>
 </h1>
 
@@ -41,6 +42,9 @@
 </p>
 
 ---
+### NOTICE OF MODIFICATION
+
+This project was forked from [LighthouseRelay](https://github.com/OpaqueSunset/LighthouseRelay) on 24 July 2024.
 
 ### NOTICE OF MODIFICATION
 
@@ -66,7 +70,7 @@ Please see [/docs/SECURITY.md](/docs/SECURITY.md) for this repository's security
 
 ### LICENSE
 
-The code for Lighthouse Station is licensed under the [GNU Affero General Public License v3](http://www.gnu.org/licenses/agpl.html), which can be found in full in [/LICENSE](/LICENSE).
+The code for 2020 is licensed under the [GNU Affero General Public License v3](http://www.gnu.org/licenses/agpl.html), which can be found in full in [/LICENSE](/LICENSE).
 
 Code with a git authorship date prior to `1420675200 +0000` (2015/01/08 00:00 GMT) is licensed under the GNU General Public License version 3, which can be found in full in [/docs/GPL3.txt](/docs/GPL3.txt)
 
