@@ -13,20 +13,20 @@
     <img src="https://www.codefactor.io/repository/github/NebulaSS13/Nebula/badge"
          alt="CodeFactor">
   </a>
-  <a href="https://github.com/NebulaSS13/Nebula/commits/dev">
-    <img src="https://img.shields.io/github/last-commit/NebulaSS13/Nebula"
+  <a href="https://github.com/Cachorro112/2020/commits/master">
+    <img src="https://img.shields.io/github/last-commit/Cachorro112/2020"
          alt="Last Commit">
   </a>
-  <a href="https://github.com/NebulaSS13/Nebula/issues">
-    <img src="https://img.shields.io/github/issues/NebulaSS13/Nebula"
+  <a href="https://github.com/Cachorro112/2020/issues">
+    <img src="https://img.shields.io/github/issues/Cachorro112/2020"
          alt="Issues">
   </a>
-  <a href="https://discord.gg/Ddw58yF">
-    <img src="https://img.shields.io/discord/678820025355862045?style=plastic"
+  <a href="https://discord.gg/5tFFZsKXdU">
+    <img src="https://img.shields.io/discord/1175960041036197940?style=plastic"
          alt="Discord">
   </a>
-  <a href="https://github.com/NebulaSS13/Nebula/blob/dev/LICENSE">
-    <img src="https://img.shields.io/github/license/NebulaSS13/Nebula"
+  <a href="https://github.com/Cachorro112/2020/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/Cachorro112/2020"
          alt="License">
   </a>
 </p>
