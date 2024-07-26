@@ -1,6 +1,6 @@
 /decl/species/human
 
-//	available_pronouns = list() /// <_< chud change
+//	available_pronouns = list() /// <_< chud change // wait
 
 	available_cultural_info = list(
 		TAG_HOMEWORLD = list(
