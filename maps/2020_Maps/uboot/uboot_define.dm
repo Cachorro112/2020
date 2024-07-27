@@ -10,7 +10,7 @@
 	boss_short    = "Navycomm"
 	company_name  = "United States Navy"
 	company_short = "USN"
-	system_name   = "X-484"
+	system_name   = "Cassini"
 
 	game_year = 14
 
@@ -44,7 +44,7 @@
 		TAG_HOMEWORLD = list(
 			/decl/cultural_info/location/human/earth/usa
 		),
-		TAG_FACTION = list(/decl/cultural_info/faction/usa/navy),
+		TAG_FACTION = list(/decl/cultural_info/faction/usa/fleet),
 
 		TAG_CULTURE = list(
 			/decl/cultural_info/culture/human_2020/yankee,
@@ -74,10 +74,10 @@
 
 	default_cultural_info = list(
 		TAG_HOMEWORLD = /decl/cultural_info/location/human/earth/usa,
-		TAG_FACTION =   /decl/cultural_info/faction/usa/navy,
+		TAG_FACTION =   /decl/cultural_info/faction/usa/fleet,
 		TAG_CULTURE =   /decl/cultural_info/culture/human_2020/yankee,
 		TAG_RELIGION =  /decl/cultural_info/religion/christian
 	)
 
 /datum/map/uboot/get_map_info()
-	return "You are aboard the USS Cassie, a Medium-size Spaceship builded by the United States Navy to Investigate Cassini, a system that can be achived by entering on a Wormhole near Jupiter. After enter the Wormhole, the Spaceship arrive at Cassini where only few try to explore... good luck discovery this new place."
+	return "You are aboard the USS Cassie, a Medium-size Deep Space Exploration Spaceship builded by the United States Fleet to Investigate Cassini outer space and study a new found planet. This are have some asteroids and debris, but is not claimed by any recoginized state. good luck discovery this new place."

@@ -1,3 +1,5 @@
+// i will find how put this shit to work.
+
 /obj/machinery/media/jukebox/old/soviet
 	name = "soviet jukebox"
 	desc = "A battered and hard-loved jukebox. this one was fabricated on the soviet union, theres only russian songs to hear."

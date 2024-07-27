@@ -40,17 +40,17 @@
 
 // Dress - i love you 3 types guy
 
-/obj/item/clothing/suit/jacket/fleet/dress/fleet
+/obj/item/clothing/suit/jacket/fleet/dress
 	name = "fleet dress jacket"
 	desc = "A navy blue US Fleet dress jacket. Don't get near pasta sauce or commies."
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/usa/suit/fleet_dress.dmi'
 
-/obj/item/clothing/suit/jacket/fleet/dress/fleet/officer
+/obj/item/clothing/suit/jacket/fleet/dress/officer
 	name = "fleet officer's dress jacket"
 	desc = "A navy blue US Fleet dress jacket with silver accents. Don't get near pasta sauce or commies."
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/usa/suit/fleet_dress_officer.dmi'
 
-/obj/item/clothing/suit/jacket/fleet/dress/fleet/command
+/obj/item/clothing/suit/jacket/fleet/dress/command
 	name = "fleet senior officer's dress jacket"
 	desc = "A navy blue US Fleet dress jacket with gold accents. Don't get near pasta sauce or commies."
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/usa/suit/fleet_dress_command.dmi'

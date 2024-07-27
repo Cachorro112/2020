@@ -9,7 +9,7 @@
 	bandages_icon           = 'icons/mob/bandage.dmi'
 	health_hud_intensity    = 1.75
 	associated_gender       = FEMALE
-	onmob_state_modifiers   = list(slot_w_uniform_str = "f")
+	onmob_state_modifiers   = list(slot_w_uniform_str = "_f")
 	movement_slowdown       = -0.5
 	base_color              = "#5f5f5f"
 	appearance_flags        = HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
