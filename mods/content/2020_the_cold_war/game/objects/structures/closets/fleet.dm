@@ -36,10 +36,10 @@
 
 /obj/structure/closet/secure_closet/fleet_exo/WillContain()
 	return list(
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
-		/obj/item/clothing/under/usa/fleet/service/officer,
-		/obj/item/clothing/under/usa/fleet/service/officer/skirt,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
+		/obj/item/clothing/under/fleet/service/officer,
+		/obj/item/clothing/under/fleet/service/officer/skirt,
 		/obj/item/clothing/suit/jacket/fleet/service/officer,
 		/obj/item/clothing/suit/jacket/fleet/fleet_sweater/officer,
 		/obj/item/clothing/suit/jacket/fleet/dress/officer,
@@ -75,10 +75,10 @@
 		/obj/item/blueprints,
 		/obj/item/clothing/head/welding,
 		/obj/item/clothing/gloves/insulated,
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
-		/obj/item/clothing/under/usa/fleet/service/officer,
-		/obj/item/clothing/under/usa/fleet/service/officer/skirt,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
+		/obj/item/clothing/under/fleet/service/officer,
+		/obj/item/clothing/under/fleet/service/officer/skirt,
 		/obj/item/clothing/suit/jacket/fleet/service/officer,
 		/obj/item/clothing/suit/jacket/fleet/fleet_sweater/officer,
 		/obj/item/clothing/suit/jacket/fleet/dress/officer,
@@ -106,10 +106,10 @@
 
 /obj/structure/closet/secure_closet/fleet_ro/WillContain()
 	return list(
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
-		/obj/item/clothing/under/usa/fleet/service/officer,
-		/obj/item/clothing/under/usa/fleet/service/officer/skirt,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
+		/obj/item/clothing/under/fleet/service/officer,
+		/obj/item/clothing/under/fleet/service/officer/skirt,
 		/obj/item/clothing/suit/jacket/fleet/service/officer,
 		/obj/item/clothing/suit/jacket/fleet/fleet_sweater/officer,
 		/obj/item/clothing/suit/jacket/fleet/dress/officer,
@@ -139,8 +139,8 @@
 	return list(
 		new/datum/atom_creator/weighted(list(/obj/item/backpack/security, /obj/item/backpack/satchel/sec)),
 		new/datum/atom_creator/simple(/obj/item/backpack/dufflebag/sec, 50),
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
 		/obj/item/clothing/head/soft/fleet,
 		/obj/item/clothing/head/fleet/utility,
 		/obj/item/clothing/head/beret/fleet/security,
@@ -161,15 +161,15 @@
 		/obj/item/holowarrant,
 	)
 
-/obj/structure/closet/secure_closet/scientist
+/obj/structure/closet/secure_closet/fleet_researcher
 	name = "researcher's locker"
 	req_access = list(list(access_tox,access_tox_storage))
 	closet_appearance = /decl/closet_appearance/secure_closet/expedition/science
 
-/obj/structure/closet/secure_closet/scientist/WillContain()
+/obj/structure/closet/secure_closet/fleet_researcher/WillContain()
 	return list(
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
 		/obj/item/clothing/head/soft/fleet,
 		/obj/item/clothing/head/fleet/utility,
 		/obj/item/clothing/head/beret/fleet/science,
@@ -186,12 +186,12 @@
 	req_access = list(access_medical_equip)
 	closet_appearance = /decl/closet_appearance/secure_closet/medical/alt
 
-/obj/structure/closet/secure_closet/medical3/WillContain()
+/obj/structure/closet/secure_closet/fleet_med_personnel/WillContain()
 	return list(
 		new/datum/atom_creator/weighted(list(/obj/item/backpack/medic, /obj/item/backpack/satchel/med)),
 		new/datum/atom_creator/simple(/obj/item/backpack/dufflebag/med, 50),
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
 		/obj/item/clothing/head/soft/fleet,
 		/obj/item/clothing/head/fleet/utility,
 		/obj/item/clothing/head/beret/fleet/medical,
@@ -211,13 +211,13 @@
 	req_access = list(access_qm)
 	closet_appearance = /decl/closet_appearance/secure_closet/cargo/qm
 
-/obj/structure/closet/secure_closet/quartermaster/WillContain()
+/obj/structure/closet/secure_closet/fleet_quartermaster/WillContain()
 	return list(
 		new/datum/atom_creator/weighted(list(/obj/item/backpack = 75,  /obj/item/backpack/satchel/grey = 25)),
 		new/datum/atom_creator/simple(/obj/item/backpack/dufflebag, 25),
 		/obj/item/radio/headset/headset_cargo,
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
 		/obj/item/clothing/head/soft/fleet,
 		/obj/item/clothing/head/fleet/utility,
 		/obj/item/clothing/head/beret/fleet/supply,
@@ -234,7 +234,7 @@
 	req_access = list(access_engine_equip)
 	closet_appearance = /decl/closet_appearance/secure_closet/engineering
 
-/obj/structure/closet/secure_closet/engineering_personal/WillContain()
+/obj/structure/closet/secure_closet/fleet_engineering_personal/WillContain()
 	return list(
 		new/datum/atom_creator/weighted(
 			list(
@@ -249,8 +249,8 @@
 			)
 		),
 		new/datum/atom_creator/simple(/obj/item/backpack/dufflebag/eng, 50),
-		/obj/item/clothing/under/usa/fleet,
-		/obj/item/clothing/under/usa/fleet/combat,
+		/obj/item/clothing/under/fleet,
+		/obj/item/clothing/under/fleet/combat,
 		/obj/item/clothing/head/soft/fleet,
 		/obj/item/clothing/head/fleet/utility,
 		/obj/item/clothing/head/beret/fleet/engineering,
@@ -270,12 +270,12 @@
 	name = "fleet common wardrobe"
 	closet_appearance = /decl/closet_appearance/wardrobe/white
 
-/obj/structure/closet/wardrobe/white/WillContain()
+/obj/structure/closet/wardrobe/fleet/WillContain()
 	return list(
-		/obj/item/clothing/under/usa/fleet = 5,
-		/obj/item/clothing/under/usa/fleet/combat = 5,
-		/obj/item/clothing/under/usa/fleet/service = 5,
-		/obj/item/clothing/under/usa/fleet/service/skirt = 5,
+		/obj/item/clothing/under/fleet = 5,
+		/obj/item/clothing/under/fleet/combat = 5,
+		/obj/item/clothing/under/fleet/service = 5,
+		/obj/item/clothing/under/fleet/service/skirt = 5,
 		/obj/item/clothing/suit/jacket/fleet/service = 5,
 		/obj/item/clothing/suit/jacket/fleet/fleet_sweater = 5,
 		/obj/item/clothing/suit/jacket/fleet/dress = 5,
@@ -291,12 +291,12 @@
 	name = "fleet officer wardrobe"
 	closet_appearance = /decl/closet_appearance/wardrobe/black
 
-/obj/structure/closet/wardrobe/white/WillContain()
+/obj/structure/closet/wardrobe/fleet_officer/WillContain()
 	return list(
-		/obj/item/clothing/under/usa/fleet = 5,
-		/obj/item/clothing/under/usa/fleet/combat = 5,
-		/obj/item/clothing/under/usa/fleet/service/officer = 5,
-		/obj/item/clothing/under/usa/fleet/service/officer/skirt = 5,
+		/obj/item/clothing/under/fleet = 5,
+		/obj/item/clothing/under/fleet/combat = 5,
+		/obj/item/clothing/under/fleet/service/officer = 5,
+		/obj/item/clothing/under/fleet/service/officer/skirt = 5,
 		/obj/item/clothing/suit/jacket/fleet/service/officer = 5,
 		/obj/item/clothing/suit/jacket/fleet/fleet_sweater/officer = 5,
 		/obj/item/clothing/suit/jacket/fleet/dress/officer = 5,
