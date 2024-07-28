@@ -41,7 +41,7 @@
 
 /datum/job/chaplain
 	title = "Chaplain"
-	department_types = list(/decl/department/civilian)
+	department_types = list(/decl/department/service)
 	total_positions = 1
 	spawn_positions = 1
 	supervisors = "the head of personnel"

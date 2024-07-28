@@ -23,7 +23,8 @@
 	#include "ss13_security_state.dm"
 	#include "ss13_setup.dm"
 	#include "ss13_shuttles.dm"
-	#include "asteroid.dmm"
+//	#include "asteroid_old.dmm" << Un-comment if you want the old (i don't really recomend, is a bit shitty.
+	#include "asteroid_new.dmm" // New asteroid! its just the mining-corporated.dmm from Baystation12 that i port to neb.
 	#include "cent_com.dmm"
 	#include "ss13.dmm"
 

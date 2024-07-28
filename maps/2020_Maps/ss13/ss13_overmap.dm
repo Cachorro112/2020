@@ -1,12 +1,10 @@
-/obj/effect/overmap/visitable/ship/ss13
+/obj/effect/overmap/visitable/sector/ss13
+	icon_state = "object"
 	name = "Space Station 13"
 	color = "#00ffff"
-	start_x = 10
-	start_y = 10
+	start_x = 5
+	start_y = 6
 	sector_flags = OVERMAP_SECTOR_KNOWN|OVERMAP_SECTOR_BASE|OVERMAP_SECTOR_IN_SPACE
-	vessel_mass = 50000
-	max_speed = 1/(20 SECONDS)
-	burn_delay = 20 SECONDS
 	initial_generic_waypoints = list(
 		"nav_mining_station",
 		"nav_centcom_station"
@@ -14,10 +12,10 @@
 
 /obj/effect/overmap/visitable/sector/asteroid
 	name = "Asteroid"
-	desc = "a Big Asteroid orbiting the Phoron Giant. Nanotrasen owned buildings detected on its surface."
+	desc = "A medium-sized asteroid full of minerals. Mining facility detected at one of sides, owner - NanoTrasen."
 	icon_state = "sector"
-	start_x = 10
-	start_y = 11
+	start_x = 5
+	start_y = 5
 	initial_generic_waypoints = list(
 		"nav_mining_asteroid"
 		)

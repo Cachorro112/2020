@@ -8,7 +8,7 @@
 	access = list()
 	minimal_access = list()
 	outfit_type = /decl/hierarchy/outfit/job/staff_assistant
-	department_types = list(/decl/department/command)
+	department_types = list(/decl/department/security)
 
 /datum/job/tech_assistant
 	title = "Technical Assistant"
