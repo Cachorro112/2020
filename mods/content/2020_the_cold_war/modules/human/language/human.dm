@@ -8,6 +8,10 @@
 /decl/language/legal
 	flags = LANG_FLAG_RESTRICTED
 
+/decl/language
+	flags = LANG_FLAG_RESTRICTED
+
+///// Actual Languages
 /decl/language/human/english
 	name = "English"
 	desc = "English is a West Germanic language in the Indo-European language family, whose speakers, called Anglophones, originated in early medieval England.\

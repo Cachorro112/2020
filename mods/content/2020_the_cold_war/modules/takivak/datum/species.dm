@@ -39,7 +39,7 @@
 		/decl/emote/exertion/synthetic/creak
 	)
 
-	spawn_flags = SPECIES_CAN_JOIN
+	spawn_flags = SPECIES_IS_WHITELISTED
 
 	preview_outfit = /decl/hierarchy/outfit/job/generic/engineer
 
