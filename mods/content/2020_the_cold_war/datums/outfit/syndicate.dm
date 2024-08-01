@@ -1,7 +1,7 @@
 /decl/hierarchy/outfit/syndi_assault
 	name = "Strike Team - Syndicate Assault Unit"
 	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/space/void/merc/prepared
+	suit = /obj/item/clothing/suit/armor/pcarrier/merc
 	mask = /obj/item/clothing/mask/gas
 	shoes = /obj/item/clothing/shoes/jackboots/swat/combat
 	l_ear = /obj/item/radio/headset/mercenary

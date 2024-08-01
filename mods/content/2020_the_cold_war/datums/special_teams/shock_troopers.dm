@@ -27,7 +27,7 @@
 	if(..())
 		deployed = 1
 
-/decl/special_role/shock_troopers/equip_role(var/mob/living/carbon/human/player)
+/decl/special_role/shock_troopers/equip_role(var/mob/living/human/player)
 	if (player.mind == leader)
 		default_outfit = /decl/hierarchy/outfit/shock_trooper/leader
 	else
@@ -55,7 +55,7 @@
 	player.current.real_name = player.name
 	player.current.SetName(player.current.name)
 
-	var/mob/living/carbon/human/H = player.current
+	var/mob/living/human/H = player.current
 	if(istype(H))
 		var/decl/pronouns/pronouns = pick(H.species.available_pronouns)
 		H.set_gender(pronouns.name)
