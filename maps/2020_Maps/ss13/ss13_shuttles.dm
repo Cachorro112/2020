@@ -35,6 +35,7 @@
 
 /obj/effect/shuttle_landmark/escape_shuttle/station
 	landmark_tag = "nav_escape_shuttle_station"
+	docking_controller = "evac"
 
 /datum/shuttle/autodock/ferry/supply/cargo
 	name = "Supply Shuttle"
@@ -51,6 +52,7 @@
 
 /obj/effect/shuttle_landmark/supply/station
 	landmark_tag = "nav_cargo_station"
+	docking_controller = "cargo_dock"
 
 /datum/shuttle/autodock/multi/centcom
 	name = "Auxiliary Shuttle"
@@ -94,6 +96,7 @@
 /obj/effect/shuttle_landmark/mine/station
 	name = "Space Station 13 North Dock"
 	landmark_tag = "nav_mining_station"
+	docking_controller = "mining"
 
 /obj/machinery/computer/shuttle_control/multi/mining
 	name = "mining shuttle control console"

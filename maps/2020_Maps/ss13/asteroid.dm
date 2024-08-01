@@ -1,5 +1,5 @@
 /datum/random_map/automata/cave_system/mining_asteroid
-	iterations = 3
+	iterations = 5
 	descriptor = "asteroid caves"
 	wall_type =  /turf/wall/natural
 	floor_type = /turf/floor/natural/barren
