@@ -9,5 +9,5 @@
 /datum/admin_secret_item/fun_secret/nether
 	name = "END GAME: Nether Invasion"
 
-/datum/admin_secret_item/fun_secret/nether/execute(var/mob/user)
-	SetUniversalState(/datum/universal_state/nether_invasion)
+///datum/admin_secret_item/fun_secret/nether/execute(var/mob/user)
+//	SetUniversalState(/datum/universal_state/nether_invasion)
