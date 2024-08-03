@@ -80,5 +80,5 @@
 		/decl/emote/audible/woof
 	)
 
-/decl/species/takivak/handle_additional_hair_loss(var/mob/living/carbon/human/H, var/defer_body_update = TRUE)
+/decl/species/takivak/handle_additional_hair_loss(var/mob/living/human/H, var/defer_body_update = TRUE)
 	. = H?.set_skin_colour(rgb(189, 171, 143))
