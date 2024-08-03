@@ -3,7 +3,7 @@
 	desc = "A modern pistol, loaded on 9x19mm, reliable and fast."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/glock17.dmi'
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/g17
 	allowed_magazines = /obj/item/ammo_magazine/pistol/g17
 	accuracy_power = 6
 	safety_icon = null
@@ -25,7 +25,7 @@
 	desc = "A modern pistol, loaded on 9x19mm, reliable and fast."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/sig.dmi'
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/sig250
 	allowed_magazines = /obj/item/ammo_magazine/pistol/sig250
 	accuracy_power = 7
 	safety_icon = null
@@ -42,7 +42,7 @@
 	desc = "a Classic Pistol. The standard issue pistol of the US Armed forces from 1911 to 1985. Chambered in .45 ACP."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/m1911.dmi'
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_casing/pistol/mm45
 	allowed_magazines = /obj/item/ammo_casing/pistol/mm45
 	accuracy_power = 5
 	safety_icon = null
@@ -59,7 +59,7 @@
 	desc = "Produced by Fabrique Nationale of Belgium, This old handgun is chambered in 9mm."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/browning_hp.dmi'
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/browninghp
 	allowed_magazines = /obj/item/ammo_magazine/pistol/browninghp
 	accuracy_power = 5
 	safety_icon = null
@@ -76,7 +76,7 @@
 	desc = "The standard issue pistol of US Armed Forces from 1985 to 2017. Chambered in 9mm Luger."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/berettam9.dmi'
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/beretta
 	allowed_magazines = /obj/item/ammo_magazine/pistol/beretta
 	accuracy_power = 7
 	safety_icon = null

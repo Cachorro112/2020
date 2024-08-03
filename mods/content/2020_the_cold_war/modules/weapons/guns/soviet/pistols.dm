@@ -4,8 +4,8 @@
 	icon = 'mods/content/2020_the_cold_war/icons/guns/makarov.dmi'
 	load_method = MAGAZINE
 	caliber = 9
-	magazine_type = /obj/item/ammo_magazine/pistol
-	allowed_magazines = /obj/item/ammo_magazine/pistol
+	magazine_type = /obj/item/ammo_magazine/pistol/pmm
+	allowed_magazines = /obj/item/ammo_magazine/pistol/pmm
 	accuracy_power = 6
 	safety_icon = null
 	ammo_indicator = FALSE
