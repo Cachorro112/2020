@@ -44,16 +44,16 @@
 
 /datum/fabricator_recipe/soviet_military/sov_arms/ak47
 	name = "AK-47"
-	path = /obj/item/gun/projectile/automatic/assault_rifle/ak47
+	path = /obj/item/gun/projectile/automatic/assault_rifle/rifles_2020/ak47
 
 /datum/fabricator_recipe/soviet_military/sov_arms/ak74
 	name = "AK-74"
-	path = /obj/item/gun/projectile/automatic/assault_rifle/ak74
+	path = /obj/item/gun/projectile/automatic/assault_rifle/rifles_2020/ak74
 
 /datum/fabricator_recipe/soviet_military/sov_arms/ak74u
 	name = "AK-74U"
-	path = /obj/item/gun/projectile/automatic/assault_rifle/ak74/tactical
+	path = /obj/item/gun/projectile/automatic/assault_rifle/rifles_2020/ak74/tactical
 
 /datum/fabricator_recipe/soviet_military/sov_arms/ak12
 	name = "AK-12"
-	path = /obj/item/gun/projectile/automatic/assault_rifle/ak12
+	path = /obj/item/gun/projectile/automatic/assault_rifle/rifles_2020/ak12

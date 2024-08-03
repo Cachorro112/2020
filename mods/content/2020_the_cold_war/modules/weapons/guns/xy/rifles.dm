@@ -2,7 +2,7 @@
 	name = "Seras Victoria"
 	desc = "a Assault Rifle Developed by Mortensen Organization, designed to be used against Nether Biological Entities using the 5.56 SV, can still used against other humans."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/seras_victoria.dmi'
-	magazine_type = /obj/item/ammo_magazine/rifle/mm565
+	magazine_type = /obj/item/ammo_magazine/rifle/stanag/sv
 	allowed_magazines = /obj/item/ammo_magazine/rifle/stanag
 	caliber = 556
 	auto_eject = 0
@@ -24,7 +24,7 @@
 
 /obj/item/ammo_magazine/rifle/stanag/sv
 	name = "30r STANAG SV magazine"
-	icon = 'mods/content/2020_the_cold_war/icons/ammo/stanag.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/ammo/rifle_magazines.dmi'
 	icon_state = "stanag"
 	mag_type = MAGAZINE
 	caliber = 556
