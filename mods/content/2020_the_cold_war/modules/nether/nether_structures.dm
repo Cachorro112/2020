@@ -32,9 +32,6 @@
 	T.maxbodytemp = 5000
 	T.faction = "meat"
 
-	if (parent)
-		parent.register_mob(T)
-
 	playsound(T, pick(mob_spawn_sounds), 100)
 	visible_message(SPAN_WARNING("\The [src] widens for a moment as a horrific monster forces its way through, before it blinks out of existence."))
 	qdel(src)

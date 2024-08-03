@@ -63,7 +63,7 @@
 /////////////////////////Magazines//////////////////////////
 /obj/item/ammo_magazine/rifle/mm762
 	name = "30r 7.62 magazine"
-	icon = 'mods/content/2020_the_cold_war/icons/ammo/762x39_magazine.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/ammo/pistol_magazines.dmi'
 	icon_state = "ak47"
 	mag_type = MAGAZINE
 	caliber = 762
