@@ -30,8 +30,6 @@
 
 /decl/special_role/security_council/Initialize()
 	. = ..()
-	var/mob/user
-	sound_to(user, sound('mods/content/2020_the_cold_war/sounds/themes/tsc_theme.ogg'))
 	leader_welcome_text = "As leader of the Terran Security Council Team, you answer only to the Terran Organization. you are a neutral force to the crew and don't need to follow the crew orders and may even use violence against them to achieve your mission goals. It is recommended that you attempt to not get involved with the crew, however."
 	welcome_text = "As member of the Terran Security Council Team, you answer only to your leader and the Terran Organization officials."
 
@@ -40,3 +38,4 @@
 		return
 	to_chat(player.current, "The Terran Security Council Team works for the Terran Organization, something that threat humanity is happening or is on [global.using_map.station_name]; your job is to destroy or contain this threat and you may be assigned with other mission.")
 	to_chat(player.current, "You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
+	sound_to(usr, sound('mods/content/2020_the_cold_war/sounds/themes/tsc_theme.ogg'))

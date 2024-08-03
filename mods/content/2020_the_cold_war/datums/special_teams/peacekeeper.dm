@@ -30,13 +30,12 @@
 
 /decl/special_role/peacekeeper/Initialize()
 	. = ..()
-	var/mob/user
 	leader_welcome_text = "As leader of the Terran Peacekeeper Team, you answer only to the Terran Organization, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however."
 	welcome_text = "As member of the Terran Peacekeeper Team, you answer only to your leader and the Terran Organization officials."
-	sound_to(user, sound('mods/content/2020_the_cold_war/sounds/themes/peacekeeper.ogg'))
 
 /decl/special_role/peacekeeper/greet(var/datum/mind/player)
 	if(!..())
 		return
 	to_chat(player.current, "The Terran Peacekeeper Team works for the Terran Organization, but requisited by the [global.using_map.boss_name] to operate on the station; your job is to restore the order and you may be assigned with other mission. There is a code red alert on [station_name()].")
 	to_chat(player.current, "You should first gear up and discuss a plan with your team. More members may be joining, don't move out before you're ready.")
+	sound_to(usr, sound('mods/content/2020_the_cold_war/sounds/themes/peacekeeper.ogg'))

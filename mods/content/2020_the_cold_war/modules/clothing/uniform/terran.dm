@@ -1,4 +1,4 @@
-/obj/item/clothing/under/terran
+/obj/item/clothing/jumpsuit/terran
 	name = "Terran Organization tactical jumpsuit"
 	desc = "A blue-ish black tactical suit with a TO logo on one of the shoulders. It's comfortable materials make it good for manueverability. All combat, all the time."
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/terran/jumpsuit/terran_utility.dmi'

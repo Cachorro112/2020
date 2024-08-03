@@ -1,6 +1,6 @@
 /decl/hierarchy/outfit/terran_pk
 	name = "Response Team - Terran Peacekeeper"
-	uniform = /obj/item/clothing/under/terran
+	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran
 	head = /obj/item/clothing/head/helmet/terran
 	shoes = /obj/item/clothing/shoes/jackboots
@@ -14,7 +14,7 @@
 
 /decl/hierarchy/outfit/terran_sc
 	name = "Response Team - Terran Security Council Agent"
-	uniform = /obj/item/clothing/under/terran
+	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran/heavy
 	head = /obj/item/clothing/head/helmet/terran/heavy
 	mask = /obj/item/clothing/mask/gas/terran

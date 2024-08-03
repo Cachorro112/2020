@@ -120,10 +120,3 @@
 #include "modules\weapons\guns\xy\rifles.dm"
 #include "modules\weapons\projectiles\rifle.dm"
 // END_INCLUDE
-// BEGIN_INTERNALS
-// END_INTERNALS
-// BEGIN_FILE_DIR
-#define FILE_DIR .
-// END_FILE_DIR
-// BEGIN_PREFERENCES
-// END_PREFERENCES

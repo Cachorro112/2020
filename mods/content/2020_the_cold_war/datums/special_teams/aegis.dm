@@ -29,8 +29,7 @@
 
 /decl/special_role/aegis_delta_8/Initialize()
 	. = ..()
-//	var/mob/user
-//	sound_to(user, sound('mods/content/2020_the_cold_war/sounds/themes/aegis_theme.ogg'))
+//	sound_to(usr, sound('mods/content/2020_the_cold_war/sounds/themes/aegis_theme.ogg'))
 	leader_welcome_text = "As leader of the Delta-8 Team, you answer only to Mortensen Organization, and have authority to override the Captain where it is necessary to achieve your mission goals. It is recommended that you attempt to cooperate with the captain where possible, however."
 	welcome_text = "As member of the Emergency Response Team, you answer only to your leader and Nanotrasen officials."
 
