@@ -10,7 +10,7 @@
 /datum/universal_state/nether_invasion/proc/Netherfy()
 	for(var/turf/T)
 		if(T.is_floor() && T.simulated  && prob(1))
-			new /obj/effect/gateway/active/nether(T)
+			new /obj/effect/gateway/nether(T)
 
 /datum/universal_state/nether_invasion/OnEnter()
 	set background = 1

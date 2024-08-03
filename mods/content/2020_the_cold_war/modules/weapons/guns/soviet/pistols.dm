@@ -12,9 +12,9 @@
 
 /obj/item/gun/projectile/pistol/makarov/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 /obj/item/gun/projectile/pistol/mp443
 	name = "MP443"
@@ -31,9 +31,9 @@
 
 /obj/item/gun/projectile/pistol/mp443/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 ///////////Magazine////////////
 /obj/item/ammo_magazine/pistol/pmm
 	name = "PMM Makarov magazine (9mm)"

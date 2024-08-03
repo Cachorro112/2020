@@ -11,9 +11,9 @@
 
 /obj/item/gun/projectile/pistol/glock17/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 /obj/item/gun/projectile/pistol/glock17/enforcer
 	name = "Enforcer"
@@ -33,9 +33,9 @@
 
 /obj/item/gun/projectile/pistol/sig250/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 /obj/item/gun/projectile/pistol/m1911
 	name = "M1911A1"
@@ -50,9 +50,9 @@
 
 /obj/item/gun/projectile/pistol/m1911/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 /obj/item/gun/projectile/pistol/browning_hp
 	name = "Browning hi-power"
@@ -67,9 +67,9 @@
 
 /obj/item/gun/projectile/pistol/browning_hp/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 /obj/item/gun/projectile/pistol/m9beretta
 	name = "Beretta M9"
@@ -84,9 +84,9 @@
 
 /obj/item/gun/projectile/pistol/m9beretta/update_base_icon()
 	if(ammo_magazine)
-		icon_state = "[world]"
+		icon_state = "[get_world_inventory_state()]"
 	else
-		icon_state = "[world]-e"
+		icon_state = "[get_world_inventory_state()]-e"
 
 ///////// Magazines /////////
 /obj/item/ammo_magazine/pistol/g17
