@@ -317,8 +317,11 @@
 	icon_state = "centcom"
 	requires_power = FALSE
 	dynamic_lighting = TRUE
-//	req_access = list(access_cent_general)
+	req_access = list(access_cent_general)
 
+/area/centcom/armory
+	name = "\improper Centcom Armory"
+	req_access = list(access_cent_specops)
 //Mining
 /area/mining
 	name = "Mining Outpost Equipment"

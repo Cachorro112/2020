@@ -1,5 +1,5 @@
 /// New one
-/obj/effect/gateway/nether
+/obj/effect/gateway/active/nether
 	name = "reality tear"
 	desc = "A piercing pain strikes your mind as you peer into the tear, witnessing horrors and suffering beyond comprehension."
 	light_range = 5
@@ -18,12 +18,12 @@
 		'sound/effects/squelch2.ogg'
 	)
 
-/obj/effect/gateway/nether/small/New(turf/T)
+/obj/effect/gateway/active/nether/small/New(turf/T)
 	..()
 
-	addtimer(new Callback(src, .proc/create_and_delete), rand(15, 30) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(create_and_delete)), rand(20,30) SECONDS)
 
-/obj/effect/gateway/nether/small/proc/create_and_delete()
+/obj/effect/gateway/active/nether/small/create_and_delete()
 	var/mob/living/simple_animal/T = pickweight(spawnable)
 	T = new T(src.loc)
 	T.min_gas = null
@@ -36,8 +36,8 @@
 	visible_message(SPAN_WARNING("\The [src] widens for a moment as a horrific monster forces its way through, before it blinks out of existence."))
 	qdel(src)
 
-//Spawns after the artifact is destroyed
-/obj/effect/gateway/nether/big
+//Spawns after the artifact is destroyed << soon.
+/obj/effect/gateway/active/nether/big
 	name = "interdimensional gateway"
 	desc = "A huge hole in reality with a strange, pulsing heartbeat. Faint, agonized screams can be heard from inside it..."
 	light_range = 10
@@ -46,7 +46,7 @@
 	///How many mobs we've spawned.
 	var/spawned_mobs = 0
 	///Maximum amount of mobs we can spawn.
-	var/mob_limit
+	var/mob_limit = 20
 	///Multiplier applied to the `transform` variable.
 	var/size_multiplier = 1.5
 	///Portal will play a sound from this list when its health ticks down.
@@ -56,15 +56,15 @@
 		'sound/hallucinations/veryfar_noise.ogg'
 	)
 
-/obj/effect/gateway/nether/big/New(turf/T)
+/obj/effect/gateway/active/nether/big/New(turf/T)
 	..()
 
 	mob_limit = health * 2
-	SetTransform(scale = size_multiplier)
-	addtimer(new Callback(src, .proc/spawn_monster), rand(30, 60) SECONDS)
-	GLOB.sound_player.PlayLoopingSound(src, "\ref[src]", 'sound/effects/Heart Beat.ogg', 70, 6)
+//	SetTransform(scale = size_multiplier)
+	addtimer(CALLBACK(src, PROC_REF(create_and_delete)), rand(30,60) SECONDS)
+	play_looping_sound(src, "\ref[src]", 'sound/effects/Heart Beat.ogg', 70, 6)
 
-/obj/effect/gateway/nether/big/proc/spawn_monster()
+/obj/effect/gateway/active/nether/big/proc/spawn_monster()
 	var/mob/living/simple_animal/T = pickweight(spawnable)
 	T = new T(src.loc)
 	T.min_gas = null
@@ -92,4 +92,4 @@
 		visible_message(SPAN_WARNING("\The [src] deposits \the [T] into the world!"))
 
 
-	addtimer(new Callback(src, .proc/spawn_monster), rand(15, 30) SECONDS)
+	addtimer(CALLBACK(src, PROC_REF(create_and_delete)), rand(15,30) SECONDS)

@@ -102,7 +102,7 @@
 #include "modules\nether\butchery_data.dm"
 #include "modules\nether\meat.dm"
 #include "modules\nether\mobs.dm"
-//#include "modules\nether\nether_structures.dm"
+#include "modules\nether\nether_structures.dm"
 //#include "modules\nether\endgame\nether_invasion.dm"
 //#include "modules\nether\endgame\tim_maia.dm"
 //#include "modules\nether\tim_maia\ritual_satanico.dm"

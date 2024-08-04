@@ -8,7 +8,7 @@
 	icon_state = "shuttle"
 
 /area/shuttle/centcom
-	name = "\improper CentCom"
+	name = "\improper Centcom Shuttle"
 	icon_state = "shuttle"
 
 /area/shuttle/mining

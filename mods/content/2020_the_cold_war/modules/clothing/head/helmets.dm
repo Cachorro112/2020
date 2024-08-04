@@ -126,7 +126,7 @@
 	name = "Stealth Visored Helmet"
 	action_button_name = "Adjust Visor"
 	desc = "A anti-memetic stealth helmet with a special visor to deal with visual memetic Anomalies."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/mortensen/helmet/aegis_lastline_helmet.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/mortensen/helmet/aegis_ghost_helmet.dmi'
 	flags_inv = HIDEMASK|HIDEEARS|HIDEEYES
 	body_parts_covered = SLOT_HEAD|SLOT_FACE|SLOT_EYES
 	cold_protection = SLOT_HEAD|SLOT_FACE|SLOT_EYES
@@ -186,7 +186,7 @@
 /obj/item/clothing/head/helmet/aegis_heavy
 	name = "combined heavy assault helmet"
 	desc = "A quad-layered heavy composite helmet with titanium strut supports made solely so it doesn't crush one's heavy with the weight."
-	icon_state = "mtf-heavy-helmet"
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/mortensen/helmet/aegis_lastline_helmet.dmi'
 	armor = list(
 		ARMOR_MELEE = ARMOR_MELEE_SHIELDED,
 		ARMOR_BULLET = ARMOR_BALLISTIC_HEAVY,
