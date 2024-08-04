@@ -10,7 +10,7 @@
 #include "datums\special_teams\ert.dm"
 #include "datums\special_teams\peacekeeper.dm"
 //#include "datums\special_teams\shock_troopers.dm"
-#include "datums\special_teams\syndicate_assault_unit.dm"
+#include "datums\special_teams\syndicate.dm"
 #include "datums\special_teams\tsc.dm"
 //#include "game\hints_and_shit.dm"
 #include "game\atmospherics\air_reservoir.dm"
