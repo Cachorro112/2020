@@ -1,14 +1,13 @@
 /decl/hierarchy/outfit/syndi_assault
-	name = "Strike Team - Syndicate Assault Unit"
-	uniform = /obj/item/clothing/under/syndicate/combat
-	suit = /obj/item/clothing/suit/armor/pcarrier/merc
-	mask = /obj/item/clothing/mask/gas
-	shoes = /obj/item/clothing/shoes/jackboots/swat/combat
+	name = "Spec Ops - Syndicate Assault Unit"
+	uniform = /obj/item/clothing/jumpsuit/syndicate_tactical
+	suit = /obj/item/clothing/suit/armor/syndicate/heavy
+	mask = /obj/item/clothing/mask/gas/syndicate
+	shoes = /obj/item/clothing/shoes/jackboots/duty
 	l_ear = /obj/item/radio/headset/mercenary
 	belt = /obj/item/belt/holster/security/tactical
-	glasses = /obj/item/rig_module/vision/nvg
-	gloves = /obj/item/clothing/gloves/thick/swat
-	l_pocket = /obj/item/chems/pill/cyanide
+	glasses = /obj/item/clothing/glasses/thermal
+	gloves = /obj/item/clothing/gloves/thick/combat
 	pda_type = /obj/item/modular_computer/pda/mercenary
 	id_slot = slot_wear_id_str
 	id_type = /obj/item/card/id/syndicate

@@ -1,6 +1,6 @@
 /decl/special_role/security_council
-	name = "Terran Secutiry Council Agent"
-	name_plural = "Terran Secutiry Council Agents"
+	name = "Terran Security Council Agent"
+	name_plural = "Terran Security Council Agents"
 	antag_text = "You are an <b>Neutral</b> antagonist! Within the rules, \
 		follow your objectives and finish them. you may use force against non-tsc agents. \
 		Try to make sure other players have <i>fun</i>! If you are confused or at a loss, always adminhelp, \
@@ -21,7 +21,6 @@
 	initial_spawn_target = 4
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
 	default_outfit = /decl/hierarchy/outfit/terran_sc
-	var/deployed = 0
 
 /decl/special_role/security_council/create_default(var/mob/source)
 	var/mob/living/human/M = ..()

@@ -79,6 +79,7 @@
 #include "modules\clothing\uniform\job.dm"
 #include "modules\clothing\uniform\marine.dm"
 #include "modules\clothing\uniform\medsci.dm"
+#include "modules\clothing\uniform\mortensen.dm"
 #include "modules\clothing\uniform\security.dm"
 #include "modules\clothing\uniform\soviet.dm"
 #include "modules\clothing\uniform\syndicate.dm"

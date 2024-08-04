@@ -14,7 +14,6 @@
 	initial_spawn_target = 3
 	min_player_age = 14
 	default_access = list(access_mercenary)
-	var/deployed = 0
 
 	faction = "syndicate"
 

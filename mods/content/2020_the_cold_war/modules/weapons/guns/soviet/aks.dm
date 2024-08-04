@@ -63,7 +63,7 @@
 /////////////////////////Magazines//////////////////////////
 /obj/item/ammo_magazine/rifle/mm762
 	name = "30r 7.62 magazine"
-	icon = 'mods/content/2020_the_cold_war/icons/ammo/pistol_magazines.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/ammo/rifle_magazines.dmi'
 	icon_state = "ak47"
 	mag_type = MAGAZINE
 	caliber = 762
@@ -74,7 +74,7 @@
 
 /obj/item/ammo_magazine/rifle/mm565
 	name = "30r 5.65 magazine"
-	icon = 'mods/content/2020_the_cold_war/icons/ammo/565x39_magazine.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/ammo/rifle_magazines.dmi'
 	icon_state = "ak74"
 	mag_type = MAGAZINE
 	caliber = 565
