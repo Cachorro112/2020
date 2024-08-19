@@ -2,9 +2,7 @@
 	name = "Soviet uniform dispenser"
 	desc = "It dispense soviet fleet issued clothing."
 	vend_delay = 5
-	icon_state = "uniform"
-	icon_deny = "uniform-deny"
-	icon_vend = "uniform-vend"
+	icon_state = "soviet_uni"
 	markup = 0
 	base_type = /obj/machinery/vending/soviet_uniform
 	products = list(
@@ -28,9 +26,7 @@
 	name = "Soviet command uniform dispenser"
 	desc = "It dispense soviet fleet issued clothing."
 	vend_delay = 5
-	icon_state = "uniform"
-	icon_deny = "uniform-deny"
-	icon_vend = "uniform-vend"
+	icon_state = "soviet_uni"
 	markup = 0
 	base_type = /obj/machinery/vending/soviet_uniform_command
 	products = list(

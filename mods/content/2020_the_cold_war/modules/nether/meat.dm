@@ -9,7 +9,7 @@
 	exoplanet_rarity_gas = MAT_RARITY_EXOTIC
 	uid = "chem_nether"
 
-	// F E L L  T H E  N E T H E R
+	// F E E L  T H E  N E T H E R
 	var/static/list/dose_messages = list(
 		"You feel... you feel... you feel.",
 		"Your muscles tremble, tremble with fear...",

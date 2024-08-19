@@ -1,10 +1,8 @@
-/obj/machinery/vending/nato_guns
+/obj/machinery/vending/guns/nato_guns
 	name = "NATO Weapons Vending"
 	desc = "A NATO weapons vending."
 	product_ads = "Crack communist skulls!;Taste some freedom!;You got oil, right?;Get your guns here, Mate.;Commies most fear!"
-	icon_state = "sec"
-	icon_deny = "sec-deny"
-	icon_vend = "sec-vend"
+	icon_state = "ammo"
 	vend_delay = 14
 	markup = 0
 	base_type = /obj/machinery/vending/security
@@ -28,13 +26,11 @@
 		/obj/item/ammo_magazine/p90 = 15,
 	)
 
-/obj/machinery/vending/soviet_guns
+/obj/machinery/vending/guns/soviet_guns
 	name = "Soviet Weapons Vending"
 	desc = "A Soviet weapons vending."
 	product_ads = "Crack capitalist skulls!;Taste some collectivism!;No food for the ukrainians.;Be awere, if the snow talks, fire at it."
-	icon_state = "sec"
-	icon_deny = "sec-deny"
-	icon_vend = "sec-vend"
+	icon_state = "soviet"
 	vend_delay = 14
 	markup = 0
 	base_type = /obj/machinery/vending/security
@@ -51,7 +47,7 @@
 		/obj/item/ammo_magazine/rifle/mm565 = 15,
 	)
 
-/obj/machinery/vending/general_guns
+/obj/machinery/vending/guns/general_guns
 	name = "General Weapons Vending"
 	desc = "A General weapons vending."
 	icon_state = "sec"

@@ -21,10 +21,10 @@
 	idle_power_usage = 211 //refrigerator - believe it or not, this is actually the average power consumption of a refrigerated vending machine according to NRCan.
 	markup = 0
 
-/obj/machinery/vending/hydronutrients/generic
-	icon_state = "nutri_generic"
-	icon_vend = "nutri_generic-vend"
-	icon_deny = "nutri_generic-deny"
+///obj/machinery/vending/hydronutrients/generic
+//	icon_state = "nutri_generic"
+//	icon_vend = "nutri_generic-vend"
+//	icon_deny = "nutri_generic-deny"
 
 /obj/machinery/vending/hydroseeds
 	name = "MegaSeed Servitor"
@@ -84,7 +84,7 @@
 		/obj/item/chems/spray/waterflower = 1
 	)
 
-/obj/machinery/vending/hydroseeds/generic
-	icon_state = "seeds_generic"
-	icon_vend = "seeds_generic-vend"
-	icon_deny = "seeds_generic-deny"
+///obj/machinery/vending/hydroseeds/generic
+//	icon_state = "seeds_generic"
+//	icon_vend = "seeds_generic-vend"
+//	icon_deny = "seeds_generic-deny"

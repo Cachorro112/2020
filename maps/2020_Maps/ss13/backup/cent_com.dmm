@@ -1,7 +1,7 @@
 "aa" = (/turf/unsimulated/dark_filler,/area/space)
 "ab" = (/turf/wall/r_wall,/area/centcom)
 "ac" = (/obj/item/box/handcuffs,/obj/item/box/handcuffs,/obj/machinery/light{dir = 1},/obj/item/box/flashbangs,/obj/item/box/flashbangs,/turf/floor/tiled/white,/area/centcom)
-"ad" = (/obj/machinery/vending/guns/general_guns,/turf/floor/tiled/white,/area/centcom)
+"ad" = (/obj/machinery/vending/general_guns,/turf/floor/tiled/white,/area/centcom)
 "ae" = (/obj/structure/rack,/obj/item/belt/holster/security/tactical,/obj/item/backpack/rucksack/blue,/obj/item/clothing/head/helmet/terran,/obj/item/clothing/jumpsuit/terran,/obj/item/clothing/suit/armor/terran,/obj/item/clothing/shoes/jackboots/duty,/obj/item/clothing/gloves/thick/combat,/turf/floor/tiled/white,/area/centcom)
 "af" = (/turf/floor/tiled,/area/centcom)
 "ag" = (/obj/machinery/portable_atmospherics/canister/air,/turf/floor/tiled,/area/centcom)
