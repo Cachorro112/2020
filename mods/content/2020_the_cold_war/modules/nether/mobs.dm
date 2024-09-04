@@ -5,7 +5,7 @@
 	speak_emote = list("roars")
 	see_in_dark = 10
 	response_harm = "pokes"
-	max_health = 90
+	max_health = 95
 	natural_weapon = /obj/item/natural_weapon/claws/strong
 	heat_damage_per_tick = null
 	cold_damage_per_tick = null
@@ -93,7 +93,7 @@
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/worm.dmi'
 	speak_emote = list("chitter")
 	response_harm = "bites"
-	max_health = 35
+	max_health = 45
 	natural_weapon = /obj/item/natural_weapon/bite/weak
 	heat_damage_per_tick = null
 	cold_damage_per_tick = null

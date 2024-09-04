@@ -60,7 +60,11 @@
 		"THE THREE WILL CONQUEST YOUR WORLD",
 		"WE ARE COMING NOW WE ARE COMING SOON",
 		"THE BORDER WORLD WAIT FOR THE TIME",
-		"THE WILLING OF THE NETHER IS UNIVERSAL"
+		"THE WILLING OF THE NETHER IS UNIVERSAL",
+		"RUN!",
+		"DON'T LOOK BACK!",
+		"KILL THEM!",
+		"FIGHT!"
 	)
 
 /decl/material/liquid/nether/affect_blood(var/mob/living/M, var/removed, var/datum/reagents/holder)
