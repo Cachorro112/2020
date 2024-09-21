@@ -322,7 +322,35 @@
 /area/centcom/armory
 	name = "\improper Centcom Armory"
 	req_access = list(access_cent_specops)
+
+//Solar
+/area/ss13/solar
+	requires_power = 1
+	always_unpowered = 1
+	has_gravity = FALSE
+	base_turf = /turf/space
+
+/area/ss13/solar/north
+	name = "\improper North Solar Array"
+	icon_state = "panelsA"
+
+/area/ss13/solar/south
+	name = "\improper South Solar Array"
+	icon_state = "panelsP"
+
+/area/ss13/solar/west
+	name = "\improper West Solar Array"
+	icon_state = "panelsS"
+
 //Mining
+/area/mining/solar
+	name = "\improper Mining Solar Array"
+	icon_state = "panelsA"
+	requires_power = 1
+	always_unpowered = 1
+	has_gravity = FALSE
+	base_turf = /turf/space
+
 /area/mining
 	name = "Mining Outpost Equipment"
 	icon_state = "mining"
