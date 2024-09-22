@@ -15,7 +15,7 @@
 	min_player_age = 8
 	default_access = list(access_mercenary)
 
-	faction = "soviet"
+	faction = "syndicate"
 
 	default_outfit = /decl/hierarchy/outfit/nuke_ops
 
