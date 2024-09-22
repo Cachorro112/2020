@@ -50,7 +50,6 @@
 //#include "game\special_roles\station\rev.dm"
 //#include "game\special_roles\station\traitor.dm"
 #include "modules\admin\secrets\endgame.dm"
-#include "modules\anomaly\mo_contained\the_paper_of_the_hill.dm"
 #include "modules\atmospherics\pipe.dm"
 #include "modules\atmospherics\unary\vent_pump.dm"
 #include "modules\atmospherics\unary\vent_scrubber.dm"
