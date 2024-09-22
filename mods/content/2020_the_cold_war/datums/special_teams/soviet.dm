@@ -7,7 +7,9 @@
 		and before taking extreme actions, please try to also contact the administration!"
 	welcome_text = "You shouldn't see this"
 	leader_welcome_text = "You shouldn't see this"
-	landmark_id = "Aegis"
+	landmark_id = "Response Team Sov"
+
+	faction = "soviet"
 
 	flags = ANTAG_OVERRIDE_JOB | ANTAG_OVERRIDE_MOB | ANTAG_SET_APPEARANCE | ANTAG_HAS_LEADER | ANTAG_CHOOSE_NAME | ANTAG_RANDOM_EXCEPTED
 	antaghud_indicator = "hudloyalist"
@@ -40,11 +42,11 @@
 /// Spetsnaz! Antagonist Soviets
 
 /decl/special_role/spestnaz
-	name = "G.R.U Spetsnaz Delta-V Operative"
+	name = "GRU Fleet Division Operative"
 	antag_indicator = "hudsyndicate"
-	name_plural = "G.R.U Spetsnaz Delta-V Operative"
-	landmark_id = "Spestnaz-Spawn"
-	leader_welcome_text = "You are the leader of the G.R.U Spetsnaz Delta-V Team. Use :t to speak to your underlings."
+	name_plural = "GRU Fleet Division Operatives"
+	landmark_id = "SOF-Spawn"
+	leader_welcome_text = "You are the leader of the SOF Fleet Division Team. Use :t to speak to your underlings."
 	welcome_text = "To speak on the strike team's private channel use :t."
 	flags = ANTAG_CLEAR_EQUIPMENT | ANTAG_OVERRIDE_JOB | ANTAG_OVERRIDE_MOB | ANTAG_SET_APPEARANCE | ANTAG_HAS_LEADER | ANTAG_CHOOSE_NAME | ANTAG_RANDOM_EXCEPTED
 	antaghud_indicator = "hudoperative"
@@ -56,19 +58,19 @@
 	min_player_age = 14
 	default_access = list(access_mercenary)
 
-	faction = "syndicate"
+	faction = "soviet"
 
 	default_outfit = /decl/hierarchy/outfit/syndi_assault
 
 /decl/special_role/spestnaz/Initialize()
-	leader_welcome_text = "As leader of the G.R.U Spetsnaz Delta-V Team, you answer only to the Soviet Union. You have authorization to Kill the Crew and damage the station, but try to be stealth."
-	welcome_text = "As member of the G.R.U Spetsnaz Delta-V Team, you answer only to your leader and the Soviet Union officials."
+	leader_welcome_text = "As leader of the GRU Fleet Division Team, you answer only to the Soviet Union. You have authorization to Kill the Crew and damage the station, but try to be stealth."
+	welcome_text = "As member of the GRU Fleet Division Team, you answer only to your leader and the Soviet Union officials."
 
 /decl/special_role/spestnaz/greet(var/datum/mind/player)
 	if(!..())
 		return
-	to_chat(player.current, "The G.R.U Spetsnaz Delta-V is a Elite GRU Division that works for the Soviet Union. the Delta-V Division works on Space and is used for Sabotage or intelligence.")
-	sound_to(usr, sound('mods/content/2020_the_cold_war/sounds/themes/syndie_assault.ogg'))
+	to_chat(player.current, "The GRU Fleet Division is a Elite SOF Spetsnaz Division that works for the Soviet Fleet on Space. the GRUFD is used on special operation missions and intelligency missions as well.")
+	sound_to(usr, sound('mods/content/2020_the_cold_war/sounds/themes/sov_theme.ogg'))
 
 /decl/special_role/spestnaz/create_global_objectives()
 	if(!..())
@@ -76,9 +78,3 @@
 	global_objectives = list()
 	global_objectives |= new /datum/objective/nuclear
 	return 1
-
-/decl/special_role/spestnaz/equip_role(var/mob/living/human/player)
-	. = ..()
-	if(.)
-		var/obj/item/radio/uplink/U = new(get_turf(player), player.mind, DEFAULT_TELECRYSTAL_AMOUNT)
-		player.put_in_hands(U)

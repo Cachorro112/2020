@@ -129,3 +129,10 @@
 	icon_state = "hair_inari"
 	accessory_flags = HAIR_TIEABLE | HAIR_LOSS_VULNERABLE
 	uid = "acc_hair_inari"
+
+/decl/sprite_accessory/hair/inari //Kek
+	name = "Dutch"
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/human/human_face.dmi'
+	icon_state = "hair_dutch"
+	accessory_flags = HAIR_LOSS_VULNERABLE
+	uid = "acc_hair_dutch"
