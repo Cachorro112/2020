@@ -19,10 +19,6 @@
 
 	default_outfit = /decl/hierarchy/outfit/nuke_ops
 
-/decl/special_role/nuke_ops/Initialize()
-	leader_welcome_text = "As leader of the Syndicate Nuclear Operative team, you answer only to the Syndicate. you are a agressive force to the crew and may kill the crew on sight in order to achieve your mission goals."
-	welcome_text = "As member of the Syndicate Nuclear Operative team, you answer only to your leader and the Syndicate officials."
-
 /decl/special_role/nuke_ops/greet(var/datum/mind/player)
 	if(!..())
 		return
@@ -64,10 +60,6 @@
 	faction = "syndicate"
 
 	default_outfit = /decl/hierarchy/outfit/syndi_assault
-
-/decl/special_role/syndi_assault/Initialize()
-	leader_welcome_text = "As leader of the Syndicate Assault Unit, you answer only to the Syndicate. you are a agressive force to the crew and may kill the crew on sight in order to achieve your mission goals."
-	welcome_text = "As member of the Syndicate Assault Unit, you answer only to your leader and the Syndicate officials."
 
 /decl/special_role/syndi_assault/greet(var/datum/mind/player)
 	if(!..())

@@ -246,7 +246,8 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 	if(planet_depth <= 0)
 		planet_depth = 1
 
-	game_year = (text2num(time2text(world.realtime, "YYYY")) + game_year)
+//	game_year = (text2num(time2text(world.realtime, "YYYY")) + game_year)
+	game_year = (text2num(time2text("2020")) + game_year)
 
 	setup_admin_faxes()
 
@@ -258,8 +259,6 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 /datum/map/proc/setup_admin_faxes()
 	LAZYSET(map_admin_faxes, uppertext(replacetext("[boss_name].COM",          " ", "_")), list("name" = "[boss_name]",           "color" = "#006100", "access" = list(access_heads)))
 	LAZYSET(map_admin_faxes, uppertext(replacetext("[boss_short]_SUPPLY.COM",  " ", "_")), list("name" = "[boss_short] Supply",   "color" = "#5f4519", "access" = list(access_heads)))
-	LAZYSET(map_admin_faxes, uppertext(replacetext("[system_name]_POLICE.GOV", " ", "_")), list("name" = "[system_name] Police",  "color" = "#1f66a0", "access" = list(access_heads)))
-
 /datum/map/proc/setup_job_lists()
 
 	// Populate blacklists for any default-blacklisted species.

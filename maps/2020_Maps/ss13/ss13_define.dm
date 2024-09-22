@@ -12,7 +12,7 @@
 	company_short = "NT"
 	system_name   = "Sol"
 
-	game_year = 2
+	game_year = 0
 
 	default_law_type = /datum/ai_laws/nanotrasen
 
@@ -40,9 +40,9 @@
 	"TERRAN_FLEET.COM" = list("name" = "Terran International Fleet", "color" = "#75CCD1", "access" = list(list(access_heads)))
 	)
 
-	lobby_screens = list(
-		'maps/2020_Maps/donut/title.dmi'
-	)
+//	lobby_screens = list(
+//		'maps/2020_Maps/donut/title.dmi'
+//	)
 
 	evac_controller_type = /datum/evacuation_controller/shuttle
 
