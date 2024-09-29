@@ -3,13 +3,9 @@
 	#include "../../../mods/content/mundane.dm"
 	#include "../../../mods/content/matchmaking/_matchmaking.dme"
 	#include "../../../mods/content/scaling_descriptors.dm"
-
 	#include "../../../mods/mobs/borers/_borers.dme"
-
 	#include "../../../mods/content/psionics/_psionics.dme"
-
 	#include "../../../mods/species/ascent/_ascent.dme"
-
 	#include "../../../mods/content/2020_the_cold_war/_2020_the_cold_war.dme"
 	#include "../../../mods/content/baychems/_baychems.dme"
 	#include "../../../mods/content/fov_module/_fov_module.dme"
@@ -22,7 +18,6 @@
 	#include "ss13_security_state.dm"
 	#include "ss13_setup.dm"
 	#include "ss13_shuttles.dm"
-//	#include "asteroid_old.dmm" << Un-comment if you want the old (i don't really recomend, is a bit shitty.)
 	#include "asteroid_new.dmm" // New asteroid! its just the mining-corporated.dmm from Baystation12 that i port to neb.
 	#include "cent_com.dmm"
 	#include "ss13.dmm"
@@ -50,6 +45,6 @@
 
 	#define USING_MAP_DATUM /datum/map/ss13
 
-#elif !defined(MAP_OVERRIDE)
+#elif
 	#warn A map has already been included, ignoring SS13
 #endif
