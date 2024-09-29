@@ -131,12 +131,6 @@
 		pref.be_random_name = !pref.be_random_name
 		return TOPIC_REFRESH
 
-//	else if(href_list["gender"])
-//		var/decl/pronouns/new_gender = locate(href_list["gender"])
-//		if(istype(new_gender) && CanUseTopic(user) && (new_gender in S.available_pronouns))
-//			pref.gender = new_gender.name
-//		return TOPIC_REFRESH_UPDATE_PREVIEW
-
 	else if(href_list["bodytype"])
 		var/decl/bodytype/new_body = locate(href_list["bodytype"])
 		if(istype(new_body) && CanUseTopic(user) && (new_body in S.available_bodytypes))

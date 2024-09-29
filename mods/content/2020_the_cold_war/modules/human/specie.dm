@@ -1,6 +1,10 @@
 /decl/species/human
 
-//	available_pronouns = list() /// <_< chud change // wait
+	// Removed /decl/bodytype/prosthetic/basic_human from this list due lore.
+	available_bodytypes = list(
+		/decl/bodytype/human,
+		/decl/bodytype/human/masculine
+	)
 
 	available_cultural_info = list(
 		TAG_HOMEWORLD = list(
