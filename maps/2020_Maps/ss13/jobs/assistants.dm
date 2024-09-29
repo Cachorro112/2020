@@ -1,6 +1,6 @@
 /datum/job/staff_assistant
 	title = "Staff Assistant"
-	selection_color = "#2f2f7f"
+	selection_color = "#601c1c"
 	total_positions = 2
 	spawn_positions = 2
 	supervisors = "the command and security personnel."
