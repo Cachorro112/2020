@@ -35,7 +35,7 @@
 
 /obj/effect/shuttle_landmark/escape_shuttle/station
 	landmark_tag = "nav_escape_shuttle_station"
-	docking_controller = "evac"
+	docking_controller = "escape_dock"
 
 /datum/shuttle/autodock/ferry/supply/cargo
 	name = "Supply Shuttle"
@@ -48,7 +48,6 @@
 
 /obj/effect/shuttle_landmark/supply/start
 	landmark_tag = "nav_cargo_start"
-	docking_controller = "cargo_bay_centcom"
 
 /obj/effect/shuttle_landmark/supply/station
 	landmark_tag = "nav_cargo_station"

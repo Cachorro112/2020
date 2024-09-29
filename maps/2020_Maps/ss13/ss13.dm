@@ -16,7 +16,6 @@
 
 	#include "asteroid.dm"
 	#include "ss13_areas.dm"
-	#include "ss13_define.dm"
 	#include "ss13_departments.dm"
 	#include "ss13_jobs.dm"
 	#include "ss13_overmap.dm"
