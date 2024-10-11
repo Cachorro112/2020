@@ -1,4 +1,4 @@
-/datum/appearance_descriptor/age/takivak
+/datum/appearance_descriptor/age/farey
 	standalone_value_descriptors = list(
 		"an infant" =       1,
 		"a toddler" =       3,
@@ -11,17 +11,17 @@
 		"elderly" =       140
 	)
 
-/decl/species/takivak
-	name = SPECIES_TAKIVAK
-	name_plural = SPECIES_TAKIVAK
+/decl/species/farey
+	name = SPECIES_FAREY
+	name_plural = SPECIES_FAREYS
 	base_external_prosthetics_model = null
 
-	description = "an omnivorous mammalian creature from the planet cassini IV. recently discovered by mankind after the voyage of the SRV Takivak. \
-	They have a biology almost identical to humans, but their genetics are similar to those of terrestrial lupines."
+	description = "an omnivorous mammalian creature from the planet cassini IV. recently discovered by mankind. \
+	They have a biology almost identical to humans, but their genetics are similar to those of terrestrial lupines and foxes."
 	hidden_from_codex = FALSE
 	available_bodytypes = list(
-		/decl/bodytype/canine,
-		/decl/bodytype/canine/masculine
+		/decl/bodytype/farey,
+		/decl/bodytype/farey/masculine
 	)
 
 	exertion_effect_chance = 10
@@ -43,9 +43,10 @@
 
 	preview_outfit = /decl/hierarchy/outfit/job/generic/engineer
 
-	organs_icon = 'mods/content/2020_the_cold_war/icons/mobs/species/takivak/organs.dmi'
+	organs_icon = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/organs.dmi'
 
-	hunger_factor = DEFAULT_HUNGER_FACTOR * 1.2
+	strength = STR_LOW
+	hunger_factor = 0.01
 	thirst_factor = DEFAULT_THIRST_FACTOR * 1.2
 	gluttonous = GLUT_TINY
 
@@ -60,12 +61,13 @@
 
 	available_cultural_info = list(
 		TAG_HOMEWORLD = list(
-			/decl/cultural_info/location/takivak/west_kingdoms,
-			/decl/cultural_info/location/takivak/space
+			/decl/cultural_info/location/farey/obyaes,
+			/decl/cultural_info/location/farey/space
 		),
 		TAG_FACTION = list(/decl/cultural_info/faction/remote/nanotrasen), // If they are on space, they work for nanotrasen.
 		TAG_CULTURE = list(
-			/decl/cultural_info/culture/takivak,
+			/decl/cultural_info/culture/farey,
+			/decl/cultural_info/culture/farey/kalyec
 		)
 	)
 
@@ -80,5 +82,5 @@
 		/decl/emote/audible/woof
 	)
 
-/decl/species/takivak/handle_additional_hair_loss(var/mob/living/human/H, var/defer_body_update = TRUE)
+/decl/species/farey/handle_additional_hair_loss(var/mob/living/human/H, var/defer_body_update = TRUE)
 	. = H?.set_skin_colour(rgb(189, 171, 143))

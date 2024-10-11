@@ -25,7 +25,7 @@
 		/datum/job/sci_assistant
 	)
 
-	species_to_job_blacklist = list(/decl/species/takivak = list(
+	species_to_job_blacklist = list(/decl/species/farey = list(
 			/datum/job/captain,
 			/datum/job/hop,
 			/datum/job/hor,
@@ -36,7 +36,7 @@
 			/datum/job/chaplain, // Takivaks may follow human religions, but they can't work as chap due being aliens.
 		))
 
-	species_to_job_whitelist = list(/decl/species/takivak = list(
+	species_to_job_whitelist = list(/decl/species/farey = list(
 		/datum/job/officer,
 		/datum/job/engineer,
 		/datum/job/atmos_tech,

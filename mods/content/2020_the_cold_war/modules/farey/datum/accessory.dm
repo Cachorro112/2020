@@ -1,23 +1,23 @@
 //Hairstyles
 
-/decl/sprite_accessory/hair/tak
+/decl/sprite_accessory/hair/far
 	name = "Bands"
 	icon_state = "belle_bands"
-	species_allowed = list(SPECIES_TAKIVAK)
-	icon = 'mods/content/2020_the_cold_war/icons/mobs/species/takivak/hair.dmi'
+	species_allowed = list(SPECIES_FAREY)
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/hair.dmi'
 	color_blend = ICON_MULTIPLY
-	uid = "acc_hair_tak_bands"
+	uid = "acc_hair_far_bands"
 
 
-/decl/sprite_accessory/hair/tak/get_hidden_substitute()
+/decl/sprite_accessory/hair/far/get_hidden_substitute()
 	if(accessory_flags & VERY_SHORT)
 		return src
 	return GET_DECL(/decl/sprite_accessory/hair/bald)
 
-/decl/sprite_accessory/hair/tak/apollo
+/decl/sprite_accessory/hair/far/apollo
 	name = "Apollo"
 	icon_state = "apollo"
-	uid = "acc_hair_tak_apollo"
+	uid = "acc_hair_far_apollo"
 
 /*
 /decl/sprite_accessory/hair/tak/straight
