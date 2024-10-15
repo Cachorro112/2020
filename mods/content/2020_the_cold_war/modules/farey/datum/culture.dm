@@ -2,7 +2,18 @@
 	name = "Other"
 	description = "Fareys have many cultures across their planet, one more unique than the other, but only the Westerns are acceptive to humans, so you are from a Minor Western Farey Culture."
 	default_language = /decl/language/kalyecis
-	secondary_langs = (/decl/language/human/english)
+	secondary_langs = list(
+	/decl/language/abidys,
+	/decl/language/human/english,
+	/decl/language/human/russian,
+	/decl/language/human/ukrainian,
+	/decl/language/human/spanish,
+	/decl/language/human/chinese,
+	/decl/language/human/japanese,
+	/decl/language/human/german,
+	/decl/language/human/french,
+	/decl/language/human/terran
+	)
 
 /decl/cultural_info/culture/farey/kalyec
 	name = "Kalyec"

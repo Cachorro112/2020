@@ -21,13 +21,11 @@
 		new_name += " [..(gender,1)]"
 	return new_name
 
-//#803b56 is color
-
 /decl/language/kalyecis/format_message(message, verb)
-	return "[verb], <span class='message'><span style='color: #803b56'>\"[capitalize(message)]\"</span></span>"
+	return "[verb], <span class='message'><span style='color: #86bf6d'>\"[capitalize(message)]\"</span></span>"
 
 /decl/language/kalyecis/format_message_radio(message, verb)
-	return "[verb], <span style='color: #803b56'>\"[capitalize(message)]\"</span>"
+	return "[verb], <span style='color: #86bf6d'>\"[capitalize(message)]\"</span>"
 
 /decl/language/abidys
 	name = "Abidys"
@@ -52,10 +50,10 @@
 		new_name += " [..(gender,1)]"
 	return new_name
 
-//#803b56 is color  <- Going to change soon.
-
 /decl/language/abidys/format_message(message, verb)
-	return "[verb], <span class='message'><span style='color: #803b56'>\"[capitalize(message)]\"</span></span>"
+	return "[verb], <span class='message'><span style='color: #d0cc52'>\"[capitalize(message)]\"</span></span>"
 
 /decl/language/abidys/format_message_radio(message, verb)
-	return "[verb], <span style='color: #803b56'>\"[capitalize(message)]\"</span>"
+	return "[verb], <span style='color: #d0cc52'>\"[capitalize(message)]\"</span>"
+
+// TODO SLAVIC FAREY LANGUAGE

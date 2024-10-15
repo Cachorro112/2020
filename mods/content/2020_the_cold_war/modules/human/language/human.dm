@@ -33,7 +33,7 @@
 
 /decl/language/human/russian
 	name = "Russian"
-	desc = "The official language of the Union of Socialist Soviet Republics, originally established in 14th century in the Kievan Rus'."
+	desc = "The official language of the Union of Soviet Republics, originally established in 14th century in the Kievan Rus'."
 	colour = "red"
 	key = "r"
 	shorthand = "Rus"
@@ -51,7 +51,7 @@
 
 /decl/language/human/ukrainian
 	name = "Ukrainian"
-	desc = "a East Slavic language of the Indo-European language family spoken primarily in Ukraine SSR. It is the native language of a majority of Ukrainians."
+	desc = "a East Slavic language of the Indo-European language family spoken primarily in Ukraine SR. It is the native language of a majority of Ukrainians."
 	colour = "yellow"
 	key = "r"
 	shorthand = "Ukrn"
@@ -134,7 +134,7 @@
 	desc = "the principal language of the Japonic language family spoken by the Japanese people."
 	colour = "white"
 	key = "2"
-	shorthand = "Mdrn"
+	shorthand = "Jap"
 	space_chance = 30
 	partial_understanding = list(
 		/decl/language/human/chinese = 5,
