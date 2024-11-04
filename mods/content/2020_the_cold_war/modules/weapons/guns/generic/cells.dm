@@ -3,7 +3,7 @@
 	desc = "A military grade high-density battery, used in small arms."
 	origin_tech = @'{"combat":2,"materials":2,"powerstorage": 2}'
 	icon_state = "gunbattery"
-	maxcharge = 150
+	maxcharge = 100
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/cell/gun/rifle
@@ -11,7 +11,7 @@
 	desc = "A military grade high-density battery, used in laser rifles."
 	origin_tech = @'{"combat":2,"materials":2,"powerstorage": 2}'
 	icon_state = "gunbattery"
-	maxcharge = 400
+	maxcharge = 150
 	w_class = ITEM_SIZE_SMALL
 
 /obj/item/cell/gun/at_cell

@@ -14,7 +14,7 @@
 /obj/item/gun/energy/gun
 	name = "Sig Lawer-A energy gun"
 	desc = "Another bestseller of SiG, the Lawer is a versatile energy based sidearm, capable of switching between low, medium and high power projectile settings. In other words: stun, shock or kill. this version is not reloadable."
-	max_shots = 7
+	max_shots = 6
 
 /obj/item/gun/energy/gun/reloadable
 	name = "SiG Lawer energy gun"
