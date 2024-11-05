@@ -29,7 +29,8 @@
 
 /obj/effect/shuttle_landmark/escape_shuttle/start
 	landmark_tag = "nav_escape_shuttle_start"
-	docking_controller = "centcom_escape_dock"
+	base_turf = /turf/floor/plating
+	base_area = /area/centcom
 
 /obj/effect/shuttle_landmark/escape_shuttle/transit
 	landmark_tag = "nav_escape_shuttle_transit"
@@ -49,10 +50,13 @@
 
 /obj/effect/shuttle_landmark/supply/start
 	landmark_tag = "nav_cargo_start"
-	docking_controller = "cargo_bay_centcom"
+	base_turf = /turf/floor/plating
+	base_area = /area/centcom
 
 /obj/effect/shuttle_landmark/supply/station
 	landmark_tag = "nav_cargo_station"
+	base_turf = /turf/floor/plating
+	base_area = /area/donut/quartermaster
 
 /datum/shuttle/autodock/multi/centcom
 	name = "CentCom"
@@ -77,21 +81,22 @@
 
 //Mining Shuttle
 
-/datum/shuttle/autodock/multi/mining
+/datum/shuttle/autodock/ferry/mining
 	name = "Mining"
 	warmup_time = 10
-	destination_tags = list(
-		"nav_mining_station",
-		"nav_mining_asteroid"
-		)
+	waypoint_offsite = "nav_mining_asteroid"
+	waypoint_station = "nav_mining_station"
 	shuttle_area = /area/shuttle/mining
-	dock_target = "nav_mining_asteroid"
 	current_location = "nav_mining_station"
 
 /obj/effect/shuttle_landmark/mine/asteroid
+	name = "Mining Outpost Hangar"
 	landmark_tag = "nav_mining_asteroid"
+	base_turf = /turf/floor/plating
+	base_area = /area/mining/hangar
 
 /obj/effect/shuttle_landmark/mine/station
+	name = "Space Station 13 North Dock"
 	landmark_tag = "nav_mining_station"
 
 /obj/machinery/computer/shuttle_control/multi/mining

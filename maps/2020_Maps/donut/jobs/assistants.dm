@@ -1,14 +1,14 @@
 /datum/job/staff_assistant
 	title = "Staff Assistant"
-	selection_color = "#2f2f7f"
+	selection_color = "#601c1c"
 	total_positions = 5
 	spawn_positions = 5
-	supervisors = "absolutely everyone and the command department."
+	supervisors = "the command and security department."
 	economic_power = 1
 	access = list()
 	minimal_access = list()
 	outfit_type = /decl/hierarchy/outfit/job/staff_assistant
-	department_types = list(/decl/department/command)
+	department_types = list(/decl/department/security)
 
 /datum/job/tech_assistant
 	title = "Technical Assistant"

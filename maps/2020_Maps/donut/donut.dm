@@ -2,11 +2,9 @@
 
 	#include "../../../mods/content/mundane.dm"
 	#include "../../../mods/content/matchmaking/_matchmaking.dme"
-	#include "../../../mods/content/modern_earth/_modern_earth.dme"
+	#include "../../../mods/mobs/borers/_borers.dme"
 	#include "../../../mods/content/psionics/_psionics.dme"
 	#include "../../../mods/content/scaling_descriptors.dm"
-
-	#include "../../../mods/mobs/borers/_borers.dme"
 
 	#include "../../../mods/species/ascent/_ascent.dme"
 

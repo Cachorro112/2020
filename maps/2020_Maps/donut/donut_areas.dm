@@ -268,26 +268,72 @@
 	req_access = list(access_cent_general)
 
 //Mining
-/area/donut/mine_base
-	name = "\improper Mining Quarters"
-	icon_state = "mining_living"
-	area_flags = AREA_FLAG_RAD_SHIELDED
-	sound_env = TUNNEL_ENCLOSED
-	req_access = list(access_cargo)
+/area/mining/solar
+	name = "\improper Mining Solar Array"
+	icon_state = "panelsA"
+	requires_power = 1
+	always_unpowered = 1
+	has_gravity = FALSE
+	base_turf = /turf/space
 
-/area/donut/mine_base/main
-	name = "\improper Mining Main"
+/area/mining
+	name = "Mining Outpost Equipment"
 	icon_state = "mining"
+	area_flags = AREA_FLAG_IS_NOT_PERSISTENT
+	sound_env = STANDARD_STATION
+	base_turf = /turf/floor/natural/barren
+	req_access = list(list(access_mining, access_xenoarch))
 
-/area/donut/mine_base/processing
-	name = "\improper Mining Processing"
-	icon_state = "mining_production"
+/area/mining/hangar
+	name = "Mining Outpost Hangar"
+	sound_env = LARGE_ENCLOSED
+	icon_state = "mining_living"
+
+/area/mining/recreation
+	name = "Mining Outpost Recreation Section"
+	icon_state = "crew_quarters"
+
+/area/mining/kitchen
+	name = "Mining Outpost Kitchen"
+	icon_state = "kitchen"
+
+/area/mining/toilet
+	name = "Mining Outpost Restroom"
+	sound_env = SMALL_ENCLOSED
+	icon_state = "toilet"
+
+/area/mining/power
+	name = "Mining Outpost Solar Control"
+	icon_state = "engine_smes"
+
+/area/mining/atmos
+	name = "Mining Outpost Atmospheric"
+	icon_state = "atmos"
+
+/area/mining/eva
+	name = "Mining Outpost EVA"
+	icon_state = "mining_eva"
+
+/area/mining/central
+	name = "Mining Outpost Central"
+	icon_state = "mining_living"
+
+/area/mining/maints
+	name = "Mining Outpost Maintenance"
+	icon_state = "asmaint"
+
+/area/mining/medical
+	name = "Mining Outpost Medical Comparement"
+	icon_state = "medbay"
+
+/area/mining/relay // Will be not used, yet.
+	name = "Mining Outpost Communication Relay"
 
 /area/mine_asteroid
 	name = "Asteroid"
-	icon_state = "asteroid"
+	icon_state = "cave"
 	ambience = list('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
 	sound_env = ASTEROID
 	base_turf = /turf/floor/natural/barren
-	area_flags = AREA_FLAG_IS_BACKGROUND | AREA_FLAG_HIDE_FROM_HOLOMAP
+	area_flags = AREA_FLAG_IS_BACKGROUND | AREA_FLAG_HIDE_FROM_HOLOMAP | AREA_FLAG_EXTERNAL
 	is_outside = OUTSIDE_YES
