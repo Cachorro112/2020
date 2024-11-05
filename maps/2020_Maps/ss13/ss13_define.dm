@@ -12,7 +12,7 @@
 	company_short = "NT"
 	system_name   = "Sol"
 
-	game_year = 0
+	game_year = 2020
 
 	default_law_type = /datum/ai_laws/nanotrasen
 

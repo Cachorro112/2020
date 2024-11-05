@@ -12,7 +12,7 @@
 	company_short = "NT"
 	system_name   = "Sol"
 
-	game_year = 2
+	game_year = 2020
 
 	overmap_ids = list(OVERMAP_ID_SPACE)
 
