@@ -1,5 +1,5 @@
 /obj/item/gun/projectile/automatic/assault_rifle/rifles_2020/m16a4
-	name = "M16A2"
+	name = "M16A4"
 	desc = "Iconic American Assault Rifle, uses 5.56 Ammo, this is a modified version of the Original M16, with a railed upper receiver and handguard."
 	icon = 'mods/content/2020_the_cold_war/icons/guns/m16a4.dmi'
 	magazine_type = /obj/item/ammo_magazine/rifle/stanag

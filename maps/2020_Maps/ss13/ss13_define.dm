@@ -10,7 +10,7 @@
 	boss_short    = "Centcomm"
 	company_name  = "NanoTrasen"
 	company_short = "NT"
-	system_name   = "Sol"
+	system_name   = "Cassini"
 
 	game_year = 2020
 

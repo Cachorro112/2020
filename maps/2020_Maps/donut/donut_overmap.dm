@@ -14,7 +14,7 @@
 
 /obj/effect/overmap/visitable/sector/asteroid
 	name = "Asteroid"
-	desc = "a Big Asteroid orbiting Cassini IV. Nanotrasen owned buildings detected on its surface."
+	desc = "a Asteroid orbiting Cassini. Nanotrasen owned buildings detected on its surface."
 	icon_state = "sector"
 	start_x = 10
 	start_y = 11
