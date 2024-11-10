@@ -16,7 +16,7 @@
 	name_plural = SPECIES_FAREYS
 	base_external_prosthetics_model = null
 
-	description = "an omnivorous mammalian creature from the planet cassini IV. recently discovered by mankind. \
+	description = "an omnivorous mammalian creature from the planet cassini IV/Korevak. recently discovered by mankind. \
 	They have a biology almost identical to humans, but their genetics are similar to those of terrestrial lupines and foxes."
 	hidden_from_codex = FALSE
 	available_bodytypes = list(

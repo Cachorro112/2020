@@ -19,7 +19,7 @@ var/global/list/wall_fullblend_objects = list(
 /turf/wall
 	name = "wall"
 	desc = "A huge chunk of metal used to seperate rooms."
-	icon = 'icons/turf/walls/_previews.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/turf/walls/_previews.dmi'
 	icon_state = "solid"
 	opacity = TRUE
 	density = TRUE
