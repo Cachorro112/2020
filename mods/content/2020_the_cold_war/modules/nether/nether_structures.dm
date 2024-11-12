@@ -9,8 +9,12 @@
 	pixel_x = -16
 	pixel_y = -16
 	spawnable = list(
-		/mob/living/simple_animal/hostile/nether = 20,
-		/mob/living/simple_animal/hostile/nether/worm = 30
+		/mob/living/simple_animal/hostile/nether = 25,
+		/mob/living/simple_animal/hostile/nether/alt = 25,
+		/mob/living/simple_animal/hostile/nether/worm = 30,
+		/mob/living/simple_animal/hostile/nether/armored = 10,
+		/mob/living/simple_animal/hostile/nether/miner = 20,
+		/mob/living/simple_animal/hostile/nether/abomination = 5
 	)
 	var/mob_spawn_sounds = list(
 		'sound/magic/mutate.ogg',

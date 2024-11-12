@@ -1,8 +1,8 @@
 /obj/item/clothing/suit/armor/geruhav
 	name = "GERUHAV Vest"
 	desc = "A heavily armored vest used by european elite forces."
-	icon_state = ICON_STATE_WORLD
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/europe/st/armor.dmi'
+	icon_state = ICON_STATE_WORLD
 	w_class = ITEM_SIZE_HUGE
 	gas_transfer_coefficient = 0.01
 	permeability_coefficient = 0.02

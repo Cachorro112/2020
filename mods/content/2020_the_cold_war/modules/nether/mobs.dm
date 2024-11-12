@@ -1,12 +1,12 @@
 /mob/living/simple_animal/hostile/nether
 	name = "horror"
-	desc = "A horror beyond human comprehension."
+	desc = "Something that resambles a human but heavily deformed and with tendrils and arms... that's horrible."
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/horror.dmi'
 	speak_emote = list("roars")
 	see_in_dark = 10
-	response_harm = "pokes"
-	max_health = 95
-	natural_weapon = /obj/item/natural_weapon/claws/strong
+	response_harm = "slices"
+	max_health = 120
+	natural_weapon = /obj/item/natural_weapon/claws
 	heat_damage_per_tick = null
 	cold_damage_per_tick = null
 	faction = "nether"
@@ -22,81 +22,49 @@
 /mob/living/simple_animal/hostile/nether/get_door_pry_time()
 	return 5 SECONDS
 
-/mob/living/simple_animal/hostile/nether/bullet_act(var/obj/item/projectile/Proj)
-	if(!Proj || Proj.nodamage)
-		return
 
-	if(Proj.is_silver == FALSE)
-		var/damage = Proj.damage
-		if(Proj.atom_damage_type == STUN)
-			damage = Proj.damage
-		if(Proj.atom_damage_type == BRUTE)
-			damage = Proj.damage
-		if(Proj.atom_damage_type == BURN)
-			damage = Proj.damage
-		if(Proj.agony)
-			damage += Proj.agony / 1
-			if(current_health < Proj.agony * 2)
-				SET_STATUS_MAX(src, STAT_PARA, Proj.agony / 10)
-				visible_message("<span class='warning'>[src] is stunned momentarily!</span>")
-
-		bullet_impact_visuals(Proj)
-		take_damage(damage)
-		Proj.on_hit(src)
-		return 0
-	else
-		var/damage = Proj.damage
-		if(Proj.atom_damage_type == STUN)
-			damage = Proj.damage / 7
-		if(Proj.atom_damage_type == BRUTE)
-			damage = Proj.damage / 5
-		if(Proj.atom_damage_type == BURN)
-			damage = Proj.damage / 8
-		if(Proj.agony)
-			damage += Proj.agony / 6
-			if(current_health < Proj.agony * 3)
-				SET_STATUS_MAX(src, STAT_PARA, Proj.agony / 20)
-				visible_message("<span class='warning'>[src] is stunned momentarily!</span>")
-
-		bullet_impact_visuals(Proj)
-		take_damage(damage)
-		Proj.on_hit(src)
-		return 0
-
-
-/*
-/mob/living/simple_animal/hostile/nether/hit_with_weapon(obj/item/O, mob/living/user, var/effective_force, var/hit_zone)
-
-	if(O.material == !/decl/material/solid/metal/silver)
-		visible_message(SPAN_DANGER("\The [src] has been attacked with \the [O] by \the [user]! but does no damage!"))
-		return
-
-	else
-		var/damage = O.force
-		if (O.atom_damage_type == PAIN)
-			damage = 0
-		if (O.atom_damage_type == STUN)
-			damage = (O.force / 8)
-		if(supernatural && istype(O,/obj/item/nullrod))
-			damage *= 2
-			purge = 3
-		take_damage(damage)
-		if(O.edge || O.sharp)
-			adjustBleedTicks(damage)
-		visible_message(SPAN_DANGER("\The [src] has been attacked with \the [O] by \the [user]!"))
-
-		return 1
-*/
 /mob/living/simple_animal/hostile/nether/worm
 	name = "blood worm"
-	desc = "A horror beyond human comprehension. resamble a worm covered in blood and meat."
+	desc = "Something that resamble a worm with sharp teeths."
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/worm.dmi'
 	speak_emote = list("chitter")
 	response_harm = "bites"
-	max_health = 45
+	max_health = 60
 	natural_weapon = /obj/item/natural_weapon/bite/weak
-	heat_damage_per_tick = null
-	cold_damage_per_tick = null
-	faction = "nether"
-	base_movement_delay = 3
+	base_movement_delay = 1
 
+/mob/living/simple_animal/hostile/nether/worm/get_door_pry_time()
+	return 10 SECONDS
+
+
+/mob/living/simple_animal/hostile/nether/alt
+	name = "walking body"
+	desc = "Something that resambles a human but with it's chest open and tendrils... that's horrible."
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/horror_alt.dmi'
+
+/mob/living/simple_animal/hostile/nether/armored
+	name = "armored horror"
+	desc = "Something that resambles a human but heavily deformed using some sort of protective equipment... that's horrible."
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/horror_sec.dmi'
+	max_health = 160
+	natural_weapon = /obj/item/natural_weapon/claws/strong
+	base_movement_delay = 4
+
+/mob/living/simple_animal/hostile/nether/miner
+	name = "miner horror"
+	desc = "Something that resambles a human but heavily deformed wearing a miner uniform... that's horrible."
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/miner.dmi'
+	max_health = 130
+	natural_weapon = /obj/item/natural_weapon/claws/strong
+	base_movement_delay = 4
+
+/mob/living/simple_animal/hostile/nether/abomination
+	name = "Abomination"
+	desc = "What the heck is that?"
+	icon = 'mods/content/2020_the_cold_war/icons/mobs/abomination.dmi'
+	max_health = 190
+	natural_weapon = /obj/item/natural_weapon/giant
+	base_movement_delay = 2
+
+/mob/living/simple_animal/hostile/nether/abomination/get_door_pry_time()
+	return 3 SECONDS
