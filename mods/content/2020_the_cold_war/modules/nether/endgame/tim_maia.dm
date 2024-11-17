@@ -1,16 +1,16 @@
-// Essa bagulho eu fiz no puro autismo e N√O … CANON.
-// È isso que o DEV faz.
+// Essa bagulho eu fiz no puro autismo e N√ÉO √â CANON.
+// √© isso que o DEV faz.
 ////AUTISMO PORRAAAAA
 
 /obj/screen/fullscreen/tim_maia
 	icon = 'mods/content/2020_the_cold_war/icons/effects/tim_maia.dmi'
 	icon_state = "tim"
 
-//Same as Nether invasion but more like QUE PORRA … ESSA
+//Same as Nether invasion but more like QUE PORRA √â ESSA
 
 /datum/universal_state/tim_maia
  	name = "Tim Maia"
- 	desc = "A SEMANA INTEIRA FIQUEI ESPERANDO PRA TE VER SORRINDO PRA TE VER CANTANDO, QUANDO A GENTE AMA N√O PENSA EM DINHEIRO SO SE QUER AMAR"
+ 	desc = "A SEMANA INTEIRA FIQUEI ESPERANDO PRA TE VER SORRINDO PRA TE VER CANTANDO, QUANDO A GENTE AMA N√ÉO PENSA EM DINHEIRO SO SE QUER AMAR"
  	var/obj/screen/fullscreen/tim_maia/jumpscare
  	var/decl/security_level/original_level
 
@@ -58,13 +58,12 @@
 	security_state.set_security_level(security_state.severe_security_level, TRUE)
 
 /datum/universal_state/tim_maia/proc/announce_tim_invasion()
-	var/end_message = "ATTENTION, THIS IS A MESSAGE FROM THE MORTENSEN ORGANIZATION AUTHORIZED BY THE TERRAN ORGANIZATION FOR ALL HUMANITY. A MASSIVE BREAK BETWEEN THE NETHER AND OUR REALITY ON A UNIVERSAL SCALE HAS BEEN DETECTED, A DEMON CALLED TIM MAIA HAS BEEN RELEASED AND IS INVADING OUR REALITY. EXPECTED CASUALTIES: MASSIVE. HUMAN EXTINCTION SCENARIO EXTREMELY PROBABLE."
-	end_message += "\n\nAUTOMATED ALERT: COMMUNICATION WITH ALL HUMANITY LOST."
-	priority_announcement.Announce(end_message, "MASSIVE EMP DETECTED. RIP BETWEEN NETHER AND REALITY DETECTED")
+	var/end_message = "ATTENTION, THIS IS A MESSAGE FROM THE MORTENSEN ORGANIZATION AUTHORIZED BY THE TERRAN ORGANIZATION FOR ALL COMMUNICATION RELAYS: A MASSIVE BREAK BETWEEN THE NETHER AND OUR REALITY ON A UNIVERSAL SCALE HAS BEEN DETECTED, A DEMON CALLED TIM MAIA HAS BEEN RELEASED AND IS INVADING OUR REALITY. EXPECTED CASUALTIES: MASSIVE. HUMAN EXTINCTION SCENARIO EXTREMELY PROBABLE."
+	end_message += "\n\nAUTOMATED ALERT: COMMUNICATION WITH CENTRAL COMMAND LOST."
 	sound_to(world, sound('mods/content/2020_the_cold_war/sounds/misc/nether_alarm.ogg'))
 
 /datum/universal_state/tim_maia/proc/announce_destruction()
-	priority_announcement.Announce("Central Alert Computer: Unknown entity with a massive amout of Energy is detected on the Station... DON'T TRY TO RUN, IS FUTILE... JOIN ME, VAMOS NAVEGAR PELOS SETE MARES.")
+	priority_announcement.Announce("Central Alert Computer: Unknown entity with a massive amount of Energy is detected on the Station... DON'T TRY TO RUN, IT'S FUTILE...")
 	sound_to(world, sound('mods/content/2020_the_cold_war/sounds/misc/suspense.ogg'))
 
 /datum/universal_state/tim_maia/proc/finalize_nether_invasion()

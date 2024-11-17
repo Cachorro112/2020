@@ -10,7 +10,7 @@
 /datum/universal_state/nether_invasion/proc/Netherfy()
 	for(var/turf/T)
 		if(T.is_floor() && T.simulated  && prob(1))
-			new /obj/effect/gateway/nether(T)
+			new /obj/effect/gateway/active/nether(T)
 
 /datum/universal_state/nether_invasion/OnEnter()
 	set background = 1
@@ -20,7 +20,7 @@
 	Firealarm()
 	APCSet()
 
-	to_world("<span class='sinister' style='font-size:22pt'>YOUR SKIN IS ROUGH, YOUR MIND IS HURTING. YOU FEEL YOUR BLOOD BOILING. AGONY. BE PREPARED, THEY ARRIVE.</span>")
+	to_world("<span class='sinister' style='font-size:22pt'>YOUR SKIN HURTS, YOUR BRAIN IS HURTING. YOU FEEL YOUR BLOOD BOILING. AGONY. BE PREPARED, THEY ARRIVE.</span>")
 	sound_to(world, sound('mods/content/2020_the_cold_war/sounds/ambience/nether_arrival.ogg'))
 
 	for(var/mob/M in global.player_list)
@@ -33,17 +33,18 @@
 	SSskybox.change_skybox("narsie", new_use_stars = FALSE, new_use_overmap_details = FALSE)
 
 	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/universal_state/nether_invasion, announce_nether_invasion)), rand(30, 60) SECONDS)
-	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/universal_state/nether_invasion, finalize_nether_invasion)), 5 MINUTES)
+	addtimer(CALLBACK(src, TYPE_PROC_REF(/datum/universal_state/nether_invasion, finalize_nether_invasion)), 3 MINUTES)
 
 /datum/universal_state/nether_invasion/proc/announce_nether_invasion()
-	var/end_message = "ATTENTION, THIS IS A MESSAGE FROM THE MORTENSEN ORGANIZATION AUTHORIZED BY THE TERRAN ORGANIZATION FOR ALL HUMANITY. A MASSIVE BREAK BETWEEN THE NETHER AND OUR REALITY ON A UNIVERSAL SCALE HAS BEEN DETECTED. EXPECTED CASUALTIES: MASSIVE. HUMAN EXTINCTION SCENARIO EXTREMELY PROBABLE."
-	end_message += "\n\nAUTOMATED ALERT: COMMUNICATION WITH ALL HUMANITY LOST."
+	var/end_message = "ATTENTION, THIS IS A MESSAGE FROM THE MORTENSEN ORGANIZATION AUTHORIZED BY THE TERRAN ORGANIZATION FOR ALL COMMUNICATION RELAYS: A MASSIVE BREAK BETWEEN THE NETHER AND OUR REALITY ON A UNIVERSAL SCALE HAS BEEN DETECTED. EXPECTED CASUALTIES: MASSIVE. HUMAN EXTINCTION SCENARIO EXTREMELY PROBABLE."
+	end_message += "\n\nAUTOMATED ALERT: COMMUNICATION WITH CENTRAL COMMAND LOST."
 	priority_announcement.Announce(end_message, "shit")
 	sound_to(world, sound('mods/content/2020_the_cold_war/sounds/misc/nether_alarm.ogg'))
 	sound_to(world, sound('mods/content/2020_the_cold_war/sounds/misc/suspense.ogg'))
 
 /datum/universal_state/nether_invasion/proc/finalize_nether_invasion()
 	global.cinematic.station_explosion_cinematic(0,null) // TODO: Custom cinematic
+	to_world("<span class='sinister' style='font-size:22pt'>Humanity has fallen, further resistence is futily. Nether has Raise to it's endless rule over the universe. Praise the Three!</span>")
 	universe_has_ended = TRUE
 
 /datum/universal_state/nether_invasion/proc/Firealarm()

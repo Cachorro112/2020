@@ -29,6 +29,8 @@
 	connected_levels = list(
 		"asteroid_mining"     = SOUTH
 		)
+	daycycle_id = "space_solars"
+	daycycle_type = /datum/daycycle/solars
 
 /obj/abstract/level_data_spawner/donut
 	level_data_type = /datum/level_data/donut

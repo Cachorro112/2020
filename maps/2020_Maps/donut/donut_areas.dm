@@ -124,6 +124,10 @@
 	name = "\improper Toxin Research Lab"
 	icon_state = "toxlab"
 
+/area/donut/research/botanic
+	name = "\improper Botanic Research Lab"
+	icon_state = "xeno_f_lab"
+
 //Quartermaster.
 /area/donut/quartermaster
 	name = "\improper Quartermasters"

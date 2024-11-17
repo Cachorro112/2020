@@ -8,7 +8,7 @@
 	icon_state = "shuttle"
 
 /area/shuttle/centcom
-	name = "\improper CentCom"
+	name = "\improper Special Shuttle"
 	icon_state = "shuttle"
 
 /area/shuttle/mining
@@ -58,15 +58,12 @@
 	base_turf = /turf/floor/plating
 	base_area = /area/donut/quartermaster
 
-/datum/shuttle/autodock/multi/centcom
-	name = "CentCom"
+/datum/shuttle/autodock/ferry/centcom
+	name = "Special Shuttle"
 	warmup_time = 10
-	destination_tags = list(
-		"nav_centcom_start",
-		"nav_centcom_station"
-		)
+	waypoint_offsite = "nav_centcom_start"
+	waypoint_station = "nav_centcom_station"
 	shuttle_area = /area/shuttle/centcom
-	dock_target = "nav_centcom_station"
 	current_location = "nav_centcom_start"
 
 /obj/effect/shuttle_landmark/centcom/start
@@ -77,7 +74,7 @@
 
 /obj/machinery/computer/shuttle_control/multi/centcom
 	name = "centcom shuttle control console"
-	shuttle_tag = "CentCom"
+	shuttle_tag = "Special Shuttle"
 
 //Mining Shuttle
 
