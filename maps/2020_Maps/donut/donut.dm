@@ -12,7 +12,6 @@
 	#include "../../../mods/content/baychems/_baychems.dme"
 	#include "../../../mods/content/fov_module/_fov_module.dme"
 
-	#include "asteroid.dm"
 	#include "donut_areas.dm"
 	#include "donut_departments.dm"
 	#include "donut_jobs.dm"
@@ -22,9 +21,6 @@
 	#include "asteroid.dmm"
 	#include "cent_com.dmm"
 	#include "donut.dmm"
-
-	#include "geology/ores.dm"
-	#include "geology/stone.dm"
 
 	#include "jobs/assistants.dm"
 	#include "jobs/engineering.dm"

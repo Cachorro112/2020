@@ -5,6 +5,7 @@
 
 /decl/flooring/tiling/mono
 	icon_base = "monotile"
+	color = COLOR_GRAY40
 
 /decl/flooring/tiling/dark
 	icon_base = "dark"

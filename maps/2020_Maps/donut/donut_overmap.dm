@@ -26,9 +26,6 @@
 	name = "Donut Station"
 	level_id = "donut"
 	level_flags = (ZLEVEL_STATION|ZLEVEL_CONTACT|ZLEVEL_PLAYER)
-	connected_levels = list(
-		"asteroid_mining"     = SOUTH
-		)
 	daycycle_id = "space_solars"
 	daycycle_type = /datum/daycycle/solars
 
