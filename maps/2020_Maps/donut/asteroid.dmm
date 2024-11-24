@@ -317,7 +317,7 @@
 "gf" = (/turf/unsimulated/dark_filler,/area/space)
 "gg" = (/obj/effect/floor_decal/industrial/outline/yellow,/obj/structure/railing/mapped,/obj/machinery/conveyor{dir = 5},/turf/floor/tiled/monotile,/area/mining)
 "gh" = (/obj/abstract/level_data_spawner/default_asteroid,/turf/space,/area/space)
-"gi" = (/obj/effect/floor_decal/corner/brown{dir = 6},/obj/machinery/computer/shuttle_control/mining{dir = 8},/turf/floor/tiled,/area/mining/hangar)
+"gi" = (/obj/effect/floor_decal/corner/brown{dir = 6},/obj/machinery/computer/shuttle_control/multi/mining{dir = 8},/turf/floor/tiled,/area/mining/hangar)
 "gj" = (/obj/machinery/recharge_station,/obj/effect/floor_decal/industrial/outline/yellow,/obj/machinery/button/access/interior{id_tag = "mining_north"},/turf/floor/tiled/monotile,/area/mining/central)
 "gk" = (/obj/structure/hygiene/sink/kitchen{pixel_y = -32},/obj/machinery/vending/dinnerware{dir = 1},/turf/floor/tiled/old_tile,/area/mining/kitchen)
 "gl" = (/obj/machinery/reagent_temperature,/obj/structure/table/reinforced,/turf/floor/tiled/old_tile,/area/mining/kitchen)

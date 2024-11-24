@@ -15,6 +15,7 @@
 	game_year = 2020
 
 	overmap_ids = list(OVERMAP_ID_SPACE)
+	away_site_budget = 1
 
 	lobby_tracks = list(
 	/decl/music_track/title_3,

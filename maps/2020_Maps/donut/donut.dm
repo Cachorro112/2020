@@ -1,16 +1,30 @@
-#if !defined(USING_MAP_DATUM)
+#if !defined (USING_MAP_DATUM)
+
+	#ifdef UNIT_TEST
+		#include "../../code/unit_tests/offset_tests.dm"
+	#endif
 
 	#include "../../../mods/content/mundane.dm"
 	#include "../../../mods/content/matchmaking/_matchmaking.dme"
-	#include "../../../mods/mobs/borers/_borers.dme"
-	#include "../../../mods/content/psionics/_psionics.dme"
 	#include "../../../mods/content/scaling_descriptors.dm"
 
 	#include "../../../mods/species/ascent/_ascent.dme"
 
+	#include "../../../mods/verbs/antighost/_subtle_antighost.dme"
+
+	#include "../../../mods/content/pheromones/_pheromones.dme"
+
+	#include "../../../mods/mobs/borers/_borers.dme"
+
+	// Must come after borers for compatibility.
+	#include "../../../mods/content/psionics/_psionics.dme"
+
 	#include "../../../mods/content/2020_the_cold_war/_2020_the_cold_war.dme"
 	#include "../../../mods/content/baychems/_baychems.dme"
 	#include "../../../mods/content/fov_module/_fov_module.dme"
+
+	#include "debris_field/debris_field.dm"
+	#include "debris_field/debris_field.dmm"
 
 	#include "donut_areas.dm"
 	#include "donut_departments.dm"
@@ -43,5 +57,7 @@
 	#define USING_MAP_DATUM /datum/map/donut
 
 #elif !defined(MAP_OVERRIDE)
+
 	#warn A map has already been included, ignoring Donut
+
 #endif

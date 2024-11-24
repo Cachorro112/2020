@@ -78,11 +78,14 @@
 
 //Mining Shuttle
 
-/datum/shuttle/autodock/ferry/mining
+/datum/shuttle/autodock/multi/mining
 	name = "Mining"
 	warmup_time = 10
-	waypoint_offsite = "nav_mining_asteroid"
-	waypoint_station = "nav_mining_station"
+	destination_tags = list(
+		"nav_mining_station",
+		"nav_mining_asteroid",
+		"nav_mining_debris",
+		)
 	shuttle_area = /area/shuttle/mining
 	current_location = "nav_mining_station"
 
@@ -93,8 +96,10 @@
 	base_area = /area/mining/hangar
 
 /obj/effect/shuttle_landmark/mine/station
-	name = "Space Station 13 North Dock"
+	name = "Helios Hangar Mining Shuttle Hangar"
 	landmark_tag = "nav_mining_station"
+	base_turf = /turf/floor/plating
+	base_area = /area/donut/quartermaster
 
 /obj/machinery/computer/shuttle_control/multi/mining
 	name = "mining shuttle control console"
