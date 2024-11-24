@@ -20530,7 +20530,7 @@
 /obj/effect/floor_decal/corner/purple/border{
 	dir = 4
 	},
-/obj/structure/closet/crate/freezer/rations,
+/obj/structure/closet/crate/plastic/rations,
 /turf/floor/tiled,
 /area/tether/station/explorer_prep)
 "hCe" = (

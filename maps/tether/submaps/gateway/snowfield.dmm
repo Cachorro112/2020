@@ -1216,7 +1216,7 @@
 /area/awaymission/snowfield/base)
 "dA" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/structure/closet/crate/freezer/rations,
+/obj/structure/closet/crate/plastic/rations,
 /turf/floor/tiled/neutral,
 /area/awaymission/snowfield/base)
 "dB" = (
