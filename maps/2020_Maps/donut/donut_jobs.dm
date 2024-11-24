@@ -1,6 +1,6 @@
 /datum/map/donut
 	default_department_type = /decl/department/civilian
-	id_hud_icons = 'maps/2020_Maps/exodus_2020/hud.dmi'
+	id_hud_icons = 'maps/2020_Maps/donut/hud.dmi'
 	allowed_jobs = list(
 		/datum/job/captain,
 		/datum/job/hop,

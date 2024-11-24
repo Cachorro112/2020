@@ -1,6 +1,7 @@
 /datum/map/ss13
 	default_job_type = /datum/job/sci_assistant
 	default_department_type = /decl/department/civilian
+	id_hud_icons = 'maps/2020_Maps/ss13/hud.dmi'
 	allowed_jobs = list(
 		/datum/job/captain,
 		/datum/job/hop,
