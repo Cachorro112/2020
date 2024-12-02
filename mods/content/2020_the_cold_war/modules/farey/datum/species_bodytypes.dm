@@ -19,6 +19,8 @@
 
 	age_descriptor = /datum/appearance_descriptor/age/farey
 
+	override_limb_types = list(BP_TAIL = /obj/item/organ/external/tail/farey)
+
 	eye_darksight_range  = 7
 	eye_flash_mod        = 2
 	eye_blend            = ICON_MULTIPLY
@@ -56,3 +58,7 @@
 	icon_deformed         = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/deformed_body.dmi'
 	associated_gender     = MALE
 	onmob_state_modifiers = null
+
+/obj/item/organ/external/tail/farey
+	tail_icon = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/tail.dmi'
+	tail      = "farey_tail"
