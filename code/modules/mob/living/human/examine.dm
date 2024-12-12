@@ -268,13 +268,13 @@
 	return
 
 /mob/living/human/getHUDsource(hudtype)
-	var/obj/item/clothing/glasses/G = get_equipped_item(slot_glasses_str)
-	if(!istype(G))
+	var/obj/item/clothing/glasses/glasses = get_equipped_item(slot_glasses_str)
+	if(!istype(glasses))
 		return ..()
-	if(G.glasses_hud_type & hudtype)
-		return G
-	if(G.hud && (G.hud.glasses_hud_type & hudtype))
-		return G.hud
+	if(glasses.glasses_hud_type & hudtype)
+		return glasses
+	if(glasses.hud && (glasses.hud.glasses_hud_type & hudtype))
+		return glasses.hud
 
 /mob/living/silicon/robot/getHUDsource(hudtype)
 	for(var/obj/item/borg/sight/sight in list(module_state_1, module_state_2, module_state_3))

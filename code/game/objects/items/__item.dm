@@ -549,11 +549,6 @@
 
 	return ..()
 
-/obj/item/attack_ghost(mob/user)
-	var/mob/observer/ghost/G = user
-	if(G.client?.holder || G.antagHUD)
-		storage?.show_to(user)
-
 /obj/item/proc/talk_into(mob/living/M, message, message_mode, var/verb = "says", var/decl/language/speaking = null)
 	return
 
