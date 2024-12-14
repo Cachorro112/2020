@@ -118,13 +118,13 @@
 
 /decl/music_track/title_3
 	artist = "Jeroen Tel, edition by Cachorro11"
-	title = "Title 3"
+	title = "Tintin on the Moon"
 	song = 'mods/content/2020_the_cold_war/sounds/music/title3.ogg'
 	license = /decl/license/cc_by_nc_sa_3_0
 
 /decl/music_track/title_3_og
-	artist = "Jeroen Tel"
-	title = "Tintin on the Moon Theme Guitar Remix / Title 3"
+	artist = "Jeroen Tel (Covered by Cuboos)"
+	title = "Tintin on the Moon"
 	song = 'mods/content/2020_the_cold_war/sounds/music/title3_og.ogg'
 	license = /decl/license/cc_by_nc_sa_3_0
 
@@ -164,3 +164,53 @@
 	title = "Tintin on Europa"
 	song = 'mods/content/2020_the_cold_war/sounds/music/tintin_on_europa.ogg'
 	license = /decl/license/cc_by_nc_sa_3_0
+
+//////////// Facility Lobby ////////
+
+/decl/music_track/goc_theme
+	artist = "Astowo | Remix by ampersad"
+	title = "Global Occult Coalition Spawn Theme (Project SCP)"
+	song = 'mods/content/2020_the_cold_war/sounds/music/goc_spawn_theme2.ogg'
+	license = /decl/license/cc_by_nc_sa_3_0
+	url = "https://www.youtube.com/watch?v=dkwdgm6hk3E"
+
+/decl/music_track/bookburners
+	artist = "Astowo"
+	title = "The Bookburners"
+	song = 'mods/content/2020_the_cold_war/sounds/music/bookburners.ogg'
+	license = /decl/license/cc_by_nc_sa_3_0
+	url = "https://www.youtube.com/watch?v=OyZlUOK2E1A"
+
+/decl/music_track/dread
+	title = "Dread"
+	artist = "Astowo"
+	song = 'mods/content/2020_the_cold_war/sounds/music/dread.ogg'
+	license = /decl/license/cc_by_sa_3_0
+	url = "https://www.youtube.com/watch?v=1ytRHNcgxQI"
+
+/decl/music_track/ajoura
+	song = 'mods/content/2020_the_cold_war/sounds/music/ajoura.ogg'
+	title = "The SCP Foundation Main Theme"
+	artist = "Ajoura"
+	url = "https://www.youtube.com/watch?v=YJaeH8ffl_M"
+	license = /decl/license/cc_by_sa_3_0
+
+/decl/music_track/nocturne
+	song = 'mods/content/2020_the_cold_war/sounds/music/nocturne.ogg'
+	title = "Chopin: Nocturne No. 20 in C-Sharp Minor, Op. Posth."
+	artist = "Chopin"
+	url = "https://www.youtube.com/watch?v=RMDWeQHgUrA"
+	license = /decl/license/cc_by_sa_3_0
+
+/decl/music_track/asimovetowardstheend
+	song = 'mods/content/2020_the_cold_war/sounds/music/asimovetowardstheend.ogg'
+	title = "As I Move Towards The End"
+	artist = "CO.AG"
+	url = "https://www.youtube.com/watch?v=KxT4JKgPtJg"
+	license = /decl/license/cc_by_sa_3_0
+
+/decl/music_track/apple
+	song = 'mods/content/2020_the_cold_war/sounds/music/apple.ogg'
+	title = "Apple"
+	artist = "ZUN"
+	license = /decl/license/cc_by_sa_3_0

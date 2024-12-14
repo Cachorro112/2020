@@ -1,4 +1,4 @@
-//Não tem lugar melhor para colocar isso, quando eu juntar todos os arquivos eu boto isso em uma area especifica.
+//Nï¿½o tem lugar melhor para colocar isso, quando eu juntar todos os arquivos eu boto isso em uma area especifica.
 //Cachorro11
 
 
@@ -18,19 +18,12 @@
 	accessory_flags = HAIR_TIEABLE | HAIR_LOSS_VULNERABLE
 	uid = "acc_hair_nia"
 
-/decl/sprite_accessory/hair/nia2
-	name = "Nia 2"
+/decl/sprite_accessory/hair/shinobu
+	name = "Shinobu"
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/human/human_face.dmi'
 	icon_state = "hair_nia2"
 	accessory_flags = HAIR_TIEABLE | HAIR_LOSS_VULNERABLE
-	uid = "acc_hair_nia2"
-
-/decl/sprite_accessory/hair/nia3
-	name = "Nia 3"
-	icon = 'mods/content/2020_the_cold_war/icons/mobs/human/human_face.dmi'
-	icon_state = "hair_nia3"
-	accessory_flags = HAIR_TIEABLE | HAIR_LOSS_VULNERABLE
-	uid = "acc_hair_nia3"
+	uid = "acc_hair_shinobu"
 
 /decl/sprite_accessory/hair/nia3
 	name = "Nia 3"
@@ -130,9 +123,9 @@
 	accessory_flags = HAIR_TIEABLE | HAIR_LOSS_VULNERABLE
 	uid = "acc_hair_inari"
 
-/decl/sprite_accessory/hair/inari //Kek
-	name = "Dutch"
+/decl/sprite_accessory/hair/mymy //Kek
+	name = "Mymy"
 	icon = 'mods/content/2020_the_cold_war/icons/mobs/human/human_face.dmi'
 	icon_state = "hair_dutch"
 	accessory_flags = HAIR_LOSS_VULNERABLE
-	uid = "acc_hair_dutch"
+	uid = "acc_hair_mymy"
