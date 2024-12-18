@@ -1,7 +1,11 @@
 /obj/structure/closet/secure_closet/komandir
 	name = "Commanding Officer's locker"
 	req_access = list(access_captain)
-	closet_appearance = /decl/closet_appearance/secure_closet/command
+	icon_state = "capsecure"
+	icon_closed = "capsecure"
+	icon_locked = "capsecure1"
+	icon_opened = "capsecureopen"
+	icon_off = "capsecureoff"
 
 /obj/structure/closet/secure_closet/komandir/WillContain()
 	return list(
@@ -23,8 +27,12 @@
 
 /obj/structure/closet/secure_closet/deputy_commander
 	name = "Deputy Commander locker"
-	closet_appearance = /decl/closet_appearance/secure_closet/command/hop
 	req_access = list(access_hop)
+	icon_state = "hopsecure"
+	icon_closed = "hopsecure"
+	icon_locked = "hopsecure1"
+	icon_opened = "hopsecureopen"
+	icon_off = "hopsecureoff"
 
 /obj/structure/closet/secure_closet/deputy_commander/WillContain()
 	return list(
@@ -44,7 +52,11 @@
 /obj/structure/closet/secure_closet/security_soviet
 	name = "Sergeant-at-Arms's locker"
 	req_access = list(access_brig)
-	closet_appearance = /decl/closet_appearance/secure_closet/security
+	icon_state = "sec"
+	icon_closed = "sec"
+	icon_locked = "sec1"
+	icon_opened = "secopen"
+	icon_off = "secoff"
 
 /obj/structure/closet/secure_closet/security_soviet/WillContain()
 	return list(
@@ -65,7 +77,8 @@
 //////////////Clothing///////////
 /obj/structure/closet/wardrobe/soviet_fleet
 	name = "soviet fleet utility wardrobe"
-	closet_appearance = /decl/closet_appearance/wardrobe/black
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/wardrobe/soviet_fleet/WillContain()
 	return list(
@@ -78,7 +91,8 @@
 
 /obj/structure/closet/wardrobe/soviet_service
 	name = "soviet fleet service wardrobe"
-	closet_appearance = /decl/closet_appearance/wardrobe/black
+	icon_state = "grey"
+	icon_closed = "grey"
 
 /obj/structure/closet/wardrobe/soviet_service/WillContain()
 	return list(

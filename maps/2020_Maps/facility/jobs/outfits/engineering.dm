@@ -1,5 +1,5 @@
 /decl/hierarchy/outfit/job/engineering
-    l_ear = /obj/item/radio/headset/headset_eng
+	l_ear = /obj/item/radio/headset/headset_eng
 	abstract_type = /decl/hierarchy/outfit/job/engineering
 	outfit_flags = OUTFIT_HAS_BACKPACK|OUTFIT_EXTENDED_SURVIVAL | OUTFIT_HAS_VITALS_SENSOR
 
@@ -43,3 +43,13 @@
 	belt = /obj/item/belt/utility/full
 	gloves = /obj/item/clothing/gloves/insulated
 	id_type = /obj/item/card/id/engineering
+
+/obj/item/card/id/engineering
+	name = "identification card"
+	desc = "A card issued to engineering staff."
+	detail_color = COLOR_SUN
+
+/obj/item/card/id/engineering/head
+	name = "identification card"
+	desc = "A card which represents creativity and ingenuity."
+	extra_details = list("goldstripe")

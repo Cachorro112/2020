@@ -38,12 +38,13 @@ var/global/list/closets = list()
 	if((setup & CLOSET_HAS_LOCK))
 		verbs += /obj/structure/closet/proc/togglelock_verb
 
-	if(ispath(closet_appearance))
-		var/decl/closet_appearance/app = GET_DECL(closet_appearance)
-		if(app)
-			icon = app.icon
-			color = null
-			queue_icon_update()
+//WILL MAKE CLOSETS INVISIBLE WITHOUT 2020 MOD
+//	if(ispath(closet_appearance))
+//		var/decl/closet_appearance/app = GET_DECL(closet_appearance)
+//		if(app)
+//			icon = app.icon
+//			color = null
+//			queue_icon_update()
 
 	return INITIALIZE_HINT_LATELOAD
 

@@ -2,7 +2,11 @@
 /obj/structure/closet/secure_closet/fleet_commander
 	name = "commanding officer's locker"
 	req_access = list(access_captain)
-	closet_appearance = /decl/closet_appearance/secure_closet/command
+	icon_state = "capsecure"
+	icon_closed = "capsecure"
+	icon_locked = "capsecure1"
+	icon_opened = "capsecureopen"
+	icon_off = "capsecureoff"
 
 /obj/structure/closet/secure_closet/fleet_commander/WillContain()
 	return list(
@@ -31,7 +35,11 @@
 
 /obj/structure/closet/secure_closet/fleet_exo
 	name = "executive officer's locker"
-	closet_appearance = /decl/closet_appearance/secure_closet/command/hop
+	icon_state = "hopsecure"
+	icon_closed = "hopsecure"
+	icon_locked = "hopsecure1"
+	icon_opened = "hopsecureopen"
+	icon_off = "hopsecureoff"
 	req_access = list(access_hop)
 
 /obj/structure/closet/secure_closet/fleet_exo/WillContain()
@@ -58,7 +66,11 @@
 
 /obj/structure/closet/secure_closet/fleet_eoow
 	name = "EOOW's locker"
-	closet_appearance = /decl/closet_appearance/secure_closet/engineering/ce
+	icon_state = "securece"
+	icon_closed = "securece"
+	icon_locked = "securece1"
+	icon_opened = "secureceopen"
+	icon_off = "secureceoff"
 	req_access = list(access_ce)
 
 /obj/structure/closet/secure_closet/fleet_eoow/WillContain()
@@ -102,7 +114,11 @@
 /obj/structure/closet/secure_closet/fleet_ro
 	name = "research officer's locker"
 	req_access = list(access_rd)
-	closet_appearance = /decl/closet_appearance/secure_closet/rd
+	icon_state = "rdsecure"
+	icon_closed = "rdsecure"
+	icon_locked = "rdsecure1"
+	icon_opened = "rdsecureopen"
+	icon_off = "rdsecureoff"
 
 /obj/structure/closet/secure_closet/fleet_ro/WillContain()
 	return list(
@@ -133,7 +149,11 @@
 /obj/structure/closet/secure_closet/fleet_mat
 	name = "master-at-arm's locker"
 	req_access = list(access_brig)
-	closet_appearance = /decl/closet_appearance/secure_closet/security
+	icon_state = "sec"
+	icon_closed = "sec"
+	icon_locked = "sec1"
+	icon_opened = "secopen"
+	icon_off = "secoff"
 
 /obj/structure/closet/secure_closet/fleet_mat/WillContain()
 	return list(
@@ -164,7 +184,11 @@
 /obj/structure/closet/secure_closet/fleet_researcher
 	name = "researcher's locker"
 	req_access = list(list(access_tox,access_tox_storage))
-	closet_appearance = /decl/closet_appearance/secure_closet/expedition/science
+	icon_state = "secureres"
+	icon_closed = "secureres"
+	icon_locked = "secureres1"
+	icon_opened = "secureresopen"
+	icon_off = "secureresoff"
 
 /obj/structure/closet/secure_closet/fleet_researcher/WillContain()
 	return list(
@@ -184,7 +208,11 @@
 /obj/structure/closet/secure_closet/fleet_med_personnel
 	name = "medical doctor's locker"
 	req_access = list(access_medical_equip)
-	closet_appearance = /decl/closet_appearance/secure_closet/medical/alt
+	icon_state = "securemed"
+	icon_closed = "securemed"
+	icon_locked = "securemed1"
+	icon_opened = "securemedopen"
+	icon_off = "securemedoff"
 
 /obj/structure/closet/secure_closet/fleet_med_personnel/WillContain()
 	return list(
@@ -209,7 +237,11 @@
 /obj/structure/closet/secure_closet/fleet_quartermaster
 	name = "supply technician's locker"
 	req_access = list(access_qm)
-	closet_appearance = /decl/closet_appearance/secure_closet/cargo/qm
+	icon_state = "secureqm"
+	icon_closed = "secureqm"
+	icon_locked = "secureqm1"
+	icon_opened = "secureqmopen"
+	icon_off = "secureqmoff"
 
 /obj/structure/closet/secure_closet/fleet_quartermaster/WillContain()
 	return list(
@@ -232,7 +264,11 @@
 /obj/structure/closet/secure_closet/fleet_engineering_personal
 	name = "engineer's locker"
 	req_access = list(access_engine_equip)
-	closet_appearance = /decl/closet_appearance/secure_closet/engineering
+	icon_state = "secureeng"
+	icon_closed = "secureeng"
+	icon_locked = "secureeng1"
+	icon_opened = "secureengopen"
+	icon_off = "secureengoff"
 
 /obj/structure/closet/secure_closet/fleet_engineering_personal/WillContain()
 	return list(
@@ -268,7 +304,8 @@
 //Wardobres
 /obj/structure/closet/wardrobe/fleet
 	name = "fleet common wardrobe"
-	closet_appearance = /decl/closet_appearance/wardrobe/white
+	icon_state = "white"
+	icon_closed = "white"
 
 /obj/structure/closet/wardrobe/fleet/WillContain()
 	return list(
@@ -289,7 +326,8 @@
 
 /obj/structure/closet/wardrobe/fleet_officer
 	name = "fleet officer wardrobe"
-	closet_appearance = /decl/closet_appearance/wardrobe/black
+	icon_state = "black"
+	icon_closed = "black"
 
 /obj/structure/closet/wardrobe/fleet_officer/WillContain()
 	return list(

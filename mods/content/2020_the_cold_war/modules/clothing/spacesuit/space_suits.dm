@@ -61,9 +61,9 @@
 /obj/item/clothing/head/helmet/space/void/merc
 	name = "blood-red voidsuit helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of the Syndicate."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/syndi/syndi_helmet.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/syndicate/space_suit/syndi_helmet.dmi'
 
 /obj/item/clothing/suit/space/void/merc
 	name = "blood-red voidsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of the Syndicate."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/syndi/syndi.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/syndicate/space_suit/syndi.dmi'

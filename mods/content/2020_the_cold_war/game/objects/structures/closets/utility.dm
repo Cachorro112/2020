@@ -1,7 +1,9 @@
 /obj/structure/closet/emcloset_simple
 	name = "emergency closet"
 	desc = "It's a storage unit for emergency breathmasks and o2 tanks."
-	closet_appearance = /decl/closet_appearance/oxygen
+	icon_state = "emergency"
+	icon_closed = "emergency"
+	icon_opened = "emergencyopen"
 
 /obj/structure/closet/emcloset_simple/WillContain()
 	return list(

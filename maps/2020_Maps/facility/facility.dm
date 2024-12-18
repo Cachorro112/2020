@@ -32,10 +32,10 @@
 	#include "facility1.dmm"
 
 	#include "jobs/outfits/cargo.dm"
-//	#include "jobs/outfits/engineering.dm"
+	#include "jobs/outfits/engineering.dm"
 	#include "jobs/outfits/misc.dm"
 	#include "jobs/outfits/security.dm"
-
+	#include "jobs/engineering.dm"
 	#include "jobs/misc.dm"
 	#include "jobs/security.dm"
 
