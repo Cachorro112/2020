@@ -1,7 +1,3 @@
-//Uncommenting ALLOW_HOLIDAYS in configuration will enable this hook.
-/hook/startup/proc/updateHoliday()
-	update_holiday()
-	return TRUE
 
 /proc/update_holiday()
 

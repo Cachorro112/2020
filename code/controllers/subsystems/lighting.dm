@@ -40,17 +40,11 @@ SUBSYSTEM_DEF(lighting)
 	)
 	..(out.Join())
 
-#ifdef USE_INTELLIGENT_LIGHTING_UPDATES
-
-/hook/roundstart/proc/lighting_init_roundstart()
-	SSlighting.handle_roundstart()
-	return TRUE
-
 /datum/controller/subsystem/lighting/proc/handle_roundstart()
+#ifdef USE_INTELLIGENT_LIGHTING_UPDATES
 	force_queued = FALSE
 	total_ss_updates = 0
 	total_instant_updates = 0
-
 #endif
 
 /datum/controller/subsystem/lighting/Initialize(timeofday)

@@ -19,7 +19,7 @@ var/global/list/whitelist = list()
 
 var/global/list/alien_whitelist = list()
 
-/hook/startup/proc/loadAlienWhitelist()
+/proc/try_load_alien_whitelist()
 	if(get_config_value(/decl/config/toggle/use_alien_whitelist))
 		if(get_config_value(/decl/config/toggle/use_alien_whitelist_sql))
 			if(!load_alienwhitelistSQL())
