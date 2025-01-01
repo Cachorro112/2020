@@ -112,7 +112,7 @@
 	dir = 2;
 	id_tag = "casino_bridge";
 	name = "Casino Bridge Blast Doors";
-	
+
 	},
 /turf/floor/plating,
 /area/casino/casino_bridge)
@@ -138,7 +138,7 @@
 	dir = 4;
 	id_tag = "casino_bridge";
 	name = "Casino Bridge Blast Doors";
-	
+
 	},
 /turf/floor/plating,
 /area/casino/casino_bridge)
@@ -156,7 +156,7 @@
 /area/casino/casino_bridge)
 "aw" = (
 /obj/item/wirecutters,
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/space,
 /area/space)
 "ax" = (
@@ -1801,7 +1801,7 @@
 	dir = 4;
 	id_tag = "casino_checkpoint";
 	name = "Casino Checkpoint Blast Doors";
-	
+
 	},
 /turf/floor/tiled,
 /area/casino/casino_security)
@@ -1892,7 +1892,7 @@
 	dir = 4;
 	id_tag = "casino_checkpoint";
 	name = "Casino Checkpoint Blast Doors";
-	
+
 	},
 /turf/floor/tiled,
 /area/casino/casino_security)
@@ -2135,7 +2135,7 @@
 	dir = 4;
 	id_tag = "casino_checkpoint";
 	name = "Casino Checkpoint Blast Doors";
-	
+
 	},
 /turf/floor/plating,
 /area/casino/casino_security)

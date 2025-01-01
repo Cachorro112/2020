@@ -149,7 +149,7 @@
 		/obj/item/chems/food/old/hotdog,
 		/obj/item/chems/food/old/pizza,
 		/obj/item/ammo_casing,
-		/obj/item/stack/material/rods/ten,
+		/obj/item/stack/material/rods/mapped/steel/ten,
 		/obj/item/stack/material/sheet/mapped/steel/five,
 		/obj/item/stack/material/cardstock/mapped/cardboard/five,
 		/obj/item/poster,
