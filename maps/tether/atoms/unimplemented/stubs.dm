@@ -206,6 +206,8 @@
 /obj/item/food/lasagna
 /obj/item/chems/drinks/bottle/lemonjuice
 /obj/item/chems/drinks/metaglass
+	icon = 'icons/obj/drink_glasses/square.dmi'
+	icon_state = "square"
 
 // TELESCI
 /obj/machinery/computer/telescience
