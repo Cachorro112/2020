@@ -1,5 +1,7 @@
 // Wrapper obj for cooked food. Appearance is set in the cooking code, not on spawn.
 /obj/item/food/variable
+	abstract_type = /obj/item/food/variable
+	is_spawnable_type = FALSE // Even subtypes can't be spawned without something to copy.
 	name = "cooked food"
 	icon = 'icons/obj/food/custom/custom.dmi'
 	desc = "If you can see this description then something is wrong. Please report the bug on the tracker."
@@ -167,3 +169,4 @@
 	desc = "Poor little thing."
 	size = 5
 	w_class = ITEM_SIZE_TINY
+	icon_state = "blank"

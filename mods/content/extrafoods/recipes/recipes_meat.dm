@@ -18,7 +18,7 @@
 	container_categories = RECIPE_CATEGORY_OVEN
 	items = list(
 		/obj/item/food/rawbacon = 6,
-		/obj/item/food/spreads = 1
+		/obj/item/food/dairy/butter = 1
 	)
 	result = /obj/item/food/bacon/oven
 	result_quantity = 6
@@ -27,7 +27,7 @@
 	container_categories = RECIPE_CATEGORY_SKILLET
 	items = list(
 		/obj/item/food/rawbacon = 6,
-		/obj/item/food/spreads = 1
+		/obj/item/food/dairy/butter = 1
 	)
 	result = /obj/item/food/bacon/pan
 	result_quantity = 6
@@ -248,7 +248,7 @@
 	reagents = list(/decl/material/liquid/water = 10, /decl/material/solid/sodiumchloride = 1)
 	items = list(
 		/obj/item/food/crabmeat = 1,
-		/obj/item/food/spreads = 1
+		/obj/item/food/dairy/butter = 1
 		)
 	reagent_mix = REAGENT_REPLACE
 	result = /obj/item/food/crab_legs

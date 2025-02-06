@@ -32,6 +32,7 @@
 
 /decl/sprite_accessory/tail/none
 	name                        = "Default Tail"
+	icon                        = 'icons/mob/human_races/species/default_tail.dmi'
 	icon_state                  = "none"
 	uid                         = "acc_tail_none"
 	bodytypes_allowed           = null
@@ -56,11 +57,13 @@
 /*
 // Leaving these in for future reference.
 /decl/sprite_accessory/tail/debug
+	icon                     = 'icons/mob/human_races/species/default_tail.dmi'
 	name                     = "Debug Tail"
 	uid                      = "acc_tail_debug"
 	is_whitelisted           = "DEBUG"
 
 /decl/sprite_accessory/tail/debug_inner
+	icon                     = 'icons/mob/human_races/species/default_tail.dmi'
 	name                     = "Debug Two-Tone Tail"
 	uid                      = "acc_tail_debug2"
 	is_whitelisted           = "DEBUG"

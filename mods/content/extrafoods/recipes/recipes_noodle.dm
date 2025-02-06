@@ -17,13 +17,6 @@
 	reagent_mix = REAGENT_REPLACE //Simplify end product
 	result = /obj/item/food/lomein
 
-/decl/recipe/simmered/chickennoodlesoup
-	fruit = list("carrot" = 1)
-	reagents = list(/decl/material/liquid/water = 10)
-	items = list(/obj/item/food/spagetti = 1, /obj/item/food/butchery/cutlet/raw = 1)
-	reagent_mix = REAGENT_REPLACE //Simplify end product
-	result = /obj/item/food/chickennoodlesoup
-
 /decl/recipe/simmered/macncheese
 	reagents = list(/decl/material/liquid/drink/milk = 5)
 	reagent_mix = REAGENT_REPLACE // no milk

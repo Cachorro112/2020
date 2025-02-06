@@ -762,6 +762,7 @@
 	name = "grapes"
 	product_name = "grapes"
 	display_name = "grapevine"
+	grown_tag = "grape"
 	mutants = list("greengrapes")
 	chems = list(/decl/material/liquid/nutriment = list(1,10), /decl/material/liquid/nutriment/sugar = list(1,5), /decl/material/liquid/drink/juice/grape = list(10,10))
 	slice_product = /obj/item/food/processed_grown/crushed
@@ -798,6 +799,7 @@
 	name = "peanut"
 	product_name = "peanut"
 	display_name = "peanut vine"
+	grown_tag = "peanut"
 	chems = list(
 		/decl/material/liquid/nutriment = list(1,10),
 		/decl/material/liquid/nutriment/plant_oil = list(1,10)

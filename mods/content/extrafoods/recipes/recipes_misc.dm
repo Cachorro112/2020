@@ -39,7 +39,7 @@
 
 /decl/recipe/cheese_cracker
 	items = list(
-		/obj/item/food/spreads = 1,
+		/obj/item/food/dairy/butter = 1,
 		/obj/item/food/slice/bread = 1,
 		/obj/item/food/dairy/cheese/wedge = 1
 	)
@@ -107,7 +107,7 @@
 		/obj/item/food/butchery/cutlet = 1,
 		/obj/item/food/friedegg = 1,
 		/obj/item/food/slice/bread = 1,
-		/obj/item/food/spreads/butter = 1
+		/obj/item/food/dairy/butter = 1
 	)
 	reagents = list(/decl/material/solid/organic/meat/egg = 3, /decl/material/liquid/drink/juice/lemon = 5)
 	result = /obj/item/food/benedict

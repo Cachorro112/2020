@@ -240,7 +240,7 @@
 /obj/item/chems/drinks/bottle/small/eggnog
 	name = "Grandma's Own Eggnog"
 	desc = "A small bottle of eggnog, ideal for on the go."
-	icon_state = ""
+	DRINK_STATE("eggnog")
 	center_of_mass = @'{"x":16,"y":12}'
 /obj/item/chems/drinks/bottle/small/eggnog/Initialize()
 	. = ..()
@@ -249,7 +249,7 @@
 /obj/item/chems/drinks/bottle/small/rootbeer
 	name = "Root Beer"
 	desc = "A simple bottle of root beer."
-	DRINK_STATE("eggnog")
+	DRINK_STATE("beer") // TODO: replace with unique root beer sprite
 	center_of_mass = @'{"x":16,"y":12}'
 /obj/item/chems/drinks/bottle/small/rootbeer/Initialize()
 	. = ..()

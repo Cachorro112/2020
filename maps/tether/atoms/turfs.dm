@@ -64,6 +64,9 @@
 	_base_flooring = /decl/flooring/dirt
 
 // Voidcraft Shuttle Walls
+// TODO: Remove these and replace their uses with literally anything else.
+// /turf/wall/shuttle/voidcraft/green is only used for elevators, really
+// and the shuttle other should just be replaced with normal hull.
 /turf/wall/shuttle/voidcraft
 	name = "voidcraft wall"
 	icon = 'maps/tether/icons/shuttle_void.dmi'
@@ -84,6 +87,12 @@
 /turf/wall/shuttle/voidcraft/Initialize()
 	. = ..()
 	update_icon()
+
+/turf/wall/shuttle/voidcraft/get_turf_validation_single_states()
+	return list("void")
+
+/turf/wall/shuttle/voidcraft/get_turf_validation_corner_states()
+	return list()
 
 /turf/wall/shuttle/voidcraft/update_wall_icon()
 	icon_state = initial(icon_state)
@@ -136,15 +145,6 @@
 
 /decl/flooring/tiling/mono/steel
 	icon_base = "steel_monotile"
-
-/turf/unsimulated/floor/wood
-	icon = 'icons/turf/flooring/wood.dmi'
-	icon_state = "wood"
-	color = WOOD_COLOR_GENERIC
-
-/turf/floor/wood/broken/Initialize(ml, floortype)
-	. = ..()
-	break_tile()
 
 //Unsimulated
 /turf/unsimulated/wall/planetary/virgo3b

@@ -5,3 +5,4 @@
 	frontier facilities are also notorious for their poor conditions and long work terms, leaving them an unpopular option for all but \
 	fame-seekers or the truly desperate; once they ship you out to the Frontier, it is nearly impossible to return before your term completes."
 	economic_power = 1.4
+	uid = "faction_nanotrasen"

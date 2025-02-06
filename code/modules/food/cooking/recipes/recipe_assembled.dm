@@ -23,22 +23,6 @@
 	)
 	result = /obj/item/food/jellysandwich/cherry
 
-/decl/recipe/tossedsalad
-	container_categories = RECIPE_CATEGORY_MIX
-	fruit = list("cabbage" = 2, "tomato" = 1, "carrot" = 1, "apple" = 1)
-	result = /obj/item/food/tossedsalad
-
-/decl/recipe/aesirsalad
-	container_categories = RECIPE_CATEGORY_MIX
-	fruit = list("goldapple" = 1, "ambrosiadeus" = 1)
-	result = /obj/item/food/aesirsalad
-
-/decl/recipe/validsalad
-	container_categories = RECIPE_CATEGORY_MIX
-	fruit = list("potato" = 1, "ambrosiavulgaris" = 3)
-	items = list(/obj/item/food/meatball)
-	result = /obj/item/food/validsalad
-
 /decl/recipe/classichotdog
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
 	items = list(

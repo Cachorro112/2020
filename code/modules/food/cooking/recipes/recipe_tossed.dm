@@ -1,5 +1,6 @@
 /decl/recipe/tossed
 	abstract_type = /decl/recipe/tossed
+	container_categories = RECIPE_CATEGORY_MIX
 
 /decl/recipe/tossed/salad
 	fruit = list("cabbage" = 2, "tomato" = 1, "carrot" = 1, "apple" = 1)

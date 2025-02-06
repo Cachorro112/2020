@@ -1,3 +1,8 @@
+// TODO: Convert all of these to the new soup system!
+/decl/recipe/simmered
+	abstract_type = /decl/recipe/simmered
+	container_categories = RECIPE_CATEGORY_MICROWAVE | RECIPE_CATEGORY_SAUCEPAN | RECIPE_CATEGORY_POT
+
 /decl/recipe/simmered/onionsoup
 	fruit = list("onion" = 1)
 	reagents = list(/decl/material/liquid/water = 10)

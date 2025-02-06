@@ -136,6 +136,7 @@
 	)
 	gas_flags = 0
 	accelerant_value = 0
+	ignition_point = null
 	exoplanet_rarity_plant = MAT_RARITY_NOWHERE
 	exoplanet_rarity_gas = MAT_RARITY_NOWHERE
 

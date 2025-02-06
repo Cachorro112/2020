@@ -3,7 +3,6 @@
 // BEGIN_INCLUDE
 #include "chems.dm"
 #include "extrafoods.dm"
-#include "reactions.dm"
 #include "trash.dm"
 #include "food\baked_goods.dm"
 #include "food\condiments.dm"

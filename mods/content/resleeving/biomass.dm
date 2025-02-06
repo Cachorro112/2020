@@ -5,6 +5,7 @@
 	color = "#df9fbf"
 	accelerant_value = 0.1 // taken from /decl/material/solid/organic
 	ignition_point = T0C+300
+	boiling_point = null
 	melting_point = T0C+300
 	hardness = MAT_VALUE_SOFT
 	weight = MAT_VALUE_NORMAL

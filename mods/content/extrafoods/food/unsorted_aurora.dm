@@ -65,29 +65,6 @@
 	nutriment_desc = list("sweet, crunchy bread" = 1)
 	bitesize = 4
 
-/obj/item/food/spreads
-	name = "nutri-spread"
-	desc = "A stick of plant-based nutriments in a semi-solid form. I can't believe it's not margarine!"
-	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
-	icon_state = "marge"
-	bitesize = 2
-	nutriment_desc = list("margarine" = 5)
-	nutriment_amt = 20
-
-/obj/item/food/spreads/butter
-	name = "butter"
-	desc = "A stick of pure butterfat made from milk products."
-	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
-	icon_state = "butter"
-	bitesize = 2
-	nutriment_amt = 5
-	nutriment_desc = list("butter" = 5)
-
-/obj/item/food/spreads/butter/Initialize()
-	. = ..()
-	add_to_reagents(/decl/material/liquid/nutriment/triglyceride, 15)
-	add_to_reagents(/decl/material/solid/sodiumchloride, 1)
-
 /obj/item/food/cheese_cracker
 	name = "supreme cheese toast"
 	desc = "A piece of toast lathered with butter, cheese, spices, and herbs."

@@ -1,7 +1,7 @@
 /obj/machinery/vending/nifsofts
 	name = "\improper NIFsoft store"
 	desc = "An automated kiosk selling NIFsoft install disks. Products are only authorized for use with NIFs and not for individual resale or modification."
-	icon_state = "robotics" // todo: custom icon with a different screen
+	icon = 'icons/obj/machines/vending/robotics.dmi' // todo: custom icon with a different screen
 	base_type = /obj/machinery/vending/nifsofts
 	products = list(
 		/obj/item/disk/nifsoft/single/arhud       = 10,

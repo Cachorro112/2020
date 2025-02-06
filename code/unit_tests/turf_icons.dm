@@ -33,7 +33,7 @@
 		fail("Unable to locate an appropriate turf at [world.maxx],[world.maxy],1.")
 		return 1
 
-	var/list/validate_types = list()
+	var/list/validate_types = typesof(tested_types) - typesof(excepted_types)
 	for(var/test_type in tested_types)
 		validate_types |= typesof(test_type)
 	for(var/test_type in excepted_types)

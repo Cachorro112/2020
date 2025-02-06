@@ -36,6 +36,7 @@
 	name = "wooden floor"
 	icon = 'icons/turf/flooring/wood.dmi'
 	icon_state = "wood0"
+	color = WOOD_COLOR_GENERIC
 
 /turf/unsimulated/floor/wood/broken
 	icon_state = "wood_broken0"

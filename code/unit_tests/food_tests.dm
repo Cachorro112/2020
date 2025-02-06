@@ -137,6 +137,10 @@
 			cooking_temperature = max(cooking_temperature, recipe.minimum_temperature)
 		if(recipe.maximum_temperature < INFINITY)
 			cooking_temperature = min(cooking_temperature, recipe.maximum_temperature)
+		// TODO: Remove batter coating or refactor to use existing coating var in upstream code
+		if(recipe.coating && recipe.coating != -1)
+			for(var/obj/item/food/snack in container)
+				snack.batter_coating = recipe.coating
 		var/decl/recipe/new_recipe = select_recipe(container_category, container, cooking_temperature)
 		if(new_recipe && new_recipe != recipe)
 			failures += "Recipe [recipe.type]'s ingredients selected [new_recipe.type] instead!"

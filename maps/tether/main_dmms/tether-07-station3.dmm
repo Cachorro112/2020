@@ -331,10 +331,6 @@
 /obj/effect/floor_decal/corner/lightgrey{
 	dir = 6
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	dir = 4
-	},
 /obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 1
 	},
@@ -348,6 +344,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/structure/sign/poster{
+	pixel_x = -32;
+	dir = 8
 	},
 /turf/floor/tiled,
 /area/hallway/station/upper)
