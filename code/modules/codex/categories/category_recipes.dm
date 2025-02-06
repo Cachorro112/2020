@@ -97,7 +97,9 @@
 			ingredients += "<span codexlink='[coating.codex_name || coating.name] (substance)'>\a [coating.name]</span> coating"
 		mechanics_text += "<ul><li>[jointext(ingredients, "</li><li>")]</li></ul>"
 
-		var/list/cooking_methods = "\a [recipe.get_category_names()]"
+		var/list/cooking_methods = list()
+		for(var/cooking_method in recipe.get_category_names())
+			cooking_methods += "\a [cooking_method]"
 
 		var/atom/recipe_product = recipe.result
 		var/plural = recipe.result_quantity > 1
