@@ -43,6 +43,7 @@
 	desc = "An interface between crew and the robotic storage systems."
 	icon = 'icons/obj/robot_storage.dmi'
 	icon_state = "console"
+	base_type = /obj/machinery/computer/cryopod/robot
 
 	storage_desc = "cyborgs"
 	storage_name = "Robotic Storage Control"
