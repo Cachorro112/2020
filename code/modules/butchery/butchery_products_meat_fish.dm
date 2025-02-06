@@ -1,7 +1,7 @@
 /obj/item/food/butchery/meat/fish
 	name                           = "fillet"
 	desc                           = "A fillet of fish."
-	icon                           = 'icons/obj/items/butchery/fish.dmi'
+	icon                           = 'icons/obj/food/butchery/fish.dmi'
 	filling_color                  = "#ffdefe"
 	center_of_mass                 = @'{"x":17,"y":13}'
 	bitesize                       = 6
@@ -14,12 +14,12 @@
 	backyard_grilling_announcement = "steams gently."
 	slice_path                     = /obj/item/food/sashimi
 	slice_num                      = 3
-	meat_name                      = "fish"
-	ingredient_flags               = INGREDIENT_FLAG_FISH
+	butchery_data                  = /decl/butchery_data/animal/fish
+	allergen_flags                 = ALLERGEN_FISH
 
 /obj/item/food/butchery/meat/fish/get_meat_icons()
 	var/static/list/meat_icons = list(
-		'icons/obj/items/butchery/fish.dmi'
+		'icons/obj/food/butchery/fish.dmi'
 	)
 	return meat_icons
 
@@ -37,14 +37,14 @@
 	icon_state                     = "grilledfish"
 	nutriment_amt                  = 8
 	bitesize                       = 2
-	icon                           = 'icons/obj/items/butchery/fish_grilled.dmi'
+	icon                           = 'icons/obj/food/butchery/fish_grilled.dmi'
 	nutriment_desc                 = list("flaky grilled fish" = 5)
 	drying_wetness                 = 0
 	dried_type                     = null
 	backyard_grilling_product      = null
 	backyard_grilling_announcement = null
 	slice_path                     = null
-	slice_num                      = null
+	slice_num                      = 0 // null means autoset, 0 means none
 	material_alteration            = MAT_FLAG_ALTERATION_NONE
 	cooked_food                    = FOOD_COOKED
 
@@ -52,36 +52,36 @@
 	. = ..()
 	SetName("grilled [name]")
 
-/obj/item/food/butchery/meat/fish/get_meat_icons()
+/obj/item/food/butchery/meat/fish/grilled/get_meat_icons()
 	var/static/list/meat_icons = list(
-		'icons/obj/items/butchery/fish_grilled.dmi'
+		'icons/obj/food/butchery/fish_grilled.dmi'
 	)
 	return meat_icons
 
 /obj/item/food/butchery/meat/fish/poison
-	meat_name = "space carp"
+	butchery_data = /decl/butchery_data/animal/fish/space_carp
 
 /obj/item/food/butchery/meat/fish/poison/populate_reagents()
 	. = ..()
 	add_to_reagents(/decl/material/liquid/carpotoxin, 6)
 
 /obj/item/food/butchery/meat/fish/shark
-	meat_name = "shark"
+	butchery_data = /decl/butchery_data/animal/fish/shark
 
 /obj/item/food/butchery/meat/fish/carp
-	meat_name = "carp"
+	butchery_data = /decl/butchery_data/animal/fish/carp
 
 /obj/item/food/butchery/meat/fish/octopus
-	meat_name = "tako"
+	butchery_data = /decl/butchery_data/animal/fish/mollusc/octopus
 
 /obj/item/food/butchery/meat/fish/mollusc
 	name           = "meat"
 	desc           = "Some slimy meat from clams or molluscs."
-	meat_name      = "mollusc"
+	butchery_data  = /decl/butchery_data/animal/fish/mollusc
 	nutriment_type = /decl/material/liquid/nutriment/slime_meat
 
 /obj/item/food/butchery/meat/fish/mollusc/clam
-	meat_name = "clam"
+	butchery_data  = /decl/butchery_data/animal/fish/mollusc/clam
 
 /obj/item/food/butchery/meat/fish/mollusc/barnacle
-	meat_name = "barnacle"
+	butchery_data  = /decl/butchery_data/animal/fish/mollusc/barnacle

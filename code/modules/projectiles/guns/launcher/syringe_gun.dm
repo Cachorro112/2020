@@ -7,7 +7,7 @@
 	matter = list(/decl/material/solid/fiberglass = MATTER_AMOUNT_REINFORCEMENT)
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_LOWER_BODY | SLOT_EARS
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 	var/icon_flight = "syringe-cartridge-flight" //so it doesn't look so weird when shot
 	var/obj/item/chems/syringe/syringe
 
@@ -25,12 +25,16 @@
 		underlays += MA
 
 /obj/item/syringe_cartridge/attackby(obj/item/I, mob/user)
-	if(istype(I, /obj/item/chems/syringe) && user.try_unequip(I, src))
+	if(istype(I, /obj/item/chems/syringe))
+		if(!user.try_unequip(I, src))
+			return TRUE
 		syringe = I
 		to_chat(user, "<span class='notice'>You carefully insert [syringe] into [src].</span>")
-		sharp = 1
+		sharp = TRUE
 		name = "syringe dart"
 		update_icon()
+		return TRUE
+	return ..()
 
 /obj/item/syringe_cartridge/attack_self(mob/user)
 	if(syringe)
@@ -129,13 +133,14 @@
 		var/obj/item/syringe_cartridge/C = A
 		if(darts.len >= max_darts)
 			to_chat(user, "<span class='warning'>[src] is full!</span>")
-			return
+			return TRUE
 		if(!user.try_unequip(C, src))
-			return
+			return TRUE
 		darts += C //add to the end
 		user.visible_message("[user] inserts \a [C] into [src].", "<span class='notice'>You insert \a [C] into [src].</span>")
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/item/gun/launcher/syringe/rapid
 	name = "syringe gun revolver"

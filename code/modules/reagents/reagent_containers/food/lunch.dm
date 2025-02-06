@@ -7,8 +7,8 @@ var/global/list/lunchables_lunches_ = list(
 									/obj/item/food/slice/pizza/meat/filled,
 									/obj/item/food/slice/pizza/mushroom/filled,
 									/obj/item/food/slice/pizza/vegetable/filled,
-									/obj/item/food/tastybread,
-									/obj/item/food/liquidfood,
+									/obj/item/food/junk/tastybread,
+									/obj/item/food/junk/liquidfood,
 									/obj/item/food/jellysandwich/cherry,
 									/obj/item/food/tossedsalad
 								  )
@@ -17,10 +17,10 @@ var/global/list/lunchables_snacks_ = list(
 									/obj/item/food/donut/jelly,
 									/obj/item/food/muffin,
 									/obj/item/food/popcorn,
-									/obj/item/food/sosjerky,
-									/obj/item/food/no_raisin,
-									/obj/item/food/spacetwinkie,
-									/obj/item/food/cheesiehonkers,
+									/obj/item/food/junk/sosjerky,
+									/obj/item/food/junk/no_raisin,
+									/obj/item/food/junk/spacetwinkie,
+									/obj/item/food/junk/cheesiehonkers,
 									/obj/item/food/poppypretzel,
 									/obj/item/food/processed_grown/sticks/carrot,
 									/obj/item/food/candiedapple,
@@ -36,7 +36,6 @@ var/global/list/lunchables_snacks_ = list(
 									/obj/item/food/slice/lemoncake/filled,
 									/obj/item/food/slice/chocolatecake/filled,
 									/obj/item/food/slice/birthdaycake/filled,
-									/obj/item/food/watermelonslice,
 									/obj/item/food/slice/applecake/filled,
 									/obj/item/food/slice/pumpkinpie/filled
 								   )
@@ -70,10 +69,10 @@ var/global/list/lunchables_drink_reagents_ = list(
 
 // This default list is a bit different, it contains items we don't want
 var/global/list/lunchables_ethanol_reagents_ = list(
-												/decl/material/liquid/ethanol/coffee,
-												/decl/material/liquid/ethanol/hooch,
-												/decl/material/liquid/ethanol/thirteenloko,
-												/decl/material/liquid/ethanol/pwine
+												/decl/material/liquid/alcohol/coffee,
+												/decl/material/liquid/alcohol/hooch,
+												/decl/material/liquid/alcohol/thirteenloko,
+												/decl/material/liquid/alcohol/pwine
 											)
 
 /proc/lunchables_lunches()
@@ -98,7 +97,7 @@ var/global/list/lunchables_ethanol_reagents_ = list(
 
 /proc/lunchables_ethanol_reagents()
 	if(!(lunchables_ethanol_reagents_[lunchables_ethanol_reagents_[1]]))
-		lunchables_ethanol_reagents_ = init_lunchable_reagent_list(lunchables_ethanol_reagents_, /decl/material/liquid/ethanol)
+		lunchables_ethanol_reagents_ = init_lunchable_reagent_list(lunchables_ethanol_reagents_, /decl/material/liquid/alcohol)
 	return lunchables_ethanol_reagents_
 
 /proc/init_lunchable_list(var/list/lunches)
@@ -108,11 +107,11 @@ var/global/list/lunchables_ethanol_reagents_ = list(
 		.[initial(O.name)] = lunch
 	return sortTim(., /proc/cmp_text_asc)
 
-/proc/init_lunchable_reagent_list(var/list/banned_reagents, var/reagent_types)
+/proc/init_lunchable_reagent_list(var/list/banned_reagents, var/reagent_type)
 	. = list()
-	for(var/reagent_type in subtypesof(reagent_types))
-		if(reagent_type in banned_reagents)
+	for(var/reagent_subtype in decls_repository.get_decls_of_type(reagent_type))
+		if(reagent_subtype in banned_reagents)
 			continue
-		var/decl/material/reagent = reagent_type
-		.[initial(reagent.name)] = reagent_type
+		var/decl/material/reagent = reagent_subtype
+		.[initial(reagent.name)] = reagent_subtype
 	return sortTim(., /proc/cmp_text_asc)

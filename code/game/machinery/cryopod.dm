@@ -392,21 +392,16 @@
 		attempt_enter(dropping, user)
 		return TRUE
 
-/obj/machinery/cryopod/attackby(var/obj/item/G, var/mob/user)
-
-	if(istype(G, /obj/item/grab))
-		var/obj/item/grab/grab = G
+/obj/machinery/cryopod/grab_attack(obj/item/grab/grab, mob/user)
+	var/mob/living/victim = grab.get_affecting_mob()
+	if(istype(victim) && istype(user))
 		if(occupant)
 			to_chat(user, SPAN_NOTICE("\The [src] is in use."))
-			return
-
-		if(!ismob(grab.affecting))
-			return
-
-		if(!check_occupant_allowed(grab.affecting))
-			return
-
-		attempt_enter(grab.affecting, user)
+			return TRUE
+		if(!check_occupant_allowed(victim))
+			return TRUE
+		attempt_enter(victim, user)
+		return TRUE
 	return ..()
 
 /obj/machinery/cryopod/verb/eject()
@@ -528,22 +523,23 @@
 /obj/structure/broken_cryo/attackby(obj/item/W, mob/user)
 	if (busy)
 		to_chat(user, SPAN_NOTICE("Someone else is attempting to open this."))
-		return
-	if (closed)
-		if (IS_CROWBAR(W))
-			busy = 1
-			visible_message("[user] starts to pry the glass cover off of \the [src].")
-			if (!do_after(user, 50, src))
-				visible_message("[user] stops trying to pry the glass off of \the [src].")
-				busy = 0
-				return
-			closed = 0
-			busy = 0
-			icon_state = "broken_cryo_open"
-			var/obj/dead = new remains_type(loc)
-			dead.set_dir(dir) //skeleton is oriented as cryo
-	else
+		return TRUE
+	if (!closed)
 		to_chat(user, SPAN_NOTICE("The glass cover is already open."))
+		return TRUE
+	if (IS_CROWBAR(W))
+		busy = 1
+		visible_message("[user] starts to pry the glass cover off of \the [src].")
+		if (!do_after(user, 50, src))
+			visible_message("[user] stops trying to pry the glass off of \the [src].")
+			busy = 0
+			return TRUE
+		closed = 0
+		busy = 0
+		icon_state = "broken_cryo_open"
+		var/obj/dead = new remains_type(loc)
+		dead.set_dir(dir) //skeleton is oriented as cryo
+	return TRUE
 
 /obj/machinery/cryopod/proc/on_mob_spawn()
 	playsound(src, 'sound/machines/ding.ogg', 30, 1)

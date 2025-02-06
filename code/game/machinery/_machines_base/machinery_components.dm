@@ -43,6 +43,10 @@ var/global/list/machine_path_to_circuit_type
 	for(var/component_path in uncreated_component_parts)
 		var/number = uncreated_component_parts[component_path] || 1
 		LAZYREMOVE(uncreated_component_parts, component_path)
+		// Stacks are created differently to avoid qdel churn.
+		if(ispath(component_path, /obj/item/stack))
+			install_component(new component_path(src, number), refresh_parts = FALSE)
+			continue
 		for(var/i in 1 to number)
 			install_component(component_path, refresh_parts = FALSE)
 
@@ -251,8 +255,8 @@ var/global/list/machine_path_to_circuit_type
 /obj/machinery/proc/component_stat_change(var/obj/item/stock_parts/part, old_stat, flag)
 
 /obj/machinery/attackby(obj/item/I, mob/user)
-	if(component_attackby(I, user))
-		return TRUE
+	if((. = component_attackby(I, user)))
+		return
 	return ..()
 
 /obj/machinery/proc/component_attackby(obj/item/I, mob/user)
@@ -261,7 +265,7 @@ var/global/list/machine_path_to_circuit_type
 			continue
 		if((. = part.attackby(I, user)))
 			return
-	return construct_state && construct_state.attackby(I, user, src)
+	return construct_state?.attackby(I, user, src)
 
 /obj/machinery/proc/component_attack_hand(mob/user)
 	for(var/obj/item/stock_parts/part in component_parts)

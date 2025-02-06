@@ -414,7 +414,7 @@ var/global/list/mob/living/forced_ambiance_list = new
 	if(isspaceturf(get_turf(mob))) // Can't fall onto nothing.
 		return
 
-	if(mob.Check_Shoegrip())
+	if(!mob.can_slip(magboots_only = TRUE))
 		return
 
 	if(ishuman(mob))
@@ -434,6 +434,8 @@ var/global/list/mob/living/forced_ambiance_list = new
 
 /area/proc/throw_unbuckled_occupant(var/mob/M, var/maxrange, var/speed, var/direction)
 	if(isliving(M))
+		if(M.anchored) // So mechs don't get tossed around.
+			return
 		if(M.buckled)
 			to_chat(M, SPAN_WARNING("Sudden acceleration presses you into your chair!"))
 			shake_camera(M, 3, 1)

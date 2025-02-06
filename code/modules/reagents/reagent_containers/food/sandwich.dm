@@ -5,18 +5,21 @@
 		S.dropInto(loc)
 		S.attackby(W,user)
 		qdel(src)
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/food/csandwich
 	name = "sandwich"
 	desc = "The best thing since sliced bread."
-	icon_state = "breadslice"
+	icon = 'icons/obj/food/baked/bread/slices/plain.dmi'
 	plate = /obj/item/plate
 	bitesize = 2
 
 	var/list/ingredients = list()
 
 /obj/item/food/csandwich/attackby(obj/item/W, mob/user)
+	if(!istype(W, /obj/item/food) && !istype(W, /obj/item/shard))
+		return ..()
 
 	var/sandwich_limit = 4
 	for(var/obj/item/O in ingredients)
@@ -24,31 +27,31 @@
 			sandwich_limit += 4
 
 	if(src.contents.len > sandwich_limit)
-		to_chat(user, "<span class='wwarning'>If you put anything else on \the [src] it's going to collapse.</span>")
-		return
-	else if(istype(W,/obj/item/shard))
+		to_chat(user, "<span class='warning'>If you put anything else on \the [src] it's going to collapse.</span>")
+		return TRUE
+	if(istype(W,/obj/item/shard))
 		if(!user.try_unequip(W, src))
-			return
+			return TRUE
 		to_chat(user, "<span class='warning'>You hide [W] in \the [src].</span>")
-		update()
-		return
+		update_icon()
+		return TRUE
 	else if(istype(W,/obj/item/food))
 		if(!user.try_unequip(W, src))
-			return
+			return TRUE
 		to_chat(user, "<span class='warning'>You layer [W] over \the [src].</span>")
 		var/obj/item/chems/F = W
 		F.reagents.trans_to_obj(src, F.reagents.total_volume)
 		ingredients += W
-		update()
-		return
-	..()
+		update_icon()
+		return TRUE
+	return FALSE // This shouldn't ever happen but okay.
 
-/obj/item/food/csandwich/proc/update()
+/obj/item/food/csandwich/on_update_icon()
+	. = ..()
+
 	var/fullname = "" //We need to build this from the contents of the var.
 	var/i = 0
-
-	overlays.Cut()
-
+	var/image/I
 	for(var/obj/item/food/O in ingredients)
 
 		i++
@@ -59,16 +62,17 @@
 		else
 			fullname += ", [O.name]"
 
-		var/image/I = new(src.icon, "sandwich_filling")
+		I = image(icon, "[icon_state]_filling")
 		I.color = O.filling_color
 		I.pixel_x = pick(list(-1,0,1))
 		I.pixel_y = (i*2)+1
-		overlays += I
+		I.appearance_flags |= RESET_COLOR
+		add_overlay(I)
 
-	var/image/T = new(src.icon, "sandwich_top")
-	T.pixel_x = pick(list(-1,0,1))
-	T.pixel_y = (ingredients.len * 2)+1
-	overlays += T
+	I = image(icon, "[icon_state]_top")
+	I.pixel_x = pick(list(-1,0,1))
+	I.pixel_y = (ingredients.len * 2)+1
+	add_overlay(I)
 
 	SetName(lowertext("[fullname] sandwich"))
 	if(length(name) > 80) SetName("[pick(list("absurd","colossal","enormous","ridiculous"))] sandwich")

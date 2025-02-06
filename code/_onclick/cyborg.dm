@@ -44,15 +44,8 @@
 		if(is_component_functioning("camera"))
 			silicon_camera.captureimage(A, usr)
 		else
-			to_chat(src, "<span class='userdanger'>Your camera isn't functional.</span>")
+			to_chat(src, "<span class='danger'>Your camera isn't functional.</span>")
 		return
-
-	/*
-	cyborg restrained() currently does nothing
-	if(restrained())
-		RestrainedClickOn(A)
-		return
-	*/
 
 	var/obj/item/holding = get_active_held_item()
 
@@ -76,7 +69,7 @@
 		var/resolved = holding.resolve_attackby(A, src, params)
 		if(!resolved && A && holding)
 			holding.afterattack(A, src, 1, params) // 1 indicates adjacency
-		setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+		setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 		return
 
 	if(!isturf(loc))
@@ -88,7 +81,7 @@
 			var/resolved = holding.resolve_attackby(A, src, params)
 			if(!resolved && A && holding)
 				holding.afterattack(A, src, 1, params) // 1 indicates adjacency
-			setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+			setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 		else
 			holding.afterattack(A, src, 0, params)
 		return

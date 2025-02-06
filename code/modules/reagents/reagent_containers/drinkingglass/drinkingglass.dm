@@ -7,7 +7,6 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 /obj/item/chems/drinks/glass2
 
 	name = "glass" // Name when empty
-	base_name = "glass"
 	desc = "A generic drinking glass." // Description when empty
 	icon = 'icons/obj/drink_glasses/square.dmi'
 	icon_state = null
@@ -101,9 +100,6 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 		icon_state = base_icon
 	if(!overlay_base_icon)
 		overlay_base_icon = base_icon
-
-/obj/item/chems/drinks/glass2/get_base_name()
-	. = base_name
 
 /obj/item/chems/drinks/glass2/get_base_desc()
 	. = custom_desc || ..()
@@ -218,10 +214,12 @@ var/global/const/DRINK_ICON_NOISY = "noise"
 				user.visible_message("<span class='notice'>The contents of \the [src] splash all over [user]!</span>")
 				reagents.splash(user, reagents.total_volume)
 			qdel(src)
-			return
+			return TRUE
 		user.visible_message("<span class='notice'>[user] gently strikes \the [src] with a spoon, calling the room to attention.</span>")
 		playsound(src, "sound/items/wineglass.ogg", 65, 1)
-	else return ..()
+		return TRUE
+	else
+		return ..()
 
 /obj/item/chems/drinks/glass2/ProcessAtomTemperature()
 	var/old_temp = temperature

@@ -17,6 +17,7 @@
 	color               = /decl/material/solid/metal/copper::color
 	can_manually_light  = FALSE
 	sconce_can_hold     = TRUE
+	can_store_lit       = TRUE
 
 /obj/item/flame/fuelled/lantern/get_sconce_overlay()
 	. = list(overlay_image(icon, "[icon_state]-sconce", color = color, flags = RESET_COLOR))
@@ -32,7 +33,7 @@
 	if(lit)
 		add_overlay(overlay_image(icon, "[icon_state]-over", lit_light_color, flags = RESET_COLOR))
 
-/obj/item/flame/fuelled/lantern/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE, skip_offset = FALSE)
+/obj/item/flame/fuelled/lantern/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && lit && (slot == slot_belt_str || (slot in global.all_hand_slots)))
 		overlay.overlays += overlay_image(overlay.icon, "[overlay.icon_state]-over", lit_light_color, flags = RESET_COLOR)
 	return ..()

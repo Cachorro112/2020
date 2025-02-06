@@ -2,8 +2,9 @@
 	name                  = "candle"
 	desc                  = "A small pillar candle. Its specially-formulated fuel-oxidizer wax mixture allows continued combustion in airless environments."
 	icon                  = 'icons/obj/items/flame/candle.dmi'
-	w_class               = ITEM_SIZE_TINY
+	w_class               = ITEM_SIZE_SMALL
 	material              = /decl/material/solid/organic/wax
+	material_alteration   = MAT_FLAG_ALTERATION_COLOR
 	lit_light_range       = 2
 	_fuel                 = null
 	sconce_can_hold       = TRUE

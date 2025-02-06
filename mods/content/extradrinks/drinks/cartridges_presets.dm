@@ -1,5 +1,5 @@
-DEFINE_CARTRIDGE_FOR_CHEM(baijiu, /decl/material/liquid/ethanol/baijiu)
-DEFINE_CARTRIDGE_FOR_CHEM(ogogoro, /decl/material/liquid/ethanol/ogogoro)
+DEFINE_CARTRIDGE_FOR_CHEM(baijiu, /decl/material/liquid/alcohol/baijiu)
+DEFINE_CARTRIDGE_FOR_CHEM(ogogoro, /decl/material/liquid/alcohol/ogogoro)
 DEFINE_CARTRIDGE_FOR_CHEM(europa, /decl/material/liquid/drink/juice/europa)
 DEFINE_CARTRIDGE_FOR_CHEM(melon, /decl/material/liquid/drink/juice/melon)
 DEFINE_CARTRIDGE_FOR_CHEM(pineapple, /decl/material/liquid/drink/juice/pineapple)

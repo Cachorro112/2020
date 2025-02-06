@@ -251,7 +251,7 @@ var/global/list/possible_say_verbs = list(
 	if(istype(T))
 		T.visible_message("<b>[src]</b> neatly folds inwards, compacting down to a rectangular card.")
 
-/mob/living/silicon/pai/lay_down()
+/mob/living/silicon/pai/lay_down(block_posture as null)
 	// Pass lying down or getting up to our pet human, if we're in a rig.
 	if(istype(loc, /obj/item/paicard))
 		set_posture(/decl/posture/standing)
@@ -284,9 +284,9 @@ var/global/list/possible_say_verbs = list(
 		to_chat(src, SPAN_NOTICE("Your access has been updated!"))
 		return FALSE // don't continue processing click callstack.
 	if(try_stock_parts_install(W, user))
-		return
+		return TRUE
 	if(try_stock_parts_removal(W, user))
-		return
+		return TRUE
 	var/force = W.get_attack_force(user)
 	if(force)
 		visible_message(SPAN_DANGER("[user] attacks [src] with [W]!"))
@@ -296,7 +296,7 @@ var/global/list/possible_say_verbs = list(
 
 	spawn(1)
 		if(stat != DEAD) fold()
-	return
+	return TRUE
 
 /mob/living/silicon/pai/default_interaction(mob/user)
 	. = ..()

@@ -80,6 +80,7 @@
 	return TRUE
 
 /obj/structure/bed/attackby(obj/item/used_item, mob/user)
+
 	if((. = ..()))
 		return
 
@@ -126,14 +127,14 @@
 			remove_padding()
 		return TRUE
 
-	if(istype(used_item, /obj/item/grab))
-		var/obj/item/grab/grab = used_item
-		var/mob/living/affecting = grab.get_affecting_mob()
-		if(affecting)
-			user.visible_message(SPAN_NOTICE("\The [user] attempts to put [affecting] onto \the [src]!"))
-			if(do_after(user, 2 SECONDS, src) && !QDELETED(affecting) && !QDELETED(user) && !QDELETED(grab) && user_buckle_mob(affecting, user))
-				qdel(used_item)
+/obj/structure/bed/grab_attack(obj/item/grab/grab, mob/user)
+	var/mob/living/victim = grab.get_affecting_mob()
+	if(istype(victim) && istype(user))
+		user.visible_message(SPAN_NOTICE("\The [user] attempts to put \the [victim] onto \the [src]!"))
+		if(do_after(user, 2 SECONDS, src) && !QDELETED(victim) && !QDELETED(user) && !QDELETED(grab) && user_buckle_mob(victim, user))
+			qdel(grab)
 		return TRUE
+	return ..()
 
 /obj/structure/bed/proc/add_padding(var/padding_type, var/new_padding_color)
 	reinf_material = GET_DECL(padding_type)
@@ -190,6 +191,7 @@
 	anchored = FALSE
 	buckle_pixel_shift = list("x" = 0, "y" = 0, "z" = 6)
 	movable_flags = MOVABLE_FLAG_WHEELED
+	tool_interaction_flags = 0
 	var/item_form_type = /obj/item/roller	//The folded-up object path.
 	var/obj/item/chems/beaker
 	var/iv_attached = 0
@@ -213,17 +215,18 @@
 			iv.pixel_y = 6
 		add_overlay(iv)
 
+/obj/structure/bed/roller/can_apply_padding()
+	return FALSE
+
 /obj/structure/bed/roller/attackby(obj/item/I, mob/user)
-	if(IS_WRENCH(I) || istype(I, /obj/item/stack) || IS_WIRECUTTER(I))
-		return 1
 	if(iv_stand && !beaker && istype(I, /obj/item/chems))
 		if(!user.try_unequip(I, src))
-			return
+			return TRUE
 		to_chat(user, "You attach \the [I] to \the [src].")
 		beaker = I
 		queue_icon_update()
-		return 1
-	..()
+		return TRUE
+	return ..()
 
 /obj/structure/bed/roller/attack_hand(mob/user)
 	if(!beaker || buckled_mob || !user.check_dexterity(DEXTERITY_HOLD_ITEM, TRUE))

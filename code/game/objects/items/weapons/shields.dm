@@ -91,8 +91,9 @@
 			user.visible_message("<span class='warning'>[user] bashes [src] with [W]!</span>")
 			playsound(user.loc, 'sound/effects/shieldbash.ogg', 50, 1)
 			cooldown = world.time
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/item/shield/riot/metal
 	name = "plasteel combat shield"
@@ -201,7 +202,7 @@
 	else
 		set_base_attack_force(3)
 		update_icon()
-		w_class = ITEM_SIZE_TINY
+		w_class = ITEM_SIZE_SMALL
 		playsound(user, 'sound/weapons/saberoff.ogg', 50, 1)
 		to_chat(user, SPAN_NOTICE("\The [src] can now be concealed."))
 

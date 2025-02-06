@@ -28,9 +28,11 @@
 
 	var/list/hand_hud_objects
 	var/list/swaphand_hud_objects
-	var/obj/screen/intent/action_intent
 	var/obj/screen/movement/move_intent
 	var/obj/screen/stamina/stamina_bar
+
+	var/action_intent_type = /obj/screen/intent
+	var/obj/screen/intent/action_intent
 
 	var/list/adding = list()
 	var/list/other = list()
@@ -68,19 +70,19 @@
 /datum/hud/proc/hide_inventory()
 	inventory_shown = FALSE
 	hidden_inventory_update()
-	persistant_inventory_update()
+	persistent_inventory_update()
 
 /datum/hud/proc/show_inventory()
 	inventory_shown = TRUE
 	hidden_inventory_update()
-	persistant_inventory_update()
+	persistent_inventory_update()
 
 /datum/hud/proc/hidden_inventory_update()
 	var/decl/species/species = mymob?.get_species()
 	if(istype(species?.species_hud))
 		refresh_inventory_slots(species.species_hud.hidden_slots, (inventory_shown && hud_shown))
 
-/datum/hud/proc/persistant_inventory_update()
+/datum/hud/proc/persistent_inventory_update()
 	var/decl/species/species = mymob?.get_species()
 	if(istype(species?.species_hud))
 		refresh_inventory_slots(species.species_hud.persistent_slots, hud_shown)
@@ -112,9 +114,21 @@
 	return FALSE
 
 /datum/hud/proc/FinalizeInstantiation()
+
 	SHOULD_CALL_PARENT(TRUE)
+
+	var/ui_style = get_ui_style_data()
+	var/ui_color = get_ui_color()
+	var/ui_alpha = get_ui_alpha()
+
+	if(!action_intent && action_intent_type) // Everyone needs an intent selector.
+		action_intent = new action_intent_type(null, mymob, ui_style, ui_color, ui_alpha, UI_ICON_INTENT)
+		adding |= action_intent
+		hud_elements |= action_intent
+
 	BuildInventoryUI()
 	BuildHandsUI()
+
 	if(mymob.client)
 		mymob.client.screen = list()
 		if(length(hand_hud_objects))
@@ -127,6 +141,7 @@
 			mymob.client.screen |= adding
 		if(length(hotkeybuttons))
 			mymob.client.screen |= hotkeybuttons
+
 	hide_inventory()
 
 /datum/hud/proc/get_ui_style_data()
@@ -363,7 +378,7 @@
 		client.screen += zone_sel				//This one is a special snowflake
 
 	hud_used.hidden_inventory_update()
-	hud_used.persistant_inventory_update()
+	hud_used.persistent_inventory_update()
 	update_action_buttons()
 
 //Similar to minimize_hud() but keeps zone_sel, gun_setting_icon, and healths.
@@ -400,7 +415,7 @@
 		hud_used.action_intent.screen_loc = ui_acti //Restore intent selection to the original position
 
 	hud_used.hidden_inventory_update()
-	hud_used.persistant_inventory_update()
+	hud_used.persistent_inventory_update()
 	update_action_buttons()
 
 /client/proc/reset_click_catchers()

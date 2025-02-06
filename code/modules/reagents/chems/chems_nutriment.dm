@@ -12,6 +12,8 @@
 	fishing_bait_value = 0.65
 	compost_value = 1
 	nutriment_factor = 10
+	affect_blood_on_ingest = 0
+	affect_blood_on_inhale = 0
 
 	// Technically a room-temperature solid, but saves
 	// repathing it to /solid all over the codebase.
@@ -30,9 +32,9 @@
 	lore_text = "Mollusc meat, or slug meat - something slimy, anyway."
 	scannable = 1
 	taste_description = "cold, bitter slime"
-	overdose = 10
 	hydration_factor = 6
 	uid = "chem_nutriment_slime"
+	allergen_flags = ALLERGEN_MEAT | ALLERGEN_FISH
 
 /decl/material/liquid/nutriment/glucose
 	name = "glucose"
@@ -44,6 +46,7 @@
 /decl/material/liquid/nutriment/bread
 	name = "bread"
 	uid = "chem_nutriment_bread"
+	allergen_flags = ALLERGEN_GLUTEN
 
 /decl/material/liquid/nutriment/bread/cake
 	name = "cake"
@@ -56,6 +59,7 @@
 	taste_description = "healthy sadness"
 	color = "#ffffff"
 	uid = "chem_nutriment_plant"
+	allergen_flags = ALLERGEN_VEGETABLE
 
 /decl/material/liquid/nutriment/plant_oil
 	name = "plant oil"
@@ -68,6 +72,7 @@
 	ignition_point = T0C+150
 	accelerant_value = FUEL_VALUE_ACCELERANT
 	gas_flags = XGM_GAS_FUEL
+	allergen_flags = ALLERGEN_VEGETABLE
 
 /decl/material/liquid/nutriment/honey
 	name = "honey"
@@ -88,10 +93,11 @@
 	color = "#ffffff"
 	slipperiness = -1
 	uid = "chem_nutriment_flour"
+	allergen_flags = ALLERGEN_GLUTEN
 
-/decl/material/liquid/nutriment/flour/touch_turf(var/turf/T, var/amount, var/datum/reagents/holder)
+/decl/material/liquid/nutriment/flour/touch_turf(var/turf/touching_turf, var/amount, var/datum/reagents/holder)
 	..()
-	new /obj/effect/decal/cleanable/flour(T)
+	new /obj/effect/decal/cleanable/flour(touching_turf)
 
 /decl/material/liquid/nutriment/batter
 	name = "batter"
@@ -106,6 +112,7 @@
 	uid = "chem_nutriment_batter"
 	melting_point = T0C
 	boiling_point = T100C
+	allergen_flags = ALLERGEN_EGG | ALLERGEN_GLUTEN
 	var/icon_raw = "batter_raw"
 	var/icon_cooked = "batter_cooked"
 	var/coated_adj = "battered"
@@ -137,9 +144,9 @@
 	if(newamount > (REAGENT_VOLUME(reagents, type)/2)) // take whatever the majority is
 		.["cooked"] = newdata["cooked"]
 
-/decl/material/liquid/nutriment/batter/touch_turf(var/turf/T, var/amount, var/datum/reagents/holder)
+/decl/material/liquid/nutriment/batter/touch_turf(var/turf/touching_turf, var/amount, var/datum/reagents/holder)
 	..()
-	new /obj/effect/decal/cleanable/pie_smudge(T)
+	new /obj/effect/decal/cleanable/pie_smudge(touching_turf)
 
 /decl/material/liquid/nutriment/batter/cakebatter
 	name = "cake batter"
@@ -148,6 +155,7 @@
 	taste_description = "sweetness"
 	color = "#ffe992"
 	uid = "chem_nutriment_cakebatter"
+	allergen_flags = ALLERGEN_EGG | ALLERGEN_GLUTEN
 
 /decl/material/liquid/nutriment/batter/beerbatter
 	name = "beer batter"
@@ -282,6 +290,7 @@
 	color = "#482000"
 	fruit_descriptor = "bitter"
 	uid = "chem_nutriment_coffeepowder"
+	allergen_flags = ALLERGEN_CAFFEINE | ALLERGEN_STIMULANT
 
 /decl/material/liquid/nutriment/coffee/affect_blood(var/mob/living/M, var/removed, var/datum/reagents/holder)
 	..()
@@ -302,6 +311,7 @@
 	nutriment_factor = 1
 	color = "#101000"
 	uid = "chem_nutriment_teapowder"
+	allergen_flags = ALLERGEN_CAFFEINE | ALLERGEN_STIMULANT
 
 /decl/material/liquid/nutriment/tea/instant
 	name = "instant tea powder"
@@ -325,6 +335,7 @@
 	exoplanet_rarity_plant = MAT_RARITY_NOWHERE
 	exoplanet_rarity_gas = MAT_RARITY_NOWHERE
 	uid = "chem_nutriment_juice"
+	allergen_flags = ALLERGEN_FRUIT
 
 /decl/material/liquid/nutriment/instantjuice/grape
 	name = "grape concentrate"
@@ -386,6 +397,7 @@
 	uid = "chem_nutriment_ketchup"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_FRUIT | ALLERGEN_VEGETABLE // Is a tomato a fruit or a vegetable?
 
 /decl/material/liquid/nutriment/banana_cream
 	name = "banana cream"
@@ -397,6 +409,7 @@
 	uid = "chem_nutriment_bananacream"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_DAIRY | ALLERGEN_FRUIT
 
 /decl/material/liquid/nutriment/barbecue
 	name = "barbecue sauce"
@@ -409,6 +422,7 @@
 	uid = "chem_nutriment_bbqsauce"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_FRUIT | ALLERGEN_VEGETABLE // Is a tomato a fruit or a vegetable?
 
 /decl/material/liquid/nutriment/garlicsauce
 	name = "garlic sauce"
@@ -421,6 +435,7 @@
 	uid = "chem_nutriment_garlicsauce"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_VEGETABLE
 
 /decl/material/liquid/nutriment/rice
 	name = "rice"
@@ -432,6 +447,7 @@
 	uid = "chem_nutriment_rice"
 	reagent_overlay_base = "rice_base"
 	reagent_overlay = "soup_meatballs"
+	allergen_flags = ALLERGEN_GLUTEN
 
 /decl/material/liquid/nutriment/cherryjelly
 	name = "cherry jelly"
@@ -444,6 +460,7 @@
 	uid = "chem_nutriment_cherryjelly"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_FRUIT
 
 /decl/material/liquid/nutriment/cornoil
 	name = "corn oil"
@@ -456,6 +473,7 @@
 	uid = "chem_nutriment_cornoil"
 	melting_point = 273
 	boiling_point = 373
+	allergen_flags = ALLERGEN_VEGETABLE
 
 /decl/material/liquid/nutriment/sprinkles
 	name = "sprinkles"
@@ -502,6 +520,7 @@
 	exoplanet_rarity_plant = MAT_RARITY_NOWHERE
 	exoplanet_rarity_gas = MAT_RARITY_NOWHERE
 	uid = "chem_nutriment_mayonnaise"
+	allergen_flags = ALLERGEN_EGG
 
 /decl/material/liquid/nutriment/yeast
 	name = "Yeast"
@@ -516,7 +535,7 @@
 	lore_text = "Aged, fermented, curdled milk."
 	uid = "chem_nutriment_cheese"
 	color = "#ffd000"
-	//allergen_flags = INGREDIENT_FLAG_DAIRY // Pending allergen PR.
+	allergen_flags = ALLERGEN_DAIRY | ALLERGEN_CHEESE
 
 /decl/material/liquid/nutriment/butter
 	name = "butter"
@@ -524,7 +543,7 @@
 	color = "#ffe864"
 	taste_description = "butter"
 	uid = "chem_nutriment_butter"
-	//allergen_flags = INGREDIENT_FLAG_DAIRY // Pending allergen PR.
+	allergen_flags = ALLERGEN_DAIRY
 
 /decl/material/liquid/nutriment/margarine
 	name = "margarine"
@@ -532,4 +551,4 @@
 	color = "#fff2ab"
 	taste_description = "bland oiliness"
 	uid = "chem_nutriment_margarine"
-	//allergen_flags = INGREDIENT_FLAG_VEGETABLE // Pending allergen PR.
+	allergen_flags = ALLERGEN_VEGETABLE

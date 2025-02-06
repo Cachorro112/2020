@@ -77,6 +77,10 @@
 	ai = /datum/mob_controller/aggressive/beast/diyaab
 	base_movement_delay = 1
 
+/mob/living/simple_animal/hostile/beast/diyaab/Initialize()
+	. = ..()
+	set_extension(src, /datum/extension/shearable, /decl/material/solid/organic/cloth/wool/diyaab)
+
 /datum/mob_controller/aggressive/beast/diyaab
 	speak_chance = 1.25
 	emote_speech = list("Awrr?","Aowrl!","Worrl")
@@ -108,7 +112,7 @@
 	ai = /datum/mob_controller/aggressive/beast/shantak/alt
 
 /datum/mob_controller/aggressive/beast/shantak/alt
-	emote_see = list("scratches the ground","shakes out it's mane","rustles softly")
+	emote_see = list("scratches the ground","shakes out its mane","rustles softly")
 
 /mob/living/simple_animal/yithian
 	name = "yithian"

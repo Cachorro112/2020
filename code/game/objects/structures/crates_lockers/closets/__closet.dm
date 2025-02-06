@@ -42,7 +42,7 @@ var/global/list/closets = list()
 		var/decl/closet_appearance/app = GET_DECL(closet_appearance)
 		if(app)
 			icon = app.icon
-			color = null
+			reset_color()
 			queue_icon_update()
 
 	return INITIALIZE_HINT_LATELOAD
@@ -244,6 +244,10 @@ var/global/list/closets = list()
 		..()
 		take_damage(proj_damage, Proj.atom_damage_type)
 
+// Override this so the logic in attackby() can run.
+/obj/structure/closet/grab_attack(obj/item/grab/grab, mob/user)
+	return FALSE
+
 /obj/structure/closet/attackby(obj/item/used_item, mob/user)
 
 	if(user.a_intent == I_HURT && used_item.get_attack_force(user))
@@ -257,8 +261,8 @@ var/global/list/closets = list()
 	if(opened)
 		if(can_wield)
 			if(istype(used_item, /obj/item/grab))
-				var/obj/item/grab/G = used_item
-				receive_mouse_drop(G.affecting, user)      //act like they were dragged onto the closet
+				var/obj/item/grab/grab = used_item
+				receive_mouse_drop(grab.affecting, user)      //act like they were dragged onto the closet
 				return TRUE
 			if(IS_WELDER(used_item))
 				var/obj/item/weldingtool/WT = used_item
@@ -315,7 +319,7 @@ var/global/list/closets = list()
 		if(!WT.weld(0,user))
 			if(WT.isOn())
 				to_chat(user, SPAN_NOTICE("You need more welding fuel to complete this task."))
-			return
+			return TRUE
 		welded = !welded
 		update_icon()
 		user.visible_message(SPAN_WARNING("\The [src] has been [welded?"welded shut":"unwelded"] by \the [user]."), blind_message = "You hear welding.", range = 3)

@@ -208,12 +208,12 @@
 		if(P)
 			var/pew_loc = pick(BP_L_FOOT, BP_R_FOOT)
 			if(process_projectile(P, user, user, pew_loc))
-				var/decl/pronouns/G = user.get_pronouns()
+				var/decl/pronouns/pronouns = user.get_pronouns()
 				handle_post_fire(user, user)
 				var/obj/item/affecting = GET_EXTERNAL_ORGAN(user, pew_loc)
 				pew_loc = affecting ? "\the [affecting]" : "the foot"
 				user.visible_message(
-					SPAN_DANGER("\The [user] shoots [G.self] in [pew_loc] with \the [src]!"),
+					SPAN_DANGER("\The [user] shoots [pronouns.self] in [pew_loc] with \the [src]!"),
 					SPAN_DANGER("You shoot yourself in [pew_loc] with \the [src]!"))
 				M.try_unequip(src)
 		else
@@ -410,12 +410,11 @@
 				for(var/obj/item/rig_module/stealth_field/S in rig.installed_modules)
 					S.deactivate()
 
-		if(space_recoil)
-			if(!user.check_space_footing())
-				var/old_dir = user.dir
-				user.inertia_ignore = projectile
-				step(user,get_dir(target,user))
-				user.set_dir(old_dir)
+		if(space_recoil && user.can_slip(magboots_only = TRUE))
+			var/old_dir = user.dir
+			user.inertia_ignore = projectile
+			step(user,get_dir(target,user))
+			user.set_dir(old_dir)
 
 	update_icon()
 
@@ -453,8 +452,8 @@
 		var/mob/living/L = target
 		if(L.incapacitated())
 			max_mult = 1.2
-		for(var/obj/item/grab/G in L.grabbed_by)
-			max_mult = max(max_mult, G.point_blank_mult())
+		for(var/obj/item/grab/grab as anything in L.grabbed_by)
+			max_mult = max(max_mult, grab.point_blank_mult())
 	P.damage *= max_mult
 
 /obj/item/gun/proc/process_accuracy(obj/projectile, atom/movable/firer, atom/target, var/burst, var/held_twohanded)
@@ -552,7 +551,7 @@
 	admin_attacker_log(user, "is attempting to suicide with \a [src]")
 	M.visible_message("<span class='danger'>[user] sticks their gun in their mouth, ready to pull the trigger...</span>")
 	if(!do_after(user, 40, progress=0))
-		M.visible_message("<span class='notice'>[user] decided life was worth living</span>")
+		M.visible_message(SPAN_NOTICE("[user] decided life was worth living."))
 		mouthshoot = 0
 		return
 
@@ -746,6 +745,9 @@
 	if(get_active_held_item() != autofiring || incapacitated())
 		return FALSE
 	return TRUE
+
+/obj/item/gun/get_quick_interaction_handler(mob/user)
+	return GET_DECL(/decl/interaction_handler/gun/toggle_safety)
 
 /obj/item/gun/get_alt_interactions(mob/user)
 	. = ..()

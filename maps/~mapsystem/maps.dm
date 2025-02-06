@@ -1,21 +1,30 @@
-var/global/datum/map/using_map = new USING_MAP_DATUM
-var/global/list/all_maps = list()
+var/global/datum/map/using_map  = new USING_MAP_DATUM
+var/global/list/all_maps        = list()
+var/global/list/votable_maps    = list()
 
 var/global/const/MAP_HAS_BRANCH = 1	//Branch system for occupations, togglable
-var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
+var/global/const/MAP_HAS_RANK   = 2		//Rank system, also togglable
 
 /hook/startup/proc/initialise_map_list()
-	for(var/type in subtypesof(/datum/map))
-		var/datum/map/M
-		if(type == global.using_map.type)
-			M = global.using_map
-			M.setup_map()
+	for(var/map_type in subtypesof(/datum/map))
+
+		var/datum/map/map_instance = map_type
+		if(TYPE_IS_ABSTRACT(map_instance))
+			continue
+
+		if(map_type == global.using_map.type)
+			map_instance = global.using_map
+			map_instance.setup_map()
+		else if(map_instance::path)
+			map_instance = new map_instance
 		else
-			M = new type
-		if(!M.path)
-			log_error("Map '[M]' ([type]) does not have a defined path, not adding to map list!")
-		else
-			global.all_maps[M.path] = M
+			log_error("Map '[map_type]' does not have a defined path, not adding to map list!")
+			continue
+
+		global.all_maps[map_instance.path] = map_instance
+		if(map_instance.votable)
+			global.votable_maps[map_instance.path] = map_instance
+
 	return 1
 
 /datum/map
@@ -127,6 +136,9 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 	var/default_species = SPECIES_HUMAN
 
+	// Can this map be voted for by players?
+	var/votable = TRUE
+
 	var/list/available_background_info = list(
 		/decl/background_category/homeworld = list(/decl/background_detail/location/other),
 		/decl/background_category/faction =   list(/decl/background_detail/faction/other),
@@ -195,7 +207,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 /datum/map/proc/get_random_location()
 	var/list/options = list()
 	for(var/cat_type in available_background_info)
-		var/decl/background_category/background_cat = GET_DECL(available_background_info[cat_type])
+		var/decl/background_category/background_cat = GET_DECL(cat_type)
 		if(istype(background_cat) && (background_cat.background_flags & BACKGROUND_FLAG_LOCATION))
 			options |= available_background_info[cat_type]
 	if(length(options))
@@ -400,7 +412,7 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 		log_unit_test("Loaded template '[PT]' ([PT.type]) at Z-level [world.maxz] with a tallness of [PT.tallness]")
 #endif
 
-// By default transition randomly to another zlevel
+// By default return a random accessible z-level, or the current level if one is unavailable
 /datum/map/proc/get_transit_zlevel(var/current_z_level)
 	var/list/candidates = SSmapping.accessible_z_levels.Copy()
 	candidates.Remove(num2text(current_z_level))
@@ -527,3 +539,21 @@ var/global/const/MAP_HAS_RANK = 2		//Rank system, also togglable
 
 /datum/map/proc/finalize_map_generation()
 	return
+
+/datum/map/proc/validate()
+	. = TRUE
+	if(!length(SSmapping.player_levels))
+		log_error("[name] has no player levels!")
+		. = FALSE
+	if(!length(SSmapping.station_levels))
+		log_error("[name] has no station levels!")
+		. = FALSE
+	// TODO: add an admin level loaded from template for maps like tradeship (generic admin level modpack?)
+	/*
+	if(!length(SSmapping.admin_levels))
+		log_error("[name] has no admin levels!")
+		. = FALSE
+	*/
+	if(!length(SSmapping.contact_levels))
+		log_error("[name] has no contact levels!")
+		. = FALSE

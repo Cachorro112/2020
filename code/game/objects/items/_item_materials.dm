@@ -47,14 +47,15 @@
 
 /obj/item/proc/shatter(var/consumed)
 	var/turf/T = get_turf(src)
-	T?.visible_message(SPAN_DANGER("\The [src] [material ? material.destruction_desc : "shatters"]!"))
-	playsound(src, "shatter", 70, 1)
+	T?.visible_message(SPAN_DANGER("\The [src] [material?.destruction_desc || "shatters"]!"))
+	playsound(src, material?.destruction_sound || "shatter", 70, 1)
 	if(!consumed && material && w_class > ITEM_SIZE_SMALL && T)
 		material.place_shards(T)
 	qdel(src)
 
 /obj/item/get_material()
-	. = material
+	RETURN_TYPE(/decl/material)
+	return material
 
 // TODO: Refactor more code to use this where necessary, and then make this use
 // some sort of generalized system for hitting with different parts of an item
@@ -88,6 +89,8 @@
 			obj_flags |= OBJ_FLAG_CONDUCTIBLE
 		else
 			obj_flags &= (~OBJ_FLAG_CONDUCTIBLE)
+		if(isnull(initial(paint_verb)))
+			paint_verb = material.paint_verb
 		update_attack_force()
 		update_name()
 		if(material_armor_multiplier)
@@ -101,7 +104,7 @@
 	queue_icon_update()
 
 /obj/item/proc/update_name()
-	if(material_alteration & MAT_FLAG_ALTERATION_NAME)
+	if(istype(material) && (material_alteration & MAT_FLAG_ALTERATION_NAME))
 		SetName("[material.adjective_name] [base_name || initial(name)]")
 	else
 		SetName(base_name || initial(name))

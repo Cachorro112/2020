@@ -50,7 +50,7 @@
 	Spray_at(A, user, proximity)
 
 	if(reagents.has_reagent(/decl/material/liquid/acid))
-		log_and_message_admins("fired sulphuric acid from \a [src].", user)
+		log_and_message_admins("fired sulfuric acid from \a [src].", user)
 	if(reagents.has_reagent(/decl/material/liquid/acid/polyacid))
 		log_and_message_admins("fired polyacid from \a [src].", user)
 	if(reagents.has_reagent(/decl/material/liquid/lube))
@@ -91,7 +91,7 @@
 		//If no safety, we just toggle the nozzle
 		var/decl/interaction_handler/IH = GET_DECL(/decl/interaction_handler/next_spray_amount)
 		if(IH.is_possible(src, user))
-			IH.invoked(src, user, src)
+			IH.invoked(src, user, user.get_active_held_item())
 			return TRUE
 
 ///Whether the spray has a safety toggle
@@ -109,7 +109,7 @@
 	if(has_safety() && distance <= 1)
 		to_chat(user, "The safety is [safety ? "on" : "off"].")
 
-/obj/item/chems/get_alt_interactions(mob/user)
+/obj/item/chems/spray/get_alt_interactions(mob/user)
 	. = ..()
 	LAZYADD(., /decl/interaction_handler/empty/chems)
 	LAZYADD(., /decl/interaction_handler/next_spray_amount)
@@ -125,12 +125,13 @@
 	if(.)
 		return !isnull(target.possible_transfer_amounts)
 
-/decl/interaction_handler/next_spray_amount/invoked(obj/item/chems/spray/target, mob/user)
-	if(!target.possible_transfer_amounts)
+/decl/interaction_handler/next_spray_amount/invoked(atom/target, mob/user, obj/item/prop)
+	var/obj/item/chems/spray/spray = target
+	if(!spray.possible_transfer_amounts)
 		return
-	target.amount_per_transfer_from_this = next_in_list(target.amount_per_transfer_from_this, cached_json_decode(target.possible_transfer_amounts))
-	target.spray_particles = next_in_list(target.spray_particles, cached_json_decode(target.possible_particle_amounts))
-	to_chat(user, SPAN_NOTICE("You adjusted the pressure nozzle. You'll now use [target.amount_per_transfer_from_this] units per spray."))
+	spray.amount_per_transfer_from_this = next_in_list(spray.amount_per_transfer_from_this, cached_json_decode(spray.possible_transfer_amounts))
+	spray.spray_particles = next_in_list(spray.spray_particles, cached_json_decode(spray.possible_particle_amounts))
+	to_chat(user, SPAN_NOTICE("You adjusted the pressure nozzle. You'll now use [spray.amount_per_transfer_from_this] units per spray."))
 
 //space cleaner
 /obj/item/chems/spray/cleaner

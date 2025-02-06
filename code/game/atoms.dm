@@ -500,10 +500,12 @@
 	- Returns: `TRUE` if qdel() was called, otherwise `FALSE`
 */
 /atom/proc/lava_act()
-	visible_message(SPAN_DANGER("\The [src] sizzles and melts away, consumed by the lava!"))
-	playsound(src, 'sound/effects/flare.ogg', 100, 3)
-	qdel(src)
-	. = TRUE
+	if(simulated)
+		visible_message(SPAN_DANGER("\The [src] sizzles and melts away, consumed by the lava!"))
+		playsound(src, 'sound/effects/flare.ogg', 100, 3)
+		qdel(src)
+		return TRUE
+	return FALSE
 
 /**
 	Handle this atom being hit by a thrown atom
@@ -584,7 +586,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T,range, mobs, objs, check_ghosts)
+	get_listeners_in_range(T,range, mobs, objs, check_ghosts)
 
 	for(var/o in objs)
 		var/obj/O = o
@@ -612,7 +614,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T, hearing_distance, mobs, objs, check_ghosts)
+	get_listeners_in_range(T, hearing_distance, mobs, objs, check_ghosts)
 
 	for(var/m in mobs)
 		var/mob/M = m
@@ -661,7 +663,7 @@
 	- `G`: The grab hitting this atom
 	- Return: `TRUE` to skip attackby() and afterattack() or `FALSE`
 */
-/atom/proc/grab_attack(var/obj/item/grab/G)
+/atom/proc/grab_attack(obj/item/grab/grab, mob/user)
 	return FALSE
 
 /atom/proc/climb_on()
@@ -737,7 +739,10 @@
 		LAZYREMOVE(climbers,user)
 		return FALSE
 
-	var/target_turf = get_turf(src)
+	// handle multitile objects
+	// this should also be fine for non-multitile objects
+	// and ensures we don't ever move more than 1 tile
+	var/target_turf = get_step(user, get_dir(user, src))
 
 	//climbing over border objects like railings
 	if((atom_flags & ATOM_FLAG_CHECKS_BORDER) && get_turf(user) == target_turf)
@@ -890,6 +895,15 @@
 		check_loc = check_loc.loc
 
 /**
+	Get a default interaction for a user from this atom.
+
+	- `user`: The mob that this interaction is for
+	- Return: A default interaction decl, or null.
+*/
+/atom/proc/get_quick_interaction_handler(mob/user)
+	return
+
+/**
 	Get a list of alt interactions for a user from this atom.
 
 	- `user`: The mob that these alt interactions are for
@@ -988,3 +1002,12 @@
 
 /atom/proc/take_vaporized_reagent(reagent, amount)
 	return
+
+/atom/proc/is_watertight()
+	return !ATOM_IS_OPEN_CONTAINER(src)
+
+/atom/proc/can_drink_from(mob/user)
+	return ATOM_IS_OPEN_CONTAINER(src) && reagents?.total_volume && user.check_has_mouth()
+
+/atom/proc/immune_to_floor_hazards()
+	return !simulated || !has_gravity()

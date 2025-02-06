@@ -50,7 +50,7 @@
 	var/gas_transfer_coefficient = 1 // for leaking gas from turf to mask and vice-versa (for masks right now, but at some point, i'd like to include space helmets)
 	var/permeability_coefficient = 1 // for chemicals/diseases
 	var/siemens_coefficient = 1 // for electrical admittance/conductance (electrocution checks and shit)
-	var/slowdown_general = 0 // How much clothing is slowing you down. Negative values speeds you up. This is a genera##l slowdown, no matter equipment slot.
+	var/slowdown_general = 0 // How much clothing is slowing you down. Negative values speeds you up. This is a general slowdown, no matter equipment slot.
 	var/slowdown_per_slot // How much clothing is slowing you down. This is an associative list: item slot - slowdown
 	var/slowdown_accessory // How much an accessory will slow you down when attached to a worn article of clothing.
 	var/canremove = 1 //Mostly for Ninja code at this point but basically will not allow the item to be removed if set to 0. /N
@@ -93,10 +93,11 @@
 	var/replaced_in_loadout = TRUE
 
 	var/paint_color
-	var/paint_verb = "painted"
+	var/paint_verb
 
 	/// What dexterity is required to attack with this item?
-	var/needs_attack_dexterity = DEXTERITY_WIELD_ITEM
+	var/needs_attack_dexterity      = DEXTERITY_WIELD_ITEM
+	var/needs_interaction_dexterity = DEXTERITY_HOLD_ITEM
 
 	/// Vars relating to wielding the item with two or more hands.
 	var/can_be_twohanded        = FALSE
@@ -109,6 +110,12 @@
 
 	var/base_name
 
+	/// Can this object leak into water sources?
+	var/watertight = FALSE
+
+	/// Can this item knock someone out if used as a weapon? Overridden for natural weapons as a nerf to simplemobs.
+	var/weapon_can_knock_prone = TRUE
+
 /obj/item/get_color()
 	if(paint_color)
 		return paint_color
@@ -117,20 +124,21 @@
 	return initial(color)
 
 /obj/item/set_color(new_color)
-
 	if(new_color == COLOR_WHITE)
 		new_color = null
-
 	if(paint_color != new_color)
 		paint_color = new_color
 		. = TRUE
+		refresh_color()
 
+/obj/item/refresh_color()
 	if(paint_color)
 		color = paint_color
 	else if(material && (material_alteration & MAT_FLAG_ALTERATION_COLOR))
 		color = material.color
 	else
-		color = new_color
+		color = null
+
 
 /obj/item/proc/can_contaminate()
 	return !(obj_flags & ITEM_FLAG_NO_CONTAMINATION)
@@ -161,6 +169,7 @@
 		material_key = material
 	if(material_key)
 		set_material(material_key)
+	paint_verb ||= "painted" // fallback for the case of no material
 
 	. = ..()
 
@@ -283,7 +292,8 @@
 		desc_comp += "[desc_damage]"
 
 	if(paint_color)
-		desc_comp += "\The [src] has been <font color='[paint_color]'>[paint_verb]</font>."
+		var/decl/pronouns/obj_pronouns = get_pronouns() // so we can do 'have' for plural objects like sheets
+		desc_comp += "\The [src] [obj_pronouns.has] been <font color='[paint_color]'>[paint_verb]</font>."
 
 	var/added_header = FALSE
 	if(user?.get_preference_value(/datum/client_preference/inquisitive_examine) == PREF_ON)
@@ -291,11 +301,7 @@
 		var/list/available_recipes = list()
 		for(var/decl/crafting_stage/initial_stage in SSfabrication.find_crafting_recipes(type))
 			if(initial_stage.can_begin_with(src) && ispath(initial_stage.completion_trigger_type))
-				var/atom/movable/prop = initial_stage.completion_trigger_type
-				if(initial_stage.stack_consume_amount > 1)
-					available_recipes[initial_stage] = "[initial_stage.stack_consume_amount] [initial(prop.name)]\s"
-				else
-					available_recipes[initial_stage] = "\a [initial(prop.name)]"
+				available_recipes[initial_stage] = initial_stage.generate_completion_string()
 
 		if(length(available_recipes))
 
@@ -572,11 +578,6 @@
 
 	return ..()
 
-/obj/item/attack_ghost(mob/user)
-	var/mob/observer/ghost/G = user
-	if(G.client?.holder || G.antagHUD)
-		storage?.show_to(user)
-
 /obj/item/proc/talk_into(mob/living/M, message, message_mode, var/verb = "says", var/decl/language/speaking = null)
 	return
 
@@ -759,9 +760,9 @@
 		return 0
 	if(!istype(attacker))
 		return 0
-	var/decl/pronouns/G = attacker.get_pronouns()
+	var/decl/pronouns/pronouns = attacker.get_pronouns()
 	attacker.apply_damage(force, atom_damage_type, attacker.get_active_held_item_slot(), used_weapon = src)
-	attacker.visible_message(SPAN_DANGER("\The [attacker] hurts [G.his] hand on \the [src]!"))
+	attacker.visible_message(SPAN_DANGER("\The [attacker] hurts [pronouns.his] hand on \the [src]!"))
 	playsound(target, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
 	playsound(target, hitsound, 50, 1, -1)
 	return 1
@@ -783,7 +784,7 @@
 	if(!blood_data && ishuman(M))
 		var/mob/living/human/H = M
 		blood_data = REAGENT_DATA(H.vessel, /decl/material/liquid/blood)
-	var/sample_dna = LAZYACCESS(blood_data, "blood_DNA")
+	var/sample_dna = LAZYACCESS(blood_data, DATA_BLOOD_DNA)
 	if(sample_dna)
 		var/datum/extension/forensic_evidence/forensics = get_or_create_extension(src, /datum/extension/forensic_evidence)
 		forensics.add_data(/datum/forensics/blood_dna, sample_dna)
@@ -795,7 +796,7 @@
 	return TRUE
 
 var/global/list/_blood_overlay_cache = list()
-var/global/list/_item_blood_mask = icon('icons/effects/blood.dmi', "itemblood")
+var/global/icon/_item_blood_mask = icon('icons/effects/blood.dmi', "itemblood")
 /obj/item/proc/generate_blood_overlay(force = FALSE)
 	if(blood_overlay && !force)
 		return
@@ -957,6 +958,11 @@ modules/mob/living/human/life.dm if you die, you will be zoomed out.
 	if(citem.item_state)
 		set_icon_state(citem.item_state)
 
+/obj/item/clothing/inherit_custom_item_data(var/datum/custom_item/citem)
+	. = ..()
+	base_clothing_icon  = icon
+	base_clothing_state = icon_state
+
 /obj/item/proc/is_special_cutting_tool(var/high_power)
 	return FALSE
 
@@ -1028,17 +1034,40 @@ modules/mob/living/human/life.dm if you die, you will be zoomed out.
 	if(item_flags & ITEM_FLAG_IS_BELT)
 		LAZYADD(., slot_belt_str)
 
+	// Where are we usually worn?
+	var/default_slot = get_fallback_slot()
+	if(default_slot)
+		LAZYDISTINCTADD(., default_slot)
+		// Uniforms can show or hide ID.
+		if(default_slot == slot_w_uniform_str)
+			LAZYDISTINCTADD(., slot_wear_id_str)
+
+	// Currently this proc is used for clothing updates, so we
+	// need to care what slot we are being worn in, if any.
+	if(ismob(loc))
+		var/mob/wearer = loc
+		var/equipped_slot = wearer.get_equipped_slot_for_item(src)
+		if(equipped_slot)
+			LAZYDISTINCTADD(., equipped_slot)
+
 // Updates the icons of the mob wearing the clothing item, if any.
-/obj/item/proc/update_clothing_icon()
+/obj/item/proc/update_clothing_icon(do_update_icon = TRUE)
+
+	// Accessories should pass this back to their holder.
+	if(isitem(loc))
+		var/obj/item/holder = loc
+		return holder.update_clothing_icon(do_update_icon)
+
+	// If we're not on a mob, we do not care.
+	if(!ismob(loc))
+		return FALSE
+
+	// We refresh our equipped slot and any associated slots that might depend on the state of this slot.
 	var/mob/wearer = loc
-	if(!istype(wearer))
-		return FALSE
-	var/equip_slots = get_associated_equipment_slots()
-	if(!islist(equip_slots))
-		return FALSE
-	for(var/slot in equip_slots)
-		wearer.update_equipment_overlay(slot, FALSE)
-	wearer.update_icon()
+	for(var/equipped_slot in get_associated_equipment_slots())
+		wearer.update_equipment_overlay(equipped_slot, FALSE)
+	if(do_update_icon)
+		wearer.update_icon()
 	return TRUE
 
 /obj/item/proc/reconsider_client_screen_presence(var/client/client, var/slot)
@@ -1142,7 +1171,7 @@ modules/mob/living/human/life.dm if you die, you will be zoomed out.
 	set name = "Switch Gathering Method"
 	set category = "Object"
 	if(!storage)
-		verbs = /obj/item/proc/toggle_gathering_mode
+		verbs -= /obj/item/proc/toggle_gathering_mode
 		return
 	storage.collection_mode = !storage.collection_mode
 	switch (storage.collection_mode)
@@ -1155,7 +1184,7 @@ modules/mob/living/human/life.dm if you die, you will be zoomed out.
 	set name = "Empty Contents"
 	set category = "Object"
 	if(!storage)
-		verbs = /obj/item/proc/quick_empty
+		verbs -= /obj/item/proc/quick_empty
 		return
 	if((!ishuman(usr) && (loc != usr)) || usr.stat || usr.restrained())
 		return
@@ -1182,3 +1211,46 @@ modules/mob/living/human/life.dm if you die, you will be zoomed out.
 
 /obj/item/proc/get_stance_support_value()
 	return 0
+
+/obj/item/is_watertight()
+	return watertight || ..()
+
+// TODO: merge beakers etc down into this proc.
+/// @params:
+/// - state_prefix as text: if non-null, this string is prepended to the reagent overlay state, typically world/inventory/etc
+/// @returns:
+/// - reagent_overlay as /image|null - the overlay image representing the reagents in this object
+/obj/item/proc/get_reagents_overlay(state_prefix)
+	if(reagents?.total_volume <= 0)
+		return
+	var/decl/material/primary_reagent = reagents.get_primary_reagent_decl()
+	if(!primary_reagent)
+		return
+	var/reagents_state
+	if(primary_reagent.reagent_overlay_base)
+		reagents_state = primary_reagent.reagent_overlay_base
+	else
+		reagents_state = "reagent_base"
+	if(state_prefix)
+		reagents_state = "[state_prefix]_[reagents_state]" // prepend world, inventory, or slot
+	if(!reagents_state || !check_state_in_icon(reagents_state, icon))
+		return
+	var/image/reagent_overlay = overlay_image(icon, reagents_state, reagents.get_color(), RESET_COLOR | RESET_ALPHA)
+	for(var/reagent_type in reagents.reagent_volumes)
+		var/decl/material/reagent = GET_DECL(reagent_type)
+		if(!reagent.reagent_overlay)
+			continue
+		var/modified_reagent_overlay = state_prefix ? "[state_prefix]_[reagent.reagent_overlay]" : reagent.reagent_overlay
+		if(!check_state_in_icon(modified_reagent_overlay, icon))
+			continue
+		reagent_overlay.overlays += overlay_image(icon, modified_reagent_overlay, reagent.get_reagent_overlay_color(reagents), RESET_COLOR | RESET_ALPHA)
+	return reagent_overlay
+
+/obj/item/on_reagent_change()
+	. = ..()
+	// You can't put liquids in clay/sand/dirt vessels, sorry.
+	if(reagents?.total_liquid_volume > 0 && material && material.hardness <= MAT_VALUE_MALLEABLE && !QDELETED(src))
+		visible_message(SPAN_DANGER("\The [src] falls apart!"))
+		squash_item()
+		if(!QDELETED(src))
+			physically_destroyed()

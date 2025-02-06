@@ -5,7 +5,7 @@
 	icon_state = "left"
 	min_force = 4
 	hitsound = 'sound/effects/Glasshit.ogg'
-	max_health = 150 //If you change this, consiter changing ../door/window/brigdoor/ health at the bottom of this .dm file
+	max_health = 150 //If you change this, consider changing ../door/window/brigdoor/ health at the bottom of this .dm file
 	current_health = 150
 	visible = 0.0
 	use_power = POWER_USE_OFF
@@ -176,7 +176,7 @@
 /obj/machinery/door/window/attackby(obj/item/I, mob/user)
 	//If it's in the process of opening/closing, ignore the click
 	if(operating)
-		return
+		return TRUE
 
 	if(bash(I, user))
 		return TRUE
@@ -191,11 +191,13 @@
 		else
 			if (emagged)
 				to_chat(user, SPAN_WARNING("\The [src] seems to be stuck and refuses to close!"))
-				return
+				return TRUE
 			close()
+		return TRUE
 
 	else if (density)
 		flick("[base_state]deny", src)
+		return TRUE
 
 /obj/machinery/door/window/bash(obj/item/weapon, mob/user)
 	//Emags and energy swords? You may pass.

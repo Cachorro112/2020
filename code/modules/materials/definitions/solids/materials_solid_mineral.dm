@@ -85,8 +85,8 @@
 	color = "#ccc9a3"
 	reflectiveness = MAT_VALUE_SHINY
 	value = 0.8
-	sparse_material_weight = 3
-	rich_material_weight = 1
+	sparse_material_weight = 9
+	rich_material_weight = 3
 	dissolves_into = list(
 		/decl/material/solid/sulfur = 0.75,
 		/decl/material/solid/metal/iron = 0.25
@@ -102,8 +102,8 @@
 	ore_icon_overlay = "lump"
 	color = "#e5becb"
 	value = 0.8
-	sparse_material_weight = 3
-	rich_material_weight = 1
+	sparse_material_weight = 9
+	rich_material_weight = 3
 	dissolves_into = list(
 		/decl/material/solid/lithium = 1
 	)
@@ -118,8 +118,8 @@
 	ore_icon_overlay = "lump"
 	color = "#e54e4e"
 	value = 0.8
-	sparse_material_weight = 3
-	rich_material_weight = 1
+	sparse_material_weight = 9
+	rich_material_weight = 3
 	dissolves_into = list(
 		/decl/material/liquid/mercury = 1
 	)
@@ -137,8 +137,8 @@
 	)
 	color = "#832828"
 	value = 0.8
-	sparse_material_weight = 3
-	rich_material_weight = 1
+	sparse_material_weight = 9
+	rich_material_weight = 3
 	lore_text = "A chemical element, the backbone of biological energy carriers."
 	taste_description = "vinegar"
 
@@ -153,8 +153,8 @@
 	ore_icon_overlay = "lump"
 	color = "#d1c0bc"
 	value = 0.8
-	sparse_material_weight = 3
-	rich_material_weight = 1
+	sparse_material_weight = 12
+	rich_material_weight = 4
 	taste_description = "salt"
 	overdose = REAGENTS_OVERDOSE
 	dissolves_into = list(
@@ -181,7 +181,8 @@
 		/decl/material/solid/potassium = 1
 	)
 
-/decl/material/solid/potassium/affect_blood(var/mob/living/M, var/removed, var/datum/reagents/holder)
+/decl/material/solid/potash/affect_blood(var/mob/living/M, var/removed, var/datum/reagents/holder)
+	. = ..()
 	var/volume = REAGENT_VOLUME(holder, type)
 	if(volume > 3)
 		M.add_chemical_effect(CE_PULSE, 1)
@@ -233,7 +234,7 @@
 	)
 	dug_drop_type = /obj/item/stack/material/ore/handful
 	default_solid_form = /obj/item/stack/material/ore/handful
-	can_backfill_turf_type = /turf/floor/natural/sand
+	can_backfill_floor_type = /decl/flooring/sand
 
 /decl/material/solid/clay
 	name = "clay"
@@ -256,7 +257,7 @@
 	melting_point = null // Clay is already almost a liquid...
 	// lower than the temperature expected from a kiln so that clay can be used to make bricks to make a high-temperature kiln.
 	bakes_into_at_temperature = 950 CELSIUS
-	can_backfill_turf_type = /turf/floor/natural/clay
+	can_backfill_floor_type = /decl/flooring/clay
 
 /decl/material/solid/soil
 	name = "soil"
@@ -271,9 +272,9 @@
 	dirtiness = 30
 	dug_drop_type = /obj/item/stack/material/lump/large
 	tillable = TRUE
-	can_backfill_turf_type = list(
-		/turf/floor/natural/mud,
-		/turf/floor/natural/dirt
+	can_backfill_floor_type = list(
+		/decl/flooring/mud,
+		/decl/flooring/dirt
 	)
 
 /decl/material/solid/hematite
@@ -284,7 +285,7 @@
 		/decl/material/solid/metal/iron = 0.8,
 		/decl/material/solid/slag = 0.2
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_result_amount = 2
@@ -329,7 +330,7 @@
 		/decl/material/solid/metal/silver = 0.4,
 		/decl/material/solid/slag = 0.2
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_result_amount = 2
@@ -351,7 +352,7 @@
 		/decl/material/solid/metal/copper = 0.1,
 		/decl/material/solid/slag = 0.1
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_result_amount = 2
@@ -378,7 +379,7 @@
 		/decl/material/solid/metal/copper = 0.6,
 		/decl/material/solid/slag = 0.4
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_result_amount = 2
@@ -438,7 +439,7 @@
 		/decl/material/solid/metal/tungsten = 0.2,
 		/decl/material/solid/slag = 0.1
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "cassiterite"
@@ -466,7 +467,7 @@
 		/decl/material/solid/metal/iron = 0.2,
 		/decl/material/solid/slag = 0.5
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "wolframite"
@@ -495,7 +496,7 @@
 		/decl/material/solid/glass = 0.1,
 		/decl/material/solid/slag = 0.3
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "sperrylite"
@@ -524,7 +525,7 @@
 		/decl/material/solid/metal/iron = 0.1,
 		/decl/material/solid/slag = 0.2
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "sphalerite"
@@ -553,7 +554,7 @@
 		/decl/material/solid/metal/silver = 0.1,
 		/decl/material/solid/slag = 0.1
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "galena"
@@ -581,7 +582,7 @@
 		/decl/material/solid/metal/silver = 0.3,
 		/decl/material/solid/slag = 0.1
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "calaverite"
@@ -608,7 +609,7 @@
 		/decl/material/solid/metal/lead = 0.4,
 		/decl/material/solid/slag = 0.3
 	)
-	heating_point = GENERIC_SMELTING_HEAT_POINT
+	heating_point = LOW_SMELTING_HEAT_POINT
 	heating_sound = null
 	heating_message = null
 	ore_name = "crocoite"

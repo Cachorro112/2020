@@ -214,7 +214,7 @@
 
 /decl/recipe/twobread
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE // it's tradition, see
-	reagents = list(/decl/material/liquid/ethanol/wine = 5)
+	reagents = list(/decl/material/liquid/alcohol/wine = 5)
 	items = list(
 		/obj/item/food/slice/bread = 2,
 	)
@@ -223,7 +223,7 @@
 /decl/recipe/taco
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
 	items = list(
-		/obj/item/food/doughslice,
+		/obj/item/food/unleaveneddoughslice,
 		/obj/item/food/butchery/cutlet,
 		/obj/item/food/dairy/cheese/wedge
 	)

@@ -18,7 +18,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 	butchery_data = null
 	ai = /datum/mob_controller/slime
-	hud_used = /datum/hud/slime
+	hud_used = /datum/hud/animal
 	nutrition = 800
 
 	var/is_adult = FALSE
@@ -127,7 +127,7 @@
 			if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition())
 					if (is_adult || prob(5))
-						UnarmedAttack(AM)
+						UnarmedAttack(AM, Adjacent(AM))
 
 	if(ismob(AM))
 		var/mob/tmob = AM

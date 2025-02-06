@@ -26,7 +26,7 @@
 			var/decl/material/bristle_mat = GET_DECL(bristle_material)
 			add_overlay(overlay_image(icon, bristle_state, bristle_mat.color, RESET_COLOR))
 
-/obj/item/staff/broom/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing)
+/obj/item/staff/broom/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && bristle_material)
 		var/bristle_state = "[overlay.icon_state]-bristles"
 		if(check_state_in_icon(bristle_state, overlay.icon))
@@ -45,10 +45,10 @@
 		if(isturf(A))
 			var/turf/cleaning = A
 			var/dirty = cleaning.get_dirt()
-			if(dirty)
+			if(dirty > 10) // a small amount so that you can't sweep immediately after someone walks somewhere
 				user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 				user.visible_message(SPAN_NOTICE("\The [user] sweeps \the [A]."))
-				// TODO: shff sound
+				playsound(A, "sweeping", 100, TRUE)
 				cleaning.remove_dirt(min(dirty, rand(20,30)))
 			else
 				to_chat(user, SPAN_WARNING("\The [cleaning] is not in need of sweeping."))

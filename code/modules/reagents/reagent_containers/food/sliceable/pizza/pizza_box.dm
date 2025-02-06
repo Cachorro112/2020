@@ -10,7 +10,7 @@
 	var/open = FALSE // Is the box open?
 	var/image/messy_overlay
 	var/obj/item/food/sliceable/pizza/pizza
-	var/list/stacked_boxes
+	var/list/obj/item/pizzabox/stacked_boxes
 	var/box_tag
 	var/box_tag_color = COLOR_BLACK
 
@@ -31,7 +31,7 @@
 	events_repository.unregister(/decl/observ/moved, src, src)
 	return ..()
 
-/obj/item/pizzabox/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
+/obj/item/pizzabox/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && length(stacked_boxes))
 		var/i = 1
 		for(var/obj/item/pizzabox/box in stacked_boxes)

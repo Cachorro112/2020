@@ -23,6 +23,9 @@
 	nutriment_animal = TRUE
 	reagent_overlay = "soup_chunks"
 	nutriment_factor = 10
+	allergen_flags = ALLERGEN_MEAT
+	affect_blood_on_ingest = 0
+	affect_blood_on_inhale = 0
 
 /decl/material/solid/organic/meat/egg
 	name = "egg yolk"
@@ -33,18 +36,26 @@
 	melting_point = 273
 	boiling_point = 373
 	reagent_overlay = "soup_dumplings"
+	allergen_flags = ALLERGEN_EGG
 
 /decl/material/solid/organic/meat/fish
 	name  = "fish meat"
 	codex_name = "fish protein"
 	uid = "solid_meat_fish"
 	color = "#ff9b9b"
+	allergen_flags = ALLERGEN_FISH
 
 /decl/material/solid/organic/meat/chicken
 	name  = "chicken meat"
 	codex_name = "chicken protein"
 	uid = "solid_meat_chicken"
 	color = "#e98a8a"
+
+/decl/material/solid/organic/meat/xeno
+	name = "alien meat"
+	codex_name = "xenoprotein"
+	uid = "solid_meat_xeno"
+	color = COLOR_LIME
 
 /decl/material/solid/organic/meat/gut
 	name = "gut"
@@ -78,6 +89,7 @@
 	tans_to = /decl/material/solid/organic/leather
 	compost_value = 0.8
 	nutriment_animal = TRUE
+	allergen_flags = ALLERGEN_MEAT
 
 /decl/material/solid/organic/skin/lizard
 	name = "lizardskin"
@@ -110,6 +122,7 @@
 	sound_manipulate = 'sound/foley/paperpickup2.ogg'
 	sound_dropped = 'sound/foley/paperpickup1.ogg'
 	fishing_bait_value = 0
+	paint_verb = "dyed"
 
 /decl/material/solid/organic/skin/fur/gray
 	uid = "solid_fur_gray"
@@ -132,6 +145,10 @@
 /decl/material/solid/organic/skin/fur/heavy
 	color = COLOR_GUNMETAL
 	uid = "solid_fur_heavy"
+
+/decl/material/solid/organic/skin/sheep
+	color = COLOR_DARK_GRAY
+	uid = "solid_skin_sheep"
 
 /decl/material/solid/organic/skin/goat
 	color = COLOR_SILVER

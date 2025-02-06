@@ -32,6 +32,7 @@
 		insert_tank(new tank, null, TRUE, TRUE)
 	set_extension(src, /datum/extension/tool, list(TOOL_WELDER = TOOL_QUALITY_DEFAULT))
 	set_extension(src, /datum/extension/base_icon_state, icon_state)
+	set_extension(src, /datum/extension/demolisher/welder)
 	. = ..()
 	update_icon()
 
@@ -146,7 +147,7 @@
 /obj/item/weldingtool/attackby(obj/item/W, mob/user)
 	if(welding)
 		to_chat(user, SPAN_WARNING("Stop welding first!"))
-		return
+		return TRUE
 
 	if (istype(W, /obj/item/chems/welder_tank))
 		return insert_tank(W, user)
@@ -212,11 +213,11 @@
 //Removes fuel from the welding tool. If a mob is passed, it will perform an eyecheck on the mob.
 /obj/item/weldingtool/proc/weld(var/fuel_usage = 1, var/mob/user = null)
 	if(!welding)
-		return
+		return FALSE
 	if(get_fuel() < fuel_usage)
 		if(user)
 			to_chat(user, SPAN_NOTICE("You need more [welding_resource] to complete this task."))
-		return
+		return FALSE
 
 	use_fuel(fuel_usage)
 	if(user)
@@ -343,20 +344,17 @@
 		return turn_on(user)
 
 /obj/item/weldingtool/use_on_mob(mob/living/target, mob/living/user, animate = TRUE)
-	if(ishuman(target))
-		var/mob/living/human/H = target
-		var/obj/item/organ/external/S = GET_EXTERNAL_ORGAN(H, user?.get_target_zone())
-		if(!S || !S.is_robotic() || user.a_intent != I_HELP)
-			return ..()
-		if(BP_IS_BRITTLE(S))
-			to_chat(user, SPAN_WARNING("\The [target]'s [S.name] is hard and brittle - \the [src]  cannot repair it."))
-			return TRUE
-		if(!welding)
-			to_chat(user, SPAN_WARNING("You'll need to turn [src] on to patch the damage on [target]'s [S.name]!"))
-			return TRUE
-		if(S.robo_repair(15, BRUTE, "some dents", src, user))
+	var/obj/item/organ/external/affecting = istype(target) && GET_EXTERNAL_ORGAN(target, user?.get_target_zone())
+	if(affecting && user.a_intent == I_HELP)
+		if(!affecting.is_robotic())
+			to_chat(user, SPAN_WARNING("\The [target]'s [affecting.name] is not robotic. \The [src] cannot repair it."))
+		else if(BP_IS_BRITTLE(affecting))
+			to_chat(user, SPAN_WARNING("\The [target]'s [affecting.name] is hard and brittle. \The [src] cannot repair it."))
+		else if(!welding)
+			to_chat(user, SPAN_WARNING("You'll need to turn \the [src] on to patch the damage on \the [target]'s [affecting.name]!"))
+		else if(affecting.robo_repair(15, BRUTE, "some dents", src, user))
 			weld(1, user)
-			return TRUE
+		return TRUE
 	return ..()
 
 /obj/item/weldingtool/get_autopsy_descriptors()
@@ -434,7 +432,7 @@
 			return TRUE
 	return ..()
 
-/obj/item/chems/welder_tank/standard_dispenser_refill(mob/user, obj/structure/reagent_dispensers/target)
+/obj/item/chems/welder_tank/standard_dispenser_refill(mob/user, obj/structure/reagent_dispensers/target, skip_container_check = FALSE)
 	if(!can_refuel)
 		to_chat(user, SPAN_DANGER("\The [src] does not have a refuelling port."))
 		return FALSE

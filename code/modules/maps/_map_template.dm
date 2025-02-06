@@ -229,7 +229,7 @@
 		SSlighting.InitializeTurfs(atoms_to_initialise)	// Hopefully no turfs get placed on new coords by SSatoms.
 	Master.StopLoadingMap()
 
-	log_game("[name] loaded at at [T.x],[T.y],[T.z]")
+	log_game("[name] loaded at [T.x],[T.y],[T.z]")
 	loaded++
 
 	return TRUE
@@ -241,6 +241,7 @@
 		if(!QDELETED(mark))
 			qdel(mark)
 	subtemplates_to_spawn = null
+	generate_multi_spawn_items()
 
 /datum/map_template/proc/extend_bounds_if_needed(var/list/existing_bounds, var/list/new_bounds)
 	var/list/bounds_to_combine = existing_bounds

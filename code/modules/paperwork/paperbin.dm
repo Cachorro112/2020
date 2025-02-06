@@ -59,7 +59,7 @@
 			if("Carbon-Copy")
 				P = new /obj/item/paper/carbon
 			else
-				return
+				return TRUE
 
 		if(!istype(P, /obj/item/paper/carbon) && global.current_holiday?.name == "April Fool's Day" && prob(30))
 			P.rigged = TRUE
@@ -76,17 +76,16 @@
 	if(istype(I, /obj/item/paper))
 		if(amount >= max_amount)
 			to_chat(user, SPAN_WARNING("\The [src] is full!"))
-			return
+			return TRUE
 		if(!user.try_unequip(I, src))
-			return
+			return TRUE
 		add_paper(I)
 		to_chat(user, SPAN_NOTICE("You put [I] in [src]."))
 		return TRUE
-
 	else if(istype(I, /obj/item/paper_bundle))
 		if(amount >= max_amount)
 			to_chat(user, SPAN_WARNING("\The [src] is full!"))
-			return
+			return TRUE
 		var/obj/item/paper_bundle/B = I
 		var/was_there_a_photo = FALSE
 		for(var/obj/item/bundleitem in I) //loop through items in bundle
@@ -102,7 +101,6 @@
 		if(was_there_a_photo)
 			to_chat(user, SPAN_NOTICE("The photo cannot go into \the [src]."))
 		return TRUE
-
 	return ..()
 
 /obj/item/paper_bin/examine(mob/user, distance)
@@ -161,7 +159,8 @@
 /decl/interaction_handler/paper_bin_dump_contents/is_possible(var/obj/item/paper_bin/target, mob/user, obj/item/prop)
 	return ..() && target.amount > 0
 
-/decl/interaction_handler/paper_bin_dump_contents/invoked(var/obj/item/paper_bin/bin, mob/user)
+/decl/interaction_handler/paper_bin_dump_contents/invoked(atom/target, mob/user, obj/item/prop)
+	var/obj/item/paper_bin/bin = target
 	to_chat(user, SPAN_NOTICE("You start emptying \the [bin]..."))
 	if(do_after(user, 2 SECONDS) && !QDELETED(bin))
 		bin.dump_contents()

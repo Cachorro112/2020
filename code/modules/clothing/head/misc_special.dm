@@ -32,6 +32,7 @@
 	flash_protection = FLASH_PROTECTION_MAJOR
 	tint = TINT_HEAVY
 	replaced_in_loadout = FALSE
+	accessory_slot = null // cannot be equipped on top of helmets
 	var/up = 0
 	var/base_state
 
@@ -145,6 +146,9 @@
 	brightness_on = 2
 	w_class = ITEM_SIZE_NORMAL
 	material = /decl/material/solid/organic/plantmatter
+	valid_accessory_slots = list(ACCESSORY_SLOT_OVER_HELMET)
+	restricted_accessory_slots = list(ACCESSORY_SLOT_OVER_HELMET)
+	accessory_slot = null // cannot be equipped on top of helmets
 	var/plant_type = "pumpkin"
 
 // Duplicated from growns for now. TODO: move sliceability down to other objects like clay.
@@ -225,7 +229,7 @@
 	if(overlay && check_state_in_icon("[overlay.icon_state]-flame", overlay.icon))
 		return emissive_overlay(overlay.icon, "[overlay.icon_state]-flame")
 
-/obj/item/clothing/head/cakehat/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
+/obj/item/clothing/head/cakehat/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && is_on_fire)
 		var/image/I = get_mob_flame_overlay(overlay, bodytype)
 		if(I)

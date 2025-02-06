@@ -8,7 +8,6 @@
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "h" = (
 /obj/abstract/exterior_marker/inside,
-/obj/structure/table/woodentable/ebony,
 /obj/item/rock/hematite{
 	pixel_x = -8;
 	pixel_y = 16
@@ -32,7 +31,8 @@
 	pixel_y = 4;
 	pixel_x = -8
 	},
-/turf/floor/natural/path/herringbone/basalt,
+/obj/structure/table/desk/ebony,
+/turf/floor/path/herringbone/basalt,
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "k" = (
 /obj/abstract/exterior_marker/inside,
@@ -52,7 +52,7 @@
 	dir = 1;
 	pixel_y = 10
 	},
-/turf/floor/natural/dirt,
+/turf/floor/dirt,
 /area/template_noop)
 "p" = (
 /obj/abstract/exterior_marker/inside,
@@ -63,12 +63,12 @@
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "q" = (
 /obj/structure/drying_rack/ebony,
-/turf/floor/natural/dirt,
+/turf/floor/dirt,
 /area/template_noop)
 "r" = (
 /obj/abstract/exterior_marker/inside,
 /obj/structure/filter_stand/mapped,
-/turf/floor/natural/path/herringbone/basalt,
+/turf/floor/path/herringbone/basalt,
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "s" = (
 /obj/abstract/exterior_marker/inside,
@@ -123,7 +123,7 @@
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "N" = (
 /obj/abstract/exterior_marker/inside,
-/turf/floor/natural/path/herringbone/basalt,
+/turf/floor/path/herringbone/basalt,
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "R" = (
 /obj/abstract/exterior_marker/inside,
@@ -133,7 +133,6 @@
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "U" = (
 /obj/abstract/exterior_marker/inside,
-/obj/structure/table/woodentable/ebony,
 /obj/structure/wall_sconce/lantern{
 	dir = 1;
 	pixel_y = 10
@@ -142,15 +141,17 @@
 	pixel_x = -10;
 	pixel_y = 18
 	},
-/obj/structure/fire_source/heater/mapped,
+/obj/structure/fire_source/heater/mapped{
+	pixel_y = 2
+	},
 /obj/item/chems/glass/handmade/bottle/tall/wine{
 	pixel_x = -10;
 	pixel_y = 9
 	},
-/turf/floor/natural/path/herringbone/basalt,
+/turf/floor/path/herringbone/basalt,
 /area/shaded_hills/outside/point_of_interest/chemistry_shack)
 "W" = (
-/turf/floor/natural/dirt,
+/turf/floor/dirt,
 /area/template_noop)
 "X" = (
 /obj/abstract/exterior_marker/inside,

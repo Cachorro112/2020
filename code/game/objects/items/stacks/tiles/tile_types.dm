@@ -21,7 +21,7 @@
 	item_flags = 0
 	obj_flags = 0
 	_base_attack_force = 1
-	var/replacement_turf_type = /turf/floor
+	var/replacement_turf_type = /turf/floor/plating
 
 /obj/item/stack/tile/proc/try_build_turf(var/mob/user, var/turf/target)
 
@@ -285,8 +285,8 @@
 
 /obj/item/stack/tile/carpet/on_update_icon()
 	. = ..()
-	color = get_color()
-	set_overlays(overlay_image(icon, "[icon_state]-detail", detail_color, RESET_COLOR))
+	if(detail_color)
+		set_overlays(overlay_image(icon, "[icon_state]-detail", detail_color, RESET_COLOR))
 
 /obj/item/stack/tile/carpet/fifty
 	amount = 50
@@ -369,6 +369,13 @@
 
 /obj/item/stack/tile/carpet/red/fifty
 	amount = 50
+
+/obj/item/stack/tile/carpet/rustic
+	name = "rustic carpet"
+	desc = "A piece of simple, rustic carpeting."
+	singular_name = "rustic carpet"
+	paint_color = COLOR_CHESTNUT
+	detail_color = null
 
 /obj/item/stack/tile/pool
 	name = "pool tiling"

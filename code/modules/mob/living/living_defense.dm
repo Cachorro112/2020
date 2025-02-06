@@ -25,7 +25,7 @@
 	var/obj/item/assembly/signaler/signaler = get_active_held_item()
 	if(istype(signaler) && signaler.deadman)
 		log_and_message_admins("has triggered a signaler deadman's switch")
-		src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
+		visible_message(SPAN_WARNING("[src] triggers their deadman's switch!"))
 		signaler.signal()
 	//Armor
 	var/damage = P.damage
@@ -83,7 +83,7 @@
 
 
 //Handles the effects of "stun" weapons
-/mob/living/proc/stun_effect_act(var/stun_amount, var/agony_amount, var/def_zone, var/used_weapon=null)
+/mob/living/proc/stun_effect_act(stun_amount, agony_amount, def_zone, used_weapon)
 	flash_pain()
 
 	if (stun_amount)
@@ -97,8 +97,53 @@
 		apply_effect(agony_amount/10, STUTTER)
 		apply_effect(agony_amount/10, EYE_BLUR)
 
-/mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, def_zone = null)
-	  return 0 // No root logic, implemented separately on human and silicon.
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, def_zone)
+	SHOULD_CALL_PARENT(TRUE)
+	if(status_flags & GODMODE)
+		return 0
+
+	var/decl/species/my_species = get_species()
+	if(my_species?.species_flags & SPECIES_FLAG_ABSORB_ELECTRICITY)
+		spark_at(loc, amount=5, cardinal_only = TRUE)
+		LAZYADD(global.stored_shock_by_ref["\ref[src]"], shock_damage)
+		return 0
+
+	if(!shock_damage)
+		return 0
+
+	stun_effect_act(agony_amount=shock_damage, def_zone=def_zone)
+
+	playsound(loc, "sparks", 50, 1, -1)
+	if (shock_damage > 15)
+		visible_message(
+			SPAN_DANGER("\The [src] was electrocuted[source ? " by \the [source]" : ""]!"),
+			SPAN_DANGER("You feel a powerful shock course through your body!"),
+			SPAN_WARNING("You hear a heavy electrical crack.")
+		)
+	else
+		visible_message(
+			SPAN_DANGER("\The [src] was shocked[source ? " by \the [source]" : ""]."),
+			SPAN_DANGER("You feel a shock course through your body."),
+			SPAN_WARNING("You hear a zapping sound.")
+		)
+
+	switch(shock_damage)
+		if(11 to 15)
+			SET_STATUS_MAX(src, STAT_STUN, 1)
+		if(16 to 20)
+			SET_STATUS_MAX(src, STAT_STUN, 2)
+		if(21 to 25)
+			SET_STATUS_MAX(src, STAT_WEAK, 2)
+		if(26 to 30)
+			SET_STATUS_MAX(src, STAT_WEAK, 5)
+		if(31 to INFINITY)
+			SET_STATUS_MAX(src, STAT_WEAK, 10) //This should work for now, more is really silly and makes you lay there forever
+
+	set_status(STAT_JITTER, min(shock_damage*5, 200))
+
+	spark_at(loc, amount=5, cardinal_only = TRUE)
+
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	for(var/obj/O in get_mob_contents())
@@ -114,7 +159,7 @@
 	if(I.attack_message_name())
 		weapon_mention = " with [I.attack_message_name()]"
 	if(effective_force)
-		visible_message(SPAN_DANGER("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by [user]!"))
+		visible_message(SPAN_DANGER("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by \the [user]!"))
 	else
 		visible_message(SPAN_WARNING("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by \the [user]!"))
 	. = standard_weapon_hit_effects(I, user, effective_force, hit_zone)
@@ -199,7 +244,7 @@
 	if(anchored || buckled)
 		return 0
 	. = (AM.get_mass()*TT.speed)/(get_mass()*min(AM.throw_speed,2))
-	if(has_gravity() || check_space_footing())
+	if(!can_slip(magboots_only = TRUE))
 		. *= 0.5
 
 /mob/living/proc/try_embed_in_mob(mob/living/user, obj/O, def_zone, embed_damage = 0, dtype = BRUTE, datum/wound/supplied_wound, obj/item/organ/external/affecting, direction)
@@ -259,13 +304,13 @@
 
 //This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(var/turf/T, var/speed)
-	visible_message("<span class='danger'>[src] slams into \the [T]!</span>")
+	visible_message(SPAN_DANGER("\The [src] slams into \the [T]!"))
 	playsound(T, 'sound/effects/bangtaper.ogg', 50, 1, 1)//so it plays sounds on the turf instead, makes for awesome carps to hull collision and such
 	apply_damage(speed*5, BRUTE)
 
 /mob/living/proc/near_wall(var/direction,var/distance=1)
 	var/turf/T = get_step(get_turf(src),direction)
-	var/turf/last_turf = src.loc
+	var/turf/last_turf = loc
 	var/i = 1
 
 	while(i>0 && i<=distance)
@@ -286,7 +331,7 @@
 
 	admin_attack_log(user, src, "Attacked", "Was attacked", "attacked")
 
-	src.visible_message("<span class='danger'>\The [user] has [attack_message] \the [src]!</span>")
+	visible_message(SPAN_DANGER("\The [user] has [attack_message] \the [src]!"))
 	take_damage(damage)
 	user.do_attack_animation(src)
 	return 1
@@ -330,13 +375,13 @@
 
 	fire_stacks = max(0, fire_stacks - 0.2) //I guess the fire runs out of fuel eventually
 
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
+	var/datum/gas_mixture/G = loc?.return_air() // Check if we're standing in an oxygenless environment
+	if(G?.get_by_flag(XGM_GAS_OXIDIZER) < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(fire_burn_temperature(), 50, 1)
+	location?.hotspot_expose(fire_burn_temperature(), 50, 1)
 
 	var/burn_temperature = fire_burn_temperature()
 	var/thermal_protection = get_heat_protection(burn_temperature)

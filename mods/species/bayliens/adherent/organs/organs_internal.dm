@@ -1,4 +1,6 @@
 #define PROTOCOL_ARTICLE "Protocol article [rand(100,999)]-[uppertext(pick(global.alphabet))] subsection #[rand(10,99)]"
+/datum/action/item_action/organ/adherent
+	button_icon = 'mods/species/bayliens/adherent/icons/actions.dmi'
 
 /obj/item/organ/internal/brain/adherent
 	name = "mentality matrix"
@@ -7,6 +9,8 @@
 	icon_state = "brain"
 	action_button_name = "Reset Ident"
 	action_button_desc = "Updates your public name to reflect your current job"
+	default_action_type = /datum/action/item_action/organ/adherent
+
 	var/next_rename
 	var/rename_delay = 15 MINUTES
 
@@ -83,6 +87,7 @@
 	desc = "Gas jets from a Adherent chassis."
 	action_button_name = "Toggle Maneuvering Pack"
 	action_button_desc = "Enables or disables your internal jetpack which allow you to maneuver in open space"
+	default_action_type = /datum/action/item_action/organ/adherent
 	use_descriptor = "adjust your vector"
 	organ_tag = BP_JETS
 	parent_organ = BP_CHEST
@@ -96,6 +101,7 @@
 	desc = "A broad, flat disc of exotic matter. Slick to the touch."
 	action_button_name = "Toggle Antigravity"
 	action_button_desc = "Enables or disables your levitation disc which allow you to levitate and fly above tables/racks"
+	default_action_type = /datum/action/item_action/organ/adherent
 	organ_tag = BP_FLOAT
 	parent_organ = BP_GROIN
 	icon_state = "float"
@@ -133,6 +139,7 @@
 	desc = "A lacy filligree of heat-radiating fins."
 	action_button_name = "Toggle Cooling"
 	action_button_desc = "Enables or disables your battery-powered internal cooling system"
+	default_action_type = /datum/action/item_action/organ/adherent
 	organ_tag = BP_COOLING_FINS
 	parent_organ = BP_GROIN
 	icon_state = "fins"
@@ -154,5 +161,16 @@
 			maintenance_cost = 0
 	else
 		. = ..()
+
+/mob/living/is_space_movement_permitted(allow_movement = FALSE)
+	// This is horrible but short of spawning a jetpack inside the organ than locating
+	// it, I don't really see another viable approach short of a total jetpack refactor.
+	for(var/obj/item/organ/internal/powered/jets/jet in get_internal_organs())
+		if(!jet.is_broken() && jet.active)
+			// Unlike Bay, we don't check or unset inertia_dir here
+			// because the spacedrift subsystem checks the return value of this proc
+			// and unsets inertia_dir if it returns nonzero.
+			return SPACE_MOVE_PERMITTED
+	return ..()
 
 #undef PROTOCOL_ARTICLE

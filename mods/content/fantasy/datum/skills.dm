@@ -220,6 +220,7 @@
 
 /decl/skill/service/husbandry
 	name = "Animal Husbandry"
+	uid = "skill_husbandry"
 	desc = "Your ability to raise and care for animals."
 	levels = list(
 		"Unskilled"   = "You know next to nothing about animals. You can feed and clean up after them, but you know nothing about their biology, their behavior, or raising their young.",
@@ -231,8 +232,13 @@
 
 /obj/item/food/egg/examine_skill = SKILL_HUSBANDRY
 /mob/living/simple_animal/chick/examine_skill = SKILL_HUSBANDRY
-/mob/living/simple_animal/cow/milking_skill = SKILL_HUSBANDRY
-/mob/living/simple_animal/hostile/goat/milking_skill = SKILL_HUSBANDRY
+
+/datum/extension/milkable
+	milking_skill = SKILL_HUSBANDRY
+
+/datum/extension/shearable
+	shearing_skill = SKILL_HUSBANDRY
+
 /datum/mob_controller/passive/scooping_skill = SKILL_HUSBANDRY
 
 /decl/skill/service/cooking
@@ -301,3 +307,6 @@
 		"Experienced" = "You work as an pharmacist, or else you are a doctor with training in chemistry. If you are a pharmacist, you can make most medications. At this stage, you're working mostly by-the-book. <br>- You can examine held containers for some reagents.",
 		"Master"      = "You specialized in chemistry or pharmaceuticals; you are either a medical researcher or professional chemist. You can create custom mixes and make even the trickiest of medications easily. You understand how your pharmaceuticals interact with the bodies of your patients. You are probably the originator of at least one new chemical innovation.<br>- You can examine held containers for all reagents."
 	)
+
+/datum/lock
+	lockpicking_skill = SKILL_ARTIFICE

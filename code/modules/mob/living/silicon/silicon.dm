@@ -71,15 +71,6 @@
 /mob/living/silicon/get_dexterity(silent)
 	return dexterity
 
-/mob/living/silicon/experiences_hunger_and_thirst()
-	return FALSE // Doesn't really apply to robots. Maybe unify this with cells in the future.
-
-/mob/living/silicon/get_nutrition()
-	return get_max_nutrition()
-
-/mob/living/silicon/get_hydration()
-	return get_max_hydration()
-
 /mob/living/silicon/fully_replace_character_name(new_name)
 	..()
 	create_or_update_account(new_name)
@@ -95,7 +86,7 @@
 	return
 
 /mob/living/silicon/drop_item(var/Target)
-	for(var/obj/item/grab/grab in get_active_grabs())
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
 		qdel(grab)
 		. = TRUE
 
@@ -115,22 +106,24 @@
 	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
-/mob/living/silicon/stun_effect_act(var/stun_amount, var/agony_amount)
+/mob/living/silicon/stun_effect_act(stun_amount, agony_amount, def_zone, used_weapon)
 	return	//immune
 
-/mob/living/silicon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, def_zone = null)
-
-	if (istype(source, /obj/effect/containment_field))
-		spark_at(loc, amount=5, cardinal_only = TRUE)
-
-		shock_damage *= 0.75	//take reduced damage
-		take_overall_damage(0, shock_damage)
-		visible_message("<span class='warning'>\The [src] was shocked by \the [source]!</span>", \
-			"<span class='danger'>Energy pulse detected, system damaged!</span>", \
-			"<span class='warning'>You hear an electrical crack</span>")
-		if(prob(20))
-			SET_STATUS_MAX(src, STAT_STUN, 2)
-		return
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, def_zone)
+	shock_damage = ..()
+	if(shock_damage <= 0 || !istype(source, /obj/effect/containment_field))
+		return 0
+	spark_at(loc, amount=5, cardinal_only = TRUE)
+	shock_damage *= 0.75	//take reduced damage
+	take_overall_damage(0, shock_damage)
+	visible_message(
+		SPAN_DANGER("\The [src] was shocked by \the [source]!"),
+		SPAN_DANGER("Energy pulse detected, system damaged!"),
+		SPAN_DANGER("You hear an electrical crack.")
+	)
+	if(prob(20))
+		SET_STATUS_MAX(src, STAT_STUN, 2)
+	return shock_damage
 
 /mob/living/silicon/bullet_act(var/obj/item/projectile/Proj)
 	if(!Proj.nodamage)
@@ -384,7 +377,7 @@
 	if(!IS_CROWBAR(W) || user.a_intent == I_HURT)
 		return
 	if(!length(stock_parts))
-		to_chat(user, SPAN_WARNING("No parts left to remove"))
+		to_chat(user, SPAN_WARNING("There are no parts in \the [src] left to remove."))
 		return
 
 	var/obj/item/stock_parts/remove = input(user, "Which component do you want to pry out?", "Remove Component") as null|anything in stock_parts
@@ -467,3 +460,4 @@
 /mob/living/silicon/handle_stance()
 	stance_damage = 0
 	return
+

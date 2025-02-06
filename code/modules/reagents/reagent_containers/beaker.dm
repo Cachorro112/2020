@@ -65,7 +65,7 @@
 	take_damage(rand(4,8))
 
 /obj/item/chems/glass/beaker/large
-	name = "large beaker"
+	name = "beaker" // see update_name override below
 	desc = "A large beaker."
 	icon = 'icons/obj/items/chem/beakers/large.dmi'
 	center_of_mass = @'{"x":16,"y":10}'
@@ -73,6 +73,10 @@
 	amount_per_transfer_from_this = 10
 	possible_transfer_amounts = @"[5,10,15,25,30,60,120]"
 	w_class = ITEM_SIZE_LARGE
+
+/obj/item/chems/glass/beaker/large/update_name()
+	. = ..()
+	SetName("large [name]") // large glass beaker, not glass large beaker
 
 /obj/item/chems/glass/beaker/bowl
 	name = "mixing bowl"
@@ -84,6 +88,12 @@
 	possible_transfer_amounts = @"[5,10,15,25,30,60,180]"
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	material = /decl/material/solid/metal/steel
+
+/obj/item/chems/glass/beaker/bowl/can_lid()
+	return FALSE
+
+/obj/item/chems/glass/beaker/bowl/pottery
+	material = /decl/material/solid/stone/pottery
 
 /obj/item/chems/glass/beaker/kettle
 	name = "kettle"
@@ -171,7 +181,7 @@
 	matter = list(/decl/material/solid/organic/plastic = MATTER_AMOUNT_REINFORCEMENT)
 	volume = 120
 
-/obj/item/chems/glass/beaker/sulphuric/populate_reagents()
+/obj/item/chems/glass/beaker/sulfuric/populate_reagents()
 	add_to_reagents(/decl/material/liquid/acid, reagents.maximum_volume)
 
 /obj/item/chems/glass/beaker/measuringcup

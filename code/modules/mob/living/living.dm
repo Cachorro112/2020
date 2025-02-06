@@ -90,7 +90,7 @@ default behaviour is:
 			for(var/mob/living/M in range(tmob, 1))
 				if(LAZYLEN(tmob.pinned) || (locate(/obj/item/grab, LAZYLEN(tmob.grabbed_by))))
 					if ( !(world.time % 5) )
-						to_chat(src, "<span class='warning'>[tmob] is restrained, you cannot push past</span>")
+						to_chat(src, SPAN_WARNING("[tmob] is restrained, you cannot push past."))
 					now_pushing = 0
 					return
 
@@ -153,9 +153,9 @@ default behaviour is:
 							step(tmob.buckled, t)
 				if(ishuman(AM))
 					var/mob/living/human/M = AM
-					for(var/obj/item/grab/G in M.grabbed_by)
-						step(G.assailant, get_dir(G.assailant, AM))
-						G.adjust_position()
+					for(var/obj/item/grab/grab as anything in M.grabbed_by)
+						step(grab.assailant, get_dir(grab.assailant, AM))
+						grab.adjust_position()
 				if(saved_dir)
 					AM.set_dir(saved_dir)
 				now_pushing = 0
@@ -389,7 +389,7 @@ default behaviour is:
 		switch_from_dead_to_living_mob_list()
 		timeofdeath = 0
 
-	stat = CONSCIOUS
+	set_stat(CONSCIOUS)
 	update_icon()
 
 	BITSET(hud_updateflag, HEALTH_HUD)
@@ -406,7 +406,7 @@ default behaviour is:
 /mob/living/proc/update_damage_overlays(update_icons = TRUE)
 
 	// first check whether something actually changed about damage appearance
-	var/damage_appearance = ""
+	var/damage_appearance = get_overlay_state_modifier() || ""
 	for(var/obj/item/organ/external/O in get_external_organs())
 		damage_appearance += O.damage_state || "00"
 
@@ -426,7 +426,7 @@ default behaviour is:
 			continue
 		var/icon/DI
 		var/use_colour = (BP_IS_PROSTHETIC(O) ? SYNTH_BLOOD_COLOR : O.species.get_species_blood_color(src))
-		var/cache_index = "[O.damage_state]/[O.bodytype.type]/[O.icon_state]/[use_colour]/[O.species.name]"
+		var/cache_index = "[O.damage_state]/[O.bodytype.uid]/[O.icon_state]/[use_colour]/[O.species.name]"
 		if(!(cache_index in damage_icon_parts))
 			var/damage_overlay_icon = O.bodytype.get_damage_overlays(src)
 			if(check_state_in_icon(O.damage_state, damage_overlay_icon))
@@ -456,8 +456,8 @@ default behaviour is:
 	..()
 
 	if(!isturf(loc))
-		for(var/G in get_active_grabs())
-			qdel(G)
+		for(var/obj/item/grab/grab as anything in get_active_grabs())
+			qdel(grab)
 		return
 
 	if(isturf(old_loc))
@@ -470,16 +470,16 @@ default behaviour is:
 					AM.dropInto(get_turf(src))
 
 	var/list/mygrabs = get_active_grabs()
-	for(var/obj/item/grab/G as anything in mygrabs)
-		if(G.assailant_reverse_facing())
+	for(var/obj/item/grab/grab as anything in mygrabs)
+		if(grab.assailant_reverse_facing())
 			set_dir(global.reverse_dir[direction])
-		G.assailant_moved()
-		if(QDELETED(G) || QDELETED(G.affecting))
-			mygrabs -= G
+		grab.assailant_moved()
+		if(QDELETED(grab) || QDELETED(grab.affecting))
+			mygrabs -= grab
 
 	if(length(grabbed_by))
-		for(var/obj/item/grab/G as anything in grabbed_by)
-			G.adjust_position()
+		for(var/obj/item/grab/grab as anything in grabbed_by)
+			grab.adjust_position()
 		reset_offsets()
 		reset_plane_and_layer()
 
@@ -490,23 +490,23 @@ default behaviour is:
 		var/txt_dir = (direction & UP) ? "upwards" : "downwards"
 		if(old_loc)
 			old_loc.visible_message(SPAN_NOTICE("\The [src] moves [txt_dir]."))
-		for(var/obj/item/grab/G as anything in mygrabs)
-			var/turf/start = G.affecting.loc
-			var/turf/destination = (direction == UP) ? GetAbove(G.affecting) : GetBelow(G.affecting)
-			if(!start.CanZPass(G.affecting, direction))
+		for(var/obj/item/grab/grab as anything in mygrabs)
+			var/turf/start = grab.affecting.loc
+			var/turf/destination = (direction == UP) ? GetAbove(grab.affecting) : GetBelow(grab.affecting)
+			if(!start.CanZPass(grab.affecting, direction))
 				to_chat(src, SPAN_WARNING("\The [start] blocked your pulled object!"))
-				mygrabs -= G
-				qdel(G)
+				mygrabs -= grab
+				qdel(grab)
 				continue
 			for(var/atom/A in destination)
-				if(!A.CanMoveOnto(G.affecting, start, 1.5, direction))
-					to_chat(src, SPAN_WARNING("\The [A] blocks the [G.affecting] you were pulling."))
-					mygrabs -= G
-					qdel(G)
+				if(!A.CanMoveOnto(grab.affecting, start, 1.5, direction))
+					to_chat(src, SPAN_WARNING("\The [A] blocks the [grab.affecting] you were pulling."))
+					mygrabs -= grab
+					qdel(grab)
 					continue
-			G.affecting.forceMove(destination)
-			if(QDELETED(G) || QDELETED(G.affecting))
-				mygrabs -= G
+			grab.affecting.forceMove(destination)
+			if(QDELETED(grab) || QDELETED(grab.affecting))
+				mygrabs -= grab
 			continue
 
 	if(length(mygrabs) && !skill_check(SKILL_MEDICAL, SKILL_BASIC))
@@ -539,14 +539,34 @@ default behaviour is:
 
 /mob/living/proc/process_resist()
 
-	//Getting out of someone's inventory.
-	if(istype(src.loc, /obj/item/holder))
-		escape_inventory(src.loc)
-		return TRUE
+	SHOULD_CALL_PARENT(TRUE)
 
 	//unbuckling yourself
 	if(buckled)
-		spawn() escape_buckle()
+		// TODO: convert vines to structures and have them override user_unbuckle_mob()
+		if(istype(buckled, /obj/effect/vine))
+			var/obj/effect/vine/V = buckled
+			spawn() V.manual_unbuckle(src)
+		else
+			spawn() escape_buckle()
+		return TRUE
+	//drop && roll
+	else if(on_fire)
+		fire_stacks = max(0, fire_stacks-1.2)
+		SET_STATUS_MAX(src, STAT_WEAK, 3)
+		spin(32,2)
+		var/decl/pronouns/pronouns = get_pronouns()
+		visible_message(
+			SPAN_DANGER("\The [src] rolls on the floor, trying to put [pronouns.him][pronouns.self] out!"),
+			SPAN_NOTICE("You stop, drop, and roll!")
+		)
+		sleep(3 SECONDS)
+		if(fire_stacks <= 0)
+			visible_message(
+				SPAN_NOTICE("\The [src] successfully extinguishes [pronouns.him][pronouns.self]!"),
+				SPAN_NOTICE("You extinguish yourself.")
+			)
+			ExtinguishMob()
 		return TRUE
 
 	//Breaking out of a structure?
@@ -555,10 +575,33 @@ default behaviour is:
 		if(C.mob_breakout(src))
 			return TRUE
 
+	//Getting out of someone's inventory.
+	if(istype(src.loc, /obj/item/holder))
+		escape_inventory(src.loc)
+		return TRUE
+
 	// Get rid of someone riding around on you.
 	if(buckled_mob)
 		unbuckle_mob()
 		return TRUE
+
+	// removing equipment
+	var/obj/item/restraint = get_restraining_equipment()
+	if(restraint)
+		spawn()
+			if(QDELETED(restraint) || restraint.loc != src)
+				return
+			var/datum/extension/resistable/restraint_data = get_extension(restraint, /datum/extension/resistable)
+			if(istype(restraint_data))
+				restraint_data.user_try_escape(src, get_equipped_slot_for_item(restraint))
+
+/mob/living/proc/get_restraining_equipment()
+	// List order determines the priority of each slot.
+	var/static/list/restraining_slots = list(slot_wear_suit_str, slot_handcuffed_str)
+	for(var/slot in restraining_slots)
+		var/obj/item/restraint = get_equipped_item(slot)
+		if(istype(restraint) && has_extension(restraint, /datum/extension/resistable))
+			return restraint
 
 /mob/living/proc/escape_inventory(obj/item/holder/H)
 	if(H != src.loc) return
@@ -592,17 +635,26 @@ default behaviour is:
 /mob/living/verb/rest_verb()
 	set name = "Rest"
 	set category = "IC"
-	lay_down()
+	lay_down(block_posture = /decl/posture/sitting)
 
-/mob/living/verb/lay_down()
+/mob/living/verb/lay_down(block_posture as null)
 	set name = "Change Posture"
 	set category = "IC"
 
 	// No posture, no adjustment.
-	if(length(get_available_postures()) <= 1 || incapacitated(INCAPACITATION_KNOCKOUT) || !canClick())
+	if(length(get_available_postures()) <= 1 || incapacitated(INCAPACITATION_KNOCKDOWN) || !canClick())
 		return
 
 	var/list/selectable_postures = get_selectable_postures()
+
+	if(block_posture)
+		for(var/decl/posture/selectable_posture in selectable_postures)
+			if(islist(block_posture))
+				if(is_type_in_list(selectable_posture, block_posture))
+					selectable_postures -= selectable_posture
+			else if(istype(selectable_posture, block_posture))
+				selectable_postures -= selectable_posture
+
 	if(!length(selectable_postures))
 		return
 
@@ -611,18 +663,18 @@ default behaviour is:
 		selected_posture = selectable_postures[1]
 	else
 		selected_posture = input(usr, "Which posture do you wish to adopt?", "Change Posture", current_posture) as null|anything in selectable_postures
-		if(!selected_posture || length(get_available_postures()) <= 1 || incapacitated(INCAPACITATION_KNOCKOUT) || !canClick())
+		if(!selected_posture || length(get_available_postures()) <= 1 || incapacitated(INCAPACITATION_KNOCKDOWN) || !canClick())
 			return
 		if(current_posture == selected_posture || !(selected_posture in get_selectable_postures()))
 			return
 
 	setClickCooldown(3)
-	to_chat(src, SPAN_NOTICE("You are now [selected_posture.posture_change_message]."))
 	if(current_posture.prone && !selected_posture.prone)
-		if(!do_after(src, 2 SECONDS, src, incapacitation_flags = ~INCAPACITATION_FORCELYING))
+		if(!do_after(src, 2 SECONDS, src, incapacitation_flags = INCAPACITATION_KNOCKDOWN))
 			return
 		if(current_posture == selected_posture || !(selected_posture in get_selectable_postures()))
 			return
+	to_chat(src, SPAN_NOTICE("You are now [selected_posture.posture_change_message]."))
 	set_posture(selected_posture)
 
 //called when the mob receives a bright flash
@@ -638,24 +690,17 @@ default behaviour is:
 /mob/living/proc/has_brain()
 	return TRUE
 
-/mob/living/proc/slip(var/slipped_on, stun_duration = 8)
+// We are jumping, levitating or being thrown.
+/mob/living/immune_to_floor_hazards()
+	. = ..() || is_floating
 
-	var/decl/species/my_species = get_species()
-	if(my_species?.check_no_slip(src))
-		return FALSE
-
-	var/obj/item/shoes = get_equipped_item(slot_shoes_str)
-	if(shoes && (shoes.item_flags & ITEM_FLAG_NOSLIP))
-		return FALSE
-
-	if(has_gravity() && !buckled && !current_posture?.prone)
+/mob/living/proc/slip(slipped_on, stun_duration = 8)
+	if(can_slip())
 		to_chat(src, SPAN_DANGER("You slipped on [slipped_on]!"))
 		playsound(loc, 'sound/misc/slip.ogg', 50, 1, -3)
 		SET_STATUS_MAX(src, STAT_WEAK, stun_duration)
 		return TRUE
-
 	return FALSE
-
 
 /mob/living/human/canUnEquip(obj/item/I)
 	. = ..() && !(I in get_organs())
@@ -801,10 +846,10 @@ default behaviour is:
 
 /mob/living/fluid_act(var/datum/reagents/fluids)
 	..()
-	if(QDELETED(src) || !fluids?.total_volume)
+	if(QDELETED(src) || fluids?.total_volume < FLUID_PUDDLE)
 		return
 	fluids.touch_mob(src)
-	if(QDELETED(src) || !fluids.total_volume)
+	if(QDELETED(src) || fluids?.total_volume < FLUID_PUDDLE)
 		return
 	for(var/atom/movable/A as anything in get_equipped_items(TRUE))
 		if(!A.simulated)
@@ -873,7 +918,7 @@ default behaviour is:
 	nutrition = clamp(amt, 0, get_max_nutrition())
 
 /mob/living/proc/get_nutrition()
-	return nutrition
+	return isSynthetic() ? get_max_nutrition() : nutrition
 
 /mob/living/proc/adjust_nutrition(var/amt)
 	set_nutrition(get_nutrition() + amt)
@@ -882,7 +927,7 @@ default behaviour is:
 	return 500
 
 /mob/living/proc/get_hydration(var/amt)
-	return hydration
+	return isSynthetic() ? get_max_hydration() : hydration
 
 /mob/living/proc/set_hydration(var/amt)
 	hydration = clamp(amt, 0, get_max_hydration())
@@ -893,6 +938,14 @@ default behaviour is:
 /mob/living/proc/has_chemical_effect(var/chem, var/threshold_over, var/threshold_under)
 	var/val = GET_CHEMICAL_EFFECT(src, chem)
 	. = (isnull(threshold_over) || val >= threshold_over) && (isnull(threshold_under) || val <= threshold_under)
+
+/mob/living/proc/remove_chemical_effect(var/effect, var/magnitude)
+	if(!isnull(magnitude))
+		magnitude = LAZYACCESS(chem_effects, effect) - magnitude
+	if(magnitude <= 0)
+		LAZYREMOVE(chem_effects, effect)
+	else
+		LAZYSET(chem_effects, effect, magnitude)
 
 /mob/living/proc/add_chemical_effect(var/effect, var/magnitude = 1)
 	magnitude += GET_CHEMICAL_EFFECT(src, effect)
@@ -1103,13 +1156,14 @@ default behaviour is:
 		client.screen += hud_used.hide_actions_toggle
 
 /mob/living/handle_fall_effect(var/turf/landing)
-	..()
-	if(istype(landing) && !landing.is_open())
-		apply_fall_damage(landing)
-		if(client)
-			var/area/A = get_area(landing)
-			if(A)
-				A.alert_on_fall(src)
+	if(!(. = ..()) || !istype(landing))
+		return
+	apply_fall_damage(landing)
+	if(!client)
+		return
+	var/area/landing_area = get_area(landing)
+	if(landing_area)
+		landing_area.alert_on_fall(src)
 
 /mob/living/proc/apply_fall_damage(var/turf/landing)
 	take_damage(rand(max(1, ceil(mob_size * 0.33)), max(1, ceil(mob_size * 0.66))) * get_fall_height())
@@ -1462,16 +1516,16 @@ default behaviour is:
 	. = ..()
 	if(buckled_mob)
 		buckled_mob.reset_layer()
-		for(var/obj/item/grab/G in buckled_mob.get_held_items())
-			if(G.get_affecting_mob() == src && !istype(G.current_grab, /decl/grab/simple/control))
-				qdel(G)
+		for(var/obj/item/grab/grab in buckled_mob.get_held_items())
+			if(grab.get_affecting_mob() == src && !istype(grab.current_grab, /decl/grab/simple/control))
+				qdel(grab)
 	if(istype(ai))
-		ai.retaliate(M)
+		ai.on_buckled(M)
 
 /mob/living/try_make_grab(mob/living/user, defer_hand = FALSE)
 	. = ..()
 	if(istype(ai))
-		ai.retaliate(user)
+		ai.on_grabbed(user)
 
 /mob/living/can_buckle_mob(var/mob/living/dropping)
 	. = ..() && stat == CONSCIOUS && !buckled && dropping.mob_size <= mob_size
@@ -1734,7 +1788,7 @@ default behaviour is:
 /mob/living/proc/get_door_pry_time()
 	return 7 SECONDS
 
-/mob/living/proc/pry_door(atom/target, pry_time)
+/mob/living/proc/pry_door(delay, obj/machinery/door/target)
 	return
 
 /mob/living/proc/turf_is_safe(turf/target)
@@ -1760,14 +1814,14 @@ default behaviour is:
 	if(attack_delay <= 0)
 		return TRUE
 
-	var/decl/pronouns/G = get_pronouns()
+	var/decl/pronouns/pronouns = get_pronouns()
 	setClickCooldown(attack_delay)
 	face_atom(target)
 
 	stop_automove() // Cancel any baked-in movement.
 	do_windup_animation(target, attack_delay, no_reset = TRUE)
 	if(!do_after(src, attack_delay, target) || !Adjacent(target))
-		visible_message(SPAN_NOTICE("\The [src] misses [G.his] attack on \the [target]!"))
+		visible_message(SPAN_NOTICE("\The [src] misses [pronouns.his] attack on \the [target]!"))
 		reset_offsets(anim_time = 2)
 		ai?.move_to_target(TRUE) // Restart hostile mob tracking.
 		return FALSE
@@ -1777,10 +1831,12 @@ default behaviour is:
 		// Clientless mobs are too dum to move away, so they can be missed.
 		var/mob/mob = target
 		if(!mob.ckey && !prob(get_telegraphed_melee_accuracy()))
-			visible_message(SPAN_NOTICE("\The [src] misses [G.his] attack on \the [target]!"))
+			visible_message(SPAN_NOTICE("\The [src] misses [pronouns.his] attack on \the [target]!"))
 			reset_offsets(anim_time = 2)
 			return FALSE
 
+	ai?.update_target_zone()
+	reset_offsets(anim_time = 2)
 	return TRUE
 
 /mob/living/proc/prepare_for_despawn()
@@ -1810,8 +1866,8 @@ default behaviour is:
 		var/screen_locs = gear.get_preview_screen_locs()
 		if(screen_locs)
 			return screen_locs
-	var/decl/species/my_species = get_species()
-	return my_species?.character_preview_screen_locs
+	var/decl/bodytype/my_bodytype = get_bodytype()
+	return my_bodytype?.character_preview_screen_locs
 
 /mob/living/can_twohand_item(obj/item/item)
 	if(!istype(item) || !item.can_be_twohanded)
@@ -1841,3 +1897,41 @@ default behaviour is:
 	. = ..()
 	reset_layer()
 	update_icon()
+
+/mob/living/proc/flee(atom/target, upset = FALSE)
+	var/static/datum/automove_metadata/_flee_automove_metadata = new(
+		_move_delay = null,
+		_acceptable_distance = 7,
+		_avoid_target = TRUE
+	)
+	var/static/datum/automove_metadata/_annoyed_automove_metadata = new(
+		_move_delay = null,
+		_acceptable_distance = 2,
+		_avoid_target = TRUE
+	)
+	if(upset)
+		set_moving_quickly()
+	else
+		set_moving_slowly()
+	start_automove(target, metadata = upset ? _flee_automove_metadata : _annoyed_automove_metadata)
+
+/mob/living/examine(mob/user, distance, infix, suffix)
+
+	. = ..()
+
+	if(has_extension(src, /datum/extension/shearable))
+		var/datum/extension/shearable/shearable = get_extension(src, /datum/extension/shearable)
+		if(world.time >= shearable.next_fleece || shearable.has_fleece)
+			to_chat(user, SPAN_NOTICE("\The [src] can be sheared with shears, or a similar tool."))
+		else
+			to_chat(user, SPAN_WARNING("\The [src] will be ready to be sheared in [ceil((shearable.next_fleece-world.time) / 10)] second\s."))
+
+	if(has_extension(src, /datum/extension/milkable))
+		var/datum/extension/milkable/milkable = get_extension(src, /datum/extension/milkable)
+		if(milkable.udder.total_volume > 0)
+			to_chat(user, SPAN_NOTICE("\The [src] can be milked into a bucket or other container."))
+		else
+			to_chat(user, SPAN_WARNING("\The [src] cannot currently be milked."))
+
+/mob/living/proc/get_age()
+	. = LAZYACCESS(appearance_descriptors, "age") || 30

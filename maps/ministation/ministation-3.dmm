@@ -88,6 +88,10 @@
 	},
 /turf/floor/plating,
 /area/ministation/maint/l4central)
+"kH" = (
+/obj/effect/shuttle_landmark/automatic,
+/turf/space,
+/area/space)
 "kV" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/universal{
 	dir = 4
@@ -185,7 +189,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/maint/l4central)
 "uG" = (
 /obj/structure/lattice,
@@ -291,7 +295,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "Dc" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -374,7 +378,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "Lx" = (
 /obj/structure/cable{
@@ -40459,7 +40463,7 @@ aa
 aa
 aa
 aa
-aa
+kH
 aa
 aa
 aa

@@ -58,7 +58,7 @@
 		desc = "A torch. This one has seen better days."
 		update_icon()
 
-/obj/item/flame/torch/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE, skip_offset = FALSE)
+/obj/item/flame/torch/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay)
 		if(head_material)
 			var/decl/material/head_mat = GET_DECL(head_material)
@@ -76,11 +76,11 @@
 	if(head_material)
 		var/decl/material/head_mat = GET_DECL(head_material)
 		if(burnt)
-			add_overlay(overlay_image(icon, "[icon_state]-burnt", head_mat.color, flags = RESET_COLOR))
+			add_overlay(overlay_image(icon, "[icon_state]-burnt", head_mat.color, flags = RESET_COLOR|KEEP_APART))
 		else
-			add_overlay(overlay_image(icon, "[icon_state]-head", head_mat.color, flags = RESET_COLOR))
+			add_overlay(overlay_image(icon, "[icon_state]-head", head_mat.color, flags = RESET_COLOR|KEEP_APART))
 	if(lit)
-		add_overlay(overlay_image(icon, "[icon_state]-lit", flags = RESET_COLOR))
+		add_overlay(overlay_image(icon, "[icon_state]-lit", flags = RESET_COLOR|KEEP_APART))
 
 /obj/item/flame/torch/get_sconce_overlay()
 	. = list(overlay_image(icon, "[icon_state]-sconce", color = color, flags = RESET_COLOR))

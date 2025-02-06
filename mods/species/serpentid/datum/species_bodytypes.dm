@@ -6,7 +6,7 @@
 	limb_blend =        ICON_MULTIPLY
 	bodytype_category = BODYTYPE_SNAKE
 	antaghud_offset_y = 8
-	bodytype_flag =     BODY_FLAG_SNAKE
+	bodytype_flag =     BODY_EQUIP_FLAG_SNAKE
 	movement_slowdown = -0.5
 	appearance_flags = HAS_SKIN_COLOR | HAS_EYE_COLOR | HAS_SKIN_TONE_NORMAL
 	base_color =      "#336600"
@@ -55,6 +55,14 @@
 	heat_level_1 = 410 //Default 360 - Higher is better
 	heat_level_2 = 440 //Default 400
 	heat_level_3 = 800 //Default 1000
+
+	natural_armour_values = list(
+		ARMOR_MELEE  = ARMOR_MELEE_KNIVES,
+		ARMOR_BULLET = ARMOR_BALLISTIC_MINOR,
+		ARMOR_BOMB   = ARMOR_BOMB_PADDED,
+		ARMOR_BIO    = ARMOR_BIO_SHIELDED,
+		ARMOR_RAD    = 0.5*ARMOR_RAD_MINOR
+	)
 
 /decl/bodytype/serpentid/Initialize()
 	equip_adjust = list(

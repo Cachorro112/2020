@@ -171,12 +171,12 @@
 			target.set_organ_sprite_accessory_by_category(null, SAC_COSMETICS, null, FALSE, FALSE, target_zone, FALSE)
 			return TRUE
 		user.visible_message(
-			SPAN_NOTICE("\The [user] begins to wipe \the [target]'s makeup  off with \the [src]."),
+			SPAN_NOTICE("\The [user] begins to wipe \the [target]'s makeup off with \the [src]."),
 			SPAN_NOTICE("You begin to wipe off [target]'s makeup .")
 		)
 		if(do_after(user, 10, target) && do_after(target, 10, check_holding = 0))	//user needs to keep their active hand, H does not.
 			user.visible_message(
-				SPAN_NOTICE("\The [user] wipes \the [target]'s makeup  off with \the [src]."),
+				SPAN_NOTICE("\The [user] wipes \the [target]'s makeup off with \the [src]."),
 				SPAN_NOTICE("You wipe off \the [target]'s makeup .")
 			)
 		target.set_organ_sprite_accessory_by_category(null, SAC_COSMETICS, null, FALSE, FALSE, target_zone, FALSE)
@@ -290,8 +290,8 @@
 		if(istype(P, /obj/item/flame/fuelled/lighter/zippo))
 			class = "rose"
 
-		var/decl/pronouns/G = user.get_pronouns()
-		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like [G.he] [G.is] trying to burn it!</span>", \
+		var/decl/pronouns/pronouns = user.get_pronouns()
+		user.visible_message("<span class='[class]'>[user] holds \the [P] up to \the [src], it looks like [pronouns.he] [pronouns.is] trying to burn it!</span>", \
 		"<span class='[class]'>You hold \the [P] up to \the [src], burning it slowly.</span>")
 
 		spawn(20)
@@ -330,8 +330,8 @@
 			return TOPIC_NOACTION
 
 		var/pen_flags = I.get_tool_property(TOOL_PEN, TOOL_PROP_PEN_FLAG)
+		var/decl/tool_archetype/pen/parch = GET_DECL(TOOL_PEN)
 		if(!(pen_flags & PEN_FLAG_ACTIVE))
-			var/decl/tool_archetype/pen/parch = GET_DECL(TOOL_PEN)
 			parch.toggle_active(usr, I)
 		var/iscrayon = pen_flags & PEN_FLAG_CRAYON
 		var/isfancy  = pen_flags & PEN_FLAG_FANCY
@@ -351,6 +351,13 @@
 		var/processed_text = user.handle_writing_literacy(user, t)
 		if(length(t))
 			playsound(src, pick('sound/effects/pen1.ogg','sound/effects/pen2.ogg'), 30)
+		var/actual_characters = length_char(strip_html_properly(t))
+		if(actual_characters > 0)
+			// 25 characters per charge, crayons get 30 charges
+			// we're really permissive here, we don't cut you short
+			// but we also use a charge even if you write <25 characters
+			if(parch.decrement_uses(user, I, max(round(actual_characters / 25, 1), 1)) <= 0)
+				parch.warn_out_of_ink(user, I)
 
 		if(id!="end")
 			addtofield(text2num(id), processed_text) // He wants to edit a field, let him.
@@ -377,7 +384,7 @@
 	else if(istype(P, /obj/item/paper) || istype(P, /obj/item/photo))
 		var/obj/item/paper_bundle/B = try_bundle_with(P, user)
 		if(!B)
-			return
+			return TRUE
 		user.put_in_hands(B)
 		to_chat(user, SPAN_NOTICE("You clip \the [P] and \the [name] together."))
 		return TRUE
@@ -385,7 +392,7 @@
 	else if(IS_PEN(P))
 		if(is_crumpled)
 			to_chat(user, SPAN_WARNING("\The [src] is too crumpled to write on."))
-			return
+			return TRUE
 
 		var/obj/item/pen/robopen/RP = P
 		if ( istype(RP) && RP.mode == 2 )
@@ -591,10 +598,11 @@ var/global/datum/topic_state/default/paper_state/paper_topic_state = new
 
 // Stub type for moving teleportation scrolls into a modpack.
 /obj/item/paper/scroll
-	name  = "scroll"
-	desc  = "A length of writing material curled into a scroll."
-	icon  = 'icons/obj/items/paperwork/scroll.dmi'
-	color = "#feeebc"
+	name    = "scroll"
+	desc    = "A length of writing material curled into a scroll."
+	icon    = 'icons/obj/items/paperwork/scroll.dmi'
+	color   = "#feeebc"
+	w_class = ITEM_SIZE_SMALL
 	var/furled = FALSE
 
 /obj/item/paper/scroll/can_bundle()
@@ -619,7 +627,7 @@ var/global/datum/topic_state/default/paper_state/paper_topic_state = new
 	abstract_type = /decl/interaction_handler/scroll
 	expected_target_type = /obj/item/paper/scroll
 
-/decl/interaction_handler/scroll/invoked(atom/target, mob/user)
+/decl/interaction_handler/scroll/invoked(atom/target, mob/user, obj/item/prop)
 	var/obj/item/paper/scroll/scroll = target
 	// TODO: paper sound
 	scroll.furled = !scroll.furled

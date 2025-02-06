@@ -31,8 +31,8 @@
 			. = handle_living_non_stasis_processes()
 		aura_check(AURA_TYPE_LIFE)
 
-	for(var/obj/item/grab/G in get_active_grabs())
-		G.Process()
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
+		grab.Process()
 
 	//Check if we're on fire
 	handle_fire()
@@ -76,8 +76,8 @@
 		if(!E)
 			continue
 		if(E.is_robotic())
-			var/decl/pronouns/G = get_pronouns()
-			visible_message("<B>\The [src]</B> drops what [G.he] [G.is] holding, [G.his] [E.name] malfunctioning!")
+			var/decl/pronouns/pronouns = get_pronouns()
+			visible_message("<B>\The [src]</B> drops what [pronouns.he] [pronouns.is] holding, [pronouns.his] [E.name] malfunctioning!")
 			spark_at(src, 5, holder=src)
 			continue
 
@@ -112,14 +112,16 @@
 	handle_random_events()
 	// eye, ear, brain damages
 	handle_disabilities()
+	// Immune system updates (currently vestigal)
 	handle_immunity()
-	//Body temperature adjusts itself (self-regulation)
+	// Allergic reactions/anaphylaxis
+	handle_allergens()
+	// Body temperature adjusts itself (self-regulation)
 	stabilize_body_temperature()
-	// Only handle AI stuff if we're not being played.
 	return TRUE
 
 /mob/living/proc/experiences_hunger_and_thirst()
-	return TRUE
+	return !isSynthetic() // Doesn't really apply to robots. Maybe unify this with cells in the future.
 
 /mob/living/proc/get_hunger_factor()
 	var/decl/species/my_species = get_species()
@@ -271,9 +273,10 @@
 	if(!loc)
 		return
 	var/datum/reagents/touching_reagents = get_contact_reagents()
-	if(!touching_reagents?.total_volume)
+	if(touching_reagents?.total_volume <= FLUID_MINIMUM_TRANSFER)
+		touching_reagents?.clear_reagents()
 		return
-	var/drip_amount = max(1, round(touching_reagents.total_volume * 0.1))
+	var/drip_amount = max(FLUID_MINIMUM_TRANSFER, round(touching_reagents.total_volume * 0.2))
 	if(drip_amount)
 		touching_reagents.trans_to(loc, drip_amount)
 
@@ -550,12 +553,9 @@
 				if(prob(current_size*5) && hand.w_class >= (11-current_size)/2 && try_unequip(hand))
 					to_chat(src, SPAN_WARNING("\The [S] pulls \the [hand] from your grip!"))
 					hand.singularity_pull(S, current_size)
-			var/obj/item/shoes = get_equipped_item(slot_shoes_str)
-			if(!current_posture.prone && !(shoes?.item_flags & ITEM_FLAG_NOSLIP))
-				var/decl/species/my_species = get_species()
-				if(!my_species?.check_no_slip(src) && prob(current_size*5))
-					to_chat(src, SPAN_DANGER("A strong gravitational force slams you to the ground!"))
-					SET_STATUS_MAX(src, STAT_WEAK, current_size)
+			if(prob(current_size*5) && can_slip())
+				to_chat(src, SPAN_DANGER("A strong gravitational force slams you to the ground!"))
+				SET_STATUS_MAX(src, STAT_WEAK, current_size)
 		apply_damage(current_size * 3, IRRADIATE, damage_flags = DAM_DISPERSED)
 	return ..()
 

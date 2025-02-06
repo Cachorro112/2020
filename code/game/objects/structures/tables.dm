@@ -59,8 +59,11 @@
 // We do this because need to make sure adjacent tables init their material before we try and merge.
 /obj/structure/table/LateInitialize()
 	..()
-	update_connections(TRUE)
-	update_icon()
+	if(is_flipped)
+		flip(dir, TRUE)
+	else
+		update_connections(TRUE)
+		update_icon()
 
 /obj/structure/table/get_material_health_modifier()
 	. = additional_reinf_material ? 0.75 : 0.5
@@ -270,11 +273,11 @@
 
 /obj/structure/table/update_material_name(override_name)
 	if(reinf_material)
-		name = "[reinf_material.solid_name] table"
+		SetName("[reinf_material.adjective_name] table")
 	else if(material)
-		name = "[material.solid_name] table frame"
+		SetName("[material.adjective_name] table frame")
 	else
-		name = "table frame"
+		SetName("table frame")
 
 /obj/structure/table/update_material_desc(override_desc)
 	desc = initial(desc)
@@ -290,77 +293,74 @@
 	if(additional_reinf_material)
 		desc = "[desc] It has been reinforced with [additional_reinf_material.solid_name]."
 
-/obj/structure/table/on_update_icon()
-
-	color = "#ffffff"
+/obj/structure/table/proc/handle_normal_icon()
+	color = null // Don't double-apply our color, clear the map preview.
 	alpha = 255
-	..()
-
 	icon_state = "blank"
-	if(!is_flipped)
-		mob_offset = initial(mob_offset)
-		var/image/I
-		// Base frame shape.
+	var/image/I
+	// Base frame shape.
+	for(var/i = 1 to 4)
+		I = image(icon, dir = BITFLAG(i-1), icon_state = connections ? connections[i] : "0")
+		I.color = material.color
+		I.alpha = 255 * material.opacity
+		add_overlay(I)
+	// Tabletop
+	if(reinf_material)
 		for(var/i = 1 to 4)
-			I = image(icon, dir = BITFLAG(i-1), icon_state = connections ? connections[i] : "0")
-			I.color = material.color
-			I.alpha = 255 * material.opacity
-			add_overlay(I)
-		// Tabletop
-		if(reinf_material)
-			for(var/i = 1 to 4)
-				I = image(icon, "[reinf_material.table_icon_base]_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1))
-				I.color = reinf_material.color
-				I.alpha = 255 * reinf_material.opacity
-				add_overlay(I)
-		if(additional_reinf_material)
-			for(var/i = 1 to 4)
-				I = image(icon, "[additional_reinf_material.table_icon_reinforced]_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1))
-				I.color = additional_reinf_material.color
-				I.alpha = 255 * additional_reinf_material.opacity
-				add_overlay(I)
-
-		if(felted)
-			for(var/i = 1 to 4)
-				add_overlay(image(icon, "carpet_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1)))
-	else
-
-		mob_offset = 0
-
-		var/obj/structure/table/left_neighbor  = locate(/obj/structure/table) in get_step(loc, turn(dir, -90))
-		var/obj/structure/table/right_neighbor = locate(/obj/structure/table) in get_step(loc, turn(dir, 90))
-		var/left_neighbor_blend = istype(left_neighbor)   && blend_with(left_neighbor)  && left_neighbor.is_flipped == is_flipped  && left_neighbor.dir == dir
-		var/right_neighbor_blend = istype(right_neighbor) && blend_with(right_neighbor) && right_neighbor.is_flipped == is_flipped && right_neighbor.dir == dir
-
-		var/flip_type = 0
-		var/flip_mod = ""
-		if(left_neighbor_blend && right_neighbor_blend)
-			flip_type = 2
-			icon_state = "flip[flip_type]"
-		else if(left_neighbor_blend || right_neighbor_blend)
-			flip_type = 1
-			flip_mod = (left_neighbor_blend ? "+" : "-")
-			icon_state = "flip[flip_type][flip_mod]"
-
-		color = material.color
-		alpha = 255 * material.opacity
-
-		var/image/I
-		if(reinf_material)
-			I = image(icon, "[reinf_material.table_icon_base]_flip[flip_type][flip_mod]")
+			I = image(icon, "[reinf_material.table_icon_base]_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1))
 			I.color = reinf_material.color
 			I.alpha = 255 * reinf_material.opacity
-			I.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			add_overlay(I)
-		if(additional_reinf_material)
-			I = image(icon, "[reinf_material.table_icon_reinforced]_flip[flip_type][flip_mod]")
+	if(additional_reinf_material)
+		for(var/i = 1 to 4)
+			I = image(icon, "[additional_reinf_material.table_icon_reinforced]_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1))
 			I.color = additional_reinf_material.color
 			I.alpha = 255 * additional_reinf_material.opacity
-			I.appearance_flags |= RESET_COLOR|RESET_ALPHA
 			add_overlay(I)
 
-		if(felted)
-			add_overlay("carpet_flip[flip_type][flip_mod]")
+	if(felted)
+		for(var/i = 1 to 4)
+			add_overlay(image(icon, "carpet_[connections ? connections[i] : "0"]", dir = BITFLAG(i-1)))
+
+/obj/structure/table/proc/handle_flipped_icon()
+	var/obj/structure/table/left_neighbor  = locate(/obj/structure/table) in get_step(loc, turn(dir, -90))
+	var/obj/structure/table/right_neighbor = locate(/obj/structure/table) in get_step(loc, turn(dir, 90))
+	var/left_neighbor_blend = istype(left_neighbor)   && blend_with(left_neighbor)  && left_neighbor.is_flipped == is_flipped  && left_neighbor.dir == dir
+	var/right_neighbor_blend = istype(right_neighbor) && blend_with(right_neighbor) && right_neighbor.is_flipped == is_flipped && right_neighbor.dir == dir
+
+	var/flip_type = 0
+	var/flip_mod = ""
+	if(left_neighbor_blend && right_neighbor_blend)
+		flip_type = 2
+		icon_state = "flip[flip_type]"
+	else if(left_neighbor_blend || right_neighbor_blend)
+		flip_type = 1
+		flip_mod = (left_neighbor_blend ? "+" : "-")
+		icon_state = "flip[flip_type][flip_mod]"
+
+	var/image/I
+	if(reinf_material)
+		I = image(icon, "[reinf_material.table_icon_base]_flip[flip_type][flip_mod]")
+		I.color = reinf_material.color
+		I.alpha = 255 * reinf_material.opacity
+		I.appearance_flags |= RESET_COLOR|RESET_ALPHA
+		add_overlay(I)
+	if(additional_reinf_material)
+		I = image(icon, "[reinf_material.table_icon_reinforced]_flip[flip_type][flip_mod]")
+		I.color = additional_reinf_material.color
+		I.alpha = 255 * additional_reinf_material.opacity
+		I.appearance_flags |= RESET_COLOR|RESET_ALPHA
+		add_overlay(I)
+
+	if(felted)
+		add_overlay("carpet_flip[flip_type][flip_mod]")
+
+/obj/structure/table/on_update_icon()
+	. = ..()
+	if(is_flipped)
+		handle_flipped_icon()
+	else
+		handle_normal_icon()
 
 /obj/structure/table/proc/blend_with(var/obj/structure/table/other)
 	if(!istype(other) || !istype(material) || !istype(other.material) || material.type != other.material.type)
@@ -547,6 +547,8 @@
 		L.Add(turn(src.dir,90))
 	for(var/new_dir in L)
 		var/obj/structure/table/T = locate() in get_step(src.loc,new_dir)
+		if(L == src) // multitile objeeeects!
+			continue
 		if(blend_with(T) && T.is_flipped && T.dir == dir && !T.unflipping_check(new_dir))
 			return FALSE
 	return TRUE
@@ -580,7 +582,8 @@
 	if(dir != NORTH)
 		layer = ABOVE_HUMAN_LAYER
 	atom_flags &= ~ATOM_FLAG_CLIMBABLE //flipping tables allows them to be used as makeshift barriers
-	is_flipped = 1
+	is_flipped = TRUE
+	mob_offset = 0
 	atom_flags |= ATOM_FLAG_CHECKS_BORDER
 
 	for(var/D in list(turn(direction, 90), turn(direction, -90)))
@@ -612,6 +615,7 @@
 	reset_plane_and_layer()
 	atom_flags |= ATOM_FLAG_CLIMBABLE
 	is_flipped = FALSE
+	mob_offset = initial(mob_offset)
 	atom_flags &= ~ATOM_FLAG_CHECKS_BORDER
 	for(var/D in list(turn(dir, 90), turn(dir, -90)))
 		var/obj/structure/table/T = locate() in get_step(src.loc,D)
@@ -631,6 +635,9 @@
 			do_put()
 		return TRUE
 	return FALSE
+
+/obj/structure/table/handle_default_hammer_attackby(var/mob/user, var/obj/item/hammer)
+	return !reinf_material && ..()
 
 /obj/structure/table/handle_default_wrench_attackby(var/mob/user, var/obj/item/wrench)
 	return !reinf_material && ..()
@@ -772,3 +779,145 @@
 
 /obj/structure/table/woodentable_reinforced/ebony/walnut
 	additional_reinf_material = /decl/material/solid/organic/wood/walnut
+
+// A table that doesn't smooth, intended for bedside tables or otherwise standalone tables.
+// TODO: make table legs use material and tabletop use reinf_material
+// theoretically, this could also be made to use the normal table icon system, unlike desks?
+/obj/structure/table/end
+	name = "end table"
+	icon = 'icons/obj/structures/endtable.dmi'
+	icon_state = "end_table_1"
+	handle_generic_blending = FALSE
+	color = /decl/material/solid/organic/wood/walnut::color
+	material = /decl/material/solid/organic/wood/walnut
+	reinf_material = /decl/material/solid/organic/wood/walnut
+	material_alteration = MAT_FLAG_ALTERATION_ALL
+	can_flip = FALSE
+
+/obj/structure/table/end/handle_normal_icon()
+	icon_state = initial(icon_state)
+
+/obj/structure/table/end/alt
+	icon_state = "end_table_2"
+
+/obj/structure/table/end/alt/ebony
+	color = /decl/material/solid/organic/wood/ebony::color
+	material = /decl/material/solid/organic/wood/ebony
+	reinf_material = /decl/material/solid/organic/wood/ebony
+
+/obj/structure/table/end/Initialize()
+	. = ..()
+	// we don't do frames or anything, just skip right to decon
+	tool_interaction_flags |= TOOL_INTERACTION_DECONSTRUCT
+
+/obj/structure/table/end/reinforce_table(obj/item/stack/material/S, mob/user)
+	return FALSE
+
+/obj/structure/table/end/finish_table(obj/item/stack/material/S, mob/user)
+	return FALSE
+
+/obj/structure/table/end/handle_default_screwdriver_attackby(mob/user, obj/item/screwdriver)
+	return FALSE
+
+/obj/structure/table/end/update_material_name(override_name)
+	SetName("[reinf_material.adjective_name] end table")
+
+/obj/structure/table/desk
+	name = "desk"
+	icon_state = "desk_left"
+	icon = 'icons/obj/structures/desk_large.dmi'
+	handle_generic_blending = FALSE
+	color = /decl/material/solid/organic/wood/walnut::color
+	material = /decl/material/solid/organic/wood/walnut
+	reinf_material = /decl/material/solid/organic/wood/walnut
+	storage = /datum/storage/structure/desk
+	bound_width = 64
+	material_alteration = MAT_FLAG_ALTERATION_ALL
+	can_flip = FALSE
+	top_surface_noun = "desktop"
+	/// The pixel height at which point clicks start registering for the tabletop and not the drawers.
+	var/tabletop_height = 9
+
+/obj/structure/table/desk/Initialize()
+	. = ..()
+	// we don't do frames or anything, just skip right to decon
+	tool_interaction_flags |= TOOL_INTERACTION_DECONSTRUCT
+
+/obj/structure/table/desk/handle_normal_icon()
+	return // logic is handled in on_update_icon
+
+/obj/structure/table/desk/right
+	icon_state = "desk_right"
+
+/obj/structure/table/desk/ebony
+	color = /decl/material/solid/organic/wood/ebony::color
+	material = /decl/material/solid/organic/wood/ebony
+	reinf_material = /decl/material/solid/organic/wood/ebony
+
+/obj/structure/table/desk/ebony/right
+	icon_state = "desk_right"
+
+/obj/structure/table/desk/update_material_name(override_name)
+	SetName("[reinf_material.adjective_name] desk")
+
+/obj/structure/table/desk/reinforce_table(obj/item/stack/material/S, mob/user)
+	return FALSE
+
+/obj/structure/table/desk/finish_table(obj/item/stack/material/S, mob/user)
+	return FALSE
+
+/obj/structure/table/desk/handle_default_screwdriver_attackby(mob/user, obj/item/screwdriver)
+	return FALSE
+
+/obj/structure/table/desk/on_update_icon()
+	. = ..()
+	if(storage)
+		if(storage.opened)
+			icon_state = "[initial(icon_state)]_open"
+		else
+			icon_state = initial(icon_state)
+
+/datum/storage/structure/desk
+	use_sound = null
+	open_sound = 'sound/foley/drawer-open.ogg'
+	close_sound = 'sound/foley/drawer-close.ogg'
+	max_storage_space = DEFAULT_BOX_STORAGE * 2 // two drawers!
+
+/datum/storage/structure/desk/can_be_inserted(obj/item/prop, mob/user, stop_messages = 0, click_params = null)
+	var/list/params = params2list(click_params)
+	var/obj/structure/table/desk/desk = holder
+	if(LAZYLEN(params) && text2num(params["icon-y"]) > desk.tabletop_height)
+		return FALSE // don't insert when clicking the tabletop
+	return ..()
+
+/datum/storage/structure/desk/play_open_sound()
+	. = ..()
+	flick("[initial(holder.icon_state)]_opening", holder)
+
+/datum/storage/structure/desk/play_close_sound()
+	. = ..()
+	flick("[initial(holder.icon_state)]_closing", holder)
+
+/obj/structure/table/desk/storage_inserted()
+	if(storage && !storage.opened)
+		playsound(src, 'sound/foley/drawer-oneshot.ogg', 50, FALSE, -5)
+		flick("[initial(icon_state)]_oneoff", src)
+
+/obj/structure/table/desk/dresser
+	icon = 'icons/obj/structures/dresser.dmi'
+	icon_state = "dresser"
+	bound_width = 32
+	top_surface_noun = "surface"
+	tabletop_height = 15
+	mob_offset = 18
+
+/obj/structure/table/desk/dresser/update_material_name(override_name)
+	SetName("[reinf_material.adjective_name] dresser")
+
+/obj/structure/table/desk/dresser/ebony
+	color = /decl/material/solid/organic/wood/ebony::color
+	material = /decl/material/solid/organic/wood/ebony
+	reinf_material = /decl/material/solid/organic/wood/ebony
+
+/datum/storage/structure/desk/dresser
+	max_storage_space = DEFAULT_BOX_STORAGE * 3 // THREE drawers!

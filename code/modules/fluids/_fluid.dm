@@ -14,6 +14,10 @@
 	var/last_update_depth
 	var/updating_edge_mask
 
+/atom/movable/fluid_overlay/on_turf_height_change(new_height)
+	update_icon()
+	return TRUE
+
 /atom/movable/fluid_overlay/on_update_icon()
 
 	var/datum/reagents/loc_reagents = loc?.reagents
@@ -21,14 +25,14 @@
 
 	// Update layer.
 	var/new_layer
-	if(reagent_volume > FLUID_DEEP)
+	var/turf/T = get_turf(src)
+	if(T.pixel_z < 0)
+		new_layer = T.layer + 0.2
+	else if(reagent_volume > FLUID_DEEP)
 		new_layer = DEEP_FLUID_LAYER
 	else
-		var/turf/T = get_turf(src)
-		if(T?.get_physical_height() < 0)
-			new_layer = T.layer + 0.2
-		else
-			new_layer = SHALLOW_FLUID_LAYER
+		new_layer = SHALLOW_FLUID_LAYER
+
 	if(layer != new_layer)
 		layer = new_layer
 

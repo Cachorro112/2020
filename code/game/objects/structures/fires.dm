@@ -28,6 +28,9 @@
 	abstract_type = /obj/structure/fire_source
 	throwpass = TRUE
 
+	// Counter for world.time, used to reduce lighting spam.
+	var/next_light_spam_guard = 0
+
 	var/has_draught = TRUE
 	var/static/list/draught_values = list(
 		"all the way open"      = 1,
@@ -158,6 +161,9 @@
 	if(lit == FIRE_LIT && !force)
 		return FALSE
 	if(!process_fuel(ignition_temperature))
+		if(world.time >= next_light_spam_guard)
+			visible_message(SPAN_WARNING("\The [src] smoulders, but fails to catch alight. Perhaps it needs better airflow or more fuel?"))
+			next_light_spam_guard = world.time + 3 SECONDS
 		return FALSE
 	last_fuel_burn_temperature = max(last_fuel_burn_temperature, ignition_temperature) // needed for initial burn procs to function
 	lit = FIRE_LIT
@@ -219,20 +225,20 @@
 
 	return ..()
 
-/obj/structure/fire_source/grab_attack(var/obj/item/grab/G)
-	var/mob/living/affecting_mob = G.get_affecting_mob()
-	if(!istype(affecting_mob))
+/obj/structure/fire_source/grab_attack(obj/item/grab/grab, mob/user)
+	var/mob/living/victim = grab.get_affecting_mob()
+	if(!istype(victim))
 		return FALSE
-	if (G.assailant.a_intent != I_HURT)
+	if (user.a_intent != I_HURT)
 		return TRUE
-	if (!G.force_danger())
-		to_chat(G.assailant, SPAN_WARNING("You need a better grip!"))
+	if (!grab.force_danger())
+		to_chat(user, SPAN_WARNING("You need a better grip!"))
 		return TRUE
-	affecting_mob.forceMove(get_turf(src))
-	SET_STATUS_MAX(affecting_mob, STAT_WEAK, 5)
-	visible_message(SPAN_DANGER("\The [G.assailant] hurls \the [affecting_mob] onto \the [src]!"))
+	victim.forceMove(get_turf(src))
+	SET_STATUS_MAX(victim, STAT_WEAK, 5)
+	visible_message(SPAN_DANGER("\The [user] hurls \the [victim] onto \the [src]!"))
 	if(lit == FIRE_LIT)
-		affecting_mob.fire_act(return_air(), get_effective_burn_temperature(), 500)
+		victim.fire_act(return_air(), get_effective_burn_temperature(), 500)
 	return TRUE
 
 /obj/structure/fire_source/isflamesource()
@@ -435,7 +441,6 @@
 				removed.add_thermal_energy(heat_transfer)
 		environment.merge(removed)
 
-
 	queue_icon_update()
 
 /obj/structure/fire_source/proc/has_fuel()
@@ -487,9 +492,9 @@
 
 /obj/structure/fire_source/CanPass(atom/movable/mover, turf/target, height, air_group)
 	. = ..()
-	if(lit && ismob(mover))
+	if(. && lit && ismob(mover))
 		var/mob/M = mover
-		if(!MOVING_QUICKLY(M))
+		if(M.client && !M.current_posture?.prone && !MOVING_QUICKLY(M))
 			to_chat(M, SPAN_WARNING("You refrain from stepping into \the [src]."))
 			return FALSE
 	return ..()
@@ -509,7 +514,7 @@
 	name = "Adjust Draught"
 	expected_target_type = /obj/structure/fire_source
 
-/decl/interaction_handler/adjust_draught/invoked(atom/target, mob/user)
+/decl/interaction_handler/adjust_draught/invoked(atom/target, mob/user, obj/item/prop)
 	var/obj/structure/fire_source/fire = target
 	if(fire.has_draught)
 		fire.adjust_draught(user)
@@ -528,7 +533,7 @@
 	color = /decl/material/solid/metal/iron::color
 	obj_flags = OBJ_FLAG_HOLLOW
 
-/obj/structure/fire_source/stove/grab_attack(obj/item/grab/G)
+/obj/structure/fire_source/stove/grab_attack(obj/item/grab/grab, mob/user)
 	return FALSE
 
 /obj/structure/fire_source/fireplace
@@ -545,7 +550,7 @@
 	light_color_mid = "#d47b27"
 	light_color_low = "#e44141"
 
-/obj/structure/fire_source/fireplace/grab_attack(obj/item/grab/G)
+/obj/structure/fire_source/fireplace/grab_attack(obj/item/grab/grab, mob/user)
 	return FALSE
 
 #define MATERIAL_FIREPLACE(material_name) \

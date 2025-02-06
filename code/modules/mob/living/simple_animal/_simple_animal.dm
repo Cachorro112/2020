@@ -17,10 +17,15 @@
 		/decl/move_intent/run/animal
 	)
 
-	var/base_movement_delay = 0 // Added to the delay expected from movement decls.
-	ai = /datum/mob_controller
+	// Set to TRUE to ignore slipping while EVA
+	var/skip_spacemove = FALSE
 
+	/// Added to the delay expected from movement decls.
+	var/base_movement_delay = 0
+
+	/// Can this mob in theory have a mob riding it?
 	var/can_have_rider = TRUE
+	/// If the mob can be ridden, what is the largest size of rider?
 	var/max_rider_size = MOB_SIZE_SMALL
 
 	/// Does the percentage health show in the stat panel for the mob?
@@ -82,8 +87,12 @@
 	var/scannable_result // Codex page generated when this mob is scanned.
 	var/base_animal_type // set automatically in Initialize(), used for language checking.
 
-	var/attack_delay = DEFAULT_ATTACK_COOLDOWN // How long in ds that a creature winds up before attacking.
-	var/sa_accuracy = 85 //base chance to hit out of 100
+	// By default, simple mobs should attack slightly slower than players, allowing a suitably attentive
+	// player to dodge/kite if they're paying attention, and not letting themselves get cornered/incapacitated.
+	var/attack_delay = DEFAULT_ATTACK_COOLDOWN * 1.3
+
+	// Base percentage chance to hit in melee against another mob, if controlled by an AI.
+	var/telegraphed_melee_accuracy = 85
 
 	// Visible message shown when the mob dies.
 	var/death_message = "dies!"
@@ -100,8 +109,14 @@
 	var/list/draw_visible_overlays
 	var/eye_color
 
+	var/list/ability_handlers
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
+
+	if(length(ability_handlers))
+		for(var/handler in ability_handlers)
+			add_ability_handler(handler)
 
 	// Aquatic creatures only care about water, not atmos.
 	add_inventory_slot(new /datum/inventory_slot/head/simple)
@@ -322,6 +337,7 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 		take_damage(dealt_damage, damage_type, damage_flags = damage_flags, inflicter = user)
 		user.visible_message(SPAN_DANGER("\The [user] [harm_verb] \the [src]!"))
 		user.do_attack_animation(src)
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		return TRUE
 
 /mob/living/simple_animal/attackby(var/obj/item/O, var/mob/user)
@@ -336,8 +352,8 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 				visible_message(SPAN_NOTICE("\The [user] applies \the [MED] to \the [src]."))
 				MED.use(1)
 		else
-			var/decl/pronouns/G = get_pronouns()
-			to_chat(user, SPAN_WARNING("\The [src] is dead, medical items won't bring [G.him] back to life."))
+			var/decl/pronouns/pronouns = get_pronouns()
+			to_chat(user, SPAN_WARNING("\The [src] is dead, medical items won't bring [pronouns.him] back to life."))
 		return TRUE
 
 	return ..()
@@ -486,7 +502,7 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 	bodytype_category = "quadrupedal animal body"
 
 /mob/living/simple_animal/get_base_telegraphed_melee_accuracy()
-	return sa_accuracy
+	return telegraphed_melee_accuracy
 
 /mob/living/simple_animal/check_has_mouth()
 	return TRUE
@@ -515,16 +531,16 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 /mob/living/simple_animal/proc/get_pry_desc()
 	return "prying"
 
-/mob/living/simple_animal/pry_door(var/mob/user, var/delay, var/obj/machinery/door/pesky_door)
+/mob/living/simple_animal/pry_door(delay, obj/machinery/door/target)
 	if(!can_pry_door())
 		return
-	visible_message(SPAN_DANGER("\The [user] begins [get_pry_desc()] at \the [pesky_door]!"))
+	visible_message(SPAN_DANGER("\The [src] begins [get_pry_desc()] at \the [target]!"))
 	if(istype(ai))
 		ai.pause()
-	if(do_after(user, delay, pesky_door))
-		pesky_door.open(1)
+	if(do_after(src, delay, target))
+		target.open(1)
 	else
-		visible_message(SPAN_NOTICE("\The [user] is interrupted."))
+		visible_message(SPAN_NOTICE("\The [src] is interrupted."))
 	if(istype(ai))
 		ai.resume()
 
@@ -571,3 +587,6 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 /mob/living/simple_animal/set_stat(var/new_stat)
 	if((. = ..()))
 		queue_icon_update()
+
+/mob/living/simple_animal/is_space_movement_permitted(allow_movement = FALSE)
+	return skip_spacemove ? SPACE_MOVE_PERMITTED : ..()

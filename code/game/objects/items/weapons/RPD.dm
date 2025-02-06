@@ -165,14 +165,14 @@ var/global/list/rpd_pipe_selection_skilled = list()
 /obj/item/rpd/attackby(var/obj/item/W, var/mob/user)
 	if(istype(W, /obj/item/pipe))
 		if(!user.try_unequip(W))
-			return
+			return TRUE
 		recycle(W,user)
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/rpd/proc/recycle(var/obj/item/W,var/mob/user)
 	if(!user.skill_check(SKILL_ATMOS,SKILL_BASIC))
-		user.visible_message("[user] struggles with \the [src], as they futilely jam \the [W] against it")
+		user.visible_message("<b>\The [user]</b> struggles with \the [src] as they futilely jam \the [W] against it.")
 		return
 	playsound(src.loc, 'sound/effects/pop.ogg', 50, 1)
 	qdel(W)

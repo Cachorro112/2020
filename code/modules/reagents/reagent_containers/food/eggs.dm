@@ -40,7 +40,7 @@
 
 		if(!(clr in list("blue","green","mime","orange","purple","rainbow","red","yellow")))
 			to_chat(usr, SPAN_WARNING("The egg refuses to take on this color!"))
-			return
+			return TRUE
 
 		to_chat(usr, SPAN_NOTICE("You color \the [src] [clr]"))
 		icon_state = "egg-[clr]"
@@ -83,14 +83,14 @@
 /obj/item/food/friedegg
 	name = "fried egg"
 	desc = "A fried egg, with a touch of salt and pepper."
-	icon_state = "friedegg"
+	icon = 'icons/obj/food/fried/friedegg.dmi'
 	filling_color = "#ffdf78"
 	center_of_mass = @'{"x":16,"y":14}'
 	bitesize = 1
 
 /obj/item/food/friedegg/populate_reagents()
 	. = ..()
-	add_to_reagents(/decl/material/solid/organic/meat, 3)
+	add_to_reagents(/decl/material/solid/organic/meat/egg, 3)
 	add_to_reagents(/decl/material/solid/sodiumchloride,     1)
 	add_to_reagents(/decl/material/solid/blackpepper,        1)
 
@@ -103,12 +103,12 @@
 
 /obj/item/food/boiledegg/populate_reagents()
 	. = ..()
-	add_to_reagents(/decl/material/solid/organic/meat, 2)
+	add_to_reagents(/decl/material/solid/organic/meat/egg, 2)
 
 /obj/item/food/omelette
 	name = "cheese omelette"
 	desc = "Omelette with cheese!"
-	icon_state = "omelette"
+	icon = 'icons/obj/food/fried/omelette.dmi'
 	plate = /obj/item/plate
 	filling_color = "#fff9a8"
 	center_of_mass = @'{"x":16,"y":13}'
@@ -116,12 +116,12 @@
 
 /obj/item/food/omelette/populate_reagents()
 	. = ..()
-	add_to_reagents(/decl/material/solid/organic/meat, 8)
+	add_to_reagents(/decl/material/solid/organic/meat/egg, 8)
 
 /obj/item/food/chawanmushi
 	name = "chawanmushi"
 	desc = "A legendary egg custard that makes friends out of enemies. Probably too hot for a cat to eat."
-	icon_state = "chawanmushi"
+	icon = 'icons/obj/food/pudding/chawanmushi.dmi'
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#f0f2e4"
 	center_of_mass = @'{"x":17,"y":10}'
@@ -129,4 +129,4 @@
 
 /obj/item/food/chawanmushi/populate_reagents()
 	. = ..()
-	add_to_reagents(/decl/material/solid/organic/meat, 5)
+	add_to_reagents(/decl/material/solid/organic/meat/egg, 5)

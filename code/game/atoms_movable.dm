@@ -46,7 +46,7 @@
 
 //call this proc to start space drifting
 /atom/movable/proc/space_drift(direction)//move this down
-	if(!loc || direction & (UP|DOWN) || Process_Spacemove(0))
+	if(!loc || direction & (UP|DOWN) || is_space_movement_permitted() != SPACE_MOVE_FORBIDDEN)
 		inertia_dir = 0
 		inertia_ignore = null
 		return 0
@@ -59,29 +59,22 @@
 	return 1
 
 //return 0 to space drift, 1 to stop, -1 for mobs to handle space slips
-/atom/movable/proc/Process_Spacemove(var/allow_movement)
+/atom/movable/proc/is_space_movement_permitted(allow_movement = FALSE)
 	if(!simulated)
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(has_gravity())
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(length(grabbed_by))
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(throwing)
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(anchored)
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(!isturf(loc))
-		return 1
-
+		return SPACE_MOVE_PERMITTED
 	if(locate(/obj/structure/lattice) in range(1, get_turf(src))) //Not realistic but makes pushing things in space easier
-		return -1
-
-	return 0
+		return SPACE_MOVE_SUPPORTED
+	return SPACE_MOVE_FORBIDDEN
 
 /atom/movable/attack_hand(mob/user)
 	// Unbuckle anything buckled to us.
@@ -432,9 +425,9 @@
 
 /atom/movable/proc/show_buckle_message(var/mob/buckled, var/mob/buckling)
 	if(buckled == buckling)
-		var/decl/pronouns/G = buckled.get_pronouns()
+		var/decl/pronouns/pronouns = buckled.get_pronouns()
 		visible_message(
-			SPAN_NOTICE("\The [buckled] buckles [G.self] to \the [src]."),
+			SPAN_NOTICE("\The [buckled] buckles [pronouns.self] to \the [src]."),
 			SPAN_NOTICE("You buckle yourself to \the [src]."),
 			SPAN_NOTICE("You hear metal clanking.")
 		)
@@ -449,16 +442,16 @@
 	var/mob/living/M = unbuckle_mob()
 	if(M)
 		show_unbuckle_message(M, user)
-		for(var/obj/item/grab/G as anything in (M.grabbed_by|grabbed_by))
-			qdel(G)
+		for(var/obj/item/grab/grab as anything in (M.grabbed_by|grabbed_by))
+			qdel(grab)
 		add_fingerprint(user)
 	return M
 
 /atom/movable/proc/show_unbuckle_message(var/mob/buckled, var/mob/buckling)
 	if(buckled == buckling)
-		var/decl/pronouns/G = buckled.get_pronouns()
+		var/decl/pronouns/pronouns = buckled.get_pronouns()
 		visible_message(
-			SPAN_NOTICE("\The [buckled] unbuckled [G.self] from \the [src]!"),
+			SPAN_NOTICE("\The [buckled] unbuckled [pronouns.self] from \the [src]!"),
 			SPAN_NOTICE("You unbuckle yourself from \the [src]."),
 			SPAN_NOTICE("You hear metal clanking.")
 		)
@@ -585,3 +578,13 @@
 	if(ATOM_IS_OPEN_CONTAINER(src))
 		return loc?.take_vaporized_reagent(reagent, amount)
 	return null
+
+/atom/movable/immune_to_floor_hazards()
+	return ..() || throwing
+
+// updates pixel offsets, triggers fluids, etc.
+/atom/movable/proc/on_turf_height_change(new_height)
+	if(simulated)
+		reset_offsets()
+		return TRUE
+	return FALSE

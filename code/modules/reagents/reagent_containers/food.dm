@@ -9,10 +9,11 @@
 //	it. Try to stick to existing reagents when possible (so if you want a stronger healing effect, just use regenerative serum).
 
 /obj/item/food
+	abstract_type = /obj/item/food
 	name = "snack"
 	desc = "Yummy!"
-	icon = 'icons/obj/food.dmi'
-	icon_state = null
+	icon = 'icons/obj/food/error.dmi'
+	icon_state = ICON_STATE_WORLD
 	randpixel = 6
 	item_flags = null
 	material = /decl/material/liquid/nutriment
@@ -36,6 +37,7 @@
 	// List of flavours and flavour strengths.
 	// The flavour strength text is determined by the ratio of flavour strengths in the snack.
 	var/list/nutriment_desc
+	/// Either a path to a sound file, a get_sfx sound string, or a list of any combination of those.
 	var/list/eat_sound = 'sound/items/eatfood.ogg'
 	var/filling_color = "#ffffff" //Used by sandwiches.
 	var/trash
@@ -51,7 +53,7 @@
 	 */
 	var/cooked_icon = null
 	/// A type used when cloning this food item for utensils.
-	var/utensil_food_type
+	var/_utensil_food_type
 	/// A set of utensil flags determining which utensil interactions are valid with this food.
 	var/utensil_flags = UTENSIL_FLAG_SCOOP | UTENSIL_FLAG_COLLECT
 
@@ -114,8 +116,8 @@
 	batter_coating = applied_coating
 	var/icon/I = icon(icon, icon_state, dir)
 	color = "#ffffff" //Some fruits use the color var. Reset this so it doesnt tint the batter
-	I.Blend(new /icon('icons/obj/food_custom.dmi', rgb(255,255,255)),ICON_ADD)
-	I.Blend(new /icon('icons/obj/food_custom.dmi', applied_coating_reagent.icon_raw),ICON_MULTIPLY)
+	I.Blend(new /icon('icons/obj/food/custom/custom.dmi', rgb(255,255,255)),ICON_ADD)
+	I.Blend(new /icon('icons/obj/food/custom/custom.dmi', applied_coating_reagent.icon_raw),ICON_MULTIPLY)
 	var/image/J = image(I)
 	J.alpha = 200
 	J.blend_mode = BLEND_OVERLAY
@@ -134,8 +136,8 @@
 		var/decl/material/liquid/nutriment/batter/our_coating = GET_DECL(batter_coating)
 		var/icon/I = icon(icon, icon_state, dir)
 		color = COLOR_WHITE //Some fruits use the color var
-		I.Blend(new /icon('icons/obj/food_custom.dmi', rgb(255,255,255)),ICON_ADD)
-		I.Blend(new /icon('icons/obj/food_custom.dmi', our_coating.icon_cooked),ICON_MULTIPLY)
+		I.Blend(new /icon('icons/obj/food/custom/custom.dmi', rgb(255,255,255)),ICON_ADD)
+		I.Blend(new /icon('icons/obj/food/custom/custom.dmi', our_coating.icon_cooked),ICON_MULTIPLY)
 		var/image/J = image(I)
 		J.alpha = 200
 		add_overlay(J)
@@ -169,8 +171,8 @@
 		plate = null
 
 	initialize_reagents()
-	if(isnull(utensil_food_type))
-		utensil_food_type = type
+	if(isnull(_utensil_food_type))
+		_utensil_food_type = type
 	if(slice_path && slice_num)
 		utensil_flags |= UTENSIL_FLAG_SLICE
 
@@ -181,7 +183,21 @@
 		reagents.maximum_volume = max(reagents.maximum_volume, volume)
 	return ..()
 
-/obj/item/chems/on_reagent_change()
+// Dummy type used solely for soup bowls/soup spoons.
+/obj/item/food/lump
+	name = "lump"
+
+/obj/item/food/lump/on_reagent_change()
+	. = ..()
+	if(reagents?.total_volume)
+		SetName(reagents.get_primary_reagent_name())
+		filling_color = reagents.get_color()
+	else
+		SetName(initial(name))
+		filling_color = COLOR_WHITE
+	color = filling_color
+
+/obj/item/food/on_reagent_change()
 	if((. = ..()))
 		update_icon()
 
@@ -280,21 +296,43 @@
 /obj/item/food/populate_reagents()
 	. = ..()
 	SHOULD_CALL_PARENT(TRUE)
-	if(nutriment_amt && nutriment_type)
-		// Ensure our taste data is in the expected format.
-		if(nutriment_desc)
-			if(!islist(nutriment_desc))
-				nutriment_desc = list(nutriment_desc)
-			for(var/taste in nutriment_desc)
-				if(nutriment_desc[taste] <= 0)
-					nutriment_desc[taste] = 1
-		add_to_reagents(nutriment_type, nutriment_amt, get_nutriment_data())
+	if(!nutriment_amt || !nutriment_type)
+		return
+	// Ensure our taste data is in the expected format.
+	if(nutriment_desc)
+		if(!islist(nutriment_desc))
+			nutriment_desc = list(nutriment_desc)
+		for(var/taste in nutriment_desc)
+			if(nutriment_desc[taste] <= 0)
+				nutriment_desc[taste] = 1
+	add_to_reagents(nutriment_type, nutriment_amt, get_nutriment_data())
 
 /obj/item/food/proc/get_nutriment_data()
 	if(nutriment_desc)
-		return list("taste" = nutriment_desc)
+		LAZYSET(., DATA_TASTE, nutriment_desc)
+	if(allergen_flags)
+		LAZYINITLIST(.)
+		.[DATA_INGREDIENT_FLAGS] |= allergen_flags
 
 /obj/item/food/proc/set_nutriment_data(list/newdata)
 	if(reagents?.total_volume && reagents.has_reagent(nutriment_type, 1))
 		LAZYINITLIST(reagents.reagent_data)
 		reagents.reagent_data[nutriment_type] = newdata
+
+/obj/item/food/get_utensil_food_type()
+	return _utensil_food_type
+
+/obj/item/food/get_food_filling_color()
+	return filling_color || ..()
+
+/obj/item/food/handle_chunk_separated()
+	bitecount++
+
+
+/obj/item/food/proc/add_allergen_flags(new_flags)
+	for(var/reagent in reagents.reagent_volumes)
+		var/decl/material/mat = GET_DECL(reagent)
+		var/list/newdata = mat.mix_data(reagents, list(DATA_INGREDIENT_FLAGS = new_flags))
+		if(newdata)
+			LAZYSET(reagents.reagent_data, reagent, newdata)
+

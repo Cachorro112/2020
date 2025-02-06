@@ -84,9 +84,9 @@
 	. = ..()
 	if(statpanel("Status"))
 
-		var/obj/item/gps/G = get_active_held_item()
-		if(istype(G))
-			stat("Coordinates:", "[G.get_coordinates()]")
+		var/obj/item/gps/gps = get_active_held_item()
+		if(istype(gps))
+			stat("Coordinates:", "[gps.get_coordinates()]")
 
 		stat("Intent:", "[a_intent]")
 		stat("Move Mode:", "[move_intent.name]")
@@ -358,8 +358,8 @@
 		if(incapacitated())
 			to_chat(src, SPAN_WARNING("You cannot do that right now."))
 			return
-		var/decl/pronouns/G = get_pronouns()
-		visible_message(SPAN_DANGER("\The [src] starts sticking a finger down [G.his] own throat. It looks like [G.he] [G.is] trying to throw up!"))
+		var/decl/pronouns/pronouns = get_pronouns()
+		visible_message(SPAN_DANGER("\The [src] starts sticking a finger down [pronouns.his] own throat. It looks like [pronouns.he] [pronouns.is] trying to throw up!"))
 		if(!do_after(src, 30))
 			return
 		timevomit = max(timevomit, 5)
@@ -511,9 +511,6 @@
 	if(species.holder_type)
 		holder_type = species.holder_type
 	set_max_health(species.total_health, skip_health_update = TRUE) // Health update is handled later.
-	remove_extension(src, /datum/extension/armor)
-	if(species.natural_armour_values)
-		set_extension(src, /datum/extension/armor, species.natural_armour_values)
 	apply_species_appearance()
 
 	var/decl/pronouns/new_pronouns = get_pronouns_by_gender(get_gender())
@@ -833,8 +830,8 @@
 		if(!nervous_system_failure() && active_breaths)
 			visible_message(SPAN_NOTICE("\The [src] jerks and gasps for breath!"))
 		else
-			var/decl/pronouns/G = get_pronouns()
-			visible_message(SPAN_NOTICE("\The [src] twitches a bit as [G.his] [heart.name] restarts!"))
+			var/decl/pronouns/pronouns = get_pronouns()
+			visible_message(SPAN_NOTICE("\The [src] twitches a bit as [pronouns.his] [heart.name] restarts!"))
 
 		shock_stage = min(shock_stage, 100) // 120 is the point at which the heart stops.
 		var/oxyloss_threshold = round(species.total_health * 0.35)
@@ -1072,9 +1069,6 @@
 		return SScharacter_info.get_record(comments_record_id, TRUE)
 	return ..()
 
-/mob/living/human/proc/get_age()
-	. = LAZYACCESS(appearance_descriptors, "age") || 30
-
 /mob/living/human/proc/set_age(var/val)
 	var/decl/bodytype/bodytype = get_bodytype()
 	var/datum/appearance_descriptor/age = LAZYACCESS(bodytype.appearance_descriptors, "age")
@@ -1101,7 +1095,7 @@
 	var/bloodcolor
 	var/list/blood_data = REAGENT_DATA(source.coating, /decl/material/liquid/blood)
 	if(blood_data)
-		bloodDNA = list(blood_data["blood_DNA"] = blood_data["blood_type"])
+		bloodDNA = list(blood_data[DATA_BLOOD_DNA] = blood_data[DATA_BLOOD_TYPE])
 	else
 		bloodDNA = list()
 	bloodcolor = source.coating.get_color()

@@ -129,7 +129,7 @@
 
 		if(emptied)
 			W.storage.finish_bulk_removal()
-			storage.update_ui_after_item_insertion(user)
+			storage.update_ui_after_item_insertion()
 			if(length(W.get_stored_inventory()))
 				to_chat(user, SPAN_NOTICE("You partially empty \the [W] into \the [src]'s hopper."))
 			else
@@ -163,23 +163,6 @@
 	if(use_power == POWER_USE_OFF || !operable())
 		to_chat(user, SPAN_WARNING("\The [src]'s interface is unresponsive."))
 		return TRUE
-	return ..()
-
-/obj/item/scrap_material/attackby(obj/item/W, mob/user)
-
-	if(W.type == type && user.try_unequip(W))
-
-		LAZYINITLIST(matter)
-		for(var/mat in W.matter)
-			matter[mat] += W.matter[mat]
-		UNSETEMPTY(matter)
-		W.matter = null
-
-		to_chat(user, SPAN_NOTICE("You combine \the [src] and \the [W]."))
-		qdel(W)
-
-		return TRUE
-
 	return ..()
 
 /obj/machinery/recycler/proc/dump_trace_material(atom/forced_loc = loc)

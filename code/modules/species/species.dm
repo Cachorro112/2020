@@ -57,9 +57,6 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/flesh_color = "#ffc896"             // Pink.
 	var/blood_oxy = 1
 
-	// Preview in prefs positioning. If null, uses defaults set on a static list in preferences.dm.
-	var/list/character_preview_screen_locs
-
 	var/organs_icon		//species specific internal organs icons
 
 	var/strength = STR_MEDIUM
@@ -83,11 +80,12 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	// Combat vars.
 	var/total_health = DEFAULT_SPECIES_HEALTH  // Point at which the mob will enter crit.
 	var/list/unarmed_attacks = list(           // Possible unarmed attacks that the mob will use in combat,
-		/decl/natural_attack,
+		/decl/natural_attack/stomp,
+		/decl/natural_attack/kick,
+		/decl/natural_attack/punch,
 		/decl/natural_attack/bite
-		)
+	)
 
-	var/list/natural_armour_values            // Armour values used if naked.
 	var/brute_mod =      1                    // Physical damage multiplier.
 	var/burn_mod =       1                    // Burn damage multiplier.
 	var/toxins_mod =     1                    // Toxloss modifier
@@ -123,7 +121,9 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	// Environment tolerance/life processes vars.
 	var/breath_pressure = 16                                    // Minimum partial pressure safe for breathing, kPa
 	var/breath_type = /decl/material/gas/oxygen                 // Non-oxygen gas breathed, if any.
-	var/poison_types = list(                                    // Noticeably poisonous air - ie. updates the toxins indicator on the HUD.
+	/// Material types considered noticeably poisonous when inhaled (ie. updates the toxins indicator on the HUD).
+	/// This is an associative list for speed.
+	var/poison_types = list(
 		/decl/material/solid/phoron = TRUE,
 		/decl/material/gas/chlorine = TRUE
 		)
@@ -485,7 +485,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 
 // Used for any extra behaviour when falling and to see if a species will fall at all.
 /decl/species/proc/can_fall(var/mob/living/human/H)
-	return TRUE
+	return !can_overcome_gravity(H)
 
 // Used to override normal fall behaviour. Use only when the species does fall down a level.
 /decl/species/proc/handle_fall_special(var/mob/living/human/H, var/turf/landing)
@@ -634,7 +634,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 			return
 
 	var/randn = rand(1, 100) - skill_mod + state_mod
-	if(!(check_no_slip(target)) && randn <= 25)
+	if(!target.can_slip() && randn <= 25)
 		var/armor_check = 100 * target.get_blocked_ratio(affecting, BRUTE, damage = 20)
 		target.apply_effect(push_mod, WEAKEN, armor_check)
 		playsound(target.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -661,8 +661,8 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	target.visible_message("<span class='danger'>[attacker] attempted to disarm \the [target]!</span>")
 
 /decl/species/proc/disfigure_msg(var/mob/living/human/H) //Used for determining the message a disfigured face has on examine. To add a unique message, just add this onto a specific species and change the "return" message.
-	var/decl/pronouns/G = H.get_pronouns()
-	return SPAN_DANGER("[G.His] face is horribly mangled!\n")
+	var/decl/pronouns/pronouns = H.get_pronouns()
+	return SPAN_DANGER("[pronouns.His] face is horribly mangled!\n")
 
 /decl/species/proc/get_available_accessories(var/decl/bodytype/bodytype, accessory_category)
 	. = list()
@@ -694,8 +694,8 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 		if(31 to 45)	. = 4
 		else			. = 8
 
-/decl/species/proc/check_no_slip(var/mob/living/human/H)
-	if(can_overcome_gravity(H))
+/decl/species/proc/check_no_slip(mob/living/user, magboots_only)
+	if(can_overcome_gravity(user))
 		return TRUE
 	return (species_flags & SPECIES_FLAG_NO_SLIP)
 

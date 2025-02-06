@@ -11,13 +11,9 @@
 		/decl/bodytype/skrell
 		)
 
+	traits = list(/decl/trait/malus/intolerance/protein = TRAIT_LEVEL_MINOR)
+
 	primitive_form = "Neaera"
-	unarmed_attacks = list(
-		/decl/natural_attack/stomp,
-		/decl/natural_attack/kick,
-		/decl/natural_attack/punch,
-		/decl/natural_attack/bite
-	)
 
 	description = "The Skrell are a highly advanced race of amphibians hailing from the system known as Qerr'Vallis. Their society is regimented into \
 	five different castes which the Qerr'Katish, or Royal Caste, rules over. Skrell are strict herbivores who are unable to eat large quantities of \
@@ -117,7 +113,7 @@
 		var/list/bloodDNA
 		var/list/blood_data = REAGENT_DATA(H.vessel, /decl/material/liquid/blood)
 		if(blood_data)
-			bloodDNA = list(blood_data["blood_DNA"] = blood_data["blood_type"])
+			bloodDNA = list(blood_data[DATA_BLOOD_DNA] = blood_data[DATA_BLOOD_TYPE])
 		else
 			bloodDNA = list()
 		if(T.simulated)

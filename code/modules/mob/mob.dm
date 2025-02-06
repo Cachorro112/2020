@@ -118,7 +118,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T, range, mobs, objs, check_ghosts)
+	get_listeners_in_range(T, range, mobs, objs, check_ghosts)
 
 	for(var/o in objs)
 		var/obj/O = o
@@ -158,7 +158,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T, hearing_distance, mobs, objs, check_ghosts)
+	get_listeners_in_range(T, hearing_distance, mobs, objs, check_ghosts)
 
 	for(var/m in mobs)
 		var/mob/M = m
@@ -229,8 +229,8 @@
 #undef ENCUMBERANCE_MOVEMENT_MOD
 
 /mob/proc/encumbrance()
-	for(var/obj/item/grab/G as anything in get_active_grabs())
-		. = max(., G.grab_slowdown())
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
+		. = max(., grab.grab_slowdown())
 	. *= (0.8 ** size_strength_mod())
 	. *= (0.5 + 1.5 * (SKILL_MAX - get_skill_value(SKILL_HAULING))/(SKILL_MAX - SKILL_MIN))
 
@@ -301,8 +301,8 @@
 #undef FULLY_BUCKLED
 
 /mob/proc/grab_restrained()
-	for (var/obj/item/grab/G in grabbed_by)
-		if(G.restrains())
+	for (var/obj/item/grab/grab as anything in grabbed_by)
+		if(grab.restrains())
 			return TRUE
 
 /mob/proc/restrained()
@@ -424,8 +424,8 @@
 			if(isobj(A.loc))
 				look_target = "inside \the [A.loc]"
 			if(A == src)
-				var/decl/pronouns/G = get_pronouns()
-				look_target = "at [G.self]"
+				var/decl/pronouns/pronouns = get_pronouns()
+				look_target = "at [pronouns.self]"
 			for(var/mob/M in viewers(4, src))
 				if(M == src)
 					continue
@@ -477,10 +477,10 @@
 		return L
 	if(!L)
 		L = list(src)
-	for(var/obj/item/grab/G in grabs)
-		if(G.affecting && !(G.affecting in L))
-			L += G.affecting
-			var/mob/living/affecting_mob = G.get_affecting_mob()
+	for(var/obj/item/grab/grab as anything in grabs)
+		if(grab.affecting && !(grab.affecting in L))
+			L += grab.affecting
+			var/mob/living/affecting_mob = grab.get_affecting_mob()
 			if(istype(affecting_mob))
 				affecting_mob.ret_grab(L)
 	return L
@@ -874,7 +874,8 @@
 		if(!canface() || current_posture.prone || restrained())
 			facing_dir = null
 		else if(buckled)
-			if(buckled.obj_flags & OBJ_FLAG_ROTATABLE)
+			var/obj/buckled_obj = buckled
+			if(!isobj(buckled) || (buckled_obj.obj_flags & OBJ_FLAG_ROTATABLE))
 				buckled.set_dir(facing_dir)
 				return ..(facing_dir)
 			else
@@ -987,12 +988,12 @@
 /mob/proc/get_gender()
 	return gender
 
-/mob/is_fluid_pushable(var/amt)
-	if(..() && !buckled && (current_posture.prone || !Check_Shoegrip()) && (amt >= mob_size * (current_posture.prone ? 5 : 10)))
+/mob/try_fluid_push(volume, strength)
+	if(..() && can_slip() && (strength >= mob_size * (current_posture.prone ? 5 : 10)))
 		if(!current_posture.prone)
 			SET_STATUS_MAX(src, STAT_WEAK, 1)
 			if(current_posture.prone && prob(10))
-				to_chat(src, "<span class='danger'>You are pushed down by the flood!</span>")
+				to_chat(src, SPAN_DANGER("You are pushed down by the flood!"))
 		return TRUE
 	return FALSE
 
@@ -1263,6 +1264,11 @@
 /mob/proc/toggle_internals(var/mob/living/user)
 	return
 
+/mob/proc/set_target_zone(new_zone)
+	if(zone_sel)
+		return zone_sel?.set_selected_zone(new_zone)
+	return FALSE
+
 /mob/proc/get_target_zone()
 	return zone_sel?.selecting || BP_CHEST
 
@@ -1393,3 +1399,92 @@
 /mob/proc/can_twohand_item(obj/item/item)
 	return FALSE
 
+/// THIS DOES NOT RELATE TO HELD ITEM SLOTS. It is very specifically a functional BP_L_HAND or BP_R_HAND organ, not necessarily a gripper.
+/mob/proc/get_usable_hand_slot_organ()
+	var/static/list/hand_slots = list(BP_L_HAND, BP_R_HAND)
+	for(var/slot in shuffle(hand_slots))
+		var/obj/item/organ/external/hand = GET_EXTERNAL_ORGAN(src, slot)
+		if(istype(hand) && hand.is_usable())
+			return hand
+
+/mob/proc/get_solid_footing()
+
+	if(!loc)
+		return src // this is a bit weird but we shouldn't slip in nullspace probably
+
+	// Check for dense turfs.
+	var/turf/my_turf = loc
+	if(!istype(my_turf))
+		return my_turf
+
+	if(my_turf.is_wall() || my_turf.is_floor())
+		return my_turf
+
+	// Check for catwalks and lattices.
+	var/atom/platform = my_turf.get_supporting_platform() || (locate(/obj/structure/lattice) in my_turf)
+	if(platform)
+		return platform
+
+	// Check for supportable nearby atoms.
+	for(var/turf/neighbor in RANGE_TURFS(my_turf, 1))
+		if(neighbor == my_turf)
+			continue
+		if(neighbor.contains_dense_objects(exceptions = src))
+			return neighbor
+		platform = neighbor.get_supporting_platform() || (locate(/obj/structure/lattice) in neighbor)
+		if(platform)
+			return platform
+
+	// Find something we are grabbing onto for support.
+	for(var/atom/movable/thing in range(1, my_turf))
+		if(thing == src || thing == inertia_ignore || !thing.simulated || thing == buckled)
+			continue
+		if(isturf(thing))
+			continue // We checked turfs when using magboots above.
+		else if(ismob(thing))
+			var/mob/victim = thing
+			if(victim.buckled)
+				continue
+		else if(thing.CanPass(src))
+			continue
+		if(thing.anchored)
+			return thing
+		var/is_being_grabbed = FALSE
+		for(var/obj/item/grab/grab in get_active_grabs())
+			if(thing == grab.affecting)
+				is_being_grabbed = TRUE
+				break
+		if(!is_being_grabbed)
+			. = thing
+
+/mob/proc/can_slip(magboots_only = FALSE)
+
+	// Are we immune to everything?
+	if(status_flags & GODMODE)
+		return FALSE
+
+	// Quick basic checks.
+	if(!simulated || !isturf(loc) || buckled || current_posture?.prone || throwing)
+		return FALSE
+
+	// Species flag/proc check.
+	if(get_species()?.check_no_slip(src, magboots_only))
+		return FALSE
+
+	// Check footwear.
+	if(!magboots_only && has_non_slip_footing())
+		return FALSE
+
+	if((has_gravity() || has_magnetised_footing()) && get_solid_footing())
+		return FALSE
+
+	// Slip!
+	return TRUE
+
+/mob/proc/has_non_slip_footing()
+	var/obj/item/shoes = get_equipped_item(slot_shoes_str)
+	return istype(shoes) && (shoes.item_flags & ITEM_FLAG_NOSLIP)
+
+/mob/proc/has_magnetised_footing()
+	var/obj/item/shoes = get_equipped_item(slot_shoes_str)
+	return istype(shoes) && (shoes.item_flags & ITEM_FLAG_MAGNETISED)

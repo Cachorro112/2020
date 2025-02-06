@@ -24,8 +24,8 @@
 /obj/machinery/seed_storage
 	name = "Seed storage"
 	desc = "It stores, sorts, and dispenses seeds."
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "seeds"
+	icon = 'icons/obj/machines/vending/seeds_grey.dmi'
+	icon_state = ICON_STATE_WORLD
 	density = TRUE
 	anchored = TRUE
 	idle_power_usage = 100
@@ -62,7 +62,6 @@
 /obj/machinery/seed_storage/garden
 	name = "Garden seed storage"
 	scanner = list("stats")
-	icon_state = "seeds_generic"
 	starting_seeds = list(
 		/obj/item/seeds/ambrosiavulgarisseed = 15,
 		/obj/item/seeds/appleseed = 15,

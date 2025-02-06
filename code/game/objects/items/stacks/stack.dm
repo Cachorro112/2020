@@ -50,6 +50,16 @@
 		singular_name = "sheet"
 	if(!plural_name)
 		plural_name = text_make_plural(singular_name)
+	update_name()
+
+/obj/item/stack/update_name()
+	. = ..()
+	if(amount == 1)
+		gender = NEUTER
+		SetName(singular_name)
+	else
+		gender = PLURAL
+		SetName(plural_name)
 
 /obj/item/stack/Destroy()
 	if (src && usr && usr.machine == src)
@@ -291,6 +301,7 @@
 	for(var/i = 1 to charge_costs.len)
 		var/datum/matter_synth/S = synths[i]
 		S.use_charge(charge_costs[i] * used) // Doesn't need to be deleted
+	update_name()
 	update_icon()
 	return TRUE
 
@@ -463,6 +474,8 @@
 /// Returns the string describing an amount of the stack, i.e. "an ingot" vs "a flag"
 /obj/item/stack/proc/get_string_for_amount(amount)
 	if(amount == 1)
+		if(gender == PLURAL)
+			return "some [singular_name]"
 		return indefinite_article ? "[indefinite_article] [singular_name]" : ADD_ARTICLE(singular_name)
 	return "[amount] [plural_name]"
 

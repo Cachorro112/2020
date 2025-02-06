@@ -4,17 +4,13 @@
 
 /decl/butchery_data/animal/ruminant/harvest_meat(mob/donor)
 	var/static/list/extra_product = list(
-		/obj/item/food/butchery/haunch/shoulder,
-		/obj/item/food/butchery/haunch/shoulder,
-		/obj/item/food/butchery/haunch/side,
-		/obj/item/food/butchery/haunch/side,
-		/obj/item/food/butchery/haunch,
-		/obj/item/food/butchery/haunch
+		/obj/item/food/butchery/haunch/shoulder = 2,
+		/obj/item/food/butchery/haunch/side = 2,
+		/obj/item/food/butchery/haunch = 2
 	)
-	var/create_turf = get_turf(donor)
+	. = list()
 	for(var/product in extra_product)
-		var/food = new product(create_turf, meat_material, donor, bone_material)
-		LAZYADD(., food)
+		. += place_products(donor, meat_material, extra_product[product], product)
 
 /decl/butchery_data/animal/ruminant/goat
 	meat_name       = "chevon"
@@ -36,6 +32,15 @@
 
 /decl/butchery_data/animal/ruminant/deer/buck
 	// todo: drop antlers
+
+/decl/butchery_data/animal/ruminant/sheep
+	meat_name       = "mutton"
+	meat_type       = /obj/item/food/butchery/meat
+	meat_amount     = 4
+	bone_amount     = 8
+	skin_material   = /decl/material/solid/organic/skin/sheep
+	skin_amount     = 8
+	butchery_offset = list(-6, 0)
 
 /decl/butchery_data/animal/ruminant/cow
 	meat_name     = "beef"
@@ -66,7 +71,7 @@
 
 /decl/butchery_data/animal/small/fowl/goose/dire/harvest_meat(mob/donor)
 	. = ..()
-	var/quill = new /obj/item/pen/fancy/quill(get_turf(donor))
+	var/quill = new /obj/item/pen/fancy/quill/goose(get_turf(donor))
 	LAZYADD(., quill)
 
 /decl/butchery_data/animal/small/fowl/duck

@@ -37,11 +37,9 @@
 /mob/proc/has_danger_grab(mob/user)
 	if (user == src || isrobot(user) || isbot(user))
 		return TRUE
-
-	for (var/obj/item/grab/G in grabbed_by)
-		if (G.force_danger())
+	for (var/obj/item/grab/grab as anything in grabbed_by)
+		if (grab.force_danger())
 			return TRUE
-
 
 /proc/isdeaf(A)
 	if(isliving(A))
@@ -119,23 +117,9 @@ var/global/list/global/organ_rel_size = list(
 		zone = check_zone(zone, target)
 		if(prob(probability))
 			return zone
-
 	var/ran_zone = zone
 	while (ran_zone == zone)
-		ran_zone = pick (
-			organ_rel_size[BP_HEAD];   BP_HEAD,
-			organ_rel_size[BP_CHEST];  BP_CHEST,
-			organ_rel_size[BP_GROIN];  BP_GROIN,
-			organ_rel_size[BP_L_ARM];  BP_L_ARM,
-			organ_rel_size[BP_R_ARM];  BP_R_ARM,
-			organ_rel_size[BP_L_LEG];  BP_L_LEG,
-			organ_rel_size[BP_R_LEG];  BP_R_LEG,
-			organ_rel_size[BP_L_HAND]; BP_L_HAND,
-			organ_rel_size[BP_R_HAND]; BP_R_HAND,
-			organ_rel_size[BP_L_FOOT]; BP_L_FOOT,
-			organ_rel_size[BP_R_FOOT]; BP_R_FOOT
-		)
-
+		ran_zone = pickweight(organ_rel_size)
 	return ran_zone
 
 // Emulates targetting a specific body part, and miss chances
@@ -152,8 +136,8 @@ var/global/list/global/organ_rel_size = list(
 		if(target.buckled || target.current_posture.prone)
 			return zone
 		// if your target is being grabbed aggressively by someone you cannot miss either
-		for(var/obj/item/grab/G in target.grabbed_by)
-			if(G.stop_move())
+		for(var/obj/item/grab/grab as anything in target.grabbed_by)
+			if(grab.stop_move())
 				return zone
 
 	var/miss_chance = 10

@@ -6,7 +6,7 @@
 	opacity                   = FALSE
 	anchored                  = TRUE
 	density                   = TRUE
-	atom_flags                = ATOM_FLAG_CLIMBABLE
+	atom_flags                = ATOM_FLAG_CLIMBABLE | ATOM_FLAG_OPEN_CONTAINER
 	matter                    = null
 	material                  = /decl/material/solid/stone/granite
 	color                     = /decl/material/solid/stone/granite::color
@@ -17,6 +17,23 @@
 	volume                    = 10000
 	can_toggle_open           = FALSE
 	var/auto_refill
+
+/obj/structure/reagent_dispensers/well/get_alt_interactions(mob/user)
+	. = ..()
+	if(reagents?.total_volume >= FLUID_PUDDLE)
+		LAZYADD(., /decl/interaction_handler/dip_item)
+		LAZYADD(., /decl/interaction_handler/fill_from)
+	if(user?.get_active_held_item())
+		LAZYADD(., /decl/interaction_handler/empty_into)
+
+// Overrides due to wonky reagent_dispeners opencontainer flag handling.
+/obj/structure/reagent_dispensers/well/can_be_poured_from(mob/user, atom/target)
+	return (reagents?.maximum_volume > 0)
+/obj/structure/reagent_dispensers/well/can_be_poured_into(mob/user, atom/target)
+	return (reagents?.maximum_volume > 0)
+// Override to skip open container check.
+/obj/structure/reagent_dispensers/well/can_drink_from(mob/user)
+	return reagents?.total_volume && user.check_has_mouth()
 
 /obj/structure/reagent_dispensers/well/populate_reagents()
 	. = ..()
@@ -40,22 +57,22 @@
 	if(!is_processing && auto_refill)
 		START_PROCESSING(SSobj, src)
 
-/obj/structure/reagent_dispensers/well/attackby(obj/item/W, mob/user)
-	. = ..()
-	if(!. && user.a_intent == I_HELP && reagents?.total_volume > FLUID_PUDDLE)
-		user.visible_message(SPAN_NOTICE("\The [user] dips \the [W] into \the [reagents.get_primary_reagent_name()]."))
-		W.fluid_act(reagents)
-		return TRUE
+/obj/structure/reagent_dispensers/well/Process()
+	if(!reagents || !auto_refill) // if we're full, we only stop at the end of the proc; we need to check for contaminants first
+		return PROCESS_KILL
+	var/amount_to_add = rand(5, 10)
+	if(length(reagents.reagent_volumes) > 1) // we have impurities!
+		reagents.remove_any(amount_to_add, defer_update = TRUE, skip_reagents = list(auto_refill)) // defer update until the add_reagent call below
+	if(reagents.total_volume < reagents.maximum_volume)
+		reagents.add_reagent(auto_refill, amount_to_add)
+		return // don't stop processing
+	else if(length(reagents.reagent_volumes) == 1 && reagents.get_primary_reagent_type() == auto_refill)
+		// only one reagent and it's our auto_refill, our work is done here
+		return PROCESS_KILL
+	// if we get here, it means we have a full well with contaminants, so we keep processing
 
 /obj/structure/reagent_dispensers/well/mapped
 	auto_refill = /decl/material/liquid/water
-
-/obj/structure/reagent_dispensers/well/mapped/Process()
-	if(!reagents || (reagents.total_volume >= reagents.maximum_volume) || !auto_refill)
-		return PROCESS_KILL
-	reagents.add_reagent(auto_refill, rand(5, 10))
-	if(reagents.total_volume >= reagents.maximum_volume)
-		return PROCESS_KILL
 
 /obj/structure/reagent_dispensers/well/wall_fountain
 	name            = "wall fountain"

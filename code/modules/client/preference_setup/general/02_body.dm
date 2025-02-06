@@ -8,7 +8,7 @@
 	var/list/appearance_descriptors = list()
 	var/equip_preview_mob = EQUIP_PREVIEW_ALL
 
-	var/icon/bgstate
+	var/bgstate
 
 /datum/category_item/player_setup_item/physical/body
 	name = "Body"
@@ -50,7 +50,6 @@
 						if(meta)
 							deserialized_metadata[meta.type] = loaded_metadata[metadata_uid]
 				pref.sprite_accessories[accessory_category.type][loaded_accessory.type] = deserialized_metadata
-
 
 	// Grandfather in pre-existing hair and markings.
 	var/decl/style_decl
@@ -149,9 +148,12 @@
 				var/acc_data = pref.sprite_accessories[acc_cat][acc]
 				for(var/metadata_type in acc_data)
 					var/decl/sprite_accessory_metadata/metadata = GET_DECL(metadata_type)
-					var/value = acc_data[metadata_type]
-					if(!metadata.validate_data(value))
-						acc_data[metadata_type] = metadata.default_value
+					if(istype(metadata))
+						var/value = acc_data[metadata_type]
+						if(!metadata.validate_data(value))
+							acc_data[metadata_type] = metadata.default_value
+					else
+						acc_data -= metadata_type
 
 	for(var/accessory_category in mob_species.available_accessory_categories)
 

@@ -53,10 +53,10 @@
 		to_chat(user, SPAN_WARNING("\The [occupant] is so badly mangled that removing them from \the [initial(name)] would be pointless."))
 	return TRUE
 
-/obj/structure/meat_hook/grab_attack(var/obj/item/grab/G)
-	var/mob/victim = G.get_affecting_mob()
+/obj/structure/meat_hook/grab_attack(obj/item/grab/grab, mob/user)
+	var/mob/victim = grab.get_affecting_mob()
 	if(istype(victim) && isturf(victim.loc))
-		try_spike(victim, G.assailant)
+		try_spike(victim, user)
 		return TRUE
 	return ..()
 
@@ -80,7 +80,10 @@
 	if(delay)
 		sleep(delay)
 
-	if(!istype(target) || QDELETED(target) || !istype(user) || QDELETED(user) || !Adjacent(user) || user.incapacitated() || target.anchored || !target.Adjacent(src))
+	if(!istype(target) || QDELETED(target) || !istype(user) || QDELETED(user) || user.incapacitated() || target.anchored)
+		return
+
+	if(!Adjacent(user) || !target.Adjacent(user))
 		return
 
 	if(!anchored)
@@ -192,11 +195,13 @@
 	update_icon()
 	if(!tool?.do_tool_interaction(TOOL_KNIFE, user, src, 3 SECONDS, start_message = butchery_string, success_message = butchery_string, check_skill = SKILL_COOKING))
 		return FALSE
-	if(!QDELETED(user) && !QDELETED(last_occupant) && occupant == last_occupant && occupant_state == last_state)
+	if(!QDELETED(user) && !QDELETED(last_occupant) && occupant == last_occupant && occupant_state == last_state && user.get_active_held_item() == tool)
 
 		var/decl/butchery_data/butchery_data = GET_DECL(occupant.butchery_data)
 		if(!butchery_data)
 			return FALSE
+
+		tool.add_blood(occupant)
 
 		switch(next_state)
 			if(CARCASS_SKINNED)

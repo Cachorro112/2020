@@ -157,10 +157,10 @@
 		return
 	..()
 
-/mob/living/bot/secbot/confirmTarget(var/atom/A)
+/mob/living/bot/secbot/confirmTarget(atom/target)
 	if(!..())
 		return 0
-	return (check_threat(A) >= SECBOT_THREAT_ARREST)
+	return (check_threat(target) >= SECBOT_THREAT_ARREST)
 
 /mob/living/bot/secbot/lookForTargets()
 	for(var/mob/living/M in view(src))
@@ -182,7 +182,7 @@
 			begin_arrest(target, threat)
 		++awaiting_surrender
 	else
-		UnarmedAttack(target)
+		UnarmedAttack(target, TRUE)
 
 /mob/living/bot/secbot/proc/cuff_target(var/mob/living/target)
 	if(istype(target) && !target.get_equipped_item(slot_handcuffed_str))

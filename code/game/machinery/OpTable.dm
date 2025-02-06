@@ -28,13 +28,11 @@
 	. = ..()
 	to_chat(user, SPAN_NOTICE("The neural suppressors are switched [suppressing ? "on" : "off"]."))
 
-/obj/machinery/optable/attackby(var/obj/item/O, var/mob/user)
-	if (istype(O, /obj/item/grab))
-		var/obj/item/grab/G = O
-		if(isliving(G.affecting) && check_table(G.affecting))
-			take_victim(G.affecting,usr)
-			qdel(O)
-			return
+/obj/machinery/optable/grab_attack(obj/item/grab/grab, mob/user)
+	if(isliving(grab.affecting) && check_table(grab.affecting))
+		take_victim(grab.affecting, user)
+		qdel(grab)
+		return TRUE
 	return ..()
 
 /obj/machinery/optable/state_transition(var/decl/machine_construction/default/new_state)
@@ -50,7 +48,7 @@
 
 	if(stat & (NOPOWER|BROKEN))
 		to_chat(user, "<span class='warning'>You try to switch on the suppressor, yet nothing happens.</span>")
-		return
+		return TRUE
 
 	if(user != victim && !suppressing) // Skip checks if you're doing it to yourself or turning it off, this is an anti-griefing mechanic more than anything.
 		user.visible_message("<span class='warning'>\The [user] begins switching on \the [src]'s neural suppressor.</span>")

@@ -10,7 +10,7 @@
 	is_spawnable_type = FALSE // Use the Spawn-Fruit verb instead.
 	drying_wetness = 45
 	dried_type = /obj/item/food/grown/dry
-	ingredient_flags = INGREDIENT_FLAG_VEGETABLE
+	allergen_flags = ALLERGEN_VEGETABLE
 	var/work_skill = SKILL_BOTANY
 	var/seeds_extracted = FALSE
 	var/datum/seed/seed
@@ -106,7 +106,7 @@
 				rtotal += round(potency/reagent_amounts[2])
 			var/decl/material/reagent = GET_DECL(rid)
 			if(!reagent.taste_description)
-				LAZYSET(data, "taste", list(seed.product_name = max(1,rtotal) * reagent.taste_mult))
+				LAZYSET(data, DATA_TASTE, list(seed.product_name = max(1,rtotal) * reagent.taste_mult))
 			add_to_reagents(rid,max(1,rtotal),data)
 
 /obj/item/food/grown/proc/update_desc()
@@ -183,11 +183,10 @@
 		return
 
 	var/mob/living/M = AM
-	if(M.buckled || MOVING_DELIBERATELY(M))
+	if(MOVING_DELIBERATELY(M))
 		return
 
-	var/obj/item/shoes = M.get_equipped_item(slot_shoes_str)
-	if(shoes && shoes.item_flags & ITEM_FLAG_NOSLIP)
+	if(!M.can_slip() || M.immune_to_floor_hazards())
 		return
 
 	to_chat(M, SPAN_DANGER("You slipped on \the [src]!"))

@@ -32,7 +32,7 @@
 	result = /obj/item/food/friedrice
 
 /decl/recipe/simmered/risotto
-	reagents = list(/decl/material/liquid/ethanol/wine = 5, /decl/material/liquid/nutriment/rice = 10, /decl/material/solid/spacespice = 1)
+	reagents = list(/decl/material/liquid/alcohol/wine = 5, /decl/material/liquid/nutriment/rice = 10, /decl/material/solid/spacespice = 1)
 	fruit = list("mushroom" = 1)
 	reagent_mix = REAGENT_REPLACE //Get that rice and wine outta here
 	result = /obj/item/food/risotto

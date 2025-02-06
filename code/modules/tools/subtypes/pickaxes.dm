@@ -5,8 +5,13 @@
 	icon               = 'icons/obj/items/tool/pickaxe.dmi'
 	sharp              = TRUE
 	edge               = TRUE
+	w_class            = ITEM_SIZE_HUGE
 	handle_material    = /decl/material/solid/organic/wood
 	_base_attack_force = 15
+
+/obj/item/tool/pickaxe/Initialize(ml, material_key, _handle_material, _binding_material, override_tool_qualities, override_tool_properties)
+	. = ..()
+	set_extension(src, /datum/extension/demolisher/pick)
 
 /obj/item/tool/pickaxe/get_initial_tool_qualities()
 	var/static/list/tool_qualities = list(

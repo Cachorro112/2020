@@ -3,6 +3,7 @@
 	ignition_point = T0C+500 // Based on loose ignition temperature of plastic
 	accelerant_value = 0.1
 	burn_product = /decl/material/gas/carbon_monoxide
+	boiling_point = null
 	melting_point = null
 	compost_value = 1
 
@@ -39,6 +40,14 @@
 	tensile_strength = 0.75
 	compost_value = 0
 
+/decl/material/solid/organic/plastic/foam
+	name = "foam"
+	lore_text = "A plastic polymer in a sponge-like form, filled with air bubbles that make it springy and compressible."
+	hardness = MAT_VALUE_SOFT + 5
+	taste_description = "foam"
+	color = COLOR_BLUE_GRAY // dunno why foam is this gray-teal color in my mind, but it is. maybe gray would also work
+	uid = "solid_foam"
+
 /decl/material/solid/organic/wax
 	name = "wax"
 	uid = "solid_wax"
@@ -59,6 +68,7 @@
 	ignition_point = 473
 	boiling_point = 643
 	compost_value = 0.2
+	paint_verb = "colored"
 
 /decl/material/solid/organic/plastic/holographic
 	name = "holographic plastic"
@@ -83,6 +93,7 @@
 	stack_origin_tech = @'{"materials":1}'
 	door_icon_base = "wood"
 	destruction_desc = "crumples"
+	destruction_sound = "pageturn"
 	conductive = 0
 	value = 0.5
 	reflectiveness = MAT_VALUE_DULL
@@ -102,6 +113,7 @@
 	stack_origin_tech       = @'{"materials":1}'
 	door_icon_base          = "wood"
 	destruction_desc        = "tears"
+	destruction_sound       = "pageturn"
 	icon_base               = 'icons/turf/walls/solid.dmi'
 	icon_reinf              = 'icons/turf/walls/reinforced.dmi'
 	integrity               = 10 //Probably don't wanna go below 10, because of the health multiplier on things, that would result in a value smaller than 1.
@@ -124,11 +136,11 @@
 	sound_manipulate        = 'sound/foley/paperpickup2.ogg'
 	sound_dropped           = 'sound/foley/paperpickup1.ogg'
 	compost_value = 0.8
+	paint_verb = "painted"
 
 /decl/material/solid/organic/cloth
 	name = "cotton"
 	uid = "solid_cotton"
-	use_name = "cotton"
 	color = "#ffffff"
 	stack_origin_tech = @'{"materials":2}'
 	door_icon_base = "wood"
@@ -150,6 +162,34 @@
 	sound_dropped = 'sound/foley/paperpickup1.ogg'
 	compost_value = 0.8
 	has_textile_fibers = TRUE
+	paint_verb = "dyed"
+
+/decl/material/solid/organic/cloth/hemp
+	name           = "hemp"
+	adjective_name = "hempen"
+	lore_text      = "Sturdy fibers from the hemp plant, woven into strong cloth."
+	uid            = "solid_hemp"
+	color          = "#b4a374"
+
+/decl/material/solid/organic/cloth/linen
+	name      = "linen"
+	lore_text = "Fibers from the flax plant, woven into sturdy, absorbent cloth."
+	uid       = "solid_linen"
+	color     = "#eee4c7"
+
+/decl/material/solid/organic/cloth/wool
+	name           = "wool"
+	adjective_name = "woolen"
+	lore_text      = "Fibers from the wooly fleece of a sheep or similar animal."
+	uid            = "solid_wool"
+	color          = "#fbfcdb"
+
+/decl/material/solid/organic/cloth/wool/diyaab
+	name           = "diyaab wool"
+	adjective_name = null // override base wool
+	lore_text      = "Fibers from the wooly fleece of a diyaab."
+	uid            = "solid_wool_diyaab"
+	color          = "#c9eeff"
 
 /decl/material/solid/organic/cloth/synthetic
 	name = "nylon"
@@ -178,6 +218,7 @@
 	sound_manipulate = 'sound/foley/paperpickup2.ogg'
 	sound_dropped = 'sound/foley/paperpickup1.ogg'
 	fishing_bait_value = 0.75
+	allergen_flags = ALLERGEN_VEGETABLE
 
 /decl/material/solid/organic/plantmatter/algae
 	default_solid_form = /obj/item/stack/material/puck
@@ -244,6 +285,7 @@
 /decl/material/solid/organic/leather/gut
 	name = "dried gut"
 	uid = "solid_dried_gut"
+	color = "#736754"
 
 /decl/material/solid/organic/leather/synth
 	name = "synthleather"
@@ -265,6 +307,7 @@
 /decl/material/solid/organic/leather/fur
 	name = "tanned pelt"
 	uid = "solid_tanned_pelt"
+	paint_verb = "dyed"
 
 /decl/material/solid/organic/leather/chitin
 	name = "treated chitin"

@@ -37,10 +37,10 @@ exactly 1 "world.log<< uses" 'world.log<<|world.log[[:space:]]<<'
 exactly 18 "<< uses" '(?<!<)<<(?!<)' -P
 exactly 9 ">> uses" '>>(?!>)' -P
 exactly 0 "incorrect indentations" '^( {4,})' -P
-exactly 24 "text2path uses" 'text2path'
+exactly 25 "text2path uses" 'text2path'
 exactly 4 "update_icon() override" '/update_icon\((.*)\)'  -P
 exactly 0 "goto uses" 'goto '
-exactly 10 "atom/New uses" '^/(obj|atom|area|mob|turf).*/New\('
+exactly 9 "atom/New uses" '^/(obj|atom|area|mob|turf).*/New\('
 exactly 1 "decl/New uses" '^/decl.*/New\('
 exactly 0 "tag uses" '\stag = ' -P '*.dmm'
 exactly 3 "unmarked globally scoped variables" '^(/|)var/(?!global)' -P
@@ -51,7 +51,7 @@ exactly 20 "direct loc set" '(\t|;|\.)loc\s*=(?!=)' -P
 exactly 0 "magic number mouse opacity set" 'mouse_opacity\s*=\s*[0-2]' -P
 exactly 1 "magic number density set" '\bdensity\s*=\s*[01]' -P
 exactly 0 "magic number anchored set" '\banchored\s*=\s*[01]' -P
-exactly 7 "magic number opacity set" '\bopacity\s*=\s*[01]' -P
+exactly 0 "magic number opacity set" '\bopacity\s*=\s*[01](?!\.)' -P
 
 # With the potential exception of << if you increase any of these numbers you're probably doing it wrong
 

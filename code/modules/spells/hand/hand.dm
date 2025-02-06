@@ -25,7 +25,7 @@
 	if(user.get_active_held_item())
 		to_chat(user, "<span class='warning'>You need an empty hand to cast this spell.</span>")
 		return FALSE
-	current_hand = new(src)
+	current_hand = new(null, src)
 	if(!user.put_in_active_hand(current_hand))
 		QDEL_NULL(current_hand)
 		return FALSE
@@ -63,7 +63,7 @@
 /spell/hand/charges/cast_hand()
 	if(..())
 		casts--
-		to_chat(holder, "<span class='notice'>The [name] spell has [casts] out of [max_casts] charges left</span>")
+		to_chat(holder, SPAN_NOTICE("The [name] spell has [casts] out of [max_casts] charges left."))
 		cancel_hand()
 		return TRUE
 	return FALSE

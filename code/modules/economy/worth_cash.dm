@@ -15,7 +15,11 @@
 	var/can_flip = TRUE // Cooldown tracker for single-coin flips.
 	var/static/overlay_cap = 50 // Max overlays to show in this pile.
 
-/obj/item/cash/Initialize(ml, material_key)
+/obj/item/cash/Initialize(ml, material_key, starting_amount)
+
+	if(!isnull(starting_amount))
+		absolute_worth = starting_amount
+
 	. = ..()
 
 	if(!ispath(currency, /decl/currency))
@@ -60,7 +64,7 @@
 		var/obj/item/cash/cash = W
 		if(cash.currency != currency)
 			to_chat(user, SPAN_WARNING("You can't mix two different currencies, it would be uncivilized."))
-			return
+			return TRUE
 		if(user.try_unequip(W))
 			adjust_worth(cash.absolute_worth)
 			var/decl/currency/cur = GET_DECL(currency)
@@ -71,6 +75,8 @@
 	else if(istype(W, /obj/item/gun/launcher/money))
 		var/obj/item/gun/launcher/money/L = W
 		L.absorb_cash(src, user)
+		return TRUE
+	return ..()
 
 /obj/item/cash/on_update_icon()
 	. = ..()

@@ -16,7 +16,7 @@
 /obj/structure/closet/statue/Initialize(mapload, var/mob/living/L)
 	if(L && (ishuman(L) || L.isMonkey() || iscorgi(L)))
 		if(L.buckled)
-			L.buckled = 0
+			L.buckled = null
 			L.anchored = FALSE
 		if(L.client)
 			L.client.perspective = EYE_PERSPECTIVE
@@ -103,6 +103,7 @@
 	user.do_attack_animation(src)
 	visible_message("<span class='danger'>[user] strikes [src] with [I].</span>")
 	check_health()
+	return TRUE
 
 /obj/structure/closet/statue/receive_mouse_drop(atom/dropping, mob/user, params)
 	return TRUE

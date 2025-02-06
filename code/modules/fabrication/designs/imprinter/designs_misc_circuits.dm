@@ -305,9 +305,6 @@
 /datum/fabricator_recipe/imprinter/circuit/miningdrill
 	path = /obj/item/stock_parts/circuitboard/miningdrill
 
-/datum/fabricator_recipe/imprinter/circuit/miningdrillbrace
-	path = /obj/item/stock_parts/circuitboard/miningdrillbrace
-
 /datum/fabricator_recipe/imprinter/circuit/floodlight
 	path = /obj/item/stock_parts/circuitboard/floodlight
 

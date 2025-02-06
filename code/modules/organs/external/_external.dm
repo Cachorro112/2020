@@ -62,7 +62,7 @@
 	var/artery_name = "artery"         // Flavour text for cartoid artery, aorta, etc.
 	var/arterial_bleed_severity = 1    // Multiplier for bleeding in a limb.
 	var/tendon_name = "tendon"         // Flavour text for Achilles tendon, etc.
-	var/cavity_name = "cavity"
+	var/cavity_name = "intramuscular cavity"
 
 	// Surgery vars.
 	var/cavity_max_w_class = ITEM_SIZE_TINY //this is increased if bigger organs spawn by default inside
@@ -260,7 +260,7 @@
 
 			if(length(connecting_limb.children))
 				to_chat(usr, SPAN_WARNING("You cannot connect additional limbs to \the [connecting_limb]."))
-				return
+				return TRUE
 
 			var/mob/holder = loc
 			if(istype(holder))
@@ -270,7 +270,7 @@
 				forceMove(connecting_limb)
 
 			if(loc != connecting_limb)
-				return
+				return TRUE
 
 			if(istype(connecting_limb.owner))
 				connecting_limb.owner.add_organ(src, connecting_limb)
@@ -283,10 +283,10 @@
 
 			if(LAZYLEN(children))
 				to_chat(usr, SPAN_WARNING("You cannot connect additional limbs to \the [src]."))
-				return
+				return TRUE
 
 			if(!user.try_unequip(connecting_limb, src))
-				return
+				return TRUE
 
 			if(istype(connecting_limb.owner))
 				connecting_limb.owner.add_organ(connecting_limb, src)
@@ -297,7 +297,7 @@
 
 		else
 			to_chat(user, SPAN_WARNING("\The [connecting_limb] cannot be connected to \the [src]."))
-			return
+			return TRUE
 
 		if(combined)
 			to_chat(user, SPAN_NOTICE("You connect \the [connecting_limb] to \the [src]."))
@@ -305,15 +305,15 @@
 			update_icon()
 			connecting_limb.compile_icon()
 			connecting_limb.update_icon()
-			return
+			return TRUE
 
 	//Remove sub-limbs
 	if(used_item.get_tool_quality(TOOL_SAW) && LAZYLEN(children) && try_saw_off_child(used_item, user))
-		return
+		return TRUE
 	//Remove internal items/organs/implants
 	if(try_remove_internal_item(used_item, user))
-		return
-	..()
+		return TRUE
+	return ..()
 
 //Handles removing internal organs/implants/items still in the detached limb.
 /obj/item/organ/external/proc/try_remove_internal_item(var/obj/item/used_item, var/mob/user)
@@ -550,7 +550,7 @@
 
 //Helper proc used by various tools for repairing robot limbs
 /obj/item/organ/external/proc/robo_repair(var/repair_amount, var/damage_type, var/damage_desc, obj/item/tool, mob/living/user)
-	if((!BP_IS_PROSTHETIC(src)))
+	if(!BP_IS_PROSTHETIC(src))
 		return 0
 
 	var/damage_amount
@@ -1588,14 +1588,13 @@ Note that amputating the affected organ does in fact remove the infection from t
 		butchery_decl.place_products(owner, butchery_decl.bone_material, 1, butchery_decl.bone_type)
 	return ..()
 
-// This likely seems excessive, but refer to organ explosion_act() to see how it should be handled before reaching this point.
 /obj/item/organ/external/physically_destroyed(skip_qdel)
 	if(!owner)
 		return ..()
 	if(limb_flags & ORGAN_FLAG_CAN_AMPUTATE)
-		dismember(FALSE, DISMEMBER_METHOD_BLUNT)
+		dismember(FALSE, DISMEMBER_METHOD_BLUNT) // This will also destroy the mob if it removes the last non-core limb.
 	else
-		owner.gib()
+		owner.physically_destroyed() // Previously gib(), but that caused blood and guts to fly everywhere.
 
 /obj/item/organ/external/is_vital_to_owner()
 	if(isnull(vital_to_owner))

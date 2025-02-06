@@ -31,7 +31,7 @@
 
 /decl/butchery_data/animal/space_bear
 	meat_name         = "bear"
-	meat_type         = /obj/item/food/bearmeat
+	meat_type         = /obj/item/food/butchery/meat/bear
 	meat_amount       = 10
 	bone_amount       = 20
 	skin_amount       = 20
@@ -83,6 +83,7 @@
 	skin_material     = /decl/material/solid/organic/skin/fur/white
 	gut_type          = /obj/item/food/butchery/offal/small
 	must_use_hook     = FALSE
+	butchery_offset   = list(-6, 0)
 
 /decl/butchery_data/animal/rabbit/brown
 	skin_material     = /decl/material/solid/organic/skin/fur/brown
@@ -98,7 +99,7 @@
 
 /decl/butchery_data/animal/antlion
 	meat_name         = "insect"
-	meat_type         = /obj/item/food/xenomeat
+	meat_type         = /obj/item/food/butchery/meat/xeno
 	meat_amount       = 5
 	skin_material     = /decl/material/solid/organic/skin/insect
 	skin_amount       = 15

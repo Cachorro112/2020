@@ -7,6 +7,7 @@
 	material = /decl/material/solid/organic/plastic
 	obj_flags = OBJ_FLAG_HOLLOW
 	abstract_type = /obj/item/chems
+	watertight = TRUE
 
 	var/base_desc
 	var/amount_per_transfer_from_this = 5
@@ -24,9 +25,19 @@
 	if(!possible_transfer_amounts)
 		src.verbs -= /obj/item/chems/verb/set_amount_per_transfer_from_this
 
-/obj/item/chems/set_custom_name(var/new_name)
-	base_name = new_name
-	update_container_name()
+/obj/item/chems/on_update_icon()
+	. = ..()
+	if(detail_state)
+		add_overlay(overlay_image(icon, "[initial(icon_state)][detail_state]", detail_color || COLOR_WHITE, RESET_COLOR))
+	var/image/contents_overlay = get_reagents_overlay(use_single_icon ? icon_state : null)
+	if(contents_overlay)
+		add_overlay(contents_overlay)
+
+/obj/item/chems/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing)
+	var/image/reagents_overlay = get_reagents_overlay(overlay.icon_state)
+	if(reagents_overlay)
+		overlay.add_overlay(reagents_overlay)
+	return ..()
 
 /obj/item/chems/set_custom_desc(var/new_desc)
 	base_desc = new_desc
@@ -41,24 +52,13 @@
 		return TRUE
 	return FALSE
 
-/obj/item/chems/proc/get_base_name()
-	if(!base_name)
-		base_name = initial(name)
-	. = base_name
-
-/obj/item/chems/on_update_icon()
-	. = ..()
-	if(detail_state)
-		add_overlay(overlay_image(icon, "[initial(icon_state)][detail_state]", detail_color || COLOR_WHITE, RESET_COLOR))
-
-/obj/item/chems/proc/update_container_name()
-	var/newname = get_base_name()
-	if(material_alteration & MAT_FLAG_ALTERATION_NAME)
-		newname = "[material.solid_name] [newname]"
+/obj/item/chems/update_name()
+	. = ..() // handles material, etc
+	var/newname = name
 	if(presentation_flags & PRESENTATION_FLAG_NAME)
-		var/decl/material/R = reagents?.get_primary_reagent_decl()
-		if(R)
-			newname += " of [R.get_presentation_name(src)]"
+		var/decl/material/primary = reagents?.get_primary_reagent_decl()
+		if(primary)
+			newname += " of [primary.get_presentation_name(src)]"
 	if(length(label_text))
 		newname += " ([label_text])"
 	if(newname != name)
@@ -79,7 +79,7 @@
 
 /obj/item/chems/on_reagent_change()
 	if((. = ..()))
-		update_container_name()
+		update_name()
 		update_container_desc()
 		update_icon()
 
@@ -110,7 +110,7 @@
 			else
 				to_chat(user, SPAN_NOTICE("You set the label to \"[tmp_label]\"."))
 				label_text = tmp_label
-				update_container_name()
+				update_name()
 			return TRUE
 	return ..()
 
@@ -155,35 +155,6 @@
 		return TRUE
 	return FALSE
 
-// TODO: merge beakers etc down into this proc.
-/obj/item/chems/proc/get_reagents_overlay()
-
-	if(reagents?.total_volume <= 0)
-		return
-
-	var/decl/material/primary_reagent = reagents.get_primary_reagent_decl()
-	if(!primary_reagent)
-		return
-
-	var/reagents_state
-	if(primary_reagent.reagent_overlay_base)
-		reagents_state = primary_reagent.reagent_overlay_base
-	else
-		reagents_state = "reagent_base"
-
-	if(!reagents_state || !check_state_in_icon(reagents_state, icon))
-		return
-
-	var/image/reagent_overlay = overlay_image(icon, reagents_state, reagents.get_color(), RESET_COLOR | RESET_ALPHA)
-	if(primary_reagent.reagent_overlay)
-		reagent_overlay.overlays += overlay_image(icon, primary_reagent.reagent_overlay, primary_reagent.color, RESET_COLOR | RESET_ALPHA)
-	else
-		for(var/reagent_type in reagents.reagent_volumes)
-			var/decl/material/reagent = GET_DECL(reagent_type)
-			if(reagent != primary_reagent && reagent.reagent_overlay && check_state_in_icon(reagent.reagent_overlay, icon))
-				reagent_overlay.overlays += overlay_image(icon, reagent.reagent_overlay, reagent.color, RESET_COLOR | RESET_ALPHA)
-	return reagent_overlay
-
 /obj/item/chems/ProcessAtomTemperature()
 
 	. = ..()
@@ -192,13 +163,17 @@
 		return
 
 	// Vaporize anything over its boiling point.
+	var/update_reagents = FALSE
 	for(var/reagent in reagents.reagent_volumes)
 		var/decl/material/mat = GET_DECL(reagent)
-		if(!isnull(mat.boiling_point) && temperature >= mat.boiling_point)
+		if(mat.can_boil_to_gas && !isnull(mat.boiling_point) && temperature >= mat.boiling_point)
 			// TODO: reduce atom temperature?
-			var/removing = min(5, reagents.reagent_volumes[reagent])
+			var/removing = min(mat.boil_evaporation_per_run, reagents.reagent_volumes[reagent])
 			reagents.remove_reagent(reagent, removing, defer_update = TRUE, removed_phases = MAT_PHASE_LIQUID)
+			update_reagents = TRUE
 			loc.take_vaporized_reagent(reagent, removing)
+	if(update_reagents)
+		reagents.update_total()
 
 /obj/item/chems/take_vaporized_reagent(reagent, amount)
 	if(!reagents?.maximum_volume)
@@ -213,9 +188,17 @@
 //
 // Interactions
 //
+/obj/item/chems/get_quick_interaction_handler(mob/user)
+	var/static/interaction = GET_DECL(/decl/interaction_handler/set_transfer/chems)
+	return interaction
+
 /obj/item/chems/get_alt_interactions(var/mob/user)
 	. = ..()
-	LAZYADD(., /decl/interaction_handler/set_transfer/chems)
+	var/static/list/chem_interactions = list(
+		/decl/interaction_handler/set_transfer/chems,
+		/decl/interaction_handler/empty/chems
+	)
+	LAZYADD(., chem_interactions)
 
 /decl/interaction_handler/set_transfer/chems
 	expected_target_type = /obj/item/chems
@@ -226,7 +209,7 @@
 		var/obj/item/chems/C = target
 		return !!C.possible_transfer_amounts
 
-/decl/interaction_handler/set_transfer/chems/invoked(var/atom/target, var/mob/user)
+/decl/interaction_handler/set_transfer/chems/invoked(atom/target, mob/user, obj/item/prop)
 	var/obj/item/chems/C = target
 	C.set_amount_per_transfer_from_this()
 
@@ -234,9 +217,9 @@
 /decl/interaction_handler/empty/chems
 	name                 = "Empty On Floor"
 	expected_target_type = /obj/item/chems
-	interaction_flags    = INTERACTION_NEEDS_INVENTORY | INTERACTION_NEEDS_PHYSICAL_INTERACTION
+	interaction_flags    = INTERACTION_NEEDS_INVENTORY | INTERACTION_NEEDS_PHYSICAL_INTERACTION | INTERACTION_NEVER_AUTOMATIC
 
-/decl/interaction_handler/empty/chems/invoked(obj/item/chems/target, mob/user)
+/decl/interaction_handler/empty/chems/invoked(atom/target, mob/user, obj/item/prop)
 	var/turf/T = get_turf(user)
 	if(T)
 		to_chat(user, SPAN_NOTICE("You empty \the [target] onto the floor."))

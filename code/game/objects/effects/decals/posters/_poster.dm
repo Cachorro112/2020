@@ -7,9 +7,9 @@
 	icon               = 'icons/obj/items/posters.dmi'
 	icon_state         = "poster0"
 	anchored           = TRUE
-	directional_offset = @'{"NORTH":{"y":32}, "SOUTH":{"y":-32}, "WEST":{"x":32}, "EAST":{"x":-32}}'
+	directional_offset = @'{"NORTH":{"y":32}, "SOUTH":{"y":-32}, "EAST":{"x":32}, "WEST":{"x":-32}}'
 	material           = /decl/material/solid/organic/paper
-	max_health = 10
+	max_health         = 10
 	parts_type         = /obj/item/poster
 	parts_amount       = 1
 
@@ -141,10 +141,10 @@
 	return ..(ml, material_key)
 
 /obj/item/poster/proc/set_design(var/decl/poster_design/_design_path)
-	if(_design_path == poster_design)
-		return TRUE
 	if(ispath(_design_path, /decl))
 		_design_path = GET_DECL(_design_path)
+	if(_design_path == poster_design)
+		return TRUE
 	if(!istype(_design_path))
 		CRASH("Invalid poster type: [log_info_line(_design_path)]")
 

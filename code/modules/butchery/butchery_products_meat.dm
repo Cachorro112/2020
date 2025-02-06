@@ -1,7 +1,7 @@
 /obj/item/food/butchery/meat
 	name                           = "slab"
 	desc                           = "A slab of meat."
-	icon                           = 'icons/obj/items/butchery/meat1.dmi'
+	icon                           = 'icons/obj/food/butchery/meat1.dmi'
 	icon_state                     = ICON_STATE_WORLD
 	slice_path                     = /obj/item/food/butchery/cutlet/raw
 	slice_num                      = 3
@@ -13,15 +13,15 @@
 	dried_type                     = /obj/item/food/jerky/meat
 	nutriment_type                 = /decl/material/solid/organic/meat
 	nutriment_amt                  = 9
-	w_class                        = ITEM_SIZE_NORMAL
+	w_class                        = ITEM_SIZE_SMALL
 	backyard_grilling_product      = /obj/item/food/meatsteak/grilled
 	backyard_grilling_announcement = "sizzles as it is grilled to medium-rare."
 
 /obj/item/food/butchery/meat/proc/get_meat_icons()
 	var/static/list/meat_icons = list(
-		'icons/obj/items/butchery/meat1.dmi',
-		'icons/obj/items/butchery/meat2.dmi',
-		'icons/obj/items/butchery/meat3.dmi'
+		'icons/obj/food/butchery/meat1.dmi',
+		'icons/obj/food/butchery/meat2.dmi',
+		'icons/obj/food/butchery/meat3.dmi'
 	)
 	return meat_icons
 
@@ -43,22 +43,43 @@
 
 /obj/item/food/butchery/meat/beef
 	desc = "The classic red meat."
-	meat_name = "beef"
+	butchery_data = /decl/butchery_data/animal/ruminant/cow
 
 /obj/item/food/butchery/meat/goat
 	desc = "Goat meat, to the uncultured."
-	meat_name = "chevon"
+	butchery_data = /decl/butchery_data/animal/ruminant/goat
 
 /obj/item/food/butchery/meat/chicken
 	name = "piece"
 	desc = "It tastes like you'd expect."
 	material = /decl/material/solid/organic/meat/chicken
-	meat_name = "chicken"
+	butchery_data = /decl/butchery_data/animal/small/fowl/chicken
 
 /obj/item/food/butchery/meat/chicken/game
 	desc = "Fresh game meat, harvested from some wild bird."
-	meat_name = "fowl"
+	butchery_data = /decl/butchery_data/animal/small/fowl
 
 /obj/item/food/butchery/meat/corgi
 	desc = "Tastes like... well you know..."
-	meat_name = "dog"
+	butchery_data = /decl/butchery_data/animal/corgi
+
+/obj/item/food/butchery/meat/xeno
+	desc = "A slab of green meat. Smells like acid."
+	icon_state = "xenomeat"
+	color = "#43de18"
+	center_of_mass = @'{"x":16,"y":10}'
+	bitesize = 6
+	butchery_data = /decl/butchery_data/xeno
+
+/obj/item/food/butchery/meat/xeno/populate_reagents()
+	. = ..()
+	add_to_reagents(/decl/material/liquid/acid/polyacid, 6)
+
+/obj/item/food/butchery/meat/bear
+	desc = "A very manly slab of meat."
+	icon_state = "bearmeat"
+	butchery_data = /decl/butchery_data/animal/space_bear
+
+/obj/item/food/butchery/meat/bear/populate_reagents()
+	. = ..()
+	add_to_reagents(/decl/material/liquid/amphetamines, 5)

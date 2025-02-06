@@ -37,9 +37,9 @@
 	if(!(. = ..()))
 		return
 	if(reagents?.total_volume > 0)
-		tool_interaction_flags = 0
+		tool_interaction_flags &= ~TOOL_INTERACTION_DECONSTRUCT
 	else
-		tool_interaction_flags = TOOL_INTERACTION_DECONSTRUCT
+		tool_interaction_flags |= TOOL_INTERACTION_DECONSTRUCT
 
 /obj/structure/reagent_dispensers/initialize_reagents(populate = TRUE)
 	if(!reagents)
@@ -117,11 +117,6 @@
 		return
 	if (N)
 		amount_dispensed = N
-
-/obj/structure/reagent_dispensers/physically_destroyed(var/skip_qdel)
-	if(reagents?.total_volume)
-		reagents.trans_to_turf(get_turf(src), reagents.total_volume)
-	. = ..()
 
 /obj/structure/reagent_dispensers/explosion_act(severity)
 	. = ..()
@@ -256,7 +251,7 @@
 /obj/structure/reagent_dispensers/water_cooler
 	name                      = "water cooler"
 	desc                      = "A machine that dispenses cool water to drink."
-	icon                      = 'icons/obj/vending.dmi'
+	icon                      = 'icons/obj/structures/water_cooler.dmi'
 	icon_state                = "water_cooler"
 	possible_transfer_amounts = null
 	amount_dispensed          = 5
@@ -286,6 +281,7 @@
 
 	if(!skip_text)
 		to_chat(user, "\The [src]'s cup dispenser is empty.")
+	return TRUE
 
 /obj/structure/reagent_dispensers/water_cooler/attackby(obj/item/W, mob/user)
 	//Allow refilling with a box
@@ -298,10 +294,15 @@
 				qdel(C)
 				cups++
 		return TRUE
+	return ..()
 
+/obj/structure/reagent_dispensers/water_cooler/on_reagent_change()
 	. = ..()
-	if(!. && ATOM_IS_OPEN_CONTAINER(W))
-		flick("[icon_state]-vend", src)
+	// Bubbles in top of cooler.
+	if(reagents?.total_volume)
+		var/vend_state = "[icon_state]-vend"
+		if(check_state_in_icon(vend_state, icon))
+			flick(vend_state, src)
 
 /obj/structure/reagent_dispensers/beerkeg
 	name             = "beer keg"
@@ -313,14 +314,15 @@
 	matter           = list(/decl/material/solid/metal/stainlesssteel = MATTER_AMOUNT_TRACE)
 
 /obj/structure/reagent_dispensers/beerkeg/populate_reagents()
-	add_to_reagents(/decl/material/liquid/ethanol/beer, reagents.maximum_volume)
+	add_to_reagents(/decl/material/liquid/alcohol/beer, reagents.maximum_volume)
 
 /obj/structure/reagent_dispensers/acid
-	name             = "sulphuric acid dispenser"
+	name             = "sulfuric acid dispenser"
 	desc             = "A dispenser of acid for industrial processes."
 	icon_state       = "acidtank"
 	amount_dispensed = 10
 	anchored         = TRUE
+	density          = FALSE
 
 /obj/structure/reagent_dispensers/acid/populate_reagents()
 	add_to_reagents(/decl/material/liquid/acid, reagents.maximum_volume)
@@ -342,7 +344,7 @@
 		var/obj/structure/reagent_dispensers/R = target
 		return !!R.possible_transfer_amounts
 
-/decl/interaction_handler/set_transfer/reagent_dispenser/invoked(var/atom/target, var/mob/user)
+/decl/interaction_handler/set_transfer/reagent_dispenser/invoked(atom/target, mob/user, obj/item/prop)
 	var/obj/structure/reagent_dispensers/R = target
 	R.set_amount_dispensed()
 
@@ -351,7 +353,7 @@
 	name                 = "Toggle refilling cap"
 	expected_target_type = /obj/structure/reagent_dispensers
 
-/decl/interaction_handler/toggle_open/reagent_dispenser/invoked(var/obj/structure/reagent_dispensers/target, var/mob/user)
+/decl/interaction_handler/toggle_open/reagent_dispenser/invoked(atom/target, mob/user, obj/item/prop)
 	if(target.atom_flags & ATOM_FLAG_OPEN_CONTAINER)
 		target.atom_flags &= ~ATOM_FLAG_OPEN_CONTAINER
 	else

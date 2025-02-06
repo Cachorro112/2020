@@ -219,7 +219,7 @@
 	icon = 'icons/obj/toy/toy.dmi'
 	icon_state = "ripleytoy"
 	var/cooldown = 0
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 
 //all credit to skasi for toy mech fun ideas
 /obj/item/toy/prize/attack_self(mob/user)
@@ -299,7 +299,7 @@
 	desc = "A \"Space Life\" brand... wait, what the hell is this thing? It seems to be requesting the sweet release of death."
 	icon_state = "assistant"
 	icon = 'icons/obj/toy/toy.dmi'
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 
 /obj/item/toy/figure/cmo
 	name = "Chief Medical Officer action figure"
@@ -496,7 +496,7 @@
 	name = "foam sword"
 	desc = "An arcane weapon (made of foam) wielded by the followers of the hit Saturday morning cartoon \"King Nursee and the Acolytes of Heroism\"."
 	icon = 'icons/obj/items/weapon/swords/cult.dmi'
-	material = /decl/material/solid/organic/plastic
+	material = /decl/material/solid/organic/plastic/foam
 	edge = 0
 	sharp = 0
 
@@ -622,7 +622,7 @@
 	name = "magic eightball"
 	desc = "A black ball with a stencilled number eight in white on the side. It seems full of dark liquid.\nThe instructions state that you should ask your question aloud, and then shake."
 	icon_state = "eightball"
-	w_class = ITEM_SIZE_TINY
+	w_class = ITEM_SIZE_SMALL
 
 	var/static/list/possible_answers = list(
 		"It is certain",

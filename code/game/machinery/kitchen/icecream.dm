@@ -33,7 +33,7 @@
 		if(ICECREAM_STRAWBERRY)
 			return list(/decl/material/liquid/drink/milk, /decl/material/solid/ice, /decl/material/liquid/drink/juice/berry)
 		if(ICECREAM_BLUE)
-			return list(/decl/material/liquid/drink/milk, /decl/material/solid/ice, /decl/material/liquid/ethanol/bluecuracao)
+			return list(/decl/material/liquid/drink/milk, /decl/material/solid/ice, /decl/material/liquid/alcohol/bluecuracao)
 		if(ICECREAM_CHERRY)
 			return list(/decl/material/liquid/drink/milk, /decl/material/solid/ice, /decl/material/liquid/nutriment/cherryjelly)
 		if(ICECREAM_BANANA)
@@ -132,11 +132,11 @@
 				to_chat(user, "<span class='warning'>There is not enough icecream left!</span>")
 		else
 			to_chat(user, "<span class='notice'>[O] already has icecream in it.</span>")
-		return 1
+		return TRUE
 	else if(ATOM_IS_OPEN_CONTAINER(O))
-		return
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/machinery/icecream_vat/proc/make(var/mob/user, var/make_type, var/amount)
 	for(var/R in get_ingredient_list(make_type))
@@ -206,7 +206,7 @@
 	volume = 20
 	nutriment_amt = 5
 	nutriment_type = /decl/material/liquid/nutriment
-	nutriment_desc = "crunchy waffle cone"
+	nutriment_desc = list("crunchy waffle cone" = 1)
 	var/ice_creamed
 	var/cone_type
 

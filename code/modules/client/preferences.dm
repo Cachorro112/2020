@@ -381,8 +381,6 @@ var/global/list/time_prefs_fixed = list()
 	character.set_gender(gender)
 	character.blood_type = blood_type
 
-	character.set_eye_colour(eye_colour, skip_update = TRUE)
-
 	character.set_skin_colour(skin_colour, skip_update = TRUE)
 	character.skin_tone = skin_tone
 
@@ -406,6 +404,8 @@ var/global/list/time_prefs_fixed = list()
 	if(length(traits))
 		for(var/trait_type in traits)
 			character.set_trait(trait_type, (traits[trait_type] || TRAIT_LEVEL_EXISTS))
+
+	character.set_eye_colour(eye_colour, skip_update = TRUE)
 
 	for(var/obj/item/organ/external/O in character.get_external_organs())
 		for(var/decl/sprite_accessory_category/sprite_category in O.get_sprite_accessory_categories())
@@ -500,7 +500,7 @@ var/global/list/time_prefs_fixed = list()
 	key_bindings = deepCopyList(global.hotkey_keybinding_list_by_key)
 
 	if(istype(client))
-		// Preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum).
+		// Preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum).
 		SScharacter_setup.preferences_datums[client.ckey] = src
 		setup()
 

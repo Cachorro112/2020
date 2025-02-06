@@ -130,6 +130,6 @@ GLOBAL_GETTER(cable_colors, /list, SetupCableColors())
 		var/obj/item/stack/cable_coil/C = coil_type
 		if(!initial(C.can_have_color))
 			continue
-		var/color = initial(C.color)
+		var/color = initial(C.paint_color) || initial(C.color)
 		.[name] = color
 	. = sortTim(., /proc/cmp_text_asc)

@@ -40,7 +40,7 @@
 			if(!product)
 				continue
 			lore_text = initial(product.lore_text)
-			if(ispath(food.result, /decl/material/liquid/drink) || ispath(food.result, /decl/material/liquid/ethanol))
+			if(ispath(food.result, /decl/material/liquid/drink) || ispath(food.result, /decl/material/liquid/alcohol))
 				category_name = "drink recipe"
 				mechanics_text = "This recipe produces [food.result_amount]u <span codexlink='[product.codex_name || product.name] (substance)'>[product.name]</span>.<br>It should be performed in a glass or shaker, and requires the following ingredients:"
 			else
@@ -96,14 +96,17 @@
 			var/decl/material/coating = GET_DECL(recipe.coating)
 			ingredients += "<span codexlink='[coating.codex_name || coating.name] (substance)'>\a [coating.name]</span> coating"
 		mechanics_text += "<ul><li>[jointext(ingredients, "</li><li>")]</li></ul>"
+
+		var/list/cooking_methods = "\a [recipe.get_category_names()]"
+
 		var/atom/recipe_product = recipe.result
 		var/plural = recipe.result_quantity > 1
 		var/product_name = ispath(recipe.result, /atom) ? atom_info_repository.get_name_for(recipe.result) : initial(recipe_product.name)
-		mechanics_text += "<br>This recipe takes [ceil(recipe.cooking_time/10)] second\s to cook in [recipe.get_categories_string()] and creates [plural ? recipe.result_quantity : "a(n)"] [product_name][plural ? "s" : ""]."
+		mechanics_text += "<br>This recipe takes [ceil(recipe.cooking_time/10)] second\s to cook in [english_list(cooking_methods, and_text = " or ")] and creates [plural ? recipe.result_quantity : "a(n)"] [product_name][plural ? "s" : ""]."
 		var/lore_text = recipe.lore_text || initial(recipe_product.desc)
 
 		var/recipe_name = recipe.display_name || sanitize(initial(recipe_product.name))
-		guide_html += "<h3>[capitalize(recipe_name)]</h3>Place [english_list(ingredients)] into [recipe.get_categories_string()] for [ceil(recipe.cooking_time/(1 SECOND))] second\s."
+		guide_html += "<h3>[capitalize(recipe_name)]</h3>Place [english_list(ingredients)] into [english_list(cooking_methods, and_text = " or ")] for [ceil(recipe.cooking_time/(1 SECOND))] second\s."
 
 		var/list/assoc_strings = list()
 		for(var/category in recipe.get_category_names())
