@@ -50,6 +50,7 @@
 /obj/item/food/eggbowl
 	name = "egg bowl"
 	desc = "A bowl of fried rice with egg mixed in."
+	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
 	icon_state = "eggbowl"
 	trash = /obj/item/trash/snack_bowl
 	filling_color = "#fffbdb"
@@ -80,6 +81,7 @@
 /obj/item/food/piginblanket
 	name = "pig in a blanket"
 	desc = "A sausage embedded in a soft, fluffy pastry. Free this pig from its blanket prison by eating it."
+	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
 	icon_state = "piginblanket"
 	nutriment_type = /decl/material/liquid/nutriment/bread
 	nutriment_amt = 3

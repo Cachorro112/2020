@@ -135,7 +135,7 @@
 	name = "micro chips"
 	desc = "Soft and rubbery, should have fried them. Good for smaller crewmembers, maybe?"
 	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
-	icon_state = "microfries"
+	icon_state = "microchips"
 	plate = /obj/item/plate
 	filling_color = "#eddd00"
 	nutriment_amt = 4

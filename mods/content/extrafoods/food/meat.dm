@@ -83,7 +83,7 @@
 	name = "bacon and eggs"
 	desc = "A piece of bacon and two fried eggs."
 	icon = 'mods/content/extrafoods/icons/obj/food.dmi'
-	icon_state = "bacon_and_eggs"
+	icon_state = "baconegg"
 	plate = /obj/item/plate
 	nutriment_amt = 3
 	nutriment_type = /decl/material/solid/organic/meat
