@@ -7,23 +7,23 @@
 /area/submap/virgo2/Lake1)
 "d" = (
 /obj/machinery/crystal/lava,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/Lake1)
 "f" = (
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/Lake1)
 "h" = (
 /turf/floor/lava,
 /area/submap/virgo2/Lake1)
 "i" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Lake1)
 "j" = (
 /turf/mineral/ignore_mapgen/virgo2,
 /area/submap/virgo2/Lake1)
 "R" = (
 /obj/machinery/crystal/lava,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Lake1)
 
 (1,1,1) = {"

@@ -245,6 +245,7 @@
 	. = min(., 2.5)//Cap multiplier at 2.5
 
 /decl/material/liquid/nutriment/triglyceride/oil/affect_touch(var/mob/living/M, var/alien, var/removed, var/datum/reagents/holder)
+	. = ..()
 	var/dfactor = heatdamage(M)
 	if (dfactor)
 		var/data = REAGENT_DATA(holder, type)
@@ -254,6 +255,7 @@
 		if (LAZYACCESS(holder.reagent_data[type], "lastburnmessage")+100 < world.time)
 			to_chat(M, SPAN_DANGER("The hot oil clings to your skin and burns you!"))
 			LAZYSET(holder.reagent_data[type], "lastburnmessage", world.time)
+		return TRUE
 
 /decl/material/liquid/nutriment/triglyceride/oil/corn
 	name = "corn oil"

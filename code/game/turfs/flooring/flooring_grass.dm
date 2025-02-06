@@ -13,7 +13,7 @@
 	flooring_flags     = TURF_REMOVE_SHOVEL
 	force_material     = /decl/material/solid/organic/plantmatter/grass
 	growth_value       = 1.2 // Shouldn't really matter since you can't plant on grass, it turns to dirt first.
-	var/harvestable    = FALSE
+	var/harvest_type   = null
 
 /decl/flooring/grass/fire_act(turf/floor/target, datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(target.get_topmost_flooring() == src && (exposed_temperature > T0C + 200 && prob(5)) || exposed_temperature > T0C + 1000)
@@ -28,17 +28,17 @@
 	desc               = "A lush, overgrown patch of wild meadowgrass. Watch out for snakes."
 	has_base_range     = null
 	icon_edge_layer    = FLOOR_EDGE_GRASS_WILD
-	harvestable        = TRUE
+	harvest_type       = /decl/flooring/grass
 
 /decl/flooring/grass/wild/get_movable_alpha_mask_state(atom/movable/mover)
 	. = ..() || "mask_grass"
 
-/decl/flooring/grass/wild/handle_item_interaction(turf/floor/floor, mob/user, obj/item/item)
+/decl/flooring/grass/handle_item_interaction(turf/floor/floor, mob/user, obj/item/item)
 	var/decl/material/floor_material = floor.get_material()
-	if(IS_KNIFE(item) && harvestable && istype(floor_material) && floor_material.dug_drop_type)
+	if(IS_KNIFE(item) && harvest_type && istype(floor_material) && floor_material.dug_drop_type)
 		if(item.do_tool_interaction(TOOL_KNIFE, user, floor, 3 SECONDS, start_message = "harvesting", success_message = "harvesting") && !QDELETED(floor) && floor.get_topmost_flooring() == src)
 			new floor_material.dug_drop_type(floor, rand(2,5))
-			floor.set_flooring(/decl/flooring/grass)
+			floor.set_flooring(harvest_type)
 		return TRUE
 	return ..()
 

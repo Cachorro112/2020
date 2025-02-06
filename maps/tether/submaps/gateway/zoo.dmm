@@ -476,11 +476,11 @@
 /obj/structure/table/reinforced,
 /obj/item/knife/kitchen/cleaver,
 /obj/item/chems/drinks/bottle/small/beer,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
 /obj/effect/floor_decal/corner/blue/diagonal,
 /turf/floor/tiled/white,
 /area/awaymission/zoo/pirateship)
@@ -579,7 +579,7 @@
 	icon_state = "heater";
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/tradeship)
 "bM" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -733,18 +733,18 @@
 /obj/structure/closet/secure_closet/freezer/meat{
 	opened = 1
 	},
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/tiled/white,
 /area/awaymission/zoo/pirateship)
 "cr" = (
 /obj/structure/closet/crate/freezer,
 /obj/item/food/butchery/meat,
 /obj/item/food/butchery/meat,
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/tiled/white,
 /area/awaymission/zoo/pirateship)
 "cs" = (
@@ -941,7 +941,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/pirateship)
 "cT" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -1218,7 +1218,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "dI" = (
@@ -1322,17 +1322,17 @@
 /turf/floor/carpet,
 /area/awaymission/zoo/pirateship)
 "dW" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "dX" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/blood/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "dY" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/item/food/xenomeat,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "dZ" = (
@@ -1448,7 +1448,7 @@
 /obj/structure/window/reinforced{
 	dir = 8
 	},
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "ep" = (
@@ -1543,7 +1543,7 @@
 /turf/floor/tiled,
 /area/awaymission/zoo/pirateship)
 "eA" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -1561,7 +1561,7 @@
 	dir = 4;
 	icon_state = "right"
 	},
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "eD" = (
@@ -1571,7 +1571,7 @@
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "eE" = (
-/obj/item/food/xenomeat,
+/obj/item/food/butchery/meat/xeno,
 /turf/floor/plating,
 /area/awaymission/zoo/pirateship)
 "eF" = (
@@ -2654,10 +2654,10 @@
 /area/awaymission/zoo/syndieship)
 "hK" = (
 /obj/structure/closet,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
 /obj/machinery/light{
 	dir = 4
 	},
@@ -2665,10 +2665,10 @@
 /area/awaymission/zoo/syndieship)
 "hL" = (
 /obj/structure/closet,
-/obj/item/food/tastybread,
-/obj/item/food/tastybread,
-/obj/item/food/tastybread,
-/obj/item/food/tastybread,
+/obj/item/food/junk/tastybread,
+/obj/item/food/junk/tastybread,
+/obj/item/food/junk/tastybread,
+/obj/item/food/junk/tastybread,
 /turf/floor/shuttle/darkred,
 /area/awaymission/zoo/syndieship)
 "hM" = (
@@ -3250,7 +3250,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/syndieship)
 "iX" = (
 /obj/structure/shuttle/engine/propulsion{
@@ -5345,7 +5345,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/awaymission/zoo)
 "oG" = (
 /obj/structure/flora/bush/lavendergrass,
@@ -8379,7 +8379,7 @@
 /area/awaymission/zoo)
 "we" = (
 /obj/machinery/shieldgen,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/floor,
 /area/awaymission/zoo)
@@ -8558,13 +8558,13 @@
 /turf/floor/tiled,
 /area/awaymission/zoo)
 "wN" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/floodlight,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/floor,
 /area/awaymission/zoo)
 "wO" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/emitter,
 /obj/effect/floor_decal/industrial/outline/yellow,
 /turf/floor,
@@ -8714,7 +8714,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xl" = (
 /obj/structure/cable{
@@ -8722,7 +8722,7 @@
 	pixel_y = 0
 	},
 /obj/machinery/power/solar/fake,
-/turf/floor/airless{
+/turf/floor/plating/airless{
 	icon_state = "solarpanel"
 	},
 /area/awaymission/zoo/solars)
@@ -8733,7 +8733,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xn" = (
 /obj/structure/cable{
@@ -8746,7 +8746,7 @@
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xo" = (
 /obj/structure/cable{
@@ -8759,7 +8759,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xp" = (
 /obj/structure/cable{
@@ -8771,7 +8771,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xq" = (
 /obj/structure/cable{
@@ -8784,7 +8784,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xr" = (
 /obj/structure/cable{
@@ -8797,7 +8797,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xs" = (
 /obj/structure/cable{
@@ -8806,12 +8806,12 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xt" = (
 /obj/structure/cable,
 /obj/machinery/power/solar/fake,
-/turf/floor/airless{
+/turf/floor/plating/airless{
 	icon_state = "solarpanel"
 	},
 /area/awaymission/zoo/solars)
@@ -8823,7 +8823,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xv" = (
 /obj/structure/cable{
@@ -8832,7 +8832,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 "xw" = (
 /obj/structure/cable{
@@ -8842,7 +8842,7 @@
 	icon_state = "4-8";
 	pixel_x = 0
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/zoo/solars)
 
 (1,1,1) = {"

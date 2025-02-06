@@ -3,7 +3,7 @@
 /turf/template_noop,
 /area/template_noop)
 "b" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/template_noop)
 "c" = (
 /turf/wall/virgo2,
@@ -266,7 +266,7 @@
 /turf/floor/tiled/steel_dirty,
 /area/submap/virgo2/Lab1)
 "V" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Lab1)
 "W" = (
 /turf/floor/plating/virgo2,

@@ -124,6 +124,15 @@
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
 	items = list(
 		/obj/item/food/burrito = 1,
-		/obj/item/food/mysterysoup = 1
+		/obj/item/chems/glass/bowl/mystery = 1
 	)
 	result = /obj/item/food/burrito_mystery
+
+/decl/recipe/burrito_mystery/check_items(obj/container)
+	. = ..()
+	if(!.)
+		return FALSE
+	var/obj/item/chems/glass/bowl/mystery/mysterysoup = locate() in container?.get_contained_external_atoms()
+	if(!mysterysoup) // how??
+		return FALSE
+	return !mysterysoup.drained

@@ -201,10 +201,14 @@
 	reagents = list(/decl/material/liquid/blood = 15)
 	result = /obj/item/food/riztizkzi_sea
 
+// TODO: Reimplement chilied eggs as soup recipe? Somehow? Or just let you add boiled eggs to soup?
 /decl/recipe/chilied_eggs
 	container_categories = RECIPE_CATEGORY_SAUCEPAN | RECIPE_CATEGORY_POT
+	// TODO: Check data to make sure it's hot pepper chili and not ice pepper chili?
+	reagents = list(
+		/decl/material/liquid/nutriment/soup/chili = 30
+	)
 	items = list(
-		/obj/item/food/hotchili = 1,
 		/obj/item/food/boiledegg = 3
 	)
 	result = /obj/item/food/chilied_eggs

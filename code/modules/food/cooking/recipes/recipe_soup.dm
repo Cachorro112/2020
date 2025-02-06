@@ -13,7 +13,7 @@
 /decl/recipe/soup
 	abstract_type = /decl/recipe/soup
 	reagent_mix = REAGENT_REPLACE
-	container_categories = RECIPE_CATEGORY_POT
+	container_categories = RECIPE_CATEGORY_SAUCEPAN | RECIPE_CATEGORY_POT
 	minimum_temperature = 100 CELSIUS
 	result_quantity = 10
 	can_bulk_cook = TRUE

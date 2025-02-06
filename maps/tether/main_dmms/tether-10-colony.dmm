@@ -3,7 +3,7 @@
 /turf/unsimulated/wall/planetary/virgo3b,
 /area/space)
 "ab" = (
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/space)
 "ac" = (
 /turf/unsimulated/mineral,
@@ -16,13 +16,13 @@
 	dir = 8;
 	icon_state = "burst_l"
 	},
-/turf/unsimulated/floor/shuttle_ceiling,
+/turf/floor/shuttle_ceiling,
 /area/shuttle/specops/centcom)
 "af" = (
 /turf/wall/shuttle/dark,
 /area/shuttle/specops/centcom)
 "ag" = (
-/turf/unsimulated/floor/shuttle_ceiling,
+/turf/floor/shuttle_ceiling,
 /area/centcom/specops)
 "ah" = (
 /turf/unsimulated/wall,
@@ -31,7 +31,7 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/unsimulated/floor/shuttle_ceiling,
+/turf/floor/shuttle_ceiling,
 /area/shuttle/specops/centcom)
 "aj" = (
 /obj/structure/shuttle/engine/heater{
@@ -40,7 +40,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/shuttle/specops/centcom)
 "ak" = (
 /obj/machinery/computer/modular/preset/civilian,
@@ -321,18 +321,18 @@
 /area/centcom/specops)
 "aI" = (
 /obj/structure/closet/crate/medical,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
-/obj/item/food/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
+/obj/item/food/junk/liquidfood,
 /turf/unsimulated/floor{
 	dir = 5;
 	icon_state = "vault"
@@ -608,7 +608,7 @@
 	dir = 8;
 	icon_state = "burst_r"
 	},
-/turf/unsimulated/floor/shuttle_ceiling,
+/turf/floor/shuttle_ceiling,
 /area/shuttle/specops/centcom)
 "bi" = (
 /obj/machinery/door/airlock/external/glass{
@@ -2486,7 +2486,7 @@
 /area/centcom/control)
 "eB" = (
 /obj/machinery/fabricator/imprinter,
-/obj/item/chems/glass/beaker/sulphuric,
+/obj/item/chems/glass/beaker/sulfuric,
 /turf/unsimulated/floor/steel,
 /area/centcom/control)
 "eC" = (
@@ -2828,7 +2828,7 @@
 /obj/structure/table,
 /obj/item/hand_labeler,
 /obj/item/chems/glass/beaker/large,
-/obj/item/chems/glass/beaker/sulphuric,
+/obj/item/chems/glass/beaker/sulfuric,
 /turf/unsimulated/floor/steel,
 /area/centcom/control)
 "fs" = (
@@ -3250,19 +3250,19 @@
 /area/centcom/control)
 "gh" = (
 /obj/effect/floor_decal/corner_steel_grid,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "gi" = (
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 10
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "gj" = (
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 8
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "gk" = (
 /obj/structure/rack,
@@ -3375,7 +3375,7 @@
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 6
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "gx" = (
 /obj/effect/floor_decal/industrial/warning/dust/corner,
@@ -3423,7 +3423,7 @@
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 9
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "gD" = (
 /obj/machinery/recharger{
@@ -3934,7 +3934,7 @@
 /obj/machinery/light/spot{
 	dir = 4
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/space)
 "hQ" = (
 /obj/machinery/door/airlock/centcom{
@@ -5454,7 +5454,7 @@
 	dir = 1
 	},
 /obj/structure/table/glass,
-/obj/item/box/monkeycubes,
+/obj/item/box/animal_cubes/monkeys,
 /obj/effect/floor_decal/borderfloorwhite{
 	dir = 5
 	},
@@ -5868,19 +5868,19 @@
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 4
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "lF" = (
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 5
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "lG" = (
 /obj/effect/floor_decal/corner_steel_grid{
 	dir = 1
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/centcom/evac)
 "lH" = (
 /obj/machinery/vending/snack,
@@ -11563,11 +11563,11 @@
 /turf/unsimulated/floor/steel,
 /area/centcom/main_hall)
 "wI" = (
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "wJ" = (
 /obj/structure/table/bench/wooden,
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "wK" = (
 /obj/effect/floor_decal/spline/fancy/wood{
@@ -11816,11 +11816,11 @@
 /area/centcom/main_hall)
 "xg" = (
 /obj/machinery/light/flamp/noshade,
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "xh" = (
 /obj/structure/flora/bush/brflowers,
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "xi" = (
 /obj/structure/bed/chair{
@@ -11861,7 +11861,7 @@
 /area/centcom/restaurant)
 "xo" = (
 /obj/structure/table/woodentable,
-/obj/item/food/meatballsoup,
+/obj/item/chems/glass/bowl/mapped/meatball,
 /turf/unsimulated/floor/wood,
 /area/centcom/restaurant)
 "xp" = (
@@ -12141,7 +12141,7 @@
 /area/centcom/security/arrivals)
 "xI" = (
 /obj/structure/flora/bush/ppflowers,
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "xJ" = (
 /obj/structure/table/woodentable,
@@ -13067,7 +13067,7 @@
 /area/centcom/security)
 "ze" = (
 /obj/structure/flora/bush/ywflowers,
-/turf/floor/natural/grass,
+/turf/floor/grass,
 /area/centcom/main_hall)
 "zf" = (
 /obj/structure/table/woodentable,
@@ -15520,7 +15520,7 @@
 /area/centcom/specops)
 "YE" = (
 /obj/abstract/level_data_spawner/virgo3b/player,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/space)
 
 (1,1,1) = {"

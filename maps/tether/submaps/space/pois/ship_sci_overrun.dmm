@@ -6,7 +6,7 @@
 /turf/wall/thull,
 /area/tether_away/debrisfield/explored)
 "ac" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "ad" = (
 /turf/floor/tiled/white/airless,
@@ -88,7 +88,7 @@
 /obj/random/tool,
 /obj/random/tool,
 /obj/random/tool,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "at" = (
 /obj/machinery/door/airlock/science,
@@ -110,7 +110,7 @@
 /obj/machinery/door/airlock/maintenance{
 	name = "Research Airlock"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "ay" = (
 /obj/structure/sign/department/xenobio_3,
@@ -134,14 +134,14 @@
 /area/tether_away/debrisfield/explored)
 "aC" = (
 /obj/structure/table/reinforced,
-/obj/item/food/monkeycube,
-/obj/item/food/monkeycube/farwacube,
-/obj/item/food/monkeycube/neaeracube,
-/obj/item/food/monkeycube/sarucube,
-/obj/item/food/monkeycube/sobakacube,
-/obj/item/food/monkeycube/sparracube,
-/obj/item/food/monkeycube/stokcube,
-/obj/item/food/monkeycube/wolpincube,
+/obj/item/food/animal_cube/monkey,
+/obj/item/food/animal_cube/monkey/farwacube,
+/obj/item/food/animal_cube/monkey/neaeracube,
+/obj/item/food/animal_cube/monkey/sarucube,
+/obj/item/food/animal_cube/monkey/sobakacube,
+/obj/item/food/animal_cube/monkey/sparracube,
+/obj/item/food/animal_cube/monkey/stokcube,
+/obj/item/food/animal_cube/monkey/wolpincube,
 /turf/floor/tiled/white/airless,
 /area/tether_away/debrisfield/explored)
 "aD" = (
@@ -152,7 +152,7 @@
 "aE" = (
 /obj/structure/grille,
 /obj/structure/window/reinforced/full,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "aF" = (
 /obj/item/chems/spray/plantbgone,
@@ -200,7 +200,7 @@
 "aL" = (
 /obj/structure/window/reinforced/full,
 /obj/structure/grille,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "aM" = (
 /obj/machinery/computer/shuttle{
@@ -329,13 +329,13 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bi" = (
 /obj/structure/rack,
 /obj/random/firstaid,
 /obj/random/firstaid,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bj" = (
 /obj/structure/rack,
@@ -343,7 +343,7 @@
 /obj/random/unidentified_medicine/scientific,
 /obj/random/unidentified_medicine/scientific,
 /obj/random/unidentified_medicine/scientific,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bk" = (
 /obj/machinery/door/airlock/command{
@@ -356,15 +356,15 @@
 /obj/item/stack/material/uranium{
 	amount = 11
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bm" = (
 /obj/structure/closet/crate,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bn" = (
 /obj/machinery/port_gen/pacman/super,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bo" = (
 /obj/structure/table/reinforced,
@@ -377,11 +377,11 @@
 /area/tether_away/debrisfield/explored)
 "bp" = (
 /obj/item/prybar/red,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "bq" = (
 /mob/living/simple_mob/slime/feral/dark_blue,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 
 (1,1,1) = {"

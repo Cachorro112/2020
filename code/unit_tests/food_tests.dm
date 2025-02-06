@@ -126,9 +126,9 @@
 		// continue with validation
 		var/container_category = RECIPE_CATEGORY_MICROWAVE
 		if(recipe.container_categories)
-			container_category = recipe.container_categories[recipe.container_categories.len]
+			container_category = FIRST_DIR(recipe.container_categories) // get the first nonzero bit set
 			if(!container_category)
-				failures += "Invalid container categories [json_encode(recipe.container_categories)] on [recipe.type]"
+				failures += "Invalid container category value [json_encode(recipe.container_categories)] on [recipe.type]"
 				QDEL_LIST(container.contents) // clean up prematurely
 				container.reagents.clear_reagents()
 				continue

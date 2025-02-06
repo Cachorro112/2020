@@ -7,7 +7,6 @@
 #include "trash.dm"
 #include "food\baked_goods.dm"
 #include "food\condiments.dm"
-#include "food\food_overrides.dm"
 #include "food\fried.dm"
 #include "food\meat.dm"
 #include "food\noodle.dm"

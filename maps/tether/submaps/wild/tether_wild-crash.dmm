@@ -9,14 +9,14 @@
 /area/tether/surfacebase/outside/wilderness)
 "ab" = (
 /obj/effect/step_trigger/teleporter/wild/to_wild_5,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "ac" = (
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "ae" = (
 /obj/structure/mob_spawner/scanner/wild_animals,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "af" = (
 /turf/wall/shuttle/dark/hard_corner,
@@ -61,7 +61,7 @@
 /area/tether/surfacebase/outside/wilderness)
 "ak" = (
 /obj/item/shard,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "al" = (
 /obj/structure/closet{
@@ -705,7 +705,7 @@
 /area/tether/surfacebase/crash)
 "bY" = (
 /obj/effect/step_trigger/teleporter/wild/to_wild_3,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "bZ" = (
 /obj/machinery/computer/arcade/battle,
@@ -740,7 +740,7 @@
 /area/tether/surfacebase/crash)
 "ce" = (
 /obj/effect/step_trigger/teleporter/wild/to_wild_1,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/tether/surfacebase/outside/wilderness)
 "cf" = (
 /obj/structure/grille,

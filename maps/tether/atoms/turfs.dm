@@ -1,4 +1,4 @@
-/turf/floor/natural/water/indoors
+/turf/floor/water/indoors
 	temperature = T20C
 	initial_gas = list(
 		/decl/material/gas/oxygen = MOLES_O2STANDARD,
@@ -28,15 +28,40 @@
 /turf/floor/virgo3b_indoors
 	initial_gas = null
 
-/turf/floor/natural/sif_growth
+/decl/flooring/grass/sif_growth
 	name = "growth"
 	desc = "A natural moss that has adapted to the sheer cold climate."
+	icon_edge_layer = FLOOR_EDGE_GRASS
+	icon_base = "sif_grass"
 	icon = 'maps/tether/icons/sif_grass.dmi'
-	possible_states = 1
+	has_base_range = 1
+	growth_value = 1.1
+	color = null
+	force_material = /decl/material/solid/organic/plantmatter/grass // todo: sifgrass material?
 
-/turf/floor/natural/sif_growth/thick
+/decl/flooring/grass/sif_growth/thick
+	name = "thick growth"
+	icon_edge_layer = FLOOR_EDGE_GRASS_WILD
+	icon = 'maps/tether/icons/sif_grass_thick.dmi'
+	growth_value = 1.5
+	harvest_type = /decl/flooring/grass/sif_growth
+
+/decl/flooring/grass/sif_growth/thick/get_movable_alpha_mask_state(atom/movable/mover)
+	. = ..() || "mask_grass"
+
+/turf/floor/sif_growth
+	name = "growth"
+	icon = 'maps/tether/icons/sif_grass.dmi'
+	icon_state = "sif_grass0"
+	_flooring = /decl/flooring/grass/sif_growth
+	_base_flooring = /decl/flooring/dirt
+
+/turf/floor/sif_growth/thick
 	name = "thick growth"
 	icon = 'maps/tether/icons/sif_grass_thick.dmi'
+	icon_state = "sif_grass0"
+	_flooring = /decl/flooring/grass/sif_growth/thick
+	_base_flooring = /decl/flooring/dirt
 
 // Voidcraft Shuttle Walls
 /turf/wall/shuttle/voidcraft
@@ -85,7 +110,7 @@
 /turf/floor/tiled/steel_dirty
 	name = "steel floor"
 	icon_state = "steel_dirty"
-	initial_flooring = /decl/flooring/tiling/steel_dirty
+	_flooring = /decl/flooring/tiling/steel_dirty
 
 /obj/item/stack/tile/floor/steel_dirty
 	name = "steel floor tile"
@@ -107,7 +132,7 @@
 	color = null
 
 /turf/floor/tiled/monotile
-	initial_flooring = /decl/flooring/tiling/mono/steel
+	_flooring = /decl/flooring/tiling/mono/steel
 
 /decl/flooring/tiling/mono/steel
 	icon_base = "steel_monotile"
@@ -180,16 +205,3 @@
 	name = "sand transit"
 	icon = 'maps/tether/icons/obj/transit_vr.dmi'
 	icon_state = "desert_ns"
-
-// originally /turf/floor/outdoors/rocks.
-// todo: port polaris rock turf sprite
-// pr this upstream
-/turf/floor/natural/rocks
-	name = "ground"
-	icon = 'icons/turf/flooring/barren.dmi'
-	icon_edge_layer = EXT_EDGE_BARREN
-
-/turf/floor/natural/rocks/Initialize()
-	if(prob(20))
-		LAZYADD(decals, image('icons/turf/flooring/decals.dmi', "asteroid[rand(0,9)]"))
-	. = ..()

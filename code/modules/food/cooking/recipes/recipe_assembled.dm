@@ -75,7 +75,7 @@
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
 	items = list(
 		/obj/item/food/bun,
-		/obj/item/food/xenomeat
+		/obj/item/food/butchery/meat/xeno
 	)
 	result = /obj/item/food/xenoburger
 
@@ -134,22 +134,6 @@
 		/obj/item/food/sausage
 	)
 	result = /obj/item/food/hotdog
-
-/decl/recipe/meatkabob
-	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
-	items = list(
-		/obj/item/stack/material/rods,
-		/obj/item/food/butchery/cutlet = 2
-	)
-	result = /obj/item/food/meatkabob
-
-/decl/recipe/tofukabob
-	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
-	items = list(
-		/obj/item/stack/material/rods,
-		/obj/item/food/tofu = 2,
-	)
-	result = /obj/item/food/tofukabob
 
 /decl/recipe/spellburger
 	container_categories = RECIPE_CATEGORY_MIX|RECIPE_CATEGORY_MICROWAVE
