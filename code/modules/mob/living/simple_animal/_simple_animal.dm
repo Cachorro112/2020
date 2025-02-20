@@ -17,10 +17,15 @@
 		/decl/move_intent/run/animal
 	)
 
-	var/base_movement_delay = 4
-	ai = /datum/mob_controller
+	// Set to TRUE to ignore slipping while EVA
+	var/skip_spacemove = FALSE
 
+	/// Added to the delay expected from movement decls.
+	var/base_movement_delay = 0
+
+	/// Can this mob in theory have a mob riding it?
 	var/can_have_rider = TRUE
+	/// If the mob can be ridden, what is the largest size of rider?
 	var/max_rider_size = MOB_SIZE_SMALL
 
 	/// Does the percentage health show in the stat panel for the mob?
@@ -82,8 +87,12 @@
 	var/scannable_result // Codex page generated when this mob is scanned.
 	var/base_animal_type // set automatically in Initialize(), used for language checking.
 
-	var/attack_delay = DEFAULT_ATTACK_COOLDOWN // How long in ds that a creature winds up before attacking.
-	var/sa_accuracy = 85 //base chance to hit out of 100
+	// By default, simple mobs should attack slightly slower than players, allowing a suitably attentive
+	// player to dodge/kite if they're paying attention, and not letting themselves get cornered/incapacitated.
+	var/attack_delay = DEFAULT_ATTACK_COOLDOWN * 1.3
+
+	// Base percentage chance to hit in melee against another mob, if controlled by an AI.
+	var/telegraphed_melee_accuracy = 85
 
 	// Visible message shown when the mob dies.
 	var/death_message = "dies!"
@@ -96,8 +105,18 @@
 	var/fire_desc = "fires" //"X fire_desc at Y!"
 	var/ranged_range = 6 //tiles of range for ranged attackers to attack
 
+	// Associative list of colors to state modifiers to draw over the top of this creature's base icon.
+	var/list/draw_visible_overlays
+	var/eye_color
+
+	var/list/ability_handlers
+
 /mob/living/simple_animal/Initialize()
 	. = ..()
+
+	if(length(ability_handlers))
+		for(var/handler in ability_handlers)
+			add_ability_handler(handler)
 
 	// Aquatic creatures only care about water, not atmos.
 	add_inventory_slot(new /datum/inventory_slot/head/simple)
@@ -139,6 +158,8 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 			mob_icon_state_flags |= MOB_ICON_HAS_SLEEP_STATE
 		if(check_state_in_icon("world-resting", icon))
 			mob_icon_state_flags |= MOB_ICON_HAS_REST_STATE
+		if(check_state_in_icon("world-sitting", icon))
+			mob_icon_state_flags |= MOB_ICON_HAS_SITTING_STATE
 		if(check_state_in_icon("world-gib", icon))
 			mob_icon_state_flags |= MOB_ICON_HAS_GIB_STATE
 		if(check_state_in_icon("world-dust", icon))
@@ -147,10 +168,32 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 			mob_icon_state_flags |= MOB_ICON_HAS_PARALYZED_STATE
 		global.simplemob_icon_bitflag_cache[type] = mob_icon_state_flags
 
+/mob/living/simple_animal/refresh_visible_overlays()
+
+	if(length(draw_visible_overlays))
+		var/list/add_overlays = list()
+		for(var/overlay_state in draw_visible_overlays)
+			var/overlay_color = draw_visible_overlays[overlay_state]
+			if(overlay_state == "base")
+				add_overlays += overlay_image(icon, icon_state, overlay_color, RESET_COLOR)
+			else
+				add_overlays += overlay_image(icon, "[icon_state]-[overlay_state]", overlay_color, RESET_COLOR)
+		set_current_mob_overlay(HO_SKIN_LAYER, add_overlays)
+	else
+		set_current_mob_overlay(HO_SKIN_LAYER, null)
+
+	z_flags &= ~ZMM_MANGLE_PLANES
+	if(stat == CONSCIOUS)
+		var/image/I = get_eye_overlay()
+		if(I && glowing_eyes)
+			z_flags |= ZMM_MANGLE_PLANES
+		set_current_mob_overlay(HO_GLASSES_LAYER, I)
+	else
+		set_current_mob_overlay(HO_GLASSES_LAYER, null)
+
+	. = ..()
+
 /mob/living/simple_animal/on_update_icon()
-
-	..()
-
 	icon_state = ICON_STATE_WORLD
 	if(stat != DEAD && HAS_STATUS(src, STAT_PARA) && (mob_icon_state_flags & MOB_ICON_HAS_PARALYZED_STATE))
 		icon_state += "-paralyzed"
@@ -158,22 +201,21 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 		icon_state += "-dead"
 	else if(stat == UNCONSCIOUS && (mob_icon_state_flags & MOB_ICON_HAS_SLEEP_STATE))
 		icon_state += "-sleeping"
-	else if(current_posture?.deliberate && (mob_icon_state_flags & MOB_ICON_HAS_REST_STATE))
+	else if(istype(current_posture, /decl/posture/sitting) && (mob_icon_state_flags & MOB_ICON_HAS_SITTING_STATE))
+		icon_state += "-sitting"
+	else if(current_posture?.prone && (mob_icon_state_flags & MOB_ICON_HAS_REST_STATE))
 		icon_state += "-resting"
+	..()
 
-	z_flags &= ~ZMM_MANGLE_PLANES
-	if(stat == CONSCIOUS)
-		var/image/I = get_eye_overlay()
-		if(I)
-			if(glowing_eyes)
-				z_flags |= ZMM_MANGLE_PLANES
-			add_overlay(I)
+/mob/living/simple_animal/get_eye_colour()
+	return eye_color || ..()
 
 /mob/living/simple_animal/get_eye_overlay()
 	var/eye_icon_state = "[icon_state]-eyes"
 	if(check_state_in_icon(eye_icon_state, icon))
 		var/image/I = (glowing_eyes ? emissive_overlay(icon, eye_icon_state) : image(icon, eye_icon_state))
 		I.appearance_flags = RESET_COLOR
+		I.color = get_eye_colour()
 		return I
 
 /mob/living/simple_animal/Destroy()
@@ -295,6 +337,7 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 		take_damage(dealt_damage, damage_type, damage_flags = damage_flags, inflicter = user)
 		user.visible_message(SPAN_DANGER("\The [user] [harm_verb] \the [src]!"))
 		user.do_attack_animation(src)
+		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
 		return TRUE
 
 /mob/living/simple_animal/attackby(var/obj/item/O, var/mob/user)
@@ -309,8 +352,8 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 				visible_message(SPAN_NOTICE("\The [user] applies \the [MED] to \the [src]."))
 				MED.use(1)
 		else
-			var/decl/pronouns/G = get_pronouns()
-			to_chat(user, SPAN_WARNING("\The [src] is dead, medical items won't bring [G.him] back to life."))
+			var/decl/pronouns/pronouns = get_pronouns()
+			to_chat(user, SPAN_WARNING("\The [src] is dead, medical items won't bring [pronouns.him] back to life."))
 		return TRUE
 
 	return ..()
@@ -357,10 +400,6 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 	message = sanitize(message)
 
 	..(message, null, verb)
-
-/mob/living/simple_animal/put_in_hands(var/obj/item/W) // No hands.
-	W.forceMove(get_turf(src))
-	return 1
 
 /mob/living/simple_animal/is_burnable()
 	return heat_damage_per_tick
@@ -463,17 +502,13 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 	bodytype_category = "quadrupedal animal body"
 
 /mob/living/simple_animal/get_base_telegraphed_melee_accuracy()
-	return sa_accuracy
+	return telegraphed_melee_accuracy
 
 /mob/living/simple_animal/check_has_mouth()
 	return TRUE
 
 /mob/living/simple_animal/can_buckle_mob(var/mob/living/dropping)
 	. = ..() && can_have_rider && (dropping.mob_size <= max_rider_size)
-
-// Simplemobs have to hang out in the rain so make them immune to weather effects (like hail).
-/mob/living/simple_animal/handle_weather_effects()
-	SHOULD_CALL_PARENT(FALSE)
 
 /mob/living/simple_animal/get_available_postures()
 	var/static/list/available_postures = list(
@@ -496,16 +531,16 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 /mob/living/simple_animal/proc/get_pry_desc()
 	return "prying"
 
-/mob/living/simple_animal/pry_door(var/mob/user, var/delay, var/obj/machinery/door/pesky_door)
+/mob/living/simple_animal/pry_door(delay, obj/machinery/door/target)
 	if(!can_pry_door())
 		return
-	visible_message(SPAN_DANGER("\The [user] begins [get_pry_desc()] at \the [pesky_door]!"))
+	visible_message(SPAN_DANGER("\The [src] begins [get_pry_desc()] at \the [target]!"))
 	if(istype(ai))
 		ai.pause()
-	if(do_after(user, delay, pesky_door))
-		pesky_door.open(1)
+	if(do_after(src, delay, target))
+		target.open(1)
 	else
-		visible_message(SPAN_NOTICE("\The [user] is interrupted."))
+		visible_message(SPAN_NOTICE("\The [src] is interrupted."))
 	if(istype(ai))
 		ai.resume()
 
@@ -548,3 +583,10 @@ var/global/list/simplemob_icon_bitflag_cache = list()
 
 /mob/living/simple_animal/get_attack_telegraph_delay()
 	return attack_delay
+
+/mob/living/simple_animal/set_stat(var/new_stat)
+	if((. = ..()))
+		queue_icon_update()
+
+/mob/living/simple_animal/is_space_movement_permitted(allow_movement = FALSE)
+	return skip_spacemove ? SPACE_MOVE_PERMITTED : ..()

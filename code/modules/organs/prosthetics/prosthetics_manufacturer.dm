@@ -6,10 +6,12 @@
 	modifier_string = "robotic"
 	is_robotic = TRUE
 	body_flags = BODY_FLAG_NO_DNA | BODY_FLAG_NO_DEFIB | BODY_FLAG_NO_STASIS | BODY_FLAG_NO_PAIN | BODY_FLAG_NO_EAT
-	material = /decl/material/solid/metal/steel
+	organ_material = /decl/material/solid/metal/steel
+	appearance_flags = HAS_EYE_COLOR
 	eye_flash_mod = 1
 	eye_darksight_range = 2
 	associated_gender = null
+	edible_reagent = null
 	emote_sounds = list(
 		"whistle" = list('sound/voice/emotes/longwhistle_robot.ogg'),
 		"qwhistle" = list('sound/voice/emotes/shortwhistle_robot.ogg'),
@@ -49,6 +51,8 @@
 	)
 	/// Determines which bodyparts can use this limb.
 	var/list/applies_to_part
+	/// Prosthetics of this type are not available in chargen unless the map has the required tech level.
+	var/required_map_tech = MAP_TECH_LEVEL_SPACE
 
 /decl/bodytype/prosthetic/get_user_species_for_validation()
 	if(bodytype_category)

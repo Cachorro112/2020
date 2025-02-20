@@ -1,6 +1,6 @@
 /decl/chemical_reaction/recipe/jovianwine
 	name = "Jovian Wine"
-	result = /decl/material/liquid/ethanol/wine/jupiter
+	result = /decl/material/liquid/alcohol/wine/jupiter
 	required_reagents = list(/decl/material/liquid/nutriment = 2, /decl/material/liquid/fuel = 1, /decl/material/liquid/cleaner = 1)
 	result_amount = 4
 	mix_message = "The mixture ferments into a thick, wine-coloured substance."

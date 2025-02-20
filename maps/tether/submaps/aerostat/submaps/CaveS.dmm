@@ -14,11 +14,11 @@
 /area/submap/virgo2/CaveS)
 "f" = (
 /obj/tether_away_spawner/aerostat_surface,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "g" = (
 /obj/effect/spider/stickyweb,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "h" = (
 /obj/item/ammo_casing/a45,
@@ -28,7 +28,7 @@
 "j" = (
 /obj/item/clothing/webbing/vest,
 /obj/item/knife/combat,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "k" = (
 /obj/tether_away_spawner/aerostat_surface,
@@ -36,18 +36,18 @@
 /area/submap/virgo2/CaveS)
 "l" = (
 /obj/effect/decal/cleanable/cobweb,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "n" = (
 /obj/effect/decal/cleanable/cobweb2,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "o" = (
 /obj/effect/mine,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "r" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/CaveS)
 "u" = (
 /turf/floor,

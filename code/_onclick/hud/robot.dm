@@ -50,11 +50,6 @@ var/global/obj/screen/robot_inventory
 	R.ui_drop_grab = new(null, mymob)
 	adding += R.ui_drop_grab
 
-	//Intent
-	action_intent = new /obj/screen/intent/robot(null, mymob, ui_style, ui_color, ui_alpha, UI_ICON_INTENT)
-	action_intent.icon_state = R.a_intent
-
-	adding += action_intent
 	adding += new /obj/screen/robot_panel(null, mymob)
 	adding += new /obj/screen/robot_store(null, mymob)
 
@@ -96,17 +91,17 @@ var/global/obj/screen/robot_inventory
 			R.active_storage.close(R) //Closes the inventory ui.
 
 		if(!R.module)
-			to_chat(usr, "<span class='danger'>No module selected</span>")
+			to_chat(usr, SPAN_WARNING("No module selected."))
 			return
 
 		if(!R.module.equipment)
-			to_chat(usr, "<span class='danger'>Selected module has no modules to select</span>")
+			to_chat(usr, SPAN_WARNING("Selected module has no equipment available."))
 			return
 
 		if(!R.robot_modules_background)
 			return
 
-		var/display_rows = -round(-(R.module.equipment.len) / 8)
+		var/display_rows = ceil(R.module.equipment.len / 8)
 		R.robot_modules_background.screen_loc = "CENTER-4:16,BOTTOM+1:7 to CENTER+3:16,BOTTOM+[display_rows]:7"
 		R.client.screen += R.robot_modules_background
 

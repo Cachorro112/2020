@@ -5,7 +5,7 @@
 	origin_tech = @'{"biotech":5,"materials":2}'
 	icon = 'icons/obj/items/device/animal_tagger.dmi'
 	icon_state = ICON_STATE_WORLD
-	force = 1
+	_base_attack_force = 1
 	material = /decl/material/solid/organic/plastic
 	matter = list(/decl/material/solid/metal/copper = MATTER_AMOUNT_REINFORCEMENT, /decl/material/solid/silicon = MATTER_AMOUNT_REINFORCEMENT)
 	var/loaded = 1
@@ -34,8 +34,8 @@
 		return TRUE
 
 	user.visible_message("\The [user] stabs \the [src] into \the [target], injecting something!")
-	var/decl/pronouns/G = user.get_pronouns()
-	to_chat(target, SPAN_NOTICE("You feel a stabbing pain as \the [user] injects something into you. All of a sudden you feel as if [user] is the friendliest and nicest person you've ever know. You want to be friends with [G.him] and all [G.his] friends."))
+	var/decl/pronouns/pronouns = user.get_pronouns()
+	to_chat(target, SPAN_NOTICE("You feel a stabbing pain as \the [user] injects something into you. All of a sudden you feel as if [user] is the friendliest and nicest person you've ever know. You want to be friends with [pronouns.him] and all [pronouns.his] friends."))
 	if(mode == "somewhat")
 		target.faction = user.faction
 	else

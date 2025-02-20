@@ -330,6 +330,8 @@ SUBSYSTEM_DEF(jobs)
 	//Get the players who are ready
 	for(var/mob/new_player/player in global.player_list)
 		if(player.ready && player.mind && !player.mind.assigned_role)
+			if(get_config_value(/decl/config/enum/server_whitelist) == CONFIG_SERVER_JOIN_WHITELIST && !check_server_whitelist(player))
+				continue
 			unassigned_roundstart += player
 	if(unassigned_roundstart.len == 0)	return 0
 	//Shuffle players and jobs
@@ -411,7 +413,7 @@ SUBSYSTEM_DEF(jobs)
 /decl/loadout_option/proc/is_permitted(mob/living/wearer, datum/job/job)
 	if(!istype(wearer))
 		return FALSE
-	if(allowed_roles && !(job.type in allowed_roles))
+	if(allowed_roles && (!job || !(job.type in allowed_roles)))
 		return FALSE
 	if(allowed_branches)
 		if(!ishuman(wearer))
@@ -436,13 +438,13 @@ SUBSYSTEM_DEF(jobs)
 	var/list/spawn_in_storage = list()
 	if(H.client.prefs.Gear() && job.loadout_allowed)
 		for(var/thing in H.client.prefs.Gear())
-			var/decl/loadout_option/G = global.gear_datums[thing]
+			var/decl/loadout_option/G = decls_repository.get_decl_by_id_or_var(thing, /decl/loadout_option)
 			if(!istype(G))
 				continue
-			if(!G.is_permitted(H))
+			if(!G.is_permitted(H, job))
 				to_chat(H, SPAN_WARNING("Your current species, job, branch, skills or whitelist status does not permit you to spawn with [thing]!"))
 				continue
-			if(!G.slot || !G.spawn_on_mob(H, H.client.prefs.Gear()[G.name]))
+			if(!G.slot || !G.spawn_on_mob(H, H.client.prefs.Gear()[G.uid]))
 				spawn_in_storage.Add(G)
 
 	// do accessories last so they don't attach to a suit that will be replaced
@@ -536,7 +538,7 @@ SUBSYSTEM_DEF(jobs)
 
 	if(spawn_in_storage)
 		for(var/decl/loadout_option/G in spawn_in_storage)
-			G.spawn_in_storage_or_drop(H, H.client.prefs.Gear()[G.name])
+			G.spawn_in_storage_or_drop(H, H.client.prefs.Gear()[G.uid])
 
 	var/article = job.total_positions == 1 ? "the" : "a"
 	to_chat(H, "<font size = 3><B>You are [article] [alt_title || job_title].</B></font>")

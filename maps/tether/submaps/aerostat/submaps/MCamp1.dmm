@@ -6,23 +6,23 @@
 /turf/template_noop,
 /area/submap/virgo2/MilitaryCamp1)
 "c" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "e" = (
 /obj/effect/decal/cleanable/blood,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "f" = (
 /obj/item/stack/material/rods,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "g" = (
 /obj/item/shard,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "h" = (
 /obj/item/remains,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "i" = (
 /obj/tether_away_spawner/aerostat_surface,
@@ -33,7 +33,7 @@
 /area/submap/virgo2/MilitaryCamp1)
 "k" = (
 /obj/effect/mine,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/MilitaryCamp1)
 "l" = (
 /turf/floor/plating/virgo2,

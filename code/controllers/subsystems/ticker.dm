@@ -103,6 +103,7 @@ SUBSYSTEM_DEF(ticker)
 
 	if(!length(global.admins))
 		send2adminirc("Round has started with no admins online.")
+		SSwebhooks.send(WEBHOOK_AHELP_SENT, list("name" = "Round Started (Game ID: [game_id])", "body" = "Round has started with no admins online."))
 
 /datum/controller/subsystem/ticker/proc/playing_tick()
 	mode.process()
@@ -112,7 +113,7 @@ SUBSYSTEM_DEF(ticker)
 		Master.SetRunLevel(RUNLEVEL_POSTGAME)
 		end_game_state = END_GAME_READY_TO_END
 		INVOKE_ASYNC(src, PROC_REF(declare_completion))
-		if(get_config_value(/decl/config/toggle/allow_map_switching) && get_config_value(/decl/config/toggle/auto_map_vote) && global.all_maps.len > 1)
+		if(get_config_value(/decl/config/toggle/allow_map_switching) && get_config_value(/decl/config/toggle/auto_map_vote) && length(global.votable_maps) > 1)
 			SSvote.initiate_vote(/datum/vote/map/end_game, automatic = 1)
 
 	else if(mode_finished && (end_game_state <= END_GAME_NOT_OVER))

@@ -73,7 +73,7 @@
 /decl/public_access/public_method/igniter_toggle
 	name = "igniter toggle"
 	desc = "Toggle the igniter on or off."
-	call_proc = /obj/machinery/igniter/proc/ignite
+	call_proc = TYPE_PROC_REF(/obj/machinery/igniter, ignite)
 
 /decl/stock_part_preset/radio/receiver/igniter
 	frequency = BUTTON_FREQ
@@ -124,12 +124,13 @@
 		add_fingerprint(user)
 		disable = !disable
 		if(disable)
-			user.visible_message("<span class='warning'>[user] has disabled the [src]!</span>", "<span class='warning'>You disable the connection to the [src].</span>")
+			user.visible_message("<span class='warning'>[user] has disabled \the [src]!</span>", "<span class='warning'>You disable the connection to \the [src].</span>")
 		else if(!disable)
-			user.visible_message("<span class='warning'>[user] has reconnected the [src]!</span>", "<span class='warning'>You fix the connection to the [src].</span>")
+			user.visible_message("<span class='warning'>[user] has reconnected \the [src]!</span>", "<span class='warning'>You fix the connection to \the [src].</span>")
 		update_icon()
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/machinery/sparker/attack_ai()
 	if (anchored)
@@ -164,7 +165,7 @@
 /decl/public_access/public_method/sparker_spark
 	name = "spark"
 	desc = "Creates sparks to ignite nearby gases."
-	call_proc = /obj/machinery/sparker/proc/ignite
+	call_proc = TYPE_PROC_REF(/obj/machinery/sparker, ignite)
 
 /decl/stock_part_preset/radio/receiver/sparker
 	frequency = BUTTON_FREQ

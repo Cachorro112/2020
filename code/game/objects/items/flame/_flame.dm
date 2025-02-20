@@ -4,7 +4,6 @@
 	abstract_type               = /obj/item/flame
 	icon_state                  = ICON_STATE_WORLD
 	w_class                     = ITEM_SIZE_TINY
-	throwforce                  = 4
 	origin_tech                 = @'{"materials":1}'
 	material                    = /decl/material/solid/organic/wood
 
@@ -33,6 +32,8 @@
 	var/can_manually_light      = FALSE
 	/// Can this item be put into a sconce?
 	var/sconce_can_hold         = FALSE
+	/// Can this item go in a bag or storage slot while lit?
+	var/can_store_lit           = FALSE
 
 /obj/item/flame/Initialize(var/ml, var/material_key)
 
@@ -64,7 +65,7 @@
 /obj/item/flame/proc/get_sconce_overlay()
 	return null
 
-/obj/item/flame/get_tool_quality(archetype, property)
+/obj/item/flame/get_tool_quality(archetype)
 	return (!lit && archetype == TOOL_CAUTERY) ? TOOL_QUALITY_NONE : ..()
 
 /obj/item/flame/proc/has_fuel(amount)
@@ -76,8 +77,10 @@
 	if(lit || !has_fuel(_fuel_spend_amt))
 		return FALSE
 	lit = TRUE
+	if(!can_store_lit)
+		obj_flags |= OBJ_FLAG_NO_STORAGE
 	atom_damage_type =  BURN
-	update_force()
+	update_attack_force()
 
 	update_icon()
 	if(istype(loc, /obj/structure/wall_sconce))
@@ -116,10 +119,15 @@
 	if(!lit)
 		return FALSE
 	lit = FALSE
+	if(!can_store_lit && !(initial(obj_flags) & OBJ_FLAG_NO_STORAGE)) // only disable it if it wasn't already set
+		obj_flags &= ~OBJ_FLAG_NO_STORAGE
 	atom_damage_type =  BRUTE
-	update_force()
+	update_attack_force()
 
 	update_icon()
+	if(ismob(loc)) // not very robust for things like accessories...
+		update_held_icon()
+		update_clothing_icon()
 	if(istype(loc, /obj/structure/wall_sconce))
 		loc.update_icon()
 

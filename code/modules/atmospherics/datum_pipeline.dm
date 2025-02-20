@@ -32,8 +32,9 @@
 
 	if(air?.volume || liquid?.total_volume)
 		temporarily_store_fluids()
-		QDEL_NULL(air)
-		QDEL_NULL(liquid)
+
+	QDEL_NULL(air)
+	QDEL_NULL(liquid)
 
 	for(var/obj/machinery/atmospherics/pipe/P in members)
 		P.parent = null
@@ -44,24 +45,27 @@
 
 	. = ..()
 
-/datum/pipeline/Process()//This use to be called called from the pipe networks
+/datum/pipeline/Process()//This use to be called from the pipe networks
 	//Check to see if pressure is within acceptable limits
 	var/pressure = air.return_pressure()
 	if(pressure > maximum_pressure)
 		for(var/obj/machinery/atmospherics/pipe/member in members)
 			if(!member.check_pressure(pressure))
 				members.Remove(member)
+
+				// Safety check.
+				if(member.parent == src)
+					member.parent = null
 				break //Only delete 1 pipe per process
 
 /datum/pipeline/proc/temporarily_store_fluids()
 	//Update individual gas_mixtures by volume ratio
 
 	var/liquid_transfer_per_pipe = min(REAGENT_UNITS_PER_PIPE, (liquid && length(members)) ? (liquid.total_volume / length(members)) : 0)
-	if(!liquid_transfer_per_pipe && !liquid_transfer_per_pipe)
+	if(!air?.volume && !liquid_transfer_per_pipe)
 		return
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
-
 		if(air?.volume)
 			member.air_temporary = new
 			member.air_temporary.copy_from(air)
@@ -69,7 +73,7 @@
 			member.air_temporary.multiply(member.volume / air.volume)
 
 		if(liquid_transfer_per_pipe)
-			member.liquid_temporary = new(REAGENT_UNITS_PER_PIPE, src)
+			member.liquid_temporary = new(REAGENT_UNITS_PER_PIPE, member)
 			liquid.trans_to_holder(member.liquid_temporary, liquid_transfer_per_pipe)
 
 /datum/pipeline/proc/build_pipeline(obj/machinery/atmospherics/pipe/base)
@@ -164,7 +168,7 @@
 
 /datum/pipeline/proc/mingle_with_turf(turf/target, mingle_volume)
 
-	if(!isturf(target))
+	if(!isturf(target) || !istype(air))
 		return
 
 	var/datum/gas_mixture/air_sample = air.remove_volume(mingle_volume)

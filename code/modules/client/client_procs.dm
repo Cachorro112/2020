@@ -66,11 +66,11 @@ var/global/list/localhost_addresses = list(
 		return
 
 	if(href_list["irc_msg"])
-		if(!holder && received_irc_pm < world.time - 6000) //Worse they can do is spam IRC for 10 minutes
-			to_chat(usr, "<span class='warning'>You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you</span>")
+		if(!holder && received_irc_pm < world.time - 6000) //Worst they can do is spam IRC for 10 minutes
+			to_chat(usr, SPAN_WARNING("You are no longer able to use this, it's been more then 10 minutes since an admin on IRC has responded to you."))
 			return
 		if(mute_irc)
-			to_chat(usr, "<span class='warning'You cannot use this as your client has been muted from sending messages to the admins on IRC</span>")
+			to_chat(usr, SPAN_WARNING("You cannot use this as your client has been muted from sending messages to the admins on IRC."))
 			return
 		cmd_admin_irc_pm(href_list["irc_msg"])
 		return
@@ -180,7 +180,7 @@ var/global/list/localhost_addresses = list(
 		holder.owner = src
 		handle_staff_login()
 
-	//preferences datum - also holds some persistant data for the client (because we may as well keep these datums to a minimum)
+	//preferences datum - also holds some persistent data for the client (because we may as well keep these datums to a minimum)
 	prefs = SScharacter_setup.preferences_datums[ckey]
 	if(!prefs)
 		prefs = new /datum/preferences(src)
@@ -378,10 +378,14 @@ var/global/list/localhost_addresses = list(
 	if(admin_datums[ckey] && GAME_STATE == RUNLEVEL_GAME) //Only report this stuff if we are currently playing.
 		message_staff("\[[holder.rank]\] [key_name(src)] logged out.")
 		if(!global.admins.len) //Apparently the admin logging out is no longer an admin at this point, so we have to check this towards 0 and not towards 1. Awell.
-			send2adminirc("[key_name(src)] logged out - no more staff online.")
+			var/full_message = "[key_name(src)] logged out - no more staff online."
+			send2adminirc(full_message)
+			SSwebhooks.send(WEBHOOK_AHELP_SENT, list("name" = "Admin Logout (Game ID: [game_id])", "body" = full_message))
 			if(get_config_value(/decl/config/toggle/delist_when_no_admins) && get_config_value(/decl/config/toggle/hub_visibility))
 				toggle_config_value(/decl/config/toggle/hub_visibility)
-				send2adminirc("Toggled hub visibility. The server is now invisible.")
+				full_message = "Toggled hub visibility. The server is now invisible."
+				send2adminirc(full_message)
+				SSwebhooks.send(WEBHOOK_AHELP_SENT, list("name" = "Automatic Hub Visibility Toggle (Game ID: [game_id])", "body" = full_message))
 
 //checks if a client is afk
 //3000 frames = 5 minutes
@@ -501,8 +505,8 @@ var/global/const/MAX_VIEW = 41
 		return // Some kind of malformed winget(), do not proceed.
 
 	// Rescale as needed.
-	var/res_x =    get_config_value(/decl/config/num/clients/lock_client_view_x) || CEILING(text2num(view_components[1]) / divisor)
-	var/res_y =    get_config_value(/decl/config/num/clients/lock_client_view_y) || CEILING(text2num(view_components[2]) / divisor)
+	var/res_x =    get_config_value(/decl/config/num/clients/lock_client_view_x) || ceil(text2num(view_components[1]) / divisor)
+	var/res_y =    get_config_value(/decl/config/num/clients/lock_client_view_y) || ceil(text2num(view_components[2]) / divisor)
 	var/max_view = get_config_value(/decl/config/num/clients/max_client_view_x)  || MAX_VIEW
 
 	last_view_x_dim = clamp(res_x, MIN_VIEW, max_view)

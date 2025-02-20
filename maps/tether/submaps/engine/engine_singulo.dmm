@@ -44,19 +44,19 @@
 /turf/floor,
 /area/engineering/engine_gas)
 "aj" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ak" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "al" = (
 /obj/structure/cable/cyan{
 	icon_state = "4-8"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "am" = (
 /obj/structure/cable/cyan{
@@ -65,13 +65,13 @@
 /obj/structure/cable/cyan{
 	icon_state = "2-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "an" = (
 /obj/structure/cable/cyan{
 	icon_state = "2-8"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ao" = (
 /obj/structure/closet/emcloset,
@@ -110,14 +110,14 @@
 	state = 1
 	},
 /obj/structure/cable/cyan,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "as" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
 	},
 /obj/effect/floor_decal/rust/mono_rusted1,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "at" = (
 /obj/machinery/button/access{
@@ -540,7 +540,7 @@
 	anchored = 1;
 	state = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "aY" = (
 /obj/structure/cable/yellow{
@@ -837,7 +837,7 @@
 /area/engineering/engine_room)
 "bE" = (
 /obj/machinery/singularity_generator,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "bF" = (
 /turf/floor/tiled/techfloor/grid,
@@ -1264,7 +1264,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "0-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ct" = (
 /obj/machinery/button/access{
@@ -1360,7 +1360,7 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cz" = (
 /obj/structure/cable/cyan{
@@ -1369,14 +1369,14 @@
 /obj/structure/cable/cyan{
 	icon_state = "1-4"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cA" = (
 /obj/structure/cable/cyan{
 	icon_state = "1-8"
 	},
 /obj/effect/floor_decal/rust,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cB" = (
 /obj/structure/closet/emcloset,
@@ -1400,7 +1400,7 @@
 	anchored = 1;
 	state = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cE" = (
 /obj/item/weldingtool,

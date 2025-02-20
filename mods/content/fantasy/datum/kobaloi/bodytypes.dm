@@ -9,7 +9,7 @@
 	skeletal_icon        = 'mods/content/fantasy/icons/kobaloi/skeleton.dmi'
 	base_color           = "#8f974a"
 	base_eye_color       = "#d95763"
-	bodytype_flag        = BODY_FLAG_KOBALOI
+	bodytype_flag        = BODY_EQUIP_FLAG_KOBALOI
 	appearance_flags     = HAS_SKIN_COLOR | HAS_EYE_COLOR
 	health_hud_intensity = 1.75
 	movement_slowdown    = -0.5
@@ -23,12 +23,13 @@
 	)
 	default_sprite_accessories = list(
 		SAC_MARKINGS = list(
-			/decl/sprite_accessory/marking/kobaloi/left_ear = "#8f974a",
-			/decl/sprite_accessory/marking/kobaloi/right_ear = "#8f974a"
+			/decl/sprite_accessory/marking/kobaloi/left_ear  = list(SAM_COLOR = "#8f974a"),
+			/decl/sprite_accessory/marking/kobaloi/right_ear = list(SAM_COLOR = "#8f974a")
 		)
 	)
 	eye_low_light_vision_effectiveness    = 0.15
 	eye_low_light_vision_adjustment_speed = 0.3
+	uid = "bodytype_kobaloi"
 
 /decl/bodytype/kobaloi/Initialize()
 	if(!equip_adjust)
@@ -50,6 +51,30 @@
 				"[EAST]"  = list( 1, -6),
 				"[SOUTH]" = list( 0, -6),
 				"[WEST]"  = list(-1, -6)
+			),
+			slot_belt_str = list(
+				"[NORTH]" = list( 0, -6),
+				"[EAST]"  = list( 1, -6),
+				"[SOUTH]" = list( 0, -6),
+				"[WEST]"  = list(-1, -6)
+			),
+			slot_handcuffed_str = list(
+				"[NORTH]" = list(-1, -4),
+				"[EAST]"  = list( 1, -4),
+				"[SOUTH]" = list( 1, -4),
+				"[WEST]"  = list( 0, -4)
+			),
+			slot_wear_id_str = list(
+				"[NORTH]" = list( 0, -6),
+				"[EAST]"  = list( 1, -6),
+				"[SOUTH]" = list( 0, -6),
+				"[WEST]"  = list(-1, -6)
+			),
+			slot_gloves_str = list(
+				"[NORTH]" = list(-1, -4),
+				"[EAST]"  = list( 1, -4),
+				"[SOUTH]" = list( 1, -4),
+				"[WEST]"  = list( 0, -4)
 			),
 			slot_wear_suit_str = list(
 				"[NORTH]" = list( 0, -6),

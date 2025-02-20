@@ -7,7 +7,7 @@
 /turf/space,
 /area/space)
 "c" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "d" = (
 /turf/wall/shuttle/dark,

@@ -48,21 +48,23 @@
 	if(href_list["hair"])
 		var/decl/sprite_accessory/hair = locate(href_list["hair"])
 		if(can_change(APPEARANCE_HAIR) && istype(hair) && (hair.type in owner.get_species()?.get_available_accessory_types(owner.get_bodytype(), SAC_HAIR)) && SET_HAIR_STYLE(owner, hair.type, FALSE))
+			owner.update_hair() // No idea why this is necessary, setting the accessory above should be fine.
 			return TRUE
 
 	if(href_list["hair_color"] && can_change(APPEARANCE_HAIR_COLOR))
-		var/new_hair = input("Please select hair color.", "Hair Color", GET_HAIR_COLOUR(owner)) as color|null
-		if(new_hair && can_still_topic(state) && SET_HAIR_COLOUR(owner, new_hair, FALSE))
+		var/new_hair_color = input("Please select hair color.", "Hair Color", GET_HAIR_COLOR(owner)) as color|null
+		if(new_hair_color && can_still_topic(state) && SET_HAIR_COLOR(owner, new_hair_color, FALSE))
 			return TRUE
 
 	if(href_list["facial_hair"])
 		var/decl/sprite_accessory/facial_hair = locate(href_list["facial_hair"])
 		if(can_change(APPEARANCE_FACIAL_HAIR) && istype(facial_hair) && (facial_hair.type in owner.get_species()?.get_available_accessory_types(owner.get_bodytype(), SAC_FACIAL_HAIR)) && SET_FACIAL_HAIR_STYLE(owner, facial_hair.type, FALSE))
+			owner.update_hair() // No idea why this is necessary, setting the accessory above should be fine.
 			return TRUE
 
 	if(href_list["facial_hair_color"] && can_change(APPEARANCE_FACIAL_HAIR_COLOR))
-		var/new_facial = input("Please select facial hair color.", "Facial Hair Color", GET_FACIAL_HAIR_COLOUR(owner)) as color|null
-		if(new_facial && can_still_topic(state) && SET_FACIAL_HAIR_COLOUR(owner, new_facial, FALSE))
+		var/new_facial = input("Please select facial hair color.", "Facial Hair Color", GET_FACIAL_HAIR_COLOR(owner)) as color|null
+		if(new_facial && can_still_topic(state) && SET_FACIAL_HAIR_COLOR(owner, new_facial, FALSE))
 			return TRUE
 
 	if(href_list["eye_color"])
@@ -90,8 +92,8 @@
 	data["change_gender"] = can_change(APPEARANCE_GENDER)
 	if(data["change_gender"])
 		var/genders[0]
-		for(var/decl/pronouns/G as anything in owner.species.available_pronouns)
-			genders[++genders.len] =  list("gender_name" = G.pronoun_string, "gender_key" = G.name)
+		for(var/decl/pronouns/pronouns as anything in owner.species.available_pronouns)
+			genders[++genders.len] =  list("gender_name" = pronouns.pronoun_string, "gender_key" = pronouns.name)
 		data["genders"] = genders
 
 	data["bodytype"] = capitalize(owner.get_bodytype().name)
@@ -114,7 +116,7 @@
 			hair_styles[++hair_styles.len] = list("hairstyle" = hair_decl.name, "ref" = "\ref[hair_decl]")
 		data["hair_styles"] = hair_styles
 		var/hairstyle = GET_HAIR_STYLE(owner)
-		var/decl/sprite_accessory/hair = GET_DECL(hairstyle)
+		var/decl/sprite_accessory/hair = GET_DECL(hairstyle) || GET_DECL(/decl/sprite_accessory/hair/bald)
 		data["hair_style"] = hair.name
 
 	data["change_facial_hair"] = can_change(APPEARANCE_FACIAL_HAIR)
@@ -125,7 +127,7 @@
 			facial_hair_styles[++facial_hair_styles.len] = list("facialhairstyle" = facial_hair_decl.name, "ref" = "\ref[facial_hair_decl]")
 		data["facial_hair_styles"] = facial_hair_styles
 		var/facial_hairstyle = GET_FACIAL_HAIR_STYLE(owner)
-		var/decl/sprite_accessory/facial_hair = GET_DECL(facial_hairstyle)
+		var/decl/sprite_accessory/facial_hair = GET_DECL(facial_hairstyle) || GET_DECL(/decl/sprite_accessory/facial_hair/shaved)
 		data["facial_hair_style"] = facial_hair.name
 
 	data["change_hair_color"] = can_change(APPEARANCE_HAIR_COLOR)

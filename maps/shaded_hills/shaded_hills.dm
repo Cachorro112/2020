@@ -1,12 +1,11 @@
 #if !defined(USING_MAP_DATUM)
 
 	#include "../../mods/content/matchmaking/_matchmaking.dme"
+	#include "../../mods/content/dungeon_loot/_dungeon_loot.dme"
 	#include "../../mods/content/mouse_highlights/_mouse_highlight.dme"
 	#include "../../mods/content/scaling_descriptors.dm"
 	#include "../../mods/species/drakes/_drakes.dme" // include before _fantasy.dme so overrides work
 	#include "../../mods/content/fantasy/_fantasy.dme"
-
-	#include "_shaded_hills_defines.dm"
 
 	#include "areas/_areas.dm"
 	#include "areas/downlands.dm"
@@ -27,6 +26,7 @@
 	#include "submaps/swamp/_swamp.dm"
 	#include "submaps/woods/_woods.dm"
 	#include "submaps/woods/bear_den/bear_den.dm"
+	#include "submaps/woods/chemistry_shack/chemistry_shack.dm"
 	#include "submaps/woods/fairy_rings/fairy_rings.dm"
 	#include "submaps/woods/fox_den/fox_den.dm"
 	#include "submaps/woods/hunter_camp/hunter_camp.dm"
@@ -47,7 +47,6 @@
 	#include "shaded_hills_events.dm"
 	#include "shaded_hills_locks.dm"
 	#include "shaded_hills_map.dm"
-	#include "shaded_hills_names.dm"
 	#include "shaded_hills_skills.dm"
 	#include "shaded_hills_testing.dm"
 	#include "shaded_hills_turfs.dm"

@@ -3,7 +3,7 @@
 
 /atom/proc/fluid_act(var/datum/reagents/fluids)
 	SHOULD_CALL_PARENT(TRUE)
-	if(reagents && reagents != fluids && fluids?.total_volume >= FLUID_SHALLOW && ATOM_IS_OPEN_CONTAINER(src))
+	if(reagents && reagents != fluids && fluids?.total_volume >= FLUID_SHALLOW && !is_watertight())
 		reagents.trans_to_holder(fluids, reagents.total_volume)
 		fluids.trans_to_holder(reagents, min(fluids.total_volume, reagents.maximum_volume))
 
@@ -16,7 +16,7 @@
 /atom/proc/CanFluidPass(var/coming_from)
 	return TRUE
 
-/atom/movable/proc/is_fluid_pushable(var/amt)
+/atom/movable/proc/try_fluid_push(volume, strength)
 	return simulated && !anchored
 
 /atom/movable/is_flooded(var/lying_mob, var/absolute)

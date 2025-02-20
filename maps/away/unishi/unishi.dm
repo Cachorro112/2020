@@ -130,6 +130,15 @@
 	lore_text = "A phoron substitute currently in laboratory testing."
 	taste_mult = 1.5
 	color = "#ffc4ff"
+	toxicity = 0
+	vapor_products = list(
+		/decl/material/solid/phoron/safe = 1
+	)
+	gas_flags = 0
+	accelerant_value = 0
+	ignition_point = null
+	exoplanet_rarity_plant = MAT_RARITY_NOWHERE
+	exoplanet_rarity_gas = MAT_RARITY_NOWHERE
 
 // TODO: readd tericadone bottles to unishi map
 /obj/item/chems/glass/bottle/tericadone
@@ -141,12 +150,3 @@
 	. = ..()
 	add_to_reagents(/decl/material/solid/phoron/safe, 60)
 	update_icon()
-
-/decl/material/solid/phoron/safe/touch_mob(mob/living/M, amount, datum/reagents/holder)
-	return
-
-/decl/material/solid/phoron/safe/affect_blood(mob/living/M, removed, datum/reagents/holder)
-	return
-
-/decl/material/solid/phoron/safe/affect_touch(mob/living/M, removed, datum/reagents/holder)
-	return

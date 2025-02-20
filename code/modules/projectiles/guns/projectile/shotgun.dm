@@ -5,7 +5,7 @@
 	icon_state = ICON_STATE_WORLD
 	max_shells = 4
 	w_class = ITEM_SIZE_HUGE
-	force = 10
+	_base_attack_force = 10
 	obj_flags =  OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_BACK
 	caliber = CALIBER_SHOTGUN
@@ -18,7 +18,7 @@
 	var/recentpump = 0 // to prevent spammage
 	load_sound = 'sound/weapons/guns/interaction/shotgun_instert.ogg'
 
-/obj/item/gun/projectile/shotgun/update_base_icon()
+/obj/item/gun/projectile/shotgun/update_base_icon_state()
 	if(length(loaded))
 		icon_state = get_world_inventory_state()
 	else
@@ -30,7 +30,7 @@
 	return null
 
 /obj/item/gun/projectile/shotgun/pump/attack_self(mob/user)
-	if(!user_can_wield(user))
+	if(!user_can_attack_with(user))
 		return TRUE
 	if(world.time >= recentpump + 10)
 		pump(user)
@@ -62,7 +62,7 @@
 	handle_casings = CYCLE_CASINGS
 	max_shells = 2
 	w_class = ITEM_SIZE_HUGE
-	force = 10
+	_base_attack_force = 10
 	obj_flags =  OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_BACK
 	caliber = CALIBER_SHOTGUN
@@ -77,7 +77,7 @@
 		)
 
 /obj/item/gun/projectile/shotgun/doublebarrel/unload_ammo(user, allow_dump)
-	..(user, allow_dump=1)
+	return ..(user, allow_dump=1)
 
 //this is largely hacky and bad :(	-Pete
 /obj/item/gun/projectile/shotgun/doublebarrel/attackby(var/obj/item/A, mob/user)
@@ -91,15 +91,17 @@
 			for(var/i in 1 to max_shells)
 				Fire(user, user)	//will this work? //it will. we call it twice, for twice the FUN
 			user.visible_message("<span class='danger'>The shotgun goes off!</span>", "<span class='danger'>The shotgun goes off in your face!</span>")
-			return
-		if(do_after(user, 30, src))	//SHIT IS STEALTHY EYYYYY
-			user.try_unequip(src)
-			var/obj/item/gun/projectile/shotgun/doublebarrel/sawn/empty/buddy = new(loc)
-			transfer_fingerprints_to(buddy)
-			qdel(src)
-			to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
+			return TRUE
+		if(!do_after(user, 3 SECONDS, src))	//SHIT IS STEALTHY EYYYYY
+			return TRUE
+		user.try_unequip(src)
+		var/obj/item/gun/projectile/shotgun/doublebarrel/sawn/empty/buddy = new(loc)
+		transfer_fingerprints_to(buddy)
+		qdel(src)
+		to_chat(user, "<span class='warning'>You shorten the barrel of \the [src]!</span>")
+		return TRUE
 	else
-		..()
+		return ..()
 
 /obj/item/gun/projectile/shotgun/doublebarrel/sawn
 	name = "sawn-off shotgun"
@@ -108,7 +110,6 @@
 	slot_flags = SLOT_LOWER_BODY|SLOT_HOLSTER
 	ammo_type = /obj/item/ammo_casing/shotgun/pellet
 	w_class = ITEM_SIZE_NORMAL
-	force = 5
 	one_hand_penalty = 4
 	bulk = 2
 

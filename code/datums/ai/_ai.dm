@@ -44,6 +44,8 @@
 	/// What directions can we wander in? Uses global.cardinal if unset.
 	var/list/wander_directions
 
+	/// Should we retaliate/startle when grabbed or buckled?
+	var/spooked_by_grab = TRUE
 	/// Can we automatically escape from buckling?
 	var/can_escape_buckles = FALSE
 
@@ -109,12 +111,15 @@
 // This is the place to actually do work in the AI.
 /datum/mob_controller/proc/do_process()
 	SHOULD_CALL_PARENT(TRUE)
-	if(!body || QDELETED(body))
-		return
-	if(!body.stat)
-		try_unbuckle()
-		try_wander()
-		try_bark()
+	if(!QDELETED(body) && !QDELETED(src))
+		if(!body.stat)
+			try_unbuckle()
+			try_wander()
+			try_bark()
+			// Recheck in case we walked into lava or something during wandering.
+			return !QDELETED(body) && !QDELETED(src)
+		return TRUE
+	return FALSE
 
 // The mob will try to unbuckle itself from nets, beds, chairs, etc.
 /datum/mob_controller/proc/try_unbuckle()
@@ -140,18 +145,19 @@
 // The mob will periodically sit up or step 1 tile in a random direction.
 /datum/mob_controller/proc/try_wander()
 	//Movement
+	if(stop_wander || body.buckled_mob || !do_wander || body.anchored)
+		return
 	if(body.current_posture?.prone)
 		if(!body.incapacitated())
 			body.set_posture(/decl/posture/standing)
-	else if(!stop_wander && !body.buckled_mob && do_wander && !body.anchored)
-		if(isturf(body.loc) && !body.current_posture?.prone)		//This is so it only moves if it's not inside a closet, gentics machine, etc.
-			turns_since_wander++
-			if(turns_since_wander >= turns_per_wander && (!(stop_wander_when_pulled) || !LAZYLEN(body.grabbed_by))) //Some animals don't move when pulled
-				var/direction = pick(wander_directions || global.cardinal)
-				var/turf/move_to = get_step(body.loc, direction)
-				if(body.turf_is_safe(move_to))
-					body.SelfMove(direction)
-					turns_since_wander = 0
+	else if(isturf(body.loc))		//This is so it only moves if it's not inside a closet, gentics machine, etc.
+		turns_since_wander++
+		if(turns_since_wander >= turns_per_wander && (!(stop_wander_when_pulled) || !LAZYLEN(body.grabbed_by))) //Some animals don't move when pulled
+			var/direction = pick(wander_directions || global.cardinal)
+			var/turf/move_to = get_step(body.loc, direction)
+			if(body.turf_is_safe(move_to))
+				body.SelfMove(direction)
+				turns_since_wander = 0
 
 // The mob will periodically make a noise or perform an emote.
 /datum/mob_controller/proc/try_bark()
@@ -215,10 +221,18 @@
 /datum/mob_controller/proc/open_fire()
 	return
 
+/datum/mob_controller/proc/startle()
+	if(QDELETED(body) || body.stat != UNCONSCIOUS)
+		return
+	body.set_stat(CONSCIOUS)
+	if(body.current_posture?.prone)
+		body.set_posture(/decl/posture/standing)
+
 /datum/mob_controller/proc/retaliate(atom/source)
 	SHOULD_CALL_PARENT(TRUE)
-	if(!istype(body) || body.stat)
+	if(!istype(body) || body.stat == DEAD)
 		return FALSE
+	startle()
 	if(isliving(source))
 		remove_friend(source)
 	return TRUE
@@ -246,6 +260,11 @@
 // General-purpose memory checking proc, used by /faithful_hound
 /datum/mob_controller/proc/check_memory(mob/speaker, message)
 	return FALSE
+
+/// General-purpose scooping reaction proc, used by /passive.
+/// Returns TRUE if the scoop should proceed, FALSE if it should be canceled.
+/datum/mob_controller/proc/scooped_by(mob/initiator)
+	return TRUE
 
 // Enemy tracking - used on /aggressive
 /datum/mob_controller/proc/get_enemies()
@@ -292,3 +311,22 @@
 
 /datum/mob_controller/proc/is_friend(mob/friend)
 	. = istype(friend) && LAZYLEN(_friends) && (weakref(friend) in _friends)
+
+// By default, randomize the target area a bit to make armor/combat
+// a bit more dynamic (and avoid constant organ damage to the chest)
+/datum/mob_controller/proc/update_target_zone()
+	if(body)
+		return body.set_target_zone(ran_zone())
+	return FALSE
+
+/datum/mob_controller/proc/on_buckled(mob/scary_grabber)
+	if(!scary_grabber || body.buckled_mob != scary_grabber) // the buckle got cancelled somehow?
+		return
+	if(spooked_by_grab && !is_friend(scary_grabber))
+		retaliate(scary_grabber)
+
+/datum/mob_controller/proc/on_grabbed(mob/scary_grabber)
+	if(!scary_grabber)
+		return
+	if(spooked_by_grab && !is_friend(scary_grabber))
+		retaliate(scary_grabber)

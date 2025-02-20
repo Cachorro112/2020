@@ -23,14 +23,13 @@
 	password = message
 
 /datum/mob_controller/faithful_hound/do_process()
-	. = ..()
-	if(body.stat || body.client || world.time <= last_check)
+	if(!(. = ..()) || body.client || world.time <= last_check)
 		return
 	last_check = world.time + 5 SECONDS
 	var/aggressiveness = 0 //The closer somebody is to us, the more aggressive we are
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(get_turf(body), 5, mobs, objs, 0)
+	get_listeners_in_range(get_turf(body), 5, mobs, objs, 0)
 	for(var/mob/living/mailman in mobs)
 		if((mailman == body) || is_friend(mailman) || mailman.faction == body.faction)
 			continue
@@ -69,7 +68,7 @@
 /mob/living/simple_animal/faithful_hound/Destroy()
 	return ..()
 
-/mob/living/simple_animal/faithful_hound/hear_say(var/message, var/verb = "says", var/decl/language/language = null, var/alt_name = "", var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
+/mob/living/simple_animal/faithful_hound/hear_say(var/message, var/verb = "says", var/decl/language/language = null, var/italics = 0, var/mob/speaker = null, var/sound/speech_sound, var/sound_vol)
 	set waitfor = FALSE
 	if(!ai?.check_memory(speaker, message))
 		return

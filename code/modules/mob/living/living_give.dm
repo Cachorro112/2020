@@ -4,6 +4,7 @@
 	do_give(target)
 
 /mob/living/proc/do_give(var/mob/living/target)
+	set waitfor = FALSE
 	if(src.incapacitated())
 		return
 	if(!istype(target) || target.incapacitated() || target.client == null)
@@ -40,4 +41,4 @@
 		return
 	if(try_unequip(I))
 		target.put_in_hands(I) // If this fails it will just end up on the floor, but that's fitting for things like dionaea.
-		target.visible_message(SPAN_NOTICE("\The [src] handed \the [I] to \the [target]"))
+		target.visible_message(SPAN_NOTICE("\The [src] handed \the [I] to \the [target]."))

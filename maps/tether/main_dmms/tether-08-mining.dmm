@@ -3,7 +3,7 @@
 /turf/unsimulated/wall/planetary/virgo3b,
 /area/mine/explored)
 "ab" = (
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "ac" = (
 /obj/structure/sign/mining,
@@ -11,16 +11,16 @@
 /area/mine/explored)
 "ad" = (
 /obj/structure/railing/mapped,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "ae" = (
 /obj/structure/railing/mapped{
 	dir = 4
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "af" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored)
 "ag" = (
 /obj/effect/step_trigger/teleporter/to_underdark{
@@ -28,13 +28,13 @@
 	icon_state = "";
 	pixel_x = -16
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "ah" = (
 /obj/structure/railing/mapped{
 	dir = 1
 	},
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "aj" = (
 /turf/wall/natural,
@@ -63,7 +63,7 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "aq" = (
@@ -71,14 +71,14 @@
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 1
 	},
-/obj/machinery/mining/drill,
+/obj/machinery/mining_drill,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "ar" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 5
 	},
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "as" = (
@@ -113,18 +113,18 @@
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/mine/explored)
 "ay" = (
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "az" = (
-/obj/machinery/mining/drill,
+/obj/machinery/mining_drill,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "aA" = (
 /obj/effect/floor_decal/industrial/warning/dust{
 	dir = 4
 	},
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/storage)
 "aB" = (
@@ -1398,7 +1398,7 @@
 /turf/floor/tiled/steel_dirty/virgo3b,
 /area/outpost/mining_main/passage)
 "cQ" = (
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/outpost/mining_main/passage)
 "cR" = (
 /obj/structure/cable/heavyduty{
@@ -1422,7 +1422,7 @@
 /area/outpost/mining_main/passage)
 "pl" = (
 /obj/abstract/level_data_spawner/virgo3b/mining,
-/turf/floor/natural/sif_growth,
+/turf/floor/sif_growth,
 /area/mine/explored)
 "rb" = (
 /turf/unsimulated/dark_filler,

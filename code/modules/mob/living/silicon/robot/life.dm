@@ -147,7 +147,7 @@
 
 	if (src.cells)
 		if (src.cell)
-			var/chargeNum = clamp(CEILING(cell.percent()/25), 0, 4)	//0-100 maps to 0-4, but give it a paranoid clamp just in case.
+			var/chargeNum = clamp(ceil(cell.percent()/25), 0, 4)	//0-100 maps to 0-4, but give it a paranoid clamp just in case.
 			src.cells.icon_state = "charge[chargeNum]"
 		else
 			src.cells.icon_state = "charge-empty"
@@ -242,8 +242,7 @@
 	if(killswitch)
 		killswitch_time --
 		if(killswitch_time <= 0)
-			if(src.client)
-				to_chat(src, "<span class='danger'>Killswitch Activated</span>")
+			to_chat(src, SPAN_DANGER("Killswitch activated."))
 			killswitch = 0
 			spawn(5)
 				gib()
@@ -253,8 +252,7 @@
 		uneq_all()
 		weaponlock_time --
 		if(weaponlock_time <= 0)
-			if(src.client)
-				to_chat(src, "<span class='danger'>Weapon Lock Timed Out!</span>")
+			to_chat(src, SPAN_DANGER("Weapon lock timed out!"))
 			weapon_lock = 0
 			weaponlock_time = 120
 

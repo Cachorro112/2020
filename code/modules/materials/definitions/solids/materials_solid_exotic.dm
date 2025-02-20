@@ -63,6 +63,7 @@
 	gas_symbol_html = "Ph"
 	gas_symbol = "Ph"
 	boiling_point = -90 CELSIUS
+	melting_point = -120 CELSIUS // Arbitrary value colder than the boiling point.
 	reflectiveness = MAT_VALUE_SHINY
 	value = 1.6
 	sparse_material_weight = 10
@@ -77,6 +78,7 @@
 	default_solid_form = /obj/item/stack/material/crystal
 	exoplanet_rarity_plant = MAT_RARITY_EXOTIC
 	exoplanet_rarity_gas = MAT_RARITY_EXOTIC
+	var/contact_damage = 0.1
 
 //Controls phoron and phoron based objects reaction to being in a turf over 200c -- Phoron's flashpoint.
 /decl/material/solid/phoron/combustion_effect(turf/T, temperature, effect_multiplier)
@@ -88,15 +90,18 @@
 	for(var/turf/floor/target_tile in range(2,T))
 		var/phoronToDeduce = (temperature/30) * effect_multiplier
 		totalPhoron += phoronToDeduce
-		target_tile.assume_gas(/decl/material/solid/phoron, phoronToDeduce, 200+T0C)
+		target_tile.assume_gas(type, phoronToDeduce, 200+T0C)
 		spawn (0)
 			target_tile.hotspot_expose(temperature, 400)
 	return round(totalPhoron/100)
 
 /decl/material/solid/phoron/affect_touch(mob/living/M, removed, datum/reagents/holder)
-	M.take_organ_damage(0, removed * 0.1) //being splashed directly with phoron causes minor chemical burns
-	if(prob(10 * accelerant_value))
+	. = ..()
+	if(contact_damage)
+		M.take_organ_damage(0, removed * contact_damage) //being splashed directly with phoron causes minor chemical burns
+	if((gas_flags & XGM_GAS_CONTAMINANT) && prob(10 * accelerant_value))
 		M.handle_contaminants()
+		. = TRUE
 
 /decl/material/solid/supermatter
 	name = "exotic matter"

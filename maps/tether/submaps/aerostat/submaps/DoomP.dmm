@@ -6,46 +6,46 @@
 /turf/template_noop,
 /area/submap/virgo2/DoomP)
 "ac" = (
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "ad" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "ae" = (
 /mob/living/simple_mob/mechanical/viscerator,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "af" = (
 /turf/floor/lava,
 /area/submap/virgo2/DoomP)
 "ah" = (
 /obj/random/landmine,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "ai" = (
 /mob/living/simple_mob/mechanical/viscerator,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "al" = (
 /obj/item/remains/mouse,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "am" = (
 /obj/random/landmine,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "an" = (
 /obj/item/remains/deer,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "ao" = (
 /obj/item/remains/mouse,
 /obj/random/landmine,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "aq" = (
 /obj/machinery/light/small,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "as" = (
 /obj/machinery/porta_turret/poi{
@@ -170,7 +170,7 @@
 /area/submap/virgo2/DoomP)
 "aL" = (
 /obj/structure/lattice,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "aM" = (
 /obj/structure/bed/chair{
@@ -507,23 +507,23 @@
 /area/submap/virgo2/DoomP)
 "bM" = (
 /obj/structure/lattice,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "bN" = (
 /obj/machinery/crystal/lava,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "bO" = (
 /obj/machinery/crystal/lava,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "mi" = (
 /obj/structure/barricade,
-/turf/floor/natural/rocks,
+/turf/floor/rock,
 /area/submap/virgo2/DoomP)
 "El" = (
 /obj/structure/barricade,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/DoomP)
 "Hh" = (
 /obj/effect/floor_decal/industrial/warning,

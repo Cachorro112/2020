@@ -61,7 +61,7 @@
 	var/on_frame = is_on_frame()
 	if(destroyed)
 		if(on_frame)
-			icon_state = "broke_onframe"
+			icon_state = "broken_onframe"
 		else
 			icon_state = "broken"
 	else
@@ -85,7 +85,8 @@
 				add_overlay(I)
 
 /obj/structure/grille/Bumped(atom/user)
-	if(ismob(user)) shock(user, 70)
+	if(ismob(user))
+		shock(user, 70)
 
 /obj/structure/grille/attack_hand(mob/user)
 
@@ -191,7 +192,7 @@
 	if(istype(W,/obj/item/stack/material))
 		var/obj/item/stack/material/ST = W
 		if(ST.material.opacity > 0.7)
-			return 0
+			return FALSE
 
 		var/dir_to_set = 5
 		if(!is_on_frame())
@@ -201,7 +202,7 @@
 				dir_to_set = get_dir(loc, user)
 				if(dir_to_set & (dir_to_set - 1)) //Only works for cardinal direcitons, diagonals aren't supposed to work like this.
 					to_chat(user, "<span class='notice'>You can't reach.</span>")
-					return
+					return TRUE
 		place_window(user, loc, dir_to_set, ST)
 		return TRUE
 
@@ -211,9 +212,9 @@
 		playsound(loc, 'sound/effects/grillehit.ogg', 80, 1)
 		switch(W.atom_damage_type)
 			if(BURN)
-				take_damage(W.force)
+				take_damage(W.get_attack_force(user))
 			if(BRUTE)
-				take_damage(W.force * 0.1)
+				take_damage(W.get_attack_force(user) * 0.1)
 		return TRUE
 
 	return ..()
@@ -229,25 +230,23 @@
 // returns 1 if shocked, 0 otherwise
 /obj/structure/grille/proc/shock(mob/user, prb)
 	if(!anchored || destroyed)		// anchored/destroyed grilles are never connected
-		return 0
+		return FALSE
 	if(!(material.conductive))
-		return 0
+		return FALSE
 	if(!prob(prb))
-		return 0
+		return FALSE
 	if(!in_range(src, user))//To prevent TK and exosuit users from getting shocked
-		return 0
-	var/turf/T = get_turf(src)
-	var/obj/structure/cable/C = T.get_cable_node()
-	if(C)
-		if(electrocute_mob(user, C, src))
-			if(C.powernet)
-				C.powernet.trigger_warning()
-			spark_at(src, cardinal_only = TRUE)
-			if(HAS_STATUS(user, STAT_STUN))
-				return 1
-		else
-			return 0
-	return 0
+		return FALSE
+	var/turf/my_turf = get_turf(src)
+	var/obj/structure/cable/cable = my_turf.get_cable_node()
+	if(!cable)
+		return FALSE
+	if(!electrocute_mob(user, cable, src))
+		return FALSE
+	if(cable.powernet)
+		cable.powernet.trigger_warning()
+	spark_at(src, cardinal_only = TRUE)
+	return !!HAS_STATUS(user, STAT_STUN)
 
 /obj/structure/grille/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
 	if(!destroyed)

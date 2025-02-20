@@ -38,6 +38,9 @@
 /mob/living/simple_animal/corgi/get_bodytype()
 	return GET_DECL(/decl/bodytype/quadruped/animal/corgi)
 
+/decl/bodytype/quadruped/animal/corgi
+	uid = "bodytype_animal_corgi"
+
 /decl/bodytype/quadruped/animal/corgi/Initialize()
 	equip_adjust = list(
 		slot_head_str = list(
@@ -93,13 +96,13 @@
 	else
 		body.set_dir(SOUTH)
 	if(isturf(movement_target.loc) && body.Adjacent(movement_target))
-		body.UnarmedAttack(movement_target)
+		body.UnarmedAttack(movement_target, TRUE)
 	else if(ishuman(movement_target.loc) && prob(20))
 		body.custom_emote(VISIBLE_MESSAGE, "stares at the [movement_target] that [movement_target.loc] has with sad puppy eyes.")
 
 /datum/mob_controller/corgi/ian/do_process(time_elapsed)
-	. = ..()
-	if(body.stat || body.current_posture?.prone || body.buckled)
+
+	if(!(. = ..()) || body.stat || body.current_posture?.prone || body.buckled)
 		return
 
 	//Feeding, chasing food, FOOOOODDDD
@@ -112,7 +115,7 @@
 		if( !movement_target || !(movement_target.loc in oview(body, 3)) )
 			movement_target = null
 			resume_wandering()
-			for(var/obj/item/chems/food/S in oview(body, 3))
+			for(var/obj/item/food/S in oview(body, 3))
 				if(isturf(S.loc) || ishuman(S.loc))
 					movement_target = S
 					break
@@ -124,15 +127,14 @@
 		dance()
 
 /mob/living/simple_animal/corgi/attackby(var/obj/item/O, var/mob/user)  //Marker -Agouri
-	if(istype(O, /obj/item/newspaper))
-		if(!stat)
-			visible_message(SPAN_NOTICE("\The [user] baps \the [src] on the nose with the rolled-up [O.name]!"))
-			spawn(0)
-				for(var/i in list(1,2,4,8,4,2,1,2))
-					set_dir(i)
-					sleep(1)
+	if(istype(O, /obj/item/newspaper) && !stat)
+		visible_message(SPAN_NOTICE("\The [user] baps \the [src] on the nose with the rolled-up [O.name]!"))
+		var/datum/mob_controller/corgi/corgi_ai = ai
+		if(istype(corgi_ai))
+			corgi_ai.dance()
+		return TRUE
 	else
-		..()
+		return ..()
 
 /mob/living/simple_animal/corgi/puppy
 	name = "\improper corgi puppy"
@@ -144,6 +146,9 @@
 
 /mob/living/simple_animal/corgi/puppy/get_bodytype()
 	return GET_DECL(/decl/bodytype/quadruped/animal/puppy)
+
+/decl/bodytype/quadruped/animal/puppy
+	uid = "bodytype_animal_puppy"
 
 /decl/bodytype/quadruped/animal/puppy/Initialize()
 	equip_adjust = list(
@@ -181,8 +186,8 @@
 	var/turns_since_scan = 0
 
 /datum/mob_controller/corgi/lisa/do_process(time_elapsed)
-	. = ..()
-	if(body.stat || body.current_posture?.prone || body.buckled)
+
+	if(!(. = ..()) || body.stat || body.current_posture?.prone || body.buckled)
 		return
 
 	turns_since_scan++

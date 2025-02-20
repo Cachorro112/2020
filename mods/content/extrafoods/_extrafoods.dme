@@ -3,11 +3,9 @@
 // BEGIN_INCLUDE
 #include "chems.dm"
 #include "extrafoods.dm"
-#include "reactions.dm"
 #include "trash.dm"
 #include "food\baked_goods.dm"
 #include "food\condiments.dm"
-#include "food\food_overrides.dm"
 #include "food\fried.dm"
 #include "food\meat.dm"
 #include "food\noodle.dm"
@@ -29,3 +27,10 @@
 #include "recipes\recipes_tortillas_chips.dm"
 // END_INCLUDE
 #endif
+// BEGIN_INTERNALS
+// END_INTERNALS
+// BEGIN_FILE_DIR
+#define FILE_DIR .
+// END_FILE_DIR
+// BEGIN_PREFERENCES
+// END_PREFERENCES

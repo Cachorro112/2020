@@ -7,13 +7,25 @@
 	amount_per_transfer_from_this = 5
 	possible_transfer_amounts = @"[5]"
 	volume = 10
-	can_be_placed_into = null
 	item_flags = ITEM_FLAG_NO_BLUDGEON
 	atom_flags = ATOM_FLAG_OPEN_CONTAINER
 	material = /decl/material/solid/organic/cloth
+	material_alteration = MAT_FLAG_ALTERATION_NAME
 
 	var/on_fire = 0
 	var/burn_time = 20 //if the rag burns for too long it turns to ashes
+
+/obj/item/chems/glass/rag/can_lid()
+	return FALSE
+
+/obj/item/chems/glass/rag/get_edible_material_amount(mob/eater)
+	return 0
+
+/obj/item/chems/glass/rag/get_utensil_food_type()
+	return null
+
+/obj/item/chems/glass/rag/get_atoms_can_be_placed_into()
+	return null
 
 /obj/item/chems/glass/rag/Initialize()
 	. = ..()
@@ -28,11 +40,17 @@
 	. = ..()
 
 /obj/item/chems/glass/rag/attack_self(mob/user)
+
 	if(on_fire && user.try_unequip(src))
 		user.visible_message(SPAN_NOTICE("\The [user] stamps out [src]."), SPAN_NOTICE("You stamp out [src]."))
 		extinguish()
-	else
+		return TRUE
+
+	if(reagents?.total_volume)
 		remove_contents(user)
+		return TRUE
+
+	return ..()
 
 /obj/item/chems/glass/rag/attackby(obj/item/W, mob/user)
 	if(W.isflamesource())
@@ -48,13 +66,14 @@
 		return TRUE
 	return ..()
 
-/obj/item/chems/glass/rag/proc/update_name()
+/obj/item/chems/glass/rag/update_name()
+	. = ..()
 	if(on_fire)
-		SetName("burning [initial(name)]")
+		SetName("burning [name]")
 	else if(reagents && reagents.total_volume)
-		SetName("damp [initial(name)]")
+		SetName("damp [name]")
 	else
-		SetName("dry [initial(name)]")
+		SetName("dry [name]")
 
 /obj/item/chems/glass/rag/on_update_icon()
 	. = ..()
@@ -66,28 +85,35 @@
 /obj/item/chems/glass/rag/proc/remove_contents(mob/user, atom/trans_dest = null)
 	if(!trans_dest && !user.loc)
 		return
-
-	if(reagents.total_volume)
-		var/target_text = trans_dest? "\the [trans_dest]" : "\the [user.loc]"
-		user.visible_message("<span class='danger'>\The [user] begins to wring out [src] over [target_text].</span>", "<span class='notice'>You begin to wring out [src] over [target_text].</span>")
-
-		if(do_after(user, reagents.total_volume*5, progress = 0)) //50 for a fully soaked rag
-			if(trans_dest)
-				reagents.trans_to(trans_dest, reagents.total_volume)
-			else
-				reagents.splash(user.loc, reagents.total_volume)
-			user.visible_message("<span class='danger'>\The [user] wrings out [src] over [target_text].</span>", "<span class='notice'>You finish to wringing out [src].</span>")
-			update_name()
-
-/obj/item/chems/glass/rag/proc/wipe_down(atom/A, mob/user)
-	if(!reagents.total_volume)
-		to_chat(user, "<span class='warning'>The [initial(name)] is dry!</span>")
+	if(reagents?.total_volume <= 0)
+		return
+	var/target_text = trans_dest? "\the [trans_dest]" : "\the [user.loc]"
+	user.visible_message(
+		SPAN_NOTICE("\The [user] begins to wring out [src] over [target_text]."),
+		SPAN_NOTICE("You begin to wring out \the [src] over [target_text].")
+	)
+	if(!do_after(user, reagents.total_volume*5, progress = 0) || !reagents?.total_volume) //50 for a fully soaked rag
+		return
+	if(trans_dest)
+		reagents.trans_to(trans_dest, reagents.total_volume)
 	else
-		user.visible_message("\The [user] starts to wipe down [A] with [src]!")
-		update_name()
-		if(do_after(user,30, progress = 1))
-			user.visible_message("\The [user] finishes wiping off the [A]!")
-			reagents.splash(A, FLUID_QDEL_POINT)
+		reagents.splash(user.loc, reagents.total_volume)
+	user.visible_message(
+		SPAN_NOTICE("\The [user] wrings out \the [src] over [target_text]."),
+		SPAN_NOTICE("You finish to wringing out \the [src].")
+	)
+	update_name()
+
+/obj/item/chems/glass/rag/proc/wipe_down(atom/target, mob/user)
+
+	if(!reagents?.total_volume)
+		to_chat(user, SPAN_WARNING("The [initial(name)] is dry."))
+		return
+
+	user.visible_message(SPAN_NOTICE("\The [user] starts to wipe down \the [target] with \the [src]."))
+	if(do_after(user, 3 SECONDS, target, check_holding = TRUE))
+		user.visible_message(SPAN_NOTICE("\The [user] finishes wiping off \the [target]."))
+		reagents.touch_atom(target)
 
 /obj/item/chems/glass/rag/use_on_mob(mob/living/target, mob/living/user, animate = TRUE)
 
@@ -149,7 +175,7 @@
 		return
 
 	if(!on_fire && istype(A) && (src in user))
-		if(ATOM_IS_OPEN_CONTAINER(A) && !(A in user))
+		if(ATOM_IS_OPEN_CONTAINER(A) && !isturf(A) && !(A in user))
 			remove_contents(user, A)
 		else if(!ismob(A)) //mobs are handled in use_on_mob() - this prevents us from wiping down people while smothering them.
 			wipe_down(A, user)

@@ -7,11 +7,11 @@
 /turf/template_noop,
 /area/tether_away/debrisfield/explored)
 "c" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "d" = (
 /obj/structure/girder,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 
 (1,1,1) = {"

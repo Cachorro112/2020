@@ -57,6 +57,8 @@
 	/// (FLOAT) Theoretical maximum health value.
 	var/max_health
 
+	/// (BOOL) Does this atom respond to changes in local temperature via the `temperature` var?
+	var/temperature_sensitive = FALSE
 	/// (DATUM) /datum/storage instance to use for this obj. Set to a type for instantiation on init.
 	var/datum/storage/storage
 	/// (FLOAT) world.time of last on_reagent_update call, used to prevent recursion due to reagents updating reagents
@@ -340,6 +342,14 @@
 
 	RAISE_EVENT(/decl/observ/dir_set, src, old_dir, new_dir)
 
+
+/// Set the icon to `new_icon`
+/atom/proc/set_icon(new_icon)
+	if(icon != new_icon)
+		icon = new_icon
+		return TRUE
+	return FALSE
+
 /// Set the icon_state to `new_icon_state`
 /atom/proc/set_icon_state(var/new_icon_state)
 	SHOULD_CALL_PARENT(TRUE)
@@ -378,7 +388,7 @@
 	if(length(reagents?.reagent_volumes))
 		LAZYINITLIST(.)
 		for(var/R in reagents.reagent_volumes)
-			.[R] += FLOOR(REAGENT_VOLUME(reagents, R) / REAGENT_UNITS_PER_MATERIAL_UNIT)
+			.[R] += floor(REAGENT_VOLUME(reagents, R) / REAGENT_UNITS_PER_MATERIAL_UNIT)
 	for(var/atom/contained_obj as anything in get_contained_external_atoms()) // machines handle component parts separately
 		. = MERGE_ASSOCS_WITH_NUM_VALUES(., contained_obj.get_contained_matter())
 
@@ -415,7 +425,7 @@
 				M.client.perspective = MOB_PERSPECTIVE
 
 /**
-	Handle the destruction of this atom, spilling it's contents by default
+	Handle the destruction of this atom, spilling its contents by default
 
 	- `skip_qdel`: If calling qdel() on this atom should be skipped.
 	- Return: Unknown, feel free to change this
@@ -490,10 +500,12 @@
 	- Returns: `TRUE` if qdel() was called, otherwise `FALSE`
 */
 /atom/proc/lava_act()
-	visible_message(SPAN_DANGER("\The [src] sizzles and melts away, consumed by the lava!"))
-	playsound(src, 'sound/effects/flare.ogg', 100, 3)
-	qdel(src)
-	. = TRUE
+	if(simulated)
+		visible_message(SPAN_DANGER("\The [src] sizzles and melts away, consumed by the lava!"))
+		playsound(src, 'sound/effects/flare.ogg', 100, 3)
+		qdel(src)
+		return TRUE
+	return FALSE
 
 /**
 	Handle this atom being hit by a thrown atom
@@ -574,7 +586,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T,range, mobs, objs, check_ghosts)
+	get_listeners_in_range(T,range, mobs, objs, check_ghosts)
 
 	for(var/o in objs)
 		var/obj/O = o
@@ -602,7 +614,7 @@
 	var/turf/T = get_turf(src)
 	var/list/mobs = list()
 	var/list/objs = list()
-	get_mobs_and_objs_in_view_fast(T, hearing_distance, mobs, objs, check_ghosts)
+	get_listeners_in_range(T, hearing_distance, mobs, objs, check_ghosts)
 
 	for(var/m in mobs)
 		var/mob/M = m
@@ -651,7 +663,7 @@
 	- `G`: The grab hitting this atom
 	- Return: `TRUE` to skip attackby() and afterattack() or `FALSE`
 */
-/atom/proc/grab_attack(var/obj/item/grab/G)
+/atom/proc/grab_attack(obj/item/grab/grab, mob/user)
 	return FALSE
 
 /atom/proc/climb_on()
@@ -727,7 +739,10 @@
 		LAZYREMOVE(climbers,user)
 		return FALSE
 
-	var/target_turf = get_turf(src)
+	// handle multitile objects
+	// this should also be fine for non-multitile objects
+	// and ensures we don't ever move more than 1 tile
+	var/target_turf = get_step(user, get_dir(user, src))
 
 	//climbing over border objects like railings
 	if((atom_flags & ATOM_FLAG_CHECKS_BORDER) && get_turf(user) == target_turf)
@@ -740,7 +755,7 @@
 	LAZYREMOVE(climbers,user)
 	return TRUE
 
-/// Shake this atom and all it's climbers.
+/// Shake this atom and all its climbers.
 /atom/proc/object_shaken()
 	for(var/mob/living/M in climbers)
 		SET_STATUS_MAX(M, STAT_WEAK, 1)
@@ -880,6 +895,15 @@
 		check_loc = check_loc.loc
 
 /**
+	Get a default interaction for a user from this atom.
+
+	- `user`: The mob that this interaction is for
+	- Return: A default interaction decl, or null.
+*/
+/atom/proc/get_quick_interaction_handler(mob/user)
+	return
+
+/**
 	Get a list of alt interactions for a user from this atom.
 
 	- `user`: The mob that these alt interactions are for
@@ -891,6 +915,9 @@
 	. = list()
 	if(storage)
 		. += /decl/interaction_handler/storage_open
+	if(reagents?.total_volume && ATOM_IS_OPEN_CONTAINER(src))
+		. += /decl/interaction_handler/wash_hands
+		. += /decl/interaction_handler/drink
 
 /atom/proc/can_climb_from_below(var/mob/climber)
 	return FALSE
@@ -956,3 +983,31 @@
 
 /atom/proc/spark_act(obj/effect/sparks/sparks)
 	return
+
+/atom/proc/get_affecting_weather()
+	return
+
+/atom/proc/is_outside()
+	var/turf/turf = get_turf(src)
+	return istype(turf) ? turf.is_outside() : OUTSIDE_UNCERTAIN
+
+/atom/proc/can_be_poured_into(atom/source)
+	return (reagents?.maximum_volume > 0) && ATOM_IS_OPEN_CONTAINER(src)
+
+/// This is whether it's physically possible to pour from this atom to the target atom, based on context like user intent and src being open, etc.
+/// This should not check things like whether there is actually anything in src to pour.
+/// It should also not check anything controlled by the target atom, because can_be_poured_into() already exists.
+/atom/proc/can_be_poured_from(mob/user, atom/target)
+	return (reagents?.maximum_volume > 0) && ATOM_IS_OPEN_CONTAINER(src)
+
+/atom/proc/take_vaporized_reagent(reagent, amount)
+	return
+
+/atom/proc/is_watertight()
+	return !ATOM_IS_OPEN_CONTAINER(src)
+
+/atom/proc/can_drink_from(mob/user)
+	return ATOM_IS_OPEN_CONTAINER(src) && reagents?.total_volume && user.check_has_mouth()
+
+/atom/proc/immune_to_floor_hazards()
+	return !simulated || !has_gravity()

@@ -1,4 +1,3 @@
-//goat
 /mob/living/simple_animal/hostile/goat
 	name = "goat"
 	desc = "Not known for their pleasant disposition."
@@ -11,7 +10,6 @@
 	natural_weapon = /obj/item/natural_weapon/hooves
 	butchery_data = /decl/butchery_data/animal/ruminant/goat
 	ai = /datum/mob_controller/aggressive/goat
-	var/datum/reagents/udder = null
 
 /datum/mob_controller/aggressive/goat
 	expected_type = /mob/living/simple_animal/hostile/goat
@@ -42,8 +40,7 @@
 
 /datum/mob_controller/aggressive/goat/do_process(time_elapsed)
 
-	. = ..()
-	if(QDELETED(body) || body.stat)
+	if(!(. = ..()) || body.stat)
 		return
 
 	//chance to go crazy and start wacking stuff
@@ -75,7 +72,7 @@
 
 /mob/living/simple_animal/hostile/goat/Initialize()
 	. = ..()
-	udder = new(50, src)
+	set_extension(src, /datum/extension/milkable/goat)
 
 /mob/living/simple_animal/hostile/goat/UnarmedAttack(var/atom/A, var/proximity)
 	var/was_food = FALSE
@@ -97,27 +94,6 @@
 
 	return was_food ? TRUE :..()
 
-/mob/living/simple_animal/hostile/goat/Destroy()
-	QDEL_NULL(udder)
-	. = ..()
-
-/mob/living/simple_animal/hostile/goat/handle_living_non_stasis_processes()
-	if((. = ..()) && stat == CONSCIOUS && udder && prob(5))
-		udder.add_reagent(/decl/material/liquid/drink/milk, rand(5, 10))
-
-/mob/living/simple_animal/hostile/goat/attackby(var/obj/item/O, var/mob/user)
-	var/obj/item/chems/glass/G = O
-	if(stat == CONSCIOUS && istype(G) && ATOM_IS_OPEN_CONTAINER(G))
-		user.visible_message("<span class='notice'>[user] milks [src] using \the [O].</span>")
-		var/transfered = udder.trans_type_to(G, /decl/material/liquid/drink/milk, rand(5,10))
-		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, "<span class='warning'>\The [O] is full.</span>")
-		if(!transfered)
-			to_chat(user, "<span class='warning'>The udder is dry. Wait a bit longer...</span>")
-	else
-		..()
-
-//cow
 /mob/living/simple_animal/cow
 	name = "cow"
 	desc = "Known for their milk, just don't tip them over."
@@ -128,7 +104,6 @@
 	max_health = 50
 	butchery_data = /decl/butchery_data/animal/ruminant/cow
 
-	var/datum/reagents/udder = null
 	var/static/list/responses = list(
 		"looks at you imploringly",
 		"looks at you pleadingly",
@@ -145,31 +120,7 @@
 
 /mob/living/simple_animal/cow/Initialize()
 	. = ..()
-	udder = new(50, src)
-
-/mob/living/simple_animal/cow/Destroy()
-	QDEL_NULL(udder)
-	. = ..()
-
-/mob/living/simple_animal/cow/attackby(var/obj/item/O, var/mob/user)
-	var/obj/item/chems/glass/G = O
-	if(stat == CONSCIOUS && istype(G) && ATOM_IS_OPEN_CONTAINER(G))
-		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, SPAN_WARNING("\The [O] is full."))
-			return TRUE
-		if(!udder.total_volume)
-			to_chat(user, SPAN_WARNING("The udder is dry. Wait a bit longer."))
-			return TRUE
-		user.visible_message(SPAN_NOTICE("\The [user] milks \the [src] using \the [O]."))
-		udder.trans_type_to(G, /decl/material/liquid/drink/milk, rand(5,10))
-		if(G.reagents.total_volume >= G.volume)
-			to_chat(user, SPAN_NOTICE("\The [O] is full."))
-		return TRUE
-	. = ..()
-
-/mob/living/simple_animal/cow/handle_living_non_stasis_processes()
-	if((. = ..()) && udder && prob(5))
-		udder.add_reagent(/decl/material/liquid/drink/milk, rand(5, 10))
+	set_extension(src, /datum/extension/milkable)
 
 /mob/living/simple_animal/cow/default_disarm_interaction(mob/user)
 	if(stat != DEAD && !HAS_STATUS(src, STAT_WEAK))
@@ -193,7 +144,26 @@
 	mob_size = MOB_SIZE_MINISCULE
 	butchery_data = /decl/butchery_data/animal/small/fowl/chicken/chick
 	ai = /datum/mob_controller/chick
+	holder_type = /obj/item/holder
 	var/amount_grown = 0
+	var/decl/skill/examine_skill = SKILL_BOTANY // for maps that change the default skills, or for alien eggs that need science/medical/anatomy instead
+	var/examine_difficulty = SKILL_ADEPT
+
+/mob/living/simple_animal/chick/examine(mob/user, distance, infix, suffix)
+	. = ..()
+	if(!user.skill_check(examine_skill, examine_difficulty))
+		var/decl/skill/examine_skill_decl = GET_DECL(examine_skill)
+		to_chat(user, SPAN_SUBTLE("If you knew more about [lowertext(examine_skill_decl.name)], you could learn additional information about this."))
+		return
+	switch(amount_grown)
+		if(0 to 20)
+			to_chat(user, SPAN_NOTICE("It's still young."))
+		if(20 to 40)
+			to_chat(user, SPAN_NOTICE("It's starting to grow in its adult feathers."))
+		if(40 to 80)
+			to_chat(user, SPAN_NOTICE("It's grown in almost all its adult feathers."))
+		if(80 to 100)
+			to_chat(user, SPAN_NOTICE("It's almost fully grown."))
 
 /datum/mob_controller/chick
 	emote_speech = list("Cherp.","Cherp?","Chirrup.","Cheep!")
@@ -209,7 +179,8 @@
 
 /mob/living/simple_animal/chick/handle_living_non_stasis_processes()
 	if((. = ..()))
-		amount_grown += rand(1,2)
+		if(prob(50)) // should take around 4 or 5 minutes to grow up, give or take
+			amount_grown += rand(1, 2)
 		if(amount_grown >= 100)
 			new /mob/living/simple_animal/fowl/chicken(src.loc)
 			qdel(src)
@@ -243,6 +214,7 @@ var/global/chicken_count = 0
 	speak_emote  = list("clucks","croons")
 	butchery_data = /decl/butchery_data/animal/small/fowl/chicken
 	ai = /datum/mob_controller/fowl/chicken
+	holder_type = /obj/item/holder
 	var/eggsleft = 0
 
 /datum/mob_controller/fowl/chicken
@@ -273,28 +245,28 @@ var/global/chicken_count = 0
 		global.chicken_count -= 1
 
 /mob/living/simple_animal/fowl/chicken/attackby(var/obj/item/O, var/mob/user)
-	if(istype(O, /obj/item/chems/food)) //feedin' dem chickens
-		var/obj/item/chems/food/G = O
-		if(findtext(G.get_grown_tag(), "wheat")) // includes chopped, crushed, dried etc.
-			if(!stat && eggsleft < 8)
-				user.visible_message("<span class='notice'>[user] feeds [O] to [name]! It clucks happily.</span>","<span class='notice'>You feed [O] to [name]! It clucks happily.</span>")
-				qdel(O)
-				eggsleft += rand(1, 4)
-			else
-				to_chat(user, "<span class='notice'>[name] doesn't seem hungry!</span>")
+	if(!istype(O, /obj/item/food))
+		return ..()
+	var/obj/item/food/G = O //feedin' dem chickens
+	if(findtext(G.get_grown_tag(), "wheat")) // includes chopped, crushed, dried etc.
+		if(!stat && eggsleft < 4)
+			user.visible_message(SPAN_NOTICE("[user] feeds \the [O] to \the [src]! It clucks happily."), SPAN_NOTICE("You feed \the [O] to \the [src]! It clucks happily."), SPAN_NOTICE("You hear clucking."))
+			qdel(O)
+			eggsleft += rand(1, 2)
 		else
-			to_chat(user, "[name] doesn't seem interested in that.")
+			to_chat(user, SPAN_NOTICE("\The [src] doesn't seem hungry!"))
 	else
-		..()
+		to_chat(user, "\The [src] doesn't seem interested in that.")
+	return TRUE
 
 /mob/living/simple_animal/fowl/chicken/handle_living_non_stasis_processes()
-	if((. = ..()) && prob(3) && eggsleft > 0)
+	if((. = ..()) && prob(1) && eggsleft > 0)
 		visible_message("[src] [pick("lays an egg.","squats down and croons.","begins making a huge racket.","begins clucking raucously.")]")
 		eggsleft--
-		var/obj/item/chems/food/egg/E = new(get_turf(src))
+		var/obj/item/food/egg/E = new(get_turf(src))
 		E.pixel_x = rand(-6,6)
 		E.pixel_y = rand(-6,6)
-		if(chicken_count < MAX_CHICKENS && prob(10))
+		if(chicken_count < MAX_CHICKENS && prob(30))
 			E.amount_grown = 1
 			START_PROCESSING(SSobj, E)
 
@@ -327,17 +299,58 @@ var/global/chicken_count = 0
 		else
 			icon = 'icons/mob/simple_animal/duck_white.dmi'
 
-/obj/item/chems/food/egg
+/obj/item/food/egg
 	var/amount_grown = 0
+	var/decl/skill/examine_skill = SKILL_BOTANY // for maps that change the default skills, or for alien eggs that need science/medical/anatomy instead
+	var/examine_difficulty = SKILL_ADEPT
 
-/obj/item/chems/food/egg/Destroy()
+/obj/item/food/egg/examine(mob/user, distance, infix, suffix)
+	. = ..()
+	if(isnull(examine_difficulty) || !ispath(examine_skill))
+		return
+	if(!user.skill_check(examine_skill, examine_difficulty))
+		var/decl/skill/examine_skill_decl = GET_DECL(examine_skill)
+		to_chat(user, SPAN_SUBTLE("If you knew more about [lowertext(examine_skill_decl.name)], you could learn additional information about this."))
+		return
+	if(distance > 1)
+		to_chat(user, SPAN_SUBTLE("You're too far away to learn anything about this."))
+		return
+	if(!user.get_held_slot_for_item(src))
+		to_chat(user, SPAN_NOTICE("You need to be holding \the [src] to examine it closer."))
+		return
+	// need a lit candle or lantern to check
+	var/too_hot = FALSE
+	var/obj/item/candle // not necessarily an actual candle, just a light source that won't fry the egg
+	for(var/obj/item/I in user.get_held_items())
+		if(I.light_power && I.light_range) // we have a light! todo: minimum power?
+			if(I.get_heat() >= /obj/item/flame/fuelled/lighter::lit_heat) // lighters are too hot!
+				too_hot = TRUE
+			candle = I
+			if(!too_hot)
+				break
+	if(too_hot)
+		to_chat(user, SPAN_WARNING("You can't use \the [candle] to examine \the [src], that would fry it!"))
+		return
+	else if(!candle)
+		to_chat(user, SPAN_NOTICE("You need to be holding a light source to examine this closer."))
+		return
+	switch(amount_grown)
+		if(0)
+			to_chat(user, SPAN_NOTICE("\The [src] is unfertilized."))
+		if(10 to 80)
+			to_chat(user, SPAN_NOTICE("There's something growing inside \the [src]."))
+		if(80 to 100)
+			to_chat(user, SPAN_NOTICE("\The [src] is about to hatch!"))
+
+/obj/item/food/egg/Destroy()
 	if(amount_grown)
 		STOP_PROCESSING(SSobj, src)
 	. = ..()
 
-/obj/item/chems/food/egg/Process()
+/obj/item/food/egg/Process()
 	if(isturf(loc))
-		amount_grown += rand(1,2)
+		if(prob(50))
+			amount_grown++
 		if(amount_grown >= 100)
 			visible_message("[src] hatches with a quiet cracking sound.")
 			new /mob/living/simple_animal/chick(get_turf(src))

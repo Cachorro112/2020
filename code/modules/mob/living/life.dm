@@ -31,8 +31,8 @@
 			. = handle_living_non_stasis_processes()
 		aura_check(AURA_TYPE_LIFE)
 
-	for(var/obj/item/grab/G in get_active_grabs())
-		G.Process()
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
+		grab.Process()
 
 	//Check if we're on fire
 	handle_fire()
@@ -76,8 +76,8 @@
 		if(!E)
 			continue
 		if(E.is_robotic())
-			var/decl/pronouns/G = get_pronouns()
-			visible_message("<B>\The [src]</B> drops what [G.he] [G.is] holding, [G.his] [E.name] malfunctioning!")
+			var/decl/pronouns/pronouns = get_pronouns()
+			visible_message("<B>\The [src]</B> drops what [pronouns.he] [pronouns.is] holding, [pronouns.his] [E.name] malfunctioning!")
 			spark_at(src, 5, holder=src)
 			continue
 
@@ -112,14 +112,16 @@
 	handle_random_events()
 	// eye, ear, brain damages
 	handle_disabilities()
+	// Immune system updates (currently vestigal)
 	handle_immunity()
-	//Body temperature adjusts itself (self-regulation)
+	// Allergic reactions/anaphylaxis
+	handle_allergens()
+	// Body temperature adjusts itself (self-regulation)
 	stabilize_body_temperature()
-	// Only handle AI stuff if we're not being played.
 	return TRUE
 
 /mob/living/proc/experiences_hunger_and_thirst()
-	return TRUE
+	return !isSynthetic() // Doesn't really apply to robots. Maybe unify this with cells in the future.
 
 /mob/living/proc/get_hunger_factor()
 	var/decl/species/my_species = get_species()
@@ -194,7 +196,7 @@
 		radiation -= 4 * RADIATION_SPEED_COEFFICIENT
 
 	var/decl/species/my_species = get_species()
-	damage = FLOOR(damage * (my_species ? my_species.get_radiation_mod(src) : 1))
+	damage = floor(damage * (my_species ? my_species.get_radiation_mod(src) : 1))
 	if(damage)
 		immunity = max(0, immunity - damage * 15 * RADIATION_SPEED_COEFFICIENT)
 		take_damage(damage * RADIATION_SPEED_COEFFICIENT, TOX)
@@ -264,20 +266,6 @@
 /mob/living/proc/handle_random_events()
 	return
 
-/mob/living/proc/is_outside()
-	var/turf/T = loc
-	return istype(T) && T.is_outside()
-
-/mob/living/proc/get_affecting_weather()
-	var/turf/my_turf = get_turf(src)
-	if(!istype(my_turf))
-		return
-	var/turf/actual_loc = loc
-	// If we're standing in the rain, use the turf weather.
-	. = istype(actual_loc) && actual_loc.weather
-	if(!.) // If we're under or inside shelter, use the z-level rain (for ambience)
-		. = SSweather.weather_by_z[my_turf.z]
-
 /mob/living/proc/handle_contact_reagent_dripping()
 	// TODO: process dripping outside of Life() so corpses don't become sponges.
 	// TODO: factor temperature and vapor into this so warmer locations dry you off.
@@ -285,24 +273,29 @@
 	if(!loc)
 		return
 	var/datum/reagents/touching_reagents = get_contact_reagents()
-	if(!touching_reagents?.total_volume)
+	if(touching_reagents?.total_volume <= FLUID_MINIMUM_TRANSFER)
+		touching_reagents?.clear_reagents()
 		return
-	var/drip_amount = max(1, round(touching_reagents.total_volume * 0.1))
+	var/drip_amount = max(FLUID_MINIMUM_TRANSFER, round(touching_reagents.total_volume * 0.2))
 	if(drip_amount)
 		touching_reagents.trans_to(loc, drip_amount)
 
-/mob/living/proc/handle_weather_effects(obj/abstract/weather_system/weather)
-	// Handle physical effects of weather.
-	if(!istype(weather))
-		return
-	var/decl/state/weather/weather_state = weather.weather_system.current_state
-	if(istype(weather_state))
-		weather_state.handle_exposure(src, get_weather_exposure(weather), weather)
+/mob/living/process_weather(obj/abstract/weather_system/weather, decl/state/weather/weather_state)
+	// Handle physical effects of weather. Ambience is handled in handle_environment with a
+	// client check as mobs with no clients don't need to handle ambient messages and sounds.
+	weather_state?.handle_exposure(src, get_weather_exposure(weather), weather)
 
 /mob/living/proc/handle_weather_ambience(obj/abstract/weather_system/weather)
 	// Refresh weather ambience.
 	// Show messages and play ambience.
-	if(!istype(weather) || !client || get_preference_value(/datum/client_preference/play_ambiance) != PREF_YES)
+	if(!istype(weather) || !client)
+		return
+
+	// Send strings if we're outside.
+	if(is_outside() && !weather.show_weather(src))
+		weather.show_wind(src)
+
+	if(get_preference_value(/datum/client_preference/play_ambiance) == PREF_NO)
 		return
 
 	// Work out if we need to change or cancel the current ambience sound.
@@ -329,9 +322,7 @@
 /mob/living/proc/handle_environment(var/datum/gas_mixture/environment)
 	SHOULD_CALL_PARENT(TRUE)
 	handle_contact_reagent_dripping() // See comment on proc definition
-	var/weather = get_affecting_weather()
-	handle_weather_effects(weather)
-	handle_weather_ambience(weather)
+	handle_weather_ambience(get_affecting_weather())
 
 //This updates the health and status of the mob (conscious, unconscious, dead)
 /mob/living/proc/handle_regular_status_updates()
@@ -562,19 +553,11 @@
 				if(prob(current_size*5) && hand.w_class >= (11-current_size)/2 && try_unequip(hand))
 					to_chat(src, SPAN_WARNING("\The [S] pulls \the [hand] from your grip!"))
 					hand.singularity_pull(S, current_size)
-			var/obj/item/shoes = get_equipped_item(slot_shoes_str)
-			if(!current_posture.prone && !(shoes?.item_flags & ITEM_FLAG_NOSLIP))
-				var/decl/species/my_species = get_species()
-				if(!my_species?.check_no_slip(src) && prob(current_size*5))
-					to_chat(src, SPAN_DANGER("A strong gravitational force slams you to the ground!"))
-					SET_STATUS_MAX(src, STAT_WEAK, current_size)
+			if(prob(current_size*5) && can_slip())
+				to_chat(src, SPAN_DANGER("A strong gravitational force slams you to the ground!"))
+				SET_STATUS_MAX(src, STAT_WEAK, current_size)
 		apply_damage(current_size * 3, IRRADIATE, damage_flags = DAM_DISPERSED)
 	return ..()
-
-#define LIMB_UNUSABLE 2
-#define LIMB_DAMAGED  1
-#define LIMB_IMPAIRED 0.5
-
 
 /mob/living/proc/handle_stance()
 	set waitfor = FALSE // Can sleep in emotes.
@@ -639,13 +622,15 @@
 	// Canes and crutches help you stand (if the latter is ever added)
 	// One cane mitigates a broken leg+foot, or a missing foot.
 	// Two canes are needed for a lost leg. If you are missing both legs, canes aren't gonna help you.
-	for(var/obj/item/cane/C in get_held_items())
-		stance_damage -= LIMB_UNUSABLE // Counts for a single functional limb.
+	for(var/obj/item/support in get_held_items())
+		var/support_amount = support.get_stance_support_value()
+		if(support_amount)
+			stance_damage -= support_amount // Counts for a single functional limb.
 
 	// Calculate the expected and actual number of functioning legs we have.
 	var/has_sufficient_working_legs = TRUE
 	var/list/root_limb_tags  = root_bodytype.organ_tags_by_category[ORGAN_CATEGORY_STANCE_ROOT]
-	var/minimum_working_legs = CEILING(length(root_limb_tags) * 0.5)
+	var/minimum_working_legs = ceil(length(root_limb_tags) * 0.5)
 	if(minimum_working_legs > 0)
 		var/leg_count = 0
 		has_sufficient_working_legs = FALSE

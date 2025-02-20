@@ -2,6 +2,43 @@
 	var/wired
 	var/tool_interaction_flags
 
+/obj/structure/proc/handle_default_hammer_attackby(var/mob/user, var/obj/item/hammer)
+
+	// Resolve ambiguous interactions.
+	var/can_deconstruct = (tool_interaction_flags & TOOL_INTERACTION_DECONSTRUCT) && can_dismantle(user)
+	var/can_unanchor    = (tool_interaction_flags & TOOL_INTERACTION_ANCHOR) && can_unanchor(user)
+	if(can_deconstruct && can_unanchor)
+		var/choice = alert(user, "Do you wish to [anchored ? "unanchor" : "anchor"] or dismantle this structure?", "Tool Choice", (anchored ? "Unanchor" : "Anchor"), "Deconstruct", "Cancel")
+		if(!choice || choice == "Cancel" || QDELETED(src) || QDELETED(user) || QDELETED(hammer) || !CanPhysicallyInteract(user) || user.get_active_held_item() != hammer)
+			return TRUE
+		if(choice == "Deconstruct")
+			can_unanchor = FALSE
+		else
+			can_deconstruct = FALSE
+
+	if(can_unanchor)
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
+		visible_message(SPAN_NOTICE("\The [user] begins [anchored ? "unanchoring [src]" : "anchoring [src] in place"] with \the [hammer]."))
+		if(!do_after(user, 4 SECONDS, src) || QDELETED(src))
+			return TRUE
+		playsound(src.loc, 'sound/items/Deconstruct.ogg', 100, 1)
+		anchored = !anchored
+		visible_message(SPAN_NOTICE("\The [user] has [anchored ? "anchored" : "unanchored"] \the [src] with \the [hammer]."))
+		update_icon()
+		return TRUE
+
+	if(can_deconstruct)
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message(SPAN_NOTICE("\The [user] starts knocking apart \the [src] with \the [hammer]."))
+		if(!do_after(user, 5 SECONDS, src) || QDELETED(src))
+			return TRUE
+		playsound(loc, 'sound/items/Crowbar.ogg', 50, 1)
+		visible_message(SPAN_NOTICE("\The [user] completely dismantles \the [src] with \the [hammer]."))
+		dismantle_structure(user)
+		return TRUE
+
+	return FALSE
+
 /obj/structure/proc/handle_default_wrench_attackby(var/mob/user, var/obj/item/wrench)
 	if((tool_interaction_flags & TOOL_INTERACTION_ANCHOR) && can_unanchor(user))
 		playsound(src.loc, 'sound/items/Ratchet.ogg', 100, 1)
@@ -105,7 +142,7 @@
 /obj/structure/proc/handle_repair(mob/user, obj/item/tool)
 	var/current_max_health = get_max_health()
 	var/obj/item/stack/stack = tool
-	var/amount_needed = CEILING((current_max_health - current_health)/DOOR_REPAIR_AMOUNT)
+	var/amount_needed = ceil((current_max_health - current_health)/DOOR_REPAIR_AMOUNT)
 	var/used = min(amount_needed,stack.amount)
 	if(used)
 		to_chat(user, SPAN_NOTICE("You fit [stack.get_string_for_amount(used)] to damaged areas of \the [src]."))
@@ -114,13 +151,16 @@
 		current_health = clamp(current_health + used*DOOR_REPAIR_AMOUNT, current_health, current_max_health)
 
 /obj/structure/attackby(obj/item/used_item, mob/user)
-	if(used_item.user_can_wield(user))
-		if(used_item.force && user.a_intent == I_HURT)
+	if(used_item.user_can_attack_with(user, silent = TRUE))
+		var/force = used_item.get_attack_force(user)
+		if(force && user.a_intent == I_HURT)
 			attack_animation(user)
 			visible_message(SPAN_DANGER("\The [src] has been [pick(used_item.attack_verb)] with \the [used_item] by \the [user]!"))
-			take_damage(used_item.force, used_item.atom_damage_type)
+			take_damage(force, used_item.atom_damage_type)
 			. = TRUE
 
+		else if(IS_HAMMER(used_item))
+			. = handle_default_hammer_attackby(user, used_item)
 		else if(IS_WRENCH(used_item))
 			. = handle_default_wrench_attackby(user, used_item)
 		else if(IS_SCREWDRIVER(used_item))

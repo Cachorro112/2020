@@ -8,13 +8,13 @@
 /area/tether_away/debrisfield/explored)
 "c" = (
 /obj/structure/girder,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "d" = (
 /turf/wall/shuttle,
 /area/tether_away/debrisfield/explored)
 "e" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "f" = (
 /turf/floor/shuttle/white/airless,

@@ -1,6 +1,8 @@
 var/global/list/bodytypes_by_category = list()
 
 /decl/bodytype
+	decl_flags = DECL_FLAG_MANDATORY_UID
+	abstract_type = /decl/bodytype
 	/// Name used in general.
 	var/name = "default"
 	/// Name used in preference bodytype selection. Defaults to name.
@@ -11,7 +13,7 @@ var/global/list/bodytypes_by_category = list()
 	var/icon_deformed
 	var/cosmetics_icon
 	var/bandages_icon
-	var/bodytype_flag = BODY_FLAG_HUMANOID
+	var/bodytype_flag = BODY_EQUIP_FLAG_HUMANOID
 	var/bodytype_category = BODYTYPE_OTHER
 	var/limb_icon_intensity = 1.5
 	var/blood_overlays
@@ -24,6 +26,9 @@ var/global/list/bodytypes_by_category = list()
 	var/ignited_icon =    'icons/mob/OnFire.dmi'
 	var/associated_gender
 	var/appearance_flags = 0 // Appearance/display related features.
+
+	// Preview in prefs positioning. If null, uses defaults set on a static list in preferences.dm.
+	var/list/character_preview_screen_locs
 
 	/// Used when filing your nails.
 	var/nail_noun
@@ -114,7 +119,7 @@ var/global/list/bodytypes_by_category = list()
 	var/base_eye_color =  COLOR_BLACK
 
 	/// Used to initialize organ material
-	var/material =        /decl/material/solid/organic/meat
+	var/organ_material = /decl/material/solid/organic/meat
 	/// Used to initialize organ matter
 	var/list/matter =     null
 	/// The reagent organs are filled with, which currently affects what mobs that eat the organ will receive.
@@ -161,8 +166,10 @@ var/global/list/bodytypes_by_category = list()
 		BP_EYES =     /obj/item/organ/internal/eyes
 	)
 
-	var/vision_organ              // If set, this organ is required for vision.
-	var/breathing_organ           // If set, this organ is required for breathing.
+	/// If set, an organ with this tag is required for vision.
+	var/vision_organ
+	/// If set, an organ with this tag is required for breathing
+	var/breathing_organ
 
 	var/list/override_organ_types // Used for species that only need to change one or two entries in has_organ.
 
@@ -228,6 +235,7 @@ var/global/list/bodytypes_by_category = list()
 	var/list/removed_emotes
 	/// Add emotes to this list to add them to the defaults (ie. a humanoid species that also has a purr)
 	var/list/additional_emotes
+
 	/// Generalized emote list available to mobs with this bodytype.
 	var/list/default_emotes = list(
 		/decl/emote/visible/blink,
@@ -258,6 +266,7 @@ var/global/list/bodytypes_by_category = list()
 		/decl/emote/audible/moan,
 		/decl/emote/audible/grunt,
 		/decl/emote/audible/slap,
+		/decl/emote/audible/snap,
 		/decl/emote/audible/deathgasp,
 		/decl/emote/audible/giggle,
 		/decl/emote/audible/scream,
@@ -320,6 +329,8 @@ var/global/list/bodytypes_by_category = list()
 	)
 	/// Set to FALSE if the mob will update prone icon based on state rather than transform.
 	var/rotate_on_prone = TRUE
+	/// Armour values used if naked.
+	var/list/natural_armour_values
 
 /decl/bodytype/Initialize()
 	. = ..()
@@ -476,7 +487,8 @@ var/global/list/bodytypes_by_category = list()
 		if(!istype(acc_cat))
 			. += "invalid sprite accessory category entry: [accessory_category || "null"]"
 			continue
-		for(var/accessory in default_sprite_accessories[accessory_category])
+		var/accessories = default_sprite_accessories[accessory_category]
+		for(var/accessory in accessories)
 			var/decl/sprite_accessory/acc_decl = GET_DECL(accessory)
 			if(!istype(acc_decl))
 				. += "invalid sprite accessory in category [accessory_category]: [accessory || "null"]"
@@ -485,6 +497,8 @@ var/global/list/bodytypes_by_category = list()
 				. += "accessory category [acc_decl.accessory_category || "null"] does not match [acc_cat.type]"
 			if(!istype(acc_decl, acc_cat.base_accessory_type))
 				. += "accessory type [acc_decl.type] does not align with category base accessory: [acc_cat.base_accessory_type || "null"]"
+			if(!islist(accessories[accessory]))
+				. += "non-list default metadata for [acc_decl.type]: [accessories[accessory] || "NULL"]"
 
 	var/list/tail_data = has_limbs[BP_TAIL]
 	if(tail_data)
@@ -500,7 +514,20 @@ var/global/list/bodytypes_by_category = list()
 				var/tail_state = tail_organ.get_tail()
 				if(tail_icon && tail_state)
 					if(!check_state_in_icon(tail_state, tail_icon))
-						. += "tail state [tail_state] not present in icon [tail_icon], available states are: [json_encode(icon_states(tail_icon))]"
+						. += "base tail state '[tail_state]' not present in icon '[tail_icon]'"
+					var/tail_states = tail_organ.get_tail_animation_states()
+					if(tail_states)
+						var/static/list/animation_modifiers = list(
+							"_idle",
+							"_slow",
+							"_loop",
+							"_once"
+						)
+						for(var/modifier in animation_modifiers)
+							var/modified_state = "[tail_state][modifier]"
+							for(var/i = 1 to tail_states)
+								if(!check_state_in_icon("[modified_state][i]", tail_icon))
+									. += "animated tail state '[modified_state][i]' not present in icon '[tail_icon]'"
 				else
 					if(!tail_icon)
 						. += "missing tail icon"
@@ -548,11 +575,15 @@ var/global/list/bodytypes_by_category = list()
 	return 220
 
 /decl/bodytype/proc/apply_bodytype_organ_modifications(obj/item/organ/org)
-	if(istype(org, /obj/item/organ/external))
-		var/obj/item/organ/external/E = org
-		E.arterial_bleed_severity *= arterial_bleed_multiplier
-		if(islist(apply_encased))
-			E.encased = apply_encased[E.organ_tag]
+	if(!istype(org, /obj/item/organ/external))
+		return
+	var/obj/item/organ/external/limb = org
+	limb.arterial_bleed_severity *= arterial_bleed_multiplier
+	if(islist(apply_encased))
+		limb.encased = apply_encased[limb.organ_tag]
+	if(LAZYLEN(natural_armour_values))
+		remove_extension(limb, /datum/extension/armor)
+		set_extension(limb, /datum/extension/armor, natural_armour_values)
 
 //fully_replace: If true, all existing organs will be discarded. Useful when doing mob transformations, and not caring about the existing organs
 /decl/bodytype/proc/create_missing_organs(mob/living/human/H, fully_replace = FALSE)
@@ -568,13 +599,14 @@ var/global/list/bodytypes_by_category = list()
 
 	//Clear invalid internal organs
 	if(H.has_internal_organs())
-		for(var/obj/item/organ/O in H.get_internal_organs())
+		for(var/obj/item/organ/internal/O in H.get_internal_organs())
 			if(!is_default_organ(O))
+				O.transfer_brainmob_with_organ = FALSE // To avoid ghosting us on set_species().
 				H.remove_organ(O, FALSE, FALSE, TRUE, TRUE, FALSE, skip_health_update = TRUE) //Remove them first so we don't trigger removal effects by just calling delete on them
 				qdel(O)
 
 	//Create missing limbs
-	var/datum/mob_snapshot/supplied_data = H.get_mob_snapshot(force = TRUE)
+	var/datum/mob_snapshot/supplied_data = H.get_mob_snapshot()
 	supplied_data.root_bodytype = src // This may not have been set on the target mob torso yet.
 
 	for(var/limb_type in has_limbs)
@@ -648,11 +680,11 @@ var/global/list/bodytypes_by_category = list()
 	for(var/accessory_category in default_sprite_accessories)
 		for(var/accessory in default_sprite_accessories[accessory_category])
 			var/decl/sprite_accessory/accessory_decl = GET_DECL(accessory)
-			var/accessory_colour = default_sprite_accessories[accessory_category][accessory]
+			var/accessory_metadata = default_sprite_accessories[accessory_category][accessory]
 			for(var/bodypart in accessory_decl.body_parts)
 				var/obj/item/organ/external/O = GET_EXTERNAL_ORGAN(setting, bodypart)
 				if(O)
-					O.set_sprite_accessory(accessory, null, accessory_colour, skip_update = TRUE)
+					O.set_sprite_accessory(accessory, null, accessory_metadata, skip_update = TRUE)
 
 /decl/bodytype/proc/customize_preview_mannequin(mob/living/human/dummy/mannequin/mannequin)
 	set_default_sprite_accessories(mannequin)
@@ -666,7 +698,7 @@ var/global/list/bodytypes_by_category = list()
 
 /decl/species/proc/customize_preview_mannequin(mob/living/human/dummy/mannequin/mannequin)
 	if(preview_outfit)
-		var/decl/hierarchy/outfit/outfit = outfit_by_type(preview_outfit)
+		var/decl/outfit/outfit = GET_DECL(preview_outfit)
 		outfit.equip_outfit(mannequin, equip_adjustments = (OUTFIT_ADJUSTMENT_SKIP_SURVIVAL_GEAR|OUTFIT_ADJUSTMENT_SKIP_BACKPACK))
 		mannequin.update_icon()
 	mannequin.update_transform()
@@ -694,14 +726,14 @@ var/global/list/bodytypes_by_category = list()
 	for(var/obj/item/organ/internal/innard in limb.internal_organs)
 		var/obj/item/organ/internal/organ_prototype = replacing_organs[innard.organ_tag]
 		if(organ_prototype && istype(innard, organ_prototype))
-			innard.set_bodytype(type, override_material || material)
+			innard.set_bodytype(type, override_material || organ_material)
 			replacing_organs -= innard.organ_tag
 		else
 			limb.owner.remove_organ(innard, FALSE, FALSE, TRUE, TRUE, FALSE)
 			qdel(innard)
 
 	// Install any necessary new organs.
-	var/datum/mob_snapshot/supplied_data = limb.owner.get_mob_snapshot(force = TRUE)
+	var/datum/mob_snapshot/supplied_data = limb.owner.get_mob_snapshot()
 	supplied_data.root_bodytype = src
 	for(var/organ_tag in replacing_organs)
 		var/organ_type = replacing_organs[organ_tag]
@@ -725,27 +757,23 @@ var/global/list/bodytypes_by_category = list()
 		else
 			CRASH("get_species_temperature_threshold() called with invalid threshold value.")
 
-/decl/bodytype/proc/get_environment_discomfort(var/mob/living/human/H, var/msg_type)
+/decl/bodytype/proc/get_environment_discomfort(var/mob/living/human/victim, var/msg_type)
 
 	if(!prob(5))
 		return
 
-	var/covered = 0 // Basic coverage can help.
-	var/held_items = H.get_held_items()
-	for(var/obj/item/clothing/clothes in H)
-		if(clothes in held_items)
-			continue
-		if((clothes.body_parts_covered & SLOT_UPPER_BODY) && (clothes.body_parts_covered & SLOT_LOWER_BODY))
-			covered = 1
-			break
+	// If we have any items that cover both the upper and lower body, we're covered.
+	// This is to have parity with the original implementation, but to be honest
+	// it might be better to just use the non-exact checks.
+	var/covered = victim.get_covering_equipped_item_exact(SLOT_UPPER_BODY|SLOT_LOWER_BODY)
 
 	switch(msg_type)
 		if("cold")
 			if(!covered && length(cold_discomfort_strings))
-				to_chat(H, SPAN_DANGER(pick(cold_discomfort_strings)))
+				to_chat(victim, SPAN_DANGER(pick(cold_discomfort_strings)))
 		if("heat")
 			if(covered && length(heat_discomfort_strings))
-				to_chat(H, SPAN_DANGER(pick(heat_discomfort_strings)))
+				to_chat(victim, SPAN_DANGER(pick(heat_discomfort_strings)))
 
 /decl/bodytype/proc/get_user_species_for_validation()
 	for(var/species_name in get_all_species())

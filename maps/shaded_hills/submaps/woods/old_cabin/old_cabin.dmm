@@ -4,11 +4,16 @@
 /obj/abstract/exterior_marker/inside,
 /turf/floor/wood/walnut,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
+"g" = (
+/obj/abstract/exterior_marker/inside,
+/obj/structure/table/end,
+/turf/floor/wood/walnut,
+/area/shaded_hills/outside/point_of_interest/old_cabin)
 "h" = (
 /turf/template_noop,
 /area/template_noop)
 "i" = (
-/turf/floor/natural/dirt,
+/turf/floor/dirt,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
 "k" = (
 /obj/structure/closet/crate/chest/ebony,
@@ -52,7 +57,7 @@
 "D" = (
 /obj/effect/spider/spiderling/mundane,
 /obj/structure/table/woodentable/ebony,
-/obj/item/chems/food/grown/carrot,
+/obj/item/food/grown/carrot,
 /obj/abstract/exterior_marker/inside,
 /turf/floor/wood/walnut,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
@@ -63,9 +68,9 @@
 "H" = (
 /obj/structure/table/woodentable/ebony,
 /obj/item/bladed/knife,
-/obj/item/chems/food/grown/potato,
-/obj/item/chems/food/grown/potato,
-/obj/item/chems/food/grown/carrot,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/potato,
+/obj/item/food/grown/carrot,
 /obj/abstract/exterior_marker/inside,
 /turf/floor/wood/walnut,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
@@ -83,8 +88,13 @@
 /turf/wall/log/walnut,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
 "N" = (
-/obj/structure/coatrack,
 /obj/abstract/exterior_marker/inside,
+/obj/structure/coatrack/ebony,
+/turf/floor/wood/walnut,
+/area/shaded_hills/outside/point_of_interest/old_cabin)
+"T" = (
+/obj/abstract/exterior_marker/inside,
+/obj/structure/table/desk/dresser,
 /turf/floor/wood/walnut,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
 "W" = (
@@ -92,7 +102,7 @@
 	dir = 1;
 	pixel_y = 24
 	},
-/turf/floor/natural/dirt,
+/turf/floor/dirt,
 /area/shaded_hills/outside/point_of_interest/old_cabin)
 "Z" = (
 /obj/item/remains/human,
@@ -171,7 +181,7 @@ o
 I
 I
 M
-I
+T
 Z
 M
 h
@@ -195,7 +205,7 @@ D
 H
 I
 M
-I
+g
 k
 M
 i

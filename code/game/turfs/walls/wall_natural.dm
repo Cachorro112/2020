@@ -3,7 +3,7 @@
 	desc               = "A rough natural wall."
 	turf_flags         = TURF_FLAG_BACKGROUND | TURF_IS_HOLOMAP_OBSTACLE
 	girder_material    = null
-	floor_type         = /turf/floor/natural/barren
+	floor_type         = /turf/floor/rock
 	construction_stage = -1
 	var/strata_override
 	var/ramp_slope_direction
@@ -93,8 +93,8 @@
 
 /turf/wall/natural/update_strings()
 	if(reinf_material)
-		SetName("[reinf_material.solid_name] deposit")
-		desc = "A natural cliff face composed of bare [material.solid_name] and a deposit of [reinf_material.solid_name]."
+		SetName("[reinf_material.ore_name] deposit")
+		desc = "A natural cliff face composed of bare [material.solid_name] and a deposit of [reinf_material.ore_name]."
 	else
 		SetName("natural [material.solid_name] wall")
 		desc = "A natural cliff face composed of bare [material.solid_name]."
@@ -167,7 +167,7 @@
 		if(!prob(reinf_material.ore_spread_chance))
 			continue
 		var/turf/wall/natural/target_turf = get_step_resolving_mimic(src, trydir)
-		if(!istype(target_turf) || !isnull(target_turf.reinf_material))
+		if(!istype(target_turf) || !isnull(target_turf.reinf_material) || target_turf.ramp_slope_direction)
 			continue
 		target_turf.set_turf_materials(target_turf.material, reinf_material)
 		target_turf.spread_deposit()

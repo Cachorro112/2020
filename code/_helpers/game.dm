@@ -108,7 +108,7 @@
 	return dist
 
 /proc/get_dist_bounds(var/target, var/source) // Alternative to get_dist for multi-turf objects
-	return CEILING(bounds_dist(target, source)/world.icon_size) + 1
+	return ceil(bounds_dist(target, source)/world.icon_size) + 1
 
 /proc/circlerangeturfs(center=usr,radius=3)
 	var/turf/centerturf = get_turf(center)
@@ -172,7 +172,6 @@
 	return L
 
 // Returns a list of mobs and/or objects in range of R from source. Used in radio and say code.
-
 /proc/get_mobs_or_objects_in_view(var/R, var/atom/source, var/include_mobs = 1, var/include_objects = 1)
 
 	var/turf/T = get_turf(source)
@@ -195,28 +194,24 @@
 				hear += I
 	return hear
 
-/proc/get_mobs_and_objs_in_view_fast(var/turf/T, var/range, var/list/mobs, var/list/objs, var/check_ghosts = null)
-	var/list/hear = list()
-	DVIEW(hear, range, T, INVISIBILITY_MAXIMUM)
+// Alternative to get_mobs_or_objects_in_view which only considers mobs and "listening" objects.
+/proc/get_listeners_in_range(turf/center, range, list/mobs, list/objs, check_ghosts=FALSE)
 	var/list/hearturfs = list()
-
-	for(var/atom/movable/AM in hear)
-		if(ismob(AM))
-			mobs += AM
-			hearturfs += get_turf(AM)
-		else if(isobj(AM))
-			objs += AM
-			hearturfs += get_turf(AM)
+	FOR_DVIEW(var/turf/T, range, center, INVISIBILITY_MAXIMUM)
+		hearturfs[T] = TRUE
+		for(var/mob/M in T)
+			mobs += M
+	END_FOR_DVIEW
 
 	for(var/mob/M in global.player_list)
 		if(check_ghosts && M.stat == DEAD && M.get_preference_value(check_ghosts) != PREF_NEARBY)
 			mobs |= M
-		else if(get_turf(M) in hearturfs)
+		else if(hearturfs[get_turf(M)])
 			mobs |= M
 
 	for(var/obj/O in global.listening_objects)
-		if(get_turf(O) in hearturfs)
-			objs |= O
+		if(hearturfs[get_turf(O)])
+			objs += O
 
 
 
@@ -228,7 +223,7 @@
 		if(Y1==Y2)
 			return 1 //Light cannot be blocked on same tile
 		else
-			var/s = SIMPLE_SIGN(Y2-Y1)
+			var/s = SIGN(Y2-Y1)
 			Y1+=s
 			while(Y1!=Y2)
 				T=locate(X1,Y1,Z)
@@ -238,8 +233,8 @@
 	else
 		var/m=(32*(Y2-Y1)+(PY2-PY1))/(32*(X2-X1)+(PX2-PX1))
 		var/b=(Y1+PY1/32-0.015625)-m*(X1+PX1/32-0.015625) //In tiles
-		var/signX = SIMPLE_SIGN(X2-X1)
-		var/signY = SIMPLE_SIGN(Y2-Y1)
+		var/signX = SIGN(X2-X1)
+		var/signY = SIGN(Y2-Y1)
 		if(X1<X2)
 			b+=m
 		while(X1!=X2 || Y1!=Y2)
@@ -293,6 +288,11 @@
 	src.dest_y = dest_y
 
 /proc/MixColors(const/list/colors)
+	switch(length(colors))
+		if(1)
+			return colors[1]
+		if(2)
+			return BlendRGBasHSV(colors[1], colors[2], 0.5)
 	var/list/reds = list()
 	var/list/blues = list()
 	var/list/greens = list()

@@ -22,7 +22,7 @@ var/global/list/map_count = list()
 
 	// Turf paths.
 	var/wall_type =  /turf/wall
-	var/floor_type = /turf/floor
+	var/floor_type = /turf/floor/plating
 	// Turf type to act on when applying this map. Set to TRUE to use world.turf, or a path to use a specific turf subtype.
 	var/target_turf_type
 
@@ -100,8 +100,7 @@ var/global/list/map_count = list()
 		else
 			return " "
 
-/datum/random_map/proc/display_map(atom/user)
-
+/datum/random_map/proc/display_map(user)
 	if(!user)
 		user = world
 
@@ -168,7 +167,7 @@ var/global/list/map_count = list()
 
 /datum/random_map/proc/apply_to_turf(var/x,var/y)
 	var/current_cell = TRANSLATE_COORD(x,y)
-	if(!current_cell)
+	if(!current_cell || current_cell > length(map))
 		return 0
 	var/turf/T = locate((origin_x-1)+x,(origin_y-1)+y,origin_z)
 	if(!T || (target_turf_type && !istype(T,target_turf_type)))

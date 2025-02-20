@@ -14,7 +14,7 @@
 		/obj/item/pill_bottle/happy                    = 2,
 		/obj/item/pill_bottle/zoom                     = 2,
 		/obj/item/chems/glass/beaker/vial/random/toxin = 1,
-		/obj/item/chems/glass/beaker/sulphuric         = 1,
+		/obj/item/chems/glass/beaker/sulfuric         = 1,
 		/obj/item/poster                               = 5,
 		/obj/item/butterflyblade                       = 3,
 		/obj/item/butterflyhandle                      = 3,
@@ -31,7 +31,7 @@
 		/obj/item/chems/syringe                        = 3,
 		/obj/item/chems/syringe/steroid                = 2,
 		/obj/item/chems/syringe/drugs                  = 1,
-		/obj/item/chems/food/egg/lizard                = 3
+		/obj/item/food/egg/lizard                = 3
 	)
 	return spawnable_choices
 
@@ -164,7 +164,8 @@
 		/obj/effect/decal/cleanable/ash,
 		/obj/effect/decal/cleanable/generic,
 		/obj/effect/decal/cleanable/flour,
-		/obj/effect/decal/cleanable/dirt,
+		/obj/effect/decal/cleanable/filth,
+		/obj/effect/decal/cleanable/dirt/visible,
 		/obj/item/remains/robot
 	)
 	return spawnable_choices
@@ -365,7 +366,7 @@
 		/obj/item/stack/material/segment/mapped/mhydrogen/ten         =  6,
 		/obj/item/stack/material/sheet/reinforced/mapped/plasteel/ten =  9,
 		/obj/item/stack/material/ingot/mapped/copper/ten              =  8,
-		/obj/item/box/monkeycubes                                     =  5,
+		/obj/item/box/animal_cubes/monkeys                            =  5,
 		/obj/item/firstaid/surgery                                    =  4,
 		/obj/item/cell/infinite                                       =  1,
 		/obj/random/archaeological_find                               =  2,
@@ -387,8 +388,8 @@
 /obj/random/vendor
 	name = "random vending machine"
 	desc = "This is a randomly selected vending machine."
-	icon = 'icons/obj/vending.dmi'
-	icon_state = "coffee-hellfire"
+	icon = 'icons/obj/machines/vending/coffee.dmi'
+	icon_state = "world-hellfire"
 
 /obj/random/vendor/spawn_choices()
 	var/static/list/spawnable_choices = list(

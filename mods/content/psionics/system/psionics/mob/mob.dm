@@ -7,9 +7,6 @@
 	return
 
 /mob/living/set_psi_rank(var/faculty, var/rank, var/take_larger, var/defer_update, var/temporary)
-	if(!get_target_zone()) // Can't target a zone, so you can't really invoke psionics.
-		to_chat(src, SPAN_NOTICE("You feel something strange brush against your mind... but your brain is not able to grasp it."))
-		return
 	var/datum/ability_handler/psionics/psi = get_ability_handler(/datum/ability_handler/psionics)
 	var/current_rank = psi?.get_rank(faculty)
 	if(!current_rank && !rank)
@@ -33,18 +30,18 @@
 	var/obj/item/projectile/P = damage_source
 	var/datum/ability_handler/psionics/psi = get_ability_handler(/datum/ability_handler/psionics)
 	if(istype(P) && !P.disrupts_psionics() && psi && P.starting && prob(psi.get_armour(SSmaterials.get_armor_key(P.atom_damage_type, P.damage_flags())) * 0.5) && psi.spend_power(round(damage/10)))
-		visible_message("<span class='danger'>\The [src] deflects [attack_text]!</span>")
+		visible_message(SPAN_DANGER("\The [src] deflects [isatom(attack_text) ? "\the [attack_text]" : attack_text]!"))
 		P.redirect(P.starting.x + rand(-2,2), P.starting.y + rand(-2,2), get_turf(src), src)
 		return PROJECTILE_FORCE_MISS
 	. = ..()
 
-/mob/living/get_cuff_breakout_mod()
+/mob/living/get_restraint_breakout_mod()
 	. = ..()
 	var/datum/ability_handler/psionics/psi = get_ability_handler(/datum/ability_handler/psionics)
 	if(psi)
 		. = clamp(. - (psi.get_rank(PSI_PSYCHOKINESIS)*0.2), 0, 1)
 
-/mob/living/can_break_cuffs()
+/mob/living/can_break_restraints()
 	var/datum/ability_handler/psionics/psi = get_ability_handler(/datum/ability_handler/psionics)
 	. = (psi && psi.can_use() && psi.get_rank(PSI_PSYCHOKINESIS) >= PSI_RANK_PARAMOUNT)
 

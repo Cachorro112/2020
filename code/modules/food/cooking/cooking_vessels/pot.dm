@@ -6,13 +6,42 @@
 	cooking_category   = RECIPE_CATEGORY_POT
 	presentation_flags = PRESENTATION_FLAG_NAME
 	obj_flags          = OBJ_FLAG_HOLLOW | OBJ_FLAG_INSULATED_HANDLE
+	var/last_boil_status
+	var/last_boil_temp
 
-/obj/item/chems/cooking_vessel/pot/on_update_icon()
+/obj/item/chems/cooking_vessel/pot/iron
+	material = /decl/material/solid/metal/iron
+	color = /decl/material/solid/metal/iron::color
+
+/obj/item/chems/cooking_vessel/pot/get_reagents_overlay(state_prefix)
+	var/image/our_overlay = ..()
+	if(our_overlay && last_boil_status && check_state_in_icon("[our_overlay.icon_state]_boiling", our_overlay.icon))
+		our_overlay.icon_state = "[our_overlay.icon_state]_boiling"
+	return our_overlay
+
+/obj/item/chems/cooking_vessel/pot/on_reagent_change()
+	last_boil_temp   = null
+	last_boil_status = null
 	. = ..()
-	if(reagents?.total_volume)
+
+/obj/item/chems/cooking_vessel/pot/ProcessAtomTemperature()
+	. = ..()
+
+	// Largely ignore return value so we don't skip this update on the final time we temperature process.
+	if(temperature != last_boil_temp)
+
+		last_boil_temp = temperature
+		var/next_boil_status = FALSE
 		for(var/reagent_type in reagents?.reagent_volumes)
 			var/decl/material/reagent = GET_DECL(reagent_type)
 			if(!isnull(reagent.boiling_point) && temperature >= reagent.boiling_point)
-				add_overlay(overlay_image(icon, "[icon_state]-boiling", reagents.get_color(), RESET_COLOR | RESET_ALPHA))
-				return
-		add_overlay(overlay_image(icon, "[icon_state]-still", reagents.get_color(), RESET_COLOR | RESET_ALPHA))
+				next_boil_status = TRUE
+				break
+
+		if(next_boil_status != last_boil_status)
+			last_boil_status = next_boil_status
+			update_icon()
+
+	if(. == PROCESS_KILL)
+		last_boil_temp   = null
+		last_boil_status = null

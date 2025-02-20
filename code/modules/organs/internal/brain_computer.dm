@@ -12,6 +12,7 @@
 		/decl/material/solid/phoron = MATTER_AMOUNT_TRACE,
 		/decl/material/solid/gemstone/diamond = MATTER_AMOUNT_TRACE
 	)
+	bodytype = /decl/bodytype/prosthetic/basic_human
 	can_use_brain_interface = FALSE
 	var/searching = FALSE
 	var/brain_name
@@ -24,7 +25,6 @@
 
 /obj/item/organ/internal/brain/robotic/Initialize()
 	. = ..()
-	set_bodytype(/decl/bodytype/prosthetic/basic_human)
 	update_icon()
 	brain_name = "[pick(list("ADA","DOS","GNU","MAC","WIN"))]-[random_id(type,1000,9999)]"
 	SetName("[name] ([brain_name])")
@@ -51,7 +51,7 @@
 		searching = TRUE
 		update_icon()
 		var/decl/ghosttrap/G = GET_DECL(/decl/ghosttrap/machine_intelligence)
-		G.request_player(brainmob, "Someone is requesting a personality for a [name].", 1 MINUTE)
+		G.request_player(brainmob, "Someone is requesting a personality for \a [name].", 1 MINUTE)
 		addtimer(CALLBACK(src, PROC_REF(reset_search)), 1 MINUTE)
 		return TRUE
 	. = ..()

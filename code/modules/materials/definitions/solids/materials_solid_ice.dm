@@ -34,12 +34,13 @@
 	liquid_name = "water"
 	solid_name = "snow"
 	gas_name = "steam"
+	color = COLOR_WHITE
 	codex_name = null
 	uid = "solid_snow"
 	hardness = MAT_VALUE_MALLEABLE
 	dug_drop_type = /obj/item/stack/material/ore/handful
 	default_solid_form = /obj/item/stack/material/ore/handful
-	can_backfill_turf_type = /turf/floor/natural/snow
+	can_backfill_floor_type = /decl/flooring/snow
 
 /decl/material/solid/ice/aspium
 	name = "aspium"
@@ -116,9 +117,9 @@
 	liquid_name = null
 	gas_name = null
 	heating_products = list(
-		/decl/material/gas/ammonia  = 0.05,
-		/decl/material/liquid/water = 0.55,
-		/decl/material/liquid/ethanol = 0.4
+		/decl/material/gas/ammonia            = 0.05,
+		/decl/material/liquid/water           = 0.55,
+		/decl/material/liquid/alcohol/ethanol = 0.4
 	)
 	uid = "solid_ice_ediroite"
 	value = 0.2

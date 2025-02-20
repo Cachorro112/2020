@@ -36,6 +36,7 @@
 				above.ChangeTurf(open_turf_type, keep_air = TRUE, update_open_turfs_above = FALSE)
 
 /turf/proc/ChangeTurf(var/turf/N, var/tell_universe = TRUE, var/force_lighting_update = FALSE, var/keep_air = FALSE, var/update_open_turfs_above = TRUE, var/keep_height = FALSE)
+
 	if (!N)
 		return
 
@@ -48,6 +49,9 @@
 
 	if (!(atom_flags & ATOM_FLAG_INITIALIZED))
 		return new N(src)
+
+	// Rebuilt on next call.
+	supporting_platform = null
 
 	// Track a number of old values for the purposes of raising
 	// state change events after changing the turf to the new type.
@@ -66,6 +70,7 @@
 	var/old_open_turf_type =   open_turf_type
 	var/old_affecting_heat_sources = affecting_heat_sources
 	var/old_height =           get_physical_height()
+	var/old_alpha_mask_state = get_movable_alpha_mask_state(null)
 
 	var/old_ambience =         ambient_light
 	var/old_ambience_mult =    ambient_light_multiplier
@@ -174,8 +179,9 @@
 	if(update_open_turfs_above)
 		update_open_above(old_open_turf_type)
 
-	for(var/atom/movable/AM in W.contents)
-		AM.update_turf_alpha_mask()
+	if(old_alpha_mask_state != get_movable_alpha_mask_state(null))
+		for(var/atom/movable/AM as anything in W)
+			AM.update_turf_alpha_mask()
 
 /turf/proc/transport_properties_from(turf/other, transport_air)
 	if(transport_air && can_inherit_air && (other.zone || other.air))
@@ -199,7 +205,9 @@
 	if(!..())
 		return FALSE
 
-	set_flooring(other.flooring)
+	// Unlint this to copy the actual raw vars.
+	UNLINT(_flooring = other._flooring)
+	UNLINT(_base_flooring = other._base_flooring)
 	set_floor_broken(other._floor_broken, TRUE)
 	set_floor_burned(other._floor_burned)
 	return TRUE
