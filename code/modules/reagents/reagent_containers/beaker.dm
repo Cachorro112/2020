@@ -191,5 +191,5 @@
 	desc = "A measuring cup, used to measure ingredients for cooking."
 	icon = 'icons/obj/items/chem/beakers/measuringcup.dmi'
 
-/obj/item/chems/glass/beaker/measuringcup/attack_self()
-	return
+/obj/item/chems/glass/beaker/measuringcup/can_lid()
+	return FALSE
