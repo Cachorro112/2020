@@ -44,7 +44,7 @@
 
 /datum/universal_state/nether_invasion/proc/finalize_nether_invasion()
 	global.cinematic.station_explosion_cinematic(0,null) // TODO: Custom cinematic
-	to_world("<span class='sinister' style='font-size:22pt'>Humanity has fallen, further resistence is futily. Nether has Raise to it's endless rule over the universe. Praise the Three!</span>")
+	to_world("<span class='sinister' style='font-size:22pt'>Humanity has fallen, further resistence is futily. Nether has Raise to its endless rule over the universe. Praise the Three!</span>")
 	universe_has_ended = TRUE
 
 /datum/universal_state/nether_invasion/proc/Firealarm()

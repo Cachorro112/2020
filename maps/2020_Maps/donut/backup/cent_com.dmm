@@ -14,7 +14,7 @@
 "an" = (/obj/structure/closet/l3closet/general/multi,/turf/floor/tiled,/area/centcom)
 "ao" = (/obj/machinery/portable_atmospherics/canister/oxygen,/turf/floor/tiled,/area/centcom)
 "ap" = (/obj/structure/table,/obj/item/toolbox/mechanical,/obj/item/backpack,/obj/item/clothing/head/earmuffs,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/jumpsuit/cargo,/obj/item/clothing/shoes/color/brown,/turf/floor/tiled/old_cargo,/area/centcom)
-"aq" = (/obj/structure/closet/crate,/obj/item/stack/material/rods/mapped/steel/fifty,/obj/item/stack/material/rods/mapped/steel/fifty,/turf/floor/tiled/old_cargo,/area/centcom)
+"aq" = (/obj/structure/closet/crate,/obj/item/stack/material/strut/mapped/steel/fifty,/obj/item/stack/material/strut/mapped/steel/fifty,/obj/item/stack/material/rods/fifty,/obj/item/stack/material/rods/fifty,/turf/floor/tiled/old_cargo,/area/centcom)
 "ar" = (/obj/machinery/light{dir = 4},/turf/floor/tiled/old_cargo,/area/centcom)
 "as" = (/obj/machinery/portable_atmospherics/canister/sleeping_agent,/turf/floor/tiled,/area/centcom)
 "at" = (/obj/structure/closet/crate,/turf/floor/tiled/old_cargo,/area/centcom)
@@ -117,7 +117,7 @@
 "cm" = (/obj/structure/table,/obj/item/implantcase/tracking,/obj/item/implantcase/tracking,/obj/item/implantcase/tracking,/obj/item/implantcase/tracking,/obj/item/implantcase/tracking,/obj/machinery/light{dir = 1},/turf/floor/tiled,/area/centcom)
 "cn" = (/obj/machinery/light{dir = 8},/turf/floor/tiled/white,/area/centcom)
 "co" = (/obj/structure/table,/turf/floor/tiled/white,/area/centcom)
-"cp" = (/obj/machinery/light{dir = 1},/obj/structure/closet/crate,/obj/item/stack/material/rods/mapped/steel/fifty,/obj/item/stack/material/rods/mapped/steel/fifty,/turf/floor/tiled/old_cargo,/area/centcom)
+"cp" = (/obj/structure/closet/crate,/obj/item/stack/material/strut/mapped/steel/fifty,/obj/item/stack/material/strut/mapped/steel/fifty,/obj/item/stack/material/rods/fifty,/obj/item/stack/material/rods/fifty,/obj/machinery/light{dir = 1},/turf/floor/tiled/old_cargo,/area/centcom)
 "cq" = (/obj/machinery/computer/modular/preset/cardslot/command{dir = 1},/turf/floor/tiled/white,/area/centcom)
 "cr" = (/obj/structure/table,/obj/item/toolbox/mechanical,/obj/item/backpack,/obj/item/clothing/head/earmuffs,/obj/item/clothing/glasses/sunglasses,/obj/item/clothing/jumpsuit/cargo,/obj/item/clothing/shoes/color/brown,/obj/machinery/light{dir = 8},/turf/floor/tiled/old_cargo,/area/centcom)
 "cs" = (/obj/machinery/light{dir = 8},/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
@@ -130,7 +130,7 @@
 "cz" = (/obj/structure/closet/emcloset,/obj/machinery/light{dir = 1},/turf/floor/tiled,/area/centcom)
 "cA" = (/obj/machinery/light{dir = 4},/turf/floor/tiled,/area/centcom)
 "cB" = (/obj/machinery/light,/turf/floor/tiled,/area/centcom)
-"cC" = (/obj/machinery/door/blast/shutters{name = "Cargo Drone"; dir = 4; id_tag = "cargo_drone"},/obj/machinery/button/blast_door{name = "Drone Shutters"; id_tag = "cargo_drone"},/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
+"cC" = (/obj/machinery/door/blast/shutters{id_tag = "cargo_drone"; name = "Cargo Drone"; dir = 4},/obj/machinery/button/blast_door{name = "Drone Shutters"; id_tag = "cargo_drone"},/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
 "cD" = (/obj/machinery/teleport/station{dir = 4},/obj/machinery/light{dir = 1},/turf/floor/tiled/white,/area/centcom)
 "cE" = (/obj/machinery/light{dir = 4},/turf/floor/tiled/white,/area/centcom)
 "cF" = (/obj/machinery/light,/turf/floor/tiled/white,/area/centcom)
@@ -157,7 +157,7 @@
 "Sf" = (/obj/effect/shuttle_landmark/supply/start,/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
 "Ud" = (/obj/machinery/light,/turf/floor/tiled/old_cargo,/area/centcom)
 "UK" = (/obj/machinery/light{dir = 1},/obj/structure/table,/turf/floor/tiled,/area/centcom)
-"We" = (/obj/machinery/door/blast/shutters{name = "Cargo Drone"; dir = 4; id_tag = "cargo_drone"},/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
+"We" = (/obj/machinery/door/blast/shutters{id_tag = "cargo_drone"; name = "Cargo Drone"; dir = 4},/turf/floor/tiled/monotile,/area/shuttle/supply_shuttle)
 
 (1,1,1) = {"
 aLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaLaL

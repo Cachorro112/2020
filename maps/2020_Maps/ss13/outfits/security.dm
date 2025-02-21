@@ -10,7 +10,7 @@
 
 /decl/hierarchy/outfit/job/security/detective
 	name = "Job - Forensic Technician"
-	uniform = /obj/item/clothing/jumpsuit/security/nt
+	uniform = /obj/item/clothing/jumpsuit/security
 	suit = /obj/item/clothing/suit/det_trench
 	shoes = /obj/item/clothing/shoes/dress
 	hands = list(/obj/item/briefcase/crimekit)
@@ -24,7 +24,7 @@
 
 /decl/hierarchy/outfit/job/security/officer
 	name = "Job - Security Officer"
-	uniform = /obj/item/clothing/jumpsuit/security/nt
+	uniform = /obj/item/clothing/jumpsuit/security
 	suit = /obj/item/clothing/suit/armor/pcarrier/nanotrasen_light
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 	shoes = /obj/item/clothing/shoes/jackboots

@@ -32,38 +32,15 @@
 		)
 	max_pressure_protection = ENG_VOIDSUIT_MAX_PRESSURE
 
-//Default Space Suit
-//Sprites From Beestation
-
-/obj/item/clothing/head/helmet/space/new_space_suit
-	name = "space helmet"
-	desc = "A slim and modern space helmet that protects against low pressure environments."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/space_suit/space_suit_helmet.dmi'
-	armor = list(
-		ARMOR_BIO = ARMOR_BIO_SHIELDED,
-		ARMOR_RAD = ARMOR_RAD_SMALL
-		)
-
-/obj/item/clothing/suit/space/new_space_suit
-	name = "space suit"
-	icon = 'icons/clothing/spacesuit/void/nasa/suit.dmi'
-	desc = "A slim and modern space suit that protects against low pressure environments."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/space_suit/space_suit.dmi'
-	armor = list(
-		ARMOR_BIO = ARMOR_BIO_SHIELDED,
-		ARMOR_RAD = ARMOR_RAD_SMALL
-		)
-	allowed = list(/obj/item/flashlight,/obj/item/tank,/obj/item/suit_cooling_unit)
-
 //Syndicate Re-sprite
 //Sprites From Baystation
 
 /obj/item/clothing/head/helmet/space/void/merc
 	name = "blood-red voidsuit helmet"
 	desc = "An advanced helmet designed for work in special operations. Property of the Syndicate."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/syndicate/space_suit/syndi_helmet.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/sprite_change/space_suit/syndi_helmet.dmi'
 
 /obj/item/clothing/suit/space/void/merc
 	name = "blood-red voidsuit"
 	desc = "An advanced suit that protects against injuries during special operations. Property of the Syndicate."
-	icon = 'mods/content/2020_the_cold_war/icons/clothing/syndicate/space_suit/syndi.dmi'
+	icon = 'mods/content/2020_the_cold_war/icons/clothing/sprite_change/space_suit/syndi.dmi'

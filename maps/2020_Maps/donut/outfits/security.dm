@@ -9,7 +9,7 @@
 /decl/hierarchy/outfit/job/security/hos
 	name = "Job - Head of security"
 	r_pocket = /obj/item/radio
-	uniform = /obj/item/clothing/jumpsuit/head_of_security/nt
+	uniform = /obj/item/clothing/jumpsuit/head_of_security
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/beret/nt_security/hos
@@ -35,7 +35,7 @@
 
 /decl/hierarchy/outfit/job/security/officer
 	name = "Job - Security Officer"
-	uniform = /obj/item/clothing/jumpsuit/security/nt
+	uniform = /obj/item/clothing/jumpsuit/security
 	suit = /obj/item/clothing/suit/armor/pcarrier/nanotrasen_light
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 	shoes = /obj/item/clothing/shoes/jackboots
