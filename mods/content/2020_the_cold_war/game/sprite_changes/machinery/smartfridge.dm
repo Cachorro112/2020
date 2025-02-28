@@ -1,18 +1,7 @@
 /obj/machinery/smartfridge
 	name = "\improper SmartFridge"
-	icon = 'mods/content/2020_the_cold_war/icons/obj/vending.dmi'
-	icon_state = "smartfridge"
-	layer = BELOW_OBJ_LAYER
-	density = TRUE
-	anchored = TRUE
-	idle_power_usage = 5
-	active_power_usage = 100
-	atom_flags = ATOM_FLAG_NO_CHEM_CHANGE
-	obj_flags = OBJ_FLAG_ANCHORABLE | OBJ_FLAG_ROTATABLE
-	atmos_canpass = CANPASS_NEVER
-	required_interaction_dexterity = DEXTERITY_SIMPLE_MACHINES
-
-	icon_base = "smartfridge"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/smartfridges/science.dmi'
+	var/icon_base = ICON_STATE_WORLD
 
 /obj/machinery/smartfridge/on_update_icon()
 	overlays.Cut()
@@ -28,17 +17,13 @@
 		icon_state = "[icon_base]-off"
 
 /obj/machinery/smartfridge/secure/medbay
-	icon_state = "medfridge"
-	icon_base = "medfridge"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/smartfridges/medical.dmi'
 
 /obj/machinery/smartfridge/chemistry
-	icon_state = "medfridge"
-	icon_base = "medfridge"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/smartfridges/medical.dmi'
 
 /obj/machinery/smartfridge/drinks
-	icon_state = "boozeomat"
-	icon_base = "boozeomat"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/smartfridges/booze.dmi'
 
 /obj/machinery/smartfridge/foods
-	icon_state = "smartfridge"
-	icon_base = "smartfridge"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/smartfridges/science.dmi'

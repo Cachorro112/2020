@@ -40,7 +40,7 @@
 		access_mining,
 		access_mining_station
 	)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/engineer
+	outfit_type = /decl/outfit/job/engineering/engineer
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_BASIC,
@@ -110,7 +110,7 @@
 		access_mining,
 		access_mining_station
 	)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/technician
+	outfit_type = /decl/outfit/job/engineering/technician
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_EXPERT,
@@ -180,7 +180,7 @@
 		access_mining,
 		access_mining_station
 	)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/atmos
+	outfit_type = /decl/outfit/job/engineering/atmos
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_BASIC,
@@ -244,7 +244,7 @@
 		access_mining_station
 	)
 	minimal_player_age = 3
-	outfit_type = /decl/hierarchy/outfit/job/qm
+	outfit_type = /decl/outfit/job/qm
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 	    SKILL_FINANCE  = SKILL_BASIC,
@@ -302,7 +302,7 @@
 		access_mining,
 		access_mining_station
 	)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/mining
+	outfit_type = /decl/outfit/job/engineering/mining
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_HAULING  = SKILL_ADEPT,

@@ -10,7 +10,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/makarov/update_base_icon()
+/obj/item/gun/projectile/pistol/makarov/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else
@@ -27,9 +27,9 @@
 	accuracy_power = 7
 	safety_icon = null
 	ammo_indicator = FALSE
-	origin_tech = @'{"combat":3,"materials":3'
+	origin_tech = @'{"combat":3,"materials":3}'
 
-/obj/item/gun/projectile/pistol/mp443/update_base_icon()
+/obj/item/gun/projectile/pistol/mp443/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else

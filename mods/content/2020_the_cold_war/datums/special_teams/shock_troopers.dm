@@ -19,7 +19,7 @@
 	initial_spawn_target = 6
 
 	faction = "europe"
-	default_outfit = /decl/hierarchy/outfit/shock_trooper
+	default_outfit = /decl/outfit/shock_trooper
 	id_title = "Shock Trooper"
 	var/deployed = 0
 

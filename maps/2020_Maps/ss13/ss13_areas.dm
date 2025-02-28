@@ -356,7 +356,7 @@
 	icon_state = "mining"
 	area_flags = AREA_FLAG_IS_NOT_PERSISTENT
 	sound_env = STANDARD_STATION
-	base_turf = /turf/floor/natural/barren
+	base_turf = /turf/floor/barren
 	req_access = list(list(access_mining, access_xenoarch))
 
 /area/mining/hangar
@@ -409,6 +409,6 @@
 	icon_state = "cave"
 	ambience = list('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
 	sound_env = ASTEROID
-	base_turf = /turf/floor/natural/barren
+	base_turf = /turf/floor/barren
 	area_flags = AREA_FLAG_IS_BACKGROUND | AREA_FLAG_HIDE_FROM_HOLOMAP | AREA_FLAG_EXTERNAL
 	is_outside = OUTSIDE_YES

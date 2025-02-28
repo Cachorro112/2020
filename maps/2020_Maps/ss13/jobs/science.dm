@@ -24,7 +24,7 @@
 		access_hydroponics
 	)
 	minimal_player_age = 7
-	outfit_type = /decl/hierarchy/outfit/job/science/scientist
+	outfit_type = /decl/outfit/job/science/scientist
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_COMPUTER = SKILL_BASIC,
@@ -65,7 +65,7 @@
 		access_hydroponics
 	)
 	minimal_player_age = 7
-	outfit_type = /decl/hierarchy/outfit/job/science/research_tech
+	outfit_type = /decl/outfit/job/science/research_tech
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_COMPUTER = SKILL_BASIC,

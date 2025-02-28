@@ -1,11 +1,11 @@
-/decl/hierarchy/outfit/job/medical
-	abstract_type = /decl/hierarchy/outfit/job/medical
+/decl/outfit/job/medical
+	abstract_type = /decl/outfit/job/medical
 
-/decl/hierarchy/outfit/job/medical/Initialize()
+/decl/outfit/job/medical/Initialize()
 	. = ..()
 	BACKPACK_OVERRIDE_MEDICAL
 
-/decl/hierarchy/outfit/job/medical/doctor
+/decl/outfit/job/medical/doctor
 	name = "Job - Medical Doctor"
 	uniform = /obj/item/clothing/jumpsuit/medical
 	shoes = /obj/item/clothing/shoes/color/white
@@ -15,7 +15,7 @@
 	l_pocket = /obj/item/radio
 	id_type = /obj/item/card/id/medical
 
-/decl/hierarchy/outfit/job/medical/med_researcher
+/decl/outfit/job/medical/med_researcher
 	name = "Job - Medical Researcher"
 	uniform = /obj/item/clothing/jumpsuit/medical
 	shoes = /obj/item/clothing/shoes/color/white

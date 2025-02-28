@@ -41,7 +41,7 @@
 
 	spawn_flags = SPECIES_IS_WHITELISTED
 
-	preview_outfit = /decl/hierarchy/outfit/job/generic/engineer
+	preview_outfit = /decl/outfit/job/generic/engineer
 
 	organs_icon = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/organs.dmi'
 
@@ -59,15 +59,15 @@
 
 	move_trail = /obj/effect/decal/cleanable/blood/tracks/paw
 
-	available_cultural_info = list(
-		TAG_HOMEWORLD = list(
-			/decl/cultural_info/location/farey/obyaes,
-			/decl/cultural_info/location/farey/space
+	available_background_info = list(
+		/decl/background_category/homeworld = list(
+			/decl/background_detail/location/farey/obyaes,
+			/decl/background_detail/location/farey/space
 		),
-		TAG_FACTION = list(/decl/cultural_info/faction/remote/nanotrasen), // If they are on space, they work for nanotrasen.
-		TAG_CULTURE = list(
-			/decl/cultural_info/culture/farey,
-			/decl/cultural_info/culture/farey/kalyec
+		/decl/background_category/faction = list(/decl/background_detail/faction/remote/nanotrasen), // If they are on space, they work for nanotrasen.
+		/decl/background_category/heritage = list(
+			/decl/background_detail/heritage/farey,
+			/decl/background_detail/heritage/farey/kalyec
 		)
 	)
 

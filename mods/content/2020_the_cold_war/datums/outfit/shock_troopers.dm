@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/shock_trooper
+/decl/outfit/shock_trooper
 	name =     "Spec Ops - Shock Trooper"
 	l_ear =    /obj/item/radio/headset/ert
 	uniform =  /obj/item/clothing/jumpsuit/shock_trooper
@@ -14,7 +14,7 @@
 		/obj/item/energy_blade/sword
 	)
 
-/decl/hierarchy/outfit/shock_trooper/leader
+/decl/outfit/shock_trooper/leader
 	name =    "Spec Ops - Shock Trooper Leader"
 	uniform =  /obj/item/clothing/jumpsuit/shock_trooper/officer
 	l_pocket = /obj/item/pinpointer

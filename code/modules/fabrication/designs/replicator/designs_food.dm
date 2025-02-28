@@ -28,8 +28,8 @@
 // Remove matter from plates from the recipe, since we don't print food with plates.
 /datum/fabricator_recipe/food/get_resources()
 	. = ..()
-	var/obj/item/chems/food/food_result = path
-	if(!ispath(food_result, /obj/item/chems/food))
+	var/obj/item/food/food_result = path
+	if(!ispath(food_result, /obj/item/food))
 		return // why?? why would this not be food??
 	var/plate_path = initial(food_result.plate)
 	if(ispath(plate_path))
@@ -42,7 +42,7 @@
 /datum/fabricator_recipe/food/build(turf/location, datum/fabricator_build_order/order)
 	// TODO: On dev, we can just spawn it with skip_plate = TRUE instead. Without that we need a workaround.
 	. = ..()
-	for(var/obj/item/chems/food/food in .)
+	for(var/obj/item/food/food in .)
 		if(istype(food.plate))
 			QDEL_NULL(food.plate)
 

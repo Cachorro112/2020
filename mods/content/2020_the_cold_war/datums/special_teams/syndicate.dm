@@ -17,7 +17,7 @@
 
 	faction = "syndicate"
 
-	default_outfit = /decl/hierarchy/outfit/nuke_ops
+	default_outfit = /decl/outfit/nuke_ops
 
 /decl/special_role/nuke_ops/greet(var/datum/mind/player)
 	if(!..())
@@ -59,7 +59,7 @@
 
 	faction = "syndicate"
 
-	default_outfit = /decl/hierarchy/outfit/syndi_assault
+	default_outfit = /decl/outfit/syndi_assault
 
 /decl/special_role/syndi_assault/greet(var/datum/mind/player)
 	if(!..())

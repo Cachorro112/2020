@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/nuke_ops
+/decl/outfit/nuke_ops
 	name = "Spec Ops - Syndicate Nuclear Operative"
 	uniform = /obj/item/clothing/jumpsuit/syndicate_tactical
 	suit = /obj/item/clothing/suit/armor/syndicate
@@ -13,7 +13,7 @@
 	id_pda_assignment = "Syndicate"
 	id_desc = "Syndicate Nuclear Operative"
 
-/decl/hierarchy/outfit/syndi_assault
+/decl/outfit/syndi_assault
 	name = "Spec Ops - Syndicate Assault Unit"
 	uniform = /obj/item/clothing/jumpsuit/syndicate_tactical
 	suit = /obj/item/clothing/suit/armor/syndicate/heavy

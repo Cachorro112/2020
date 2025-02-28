@@ -19,16 +19,6 @@ var/global/const/SMES_WIRE_OUTPUT    = BITFLAG(2)
 var/global/const/SMES_WIRE_GROUNDING = BITFLAG(3)
 /// Cut to disable failsafes, mend to reenable
 var/global/const/SMES_WIRE_FAILSAFES = BITFLAG(4)
-/// Remote control (AI and consoles), cut to disable
-var/global/const/SMES_WIRE_RCON      = BITFLAG(0)
-/// Input wire, cut to disable input, pulse to disable for 60s
-var/global/const/SMES_WIRE_INPUT     = BITFLAG(1)
-/// Output wire, cut to disable output, pulse to disable for 60s
-var/global/const/SMES_WIRE_OUTPUT    = BITFLAG(2)
-/// Cut to quickly discharge causing sparks, pulse to only create few sparks
-var/global/const/SMES_WIRE_GROUNDING = BITFLAG(3)
-/// Cut to disable failsafes, mend to reenable
-var/global/const/SMES_WIRE_FAILSAFES = BITFLAG(4)
 
 /datum/wires/smes/CanUse(var/mob/living/user)
 	var/obj/machinery/power/smes/buildable/storage = holder

@@ -2,7 +2,7 @@
 	iterations = 5
 	descriptor = "asteroid caves"
 	wall_type =  /turf/wall/natural
-	floor_type = /turf/floor/natural/barren
+	floor_type = /turf/floor/barren
 	target_turf_type = /turf/unsimulated/mask
 
 /datum/level_data/asteroid_mining

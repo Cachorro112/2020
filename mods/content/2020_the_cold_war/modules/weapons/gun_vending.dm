@@ -2,7 +2,7 @@
 	name = "NATO Weapons Vending"
 	desc = "A NATO weapons vending."
 	product_ads = "Crack communist skulls!;Taste some freedom!;You got oil, right?;Get your guns here, Mate.;Commies most fear!"
-	icon_state = "ammo"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/vending/usa.dmi'
 	vend_delay = 14
 	markup = 0
 	base_type = /obj/machinery/vending/security
@@ -30,7 +30,7 @@
 	name = "Soviet Weapons Vending"
 	desc = "A Soviet weapons vending."
 	product_ads = "Crack capitalist skulls!;Taste some collectivism!;No food for the ukrainians.;Be awere, if the snow talks, fire at it."
-	icon_state = "soviet"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/vending/soviet.dmi'
 	vend_delay = 14
 	markup = 0
 	base_type = /obj/machinery/vending/security
@@ -50,9 +50,7 @@
 /obj/machinery/vending/guns/general_guns
 	name = "General Weapons Vending"
 	desc = "A General weapons vending."
-	icon_state = "sec"
-	icon_deny = "sec-deny"
-	icon_vend = "sec-vend"
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/vending/security.dmi'
 	vend_delay = 14
 	markup = 0
 	base_type = /obj/machinery/vending/security

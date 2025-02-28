@@ -91,7 +91,7 @@
 	if(prob(10))
 		to_chat(M, SPAN_DANGER("<font size = [rand(2,4)]>[pick(overdose_messages)]</font>"))
 
-/obj/item/chems/food/butchery/meat/nether
+/obj/item/food/butchery/meat/nether
 	desc = "An ugly-looking meat with a rotten smell."
 	icon                           = 'mods/content/2020_the_cold_war/icons/mobs/items/nether_meat.dmi'
 	nutriment_type                 = /decl/material/liquid/nether
