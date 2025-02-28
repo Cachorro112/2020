@@ -9,24 +9,24 @@
 /turf/wall/shuttle,
 /area/tether_away/debrisfield/explored)
 "d" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/tether_away/debrisfield/explored)
 "e" = (
 /obj/structure/shuttle/window,
 /obj/structure/grille,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "f" = (
 /turf/floor/shuttle/blue/airless,
 /area/tether_away/debrisfield/explored)
 "g" = (
 /obj/effect/decal/cleanable/generic,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/tether_away/debrisfield/explored)
 "h" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/constructable_frame/machine_frame,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "i" = (
 /obj/machinery/constructable_frame/machine_frame,
@@ -42,11 +42,11 @@
 /obj/structure/shuttle/engine/propulsion{
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "l" = (
-/obj/effect/decal/cleanable/dirt,
-/turf/floor/airless,
+/obj/effect/decal/cleanable/dirt/visible,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "m" = (
 /obj/structure/table,
@@ -56,9 +56,9 @@
 /turf/floor/shuttle/blue/airless,
 /area/tether_away/debrisfield/explored)
 "n" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/generic,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "o" = (
 /obj/structure/table,
@@ -74,19 +74,19 @@
 /turf/floor/shuttle/blue/airless,
 /area/tether_away/debrisfield/explored)
 "q" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/molten_item,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "r" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/blood/oil,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "s" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/remains/posi,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "t" = (
 /obj/structure/door/shuttle,
@@ -129,41 +129,41 @@
 /turf/floor/shuttle/blue/airless,
 /area/tether_away/debrisfield/explored)
 "C" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random/firstaid,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "D" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/firstaid/adv,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "E" = (
 /obj/item/shard/shrapnel,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/tether_away/debrisfield/explored)
 "F" = (
 /obj/item/stack/material/sheet/mapped/steel,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/tether_away/debrisfield/explored)
 "G" = (
 /obj/item/stack/material/rods,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/tether_away/debrisfield/explored)
 "H" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/stack/material/sheet/mapped/steel,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "I" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/stack/material/rods,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "J" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/shard/shrapnel,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/tether_away/debrisfield/explored)
 "K" = (
 /obj/item/shard/shrapnel,

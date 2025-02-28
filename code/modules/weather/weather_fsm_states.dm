@@ -95,21 +95,16 @@
 	handle_protected_effects(M, weather)
 
 /decl/state/weather/proc/handle_exposure(var/mob/living/M, var/exposure, var/obj/abstract/weather_system/weather)
-
-	// Send strings if we're outside.
-	if(M.is_outside() && M.client)
-		if(!weather.show_weather(M))
-			weather.show_wind(M)
-
-	if(exposure != WEATHER_IGNORE && weather.set_cooldown(M))
-		if(exposure == WEATHER_EXPOSED)
-			handle_exposure_effects(M, weather)
-		else if(exposure == WEATHER_ROOFED)
-			handle_roofed_effects(M, weather)
-		else if(exposure == WEATHER_PROTECTED)
-			var/list/protected_by = M.get_weather_protection()
-			if(LAZYLEN(protected_by))
-				handle_protected_effects(M, weather, pick(protected_by))
+	if(exposure == WEATHER_IGNORE || !weather.set_cooldown(M))
+		return
+	if(exposure == WEATHER_EXPOSED)
+		handle_exposure_effects(M, weather)
+	else if(exposure == WEATHER_ROOFED)
+		handle_roofed_effects(M, weather)
+	else if(exposure == WEATHER_PROTECTED)
+		var/list/protected_by = M.get_weather_protection()
+		if(LAZYLEN(protected_by))
+			handle_protected_effects(M, weather, pick(protected_by))
 
 /decl/state/weather/proc/adjust_temperature(initial_temperature)
 	return initial_temperature
@@ -168,7 +163,7 @@
 		/decl/state_transition/weather/snow_heavy
 	)
 
-/decl/state/weather/snow/heavy/adjust_temperature(initial_temperature)
+/decl/state/weather/snow/medium/adjust_temperature(initial_temperature)
 	return min(initial_temperature - 25, T0C)
 
 /decl/state/weather/snow/heavy
@@ -253,7 +248,8 @@
 
 /decl/state/weather/rain/hail/handle_exposure_effects(var/mob/living/M, var/obj/abstract/weather_system/weather)
 	to_chat(M, SPAN_DANGER("You are pelted by a shower of hail!"))
-	M.take_damage(rand(1, 3))
+	if(M.getBruteLoss() < 20) // Put a cap on it to make it annoying but not lethal.
+		M.take_damage(rand(1, 3))
 
 /decl/state/weather/ash
 	name =  "Ash"

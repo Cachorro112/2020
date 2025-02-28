@@ -10,7 +10,7 @@
 		access_kitchen
 	)
 	minimal_access = list(access_kitchen)
-	outfit_type = /decl/hierarchy/outfit/job/chef
+	outfit_type = /decl/outfit/job/chef
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_ADEPT,
 		SKILL_COOKING   = SKILL_ADEPT,
@@ -31,7 +31,7 @@
 	)
 	minimal_access = list(access_bar)
 	alt_titles = list("Barista")
-	outfit_type = /decl/hierarchy/outfit/job/bartender
+	outfit_type = /decl/outfit/job/bartender
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_ADEPT,
 		SKILL_COOKING   = SKILL_BASIC,
@@ -56,7 +56,7 @@
 		access_chapel_office,
 		access_crematorium
 	)
-	outfit_type = /decl/hierarchy/outfit/job/chaplain
+	outfit_type = /decl/outfit/job/chaplain
 	is_holy = TRUE
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,

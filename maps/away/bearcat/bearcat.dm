@@ -79,7 +79,7 @@
 	name = "Lower Deck"
 	landmark_tag = "nav_bearcat_lift_bottom"
 	base_area = /area/ship/scrap/cargo/lower
-	base_turf = /turf/floor
+	base_turf = /turf/floor/plating
 
 /obj/machinery/door/airlock/autoname/command
 	door_color = COLOR_COMMAND_BLUE
@@ -101,7 +101,7 @@
 
 /obj/abstract/landmark/corpse/deadcap
 	name = "Dead Captain"
-	corpse_outfits = list(/decl/hierarchy/outfit/deadcap)
+	corpse_outfits = list(/decl/outfit/deadcap)
 	delete_me = FALSE //  we handle this in LateInit
 
 /obj/abstract/landmark/corpse/deadcap/Initialize()
@@ -118,16 +118,16 @@
 		C.buckle_mob(corpse)
 	qdel(src)
 
-/decl/hierarchy/outfit/deadcap
+/decl/outfit/deadcap
 	name = "Derelict Captain"
 	uniform = /obj/item/clothing/pants/baggy/casual/classicjeans
 	suit = /obj/item/clothing/suit/jacket/winter
 	shoes = /obj/item/clothing/shoes/color/black
 	r_pocket = /obj/item/radio
 
-/decl/hierarchy/outfit/deadcap/post_equip(mob/living/human/H)
+/decl/outfit/deadcap/post_equip(mob/living/wearer)
 	..()
-	var/obj/item/clothing/uniform = H.get_equipped_item(slot_w_uniform_str)
+	var/obj/item/clothing/uniform = wearer.get_equipped_item(slot_w_uniform_str)
 	if(uniform)
 		var/obj/item/clothing/shirt/hawaii/random/eyegore = new()
 		if(uniform.can_attach_accessory(eyegore))
@@ -135,4 +135,4 @@
 		else
 			qdel(eyegore)
 	var/obj/item/cell/super/C = new()
-	H.put_in_hands(C)
+	wearer.put_in_hands(C)

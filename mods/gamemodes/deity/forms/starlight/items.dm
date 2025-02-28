@@ -19,6 +19,7 @@
 	name = "Talisman of the Starborn"
 	desc = "This ring seems to shine with more light than is put on it."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_star.dmi'
+	material = /decl/material/solid/metal/blackbronze
 
 /obj/item/clothing/gloves/ring/aura_ring/talisman_of_starborn/Initialize()
 	. = ..()
@@ -37,6 +38,7 @@
 	name = "Talisman of the Shadowling"
 	desc = "If you weren't looking at this, you probably wouldn't have noticed it."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_shadow.dmi'
+	material = /decl/material/solid/metal/blackbronze
 
 /obj/item/clothing/gloves/ring/aura_ring/talisman_of_shadowling/Initialize()
 	. = ..()
@@ -94,7 +96,6 @@
 /obj/item/knife/ritual/shadow
 	name = "black death"
 	desc = "An obsidian dagger. The singed remains of a green cloth are wrapped around the 'handle.'"
-	material_force_multiplier = 0.3
 	var/charge = 5
 
 /obj/item/knife/ritual/shadow/apply_hit_effect(var/mob/living/target, var/mob/living/user, var/hit_zone)

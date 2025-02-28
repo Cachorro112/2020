@@ -12,6 +12,9 @@
 	hub = "Exadv1.spacestation13"
 	icon_size = WORLD_ICON_SIZE
 	fps = 20
-#ifdef GC_FAILURE_HARD_LOOKUP
+#if defined(GC_FAILURE_HARD_LOOKUP) || defined(UNIT_TEST) // Larger maps fail with this off.
+#pragma push
+#pragma ignore loop_checks
 	loop_checks = FALSE
+#pragma pop
 #endif

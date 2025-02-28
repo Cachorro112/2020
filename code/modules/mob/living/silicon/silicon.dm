@@ -86,7 +86,7 @@
 	return
 
 /mob/living/silicon/drop_item(var/Target)
-	for(var/obj/item/grab/grab in get_active_grabs())
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
 		qdel(grab)
 		. = TRUE
 
@@ -106,11 +106,10 @@
 	to_chat(src, "<span class='danger'>Warning: Electromagnetic pulse detected.</span>")
 	..()
 
-/mob/living/silicon/stun_effect_act(var/stun_amount, var/agony_amount)
+/mob/living/silicon/stun_effect_act(stun_amount, agony_amount, def_zone, used_weapon)
 	return	//immune
 
-/mob/living/silicon/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, def_zone = null)
-
+/mob/living/silicon/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, def_zone)
 	shock_damage = ..()
 	if(shock_damage <= 0 || !istype(source, /obj/effect/containment_field))
 		return 0
@@ -348,7 +347,7 @@
 			qdel(mind.objectives)
 			mind.assigned_special_role = null
 		clear_antag_roles(mind)
-	ghostize(0)
+	ghostize(CORPSE_CANNOT_REENTER)
 	qdel(src)
 
 /mob/living/silicon/flash_eyes(intensity = FLASH_PROTECTION_MODERATE, override_blindness_check = FALSE, affect_silicon = FALSE, visual = FALSE, type = /obj/screen/fullscreen/flash)
@@ -378,7 +377,7 @@
 	if(!IS_CROWBAR(W) || user.a_intent == I_HURT)
 		return
 	if(!length(stock_parts))
-		to_chat(user, SPAN_WARNING("No parts left to remove"))
+		to_chat(user, SPAN_WARNING("There are no parts in \the [src] left to remove."))
 		return
 
 	var/obj/item/stock_parts/remove = input(user, "Which component do you want to pry out?", "Remove Component") as null|anything in stock_parts
@@ -418,7 +417,7 @@
 	if(os)
 		os.Process()
 
-/mob/living/silicon/handle_flashed(var/obj/item/flash/flash, var/flash_strength)
+/mob/living/silicon/handle_flashed(var/flash_strength)
 	SET_STATUS_MAX(src, STAT_PARA, flash_strength)
 	SET_STATUS_MAX(src, STAT_WEAK, flash_strength)
 	return TRUE
@@ -461,3 +460,6 @@
 /mob/living/silicon/handle_stance()
 	stance_damage = 0
 	return
+
+/mob/living/silicon/isSynthetic()
+	return TRUE

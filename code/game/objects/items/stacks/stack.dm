@@ -50,6 +50,16 @@
 		singular_name = "sheet"
 	if(!plural_name)
 		plural_name = text_make_plural(singular_name)
+	update_name()
+
+/obj/item/stack/update_name()
+	. = ..()
+	if(amount == 1)
+		gender = NEUTER
+		SetName(singular_name)
+	else
+		gender = PLURAL
+		SetName(plural_name)
 
 /obj/item/stack/Destroy()
 	if (src && usr && usr.machine == src)
@@ -291,6 +301,7 @@
 	for(var/i = 1 to charge_costs.len)
 		var/datum/matter_synth/S = synths[i]
 		S.use_charge(charge_costs[i] * used) // Doesn't need to be deleted
+	update_name()
 	update_icon()
 	return TRUE
 
@@ -353,6 +364,7 @@
 	var/orig_amount = src.amount
 	if (transfer && src.use(transfer))
 		var/obj/item/stack/newstack = new src.type(loc, transfer, material?.type)
+		newstack.dropInto(loc) // avoid being placed inside mobs
 		newstack.copy_from(src)
 		if (prob(transfer/orig_amount * 100))
 			transfer_fingerprints_to(newstack)
@@ -412,7 +424,7 @@
 /obj/item/stack/get_storage_cost()	//Scales storage cost to stack size
 	. = ..()
 	if (amount < max_amount)
-		. = CEILING(. * amount / max_amount)
+		. = ceil(. * amount / max_amount)
 
 /obj/item/stack/get_mass() // Scales mass to stack size
 	. = ..()
@@ -453,15 +465,17 @@
 
 /**Whether a stack has the capability to be split. */
 /obj/item/stack/proc/can_split()
-	return !(uses_charge && !force) //#TODO: The !force was a hacky way to tell if its a borg or rigsuit module. Probably would be good to find a better way...
+	return !(uses_charge && !is_robot_module(src))
 
 /**Whether a stack type has the capability to be merged. */
 /obj/item/stack/proc/can_merge_stacks(var/obj/item/stack/other)
-	return !(uses_charge && !force) && (!istype(other) || other.paint_color == paint_color)
+	return !(uses_charge && !is_robot_module(src)) && (!istype(other) || other.paint_color == paint_color)
 
 /// Returns the string describing an amount of the stack, i.e. "an ingot" vs "a flag"
 /obj/item/stack/proc/get_string_for_amount(amount)
 	if(amount == 1)
+		if(gender == PLURAL)
+			return "some [singular_name]"
 		return indefinite_article ? "[indefinite_article] [singular_name]" : ADD_ARTICLE(singular_name)
 	return "[amount] [plural_name]"
 

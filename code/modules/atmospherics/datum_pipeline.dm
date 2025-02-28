@@ -45,7 +45,7 @@
 
 	. = ..()
 
-/datum/pipeline/Process()//This use to be called called from the pipe networks
+/datum/pipeline/Process()//This use to be called from the pipe networks
 	//Check to see if pressure is within acceptable limits
 	var/pressure = air.return_pressure()
 	if(pressure > maximum_pressure)
@@ -66,7 +66,6 @@
 		return
 
 	for(var/obj/machinery/atmospherics/pipe/member in members)
-
 		if(air?.volume)
 			member.air_temporary = new
 			member.air_temporary.copy_from(air)
@@ -169,7 +168,7 @@
 
 /datum/pipeline/proc/mingle_with_turf(turf/target, mingle_volume)
 
-	if(!isturf(target))
+	if(!isturf(target) || !istype(air))
 		return
 
 	var/datum/gas_mixture/air_sample = air.remove_volume(mingle_volume)

@@ -25,7 +25,7 @@
 	var/obj/item/assembly/signaler/signaler = get_active_held_item()
 	if(istype(signaler) && signaler.deadman)
 		log_and_message_admins("has triggered a signaler deadman's switch")
-		src.visible_message("<span class='warning'>[src] triggers their deadman's switch!</span>")
+		visible_message(SPAN_WARNING("[src] triggers their deadman's switch!"))
 		signaler.signal()
 	//Armor
 	var/damage = P.damage
@@ -83,7 +83,7 @@
 
 
 //Handles the effects of "stun" weapons
-/mob/living/proc/stun_effect_act(var/stun_amount, var/agony_amount, var/def_zone, var/used_weapon=null)
+/mob/living/proc/stun_effect_act(stun_amount, agony_amount, def_zone, used_weapon)
 	flash_pain()
 
 	if (stun_amount)
@@ -97,8 +97,53 @@
 		apply_effect(agony_amount/10, STUTTER)
 		apply_effect(agony_amount/10, EYE_BLUR)
 
-/mob/living/proc/electrocute_act(var/shock_damage, var/obj/source, var/siemens_coeff = 1.0, def_zone = null)
-	  return 0 // No root logic, implemented separately on human and silicon.
+/mob/living/proc/electrocute_act(shock_damage, obj/source, siemens_coeff = 1, def_zone)
+	SHOULD_CALL_PARENT(TRUE)
+	if(status_flags & GODMODE)
+		return 0
+
+	var/decl/species/my_species = get_species()
+	if(my_species?.species_flags & SPECIES_FLAG_ABSORB_ELECTRICITY)
+		spark_at(loc, amount=5, cardinal_only = TRUE)
+		LAZYADD(global.stored_shock_by_ref["\ref[src]"], shock_damage)
+		return 0
+
+	if(!shock_damage)
+		return 0
+
+	stun_effect_act(agony_amount=shock_damage, def_zone=def_zone)
+
+	playsound(loc, "sparks", 50, 1, -1)
+	if (shock_damage > 15)
+		visible_message(
+			SPAN_DANGER("\The [src] was electrocuted[source ? " by \the [source]" : ""]!"),
+			SPAN_DANGER("You feel a powerful shock course through your body!"),
+			SPAN_WARNING("You hear a heavy electrical crack.")
+		)
+	else
+		visible_message(
+			SPAN_DANGER("\The [src] was shocked[source ? " by \the [source]" : ""]."),
+			SPAN_DANGER("You feel a shock course through your body."),
+			SPAN_WARNING("You hear a zapping sound.")
+		)
+
+	switch(shock_damage)
+		if(11 to 15)
+			SET_STATUS_MAX(src, STAT_STUN, 1)
+		if(16 to 20)
+			SET_STATUS_MAX(src, STAT_STUN, 2)
+		if(21 to 25)
+			SET_STATUS_MAX(src, STAT_WEAK, 2)
+		if(26 to 30)
+			SET_STATUS_MAX(src, STAT_WEAK, 5)
+		if(31 to INFINITY)
+			SET_STATUS_MAX(src, STAT_WEAK, 10) //This should work for now, more is really silly and makes you lay there forever
+
+	set_status(STAT_JITTER, min(shock_damage*5, 200))
+
+	spark_at(loc, amount=5, cardinal_only = TRUE)
+
+	return shock_damage
 
 /mob/living/emp_act(severity)
 	for(var/obj/O in get_mob_contents())
@@ -114,7 +159,7 @@
 	if(I.attack_message_name())
 		weapon_mention = " with [I.attack_message_name()]"
 	if(effective_force)
-		visible_message(SPAN_DANGER("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by [user]!"))
+		visible_message(SPAN_DANGER("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by \the [user]!"))
 	else
 		visible_message(SPAN_WARNING("\The [src] has been [DEFAULTPICK(I.attack_verb, "attacked")][weapon_mention] by \the [user]!"))
 	. = standard_weapon_hit_effects(I, user, effective_force, hit_zone)
@@ -126,7 +171,7 @@
 //returns 0 if the effects failed to apply for some reason, 1 otherwise.
 /mob/living/standard_weapon_hit_effects(obj/item/I, mob/living/user, var/effective_force, var/hit_zone)
 	if(effective_force)
-		try_embed_in_mob(I, hit_zone, effective_force, direction = get_dir(user, src))
+		try_embed_in_mob(user, I, hit_zone, effective_force, direction = get_dir(user, src))
 		return TRUE
 	return FALSE
 
@@ -159,7 +204,7 @@
 /mob/living/proc/handle_thrown_obj_damage(obj/O, datum/thrownthing/TT)
 
 	var/dtype = O.atom_damage_type
-	var/throw_damage = O.throwforce*(TT?.speed/THROWFORCE_SPEED_DIVISOR)
+	var/throw_damage = O.get_thrown_attack_force()*(TT?.speed/THROWFORCE_SPEED_DIVISOR)
 	var/zone = BP_CHEST
 
 	//check if we hit
@@ -175,7 +220,7 @@
 	zone = get_zone_with_miss_chance(zone, src, miss_chance, ranged_attack=1)
 
 	if(zone && TT?.thrower && TT.thrower != src)
-		var/shield_check = check_shields(throw_damage, O, TT.thrower, zone, "[O]")
+		var/shield_check = check_shields(throw_damage, O, TT.thrower, zone, O)
 		if(shield_check == PROJECTILE_FORCE_MISS)
 			zone = null
 		else if(shield_check)
@@ -192,34 +237,34 @@
 	visible_message(SPAN_DANGER("\The [src] is hit [affecting ? "in \the [affecting.name] " : ""]by \the [O]!"))
 	if(TT?.thrower?.client)
 		admin_attack_log(TT.thrower, src, "Threw \an [O] at the victim.", "Had \an [O] thrown at them.", "threw \an [O] at")
-	try_embed_in_mob(O, zone, throw_damage, dtype, null, affecting, direction = TT.init_dir)
+	try_embed_in_mob(TT.thrower, O, zone, throw_damage, dtype, null, affecting, direction = TT.init_dir)
 	return TRUE
 
 /mob/living/momentum_power(var/atom/movable/AM, var/datum/thrownthing/TT)
 	if(anchored || buckled)
 		return 0
 	. = (AM.get_mass()*TT.speed)/(get_mass()*min(AM.throw_speed,2))
-	if(has_gravity() || check_space_footing())
+	if(!can_slip(magboots_only = TRUE))
 		. *= 0.5
 
-/mob/living/proc/try_embed_in_mob(obj/O, def_zone, embed_damage = 0, dtype = BRUTE, datum/wound/supplied_wound, obj/item/organ/external/affecting, direction)
+/mob/living/proc/try_embed_in_mob(mob/living/user, obj/O, def_zone, embed_damage = 0, dtype = BRUTE, datum/wound/supplied_wound, obj/item/organ/external/affecting, direction)
 
 	if(!istype(O))
-		return FALSE
-
-	if(!supplied_wound)
-		supplied_wound = apply_damage(embed_damage, dtype, def_zone, O.damage_flags(), O, O.armor_penetration)
-
-	if(!O.can_embed())
 		return FALSE
 
 	if(!affecting)
 		affecting = get_organ(def_zone)
 
+	if(!supplied_wound)
+		supplied_wound = apply_damage(embed_damage, dtype, damage_flags = O.damage_flags(), used_weapon = O, armor_pen = O.armor_penetration, given_organ = (affecting || def_zone))
+
+	if(!O.can_embed())
+		return FALSE
+
 	if(affecting && istype(supplied_wound) && supplied_wound.is_open() && dtype == BRUTE) // Can't embed in a small bruise.
 		var/obj/item/I = O
 		var/sharp = is_sharp(I)
-		embed_damage *= (1 - get_blocked_ratio(def_zone, BRUTE, O.damage_flags(), O.armor_penetration, I.force))
+		embed_damage *= (1 - get_blocked_ratio(def_zone, BRUTE, O.damage_flags(), O.armor_penetration, I.get_attack_force(user)))
 
 		//blunt objects should really not be embedding in things unless a huge amount of force is involved
 		var/embed_chance = embed_damage / (sharp ? I.w_class : (I.w_class*3))
@@ -259,13 +304,13 @@
 
 //This is called when the mob is thrown into a dense turf
 /mob/living/proc/turf_collision(var/turf/T, var/speed)
-	visible_message("<span class='danger'>[src] slams into \the [T]!</span>")
+	visible_message(SPAN_DANGER("\The [src] slams into \the [T]!"))
 	playsound(T, 'sound/effects/bangtaper.ogg', 50, 1, 1)//so it plays sounds on the turf instead, makes for awesome carps to hull collision and such
 	apply_damage(speed*5, BRUTE)
 
 /mob/living/proc/near_wall(var/direction,var/distance=1)
 	var/turf/T = get_step(get_turf(src),direction)
-	var/turf/last_turf = src.loc
+	var/turf/last_turf = loc
 	var/i = 1
 
 	while(i>0 && i<=distance)
@@ -286,7 +331,7 @@
 
 	admin_attack_log(user, src, "Attacked", "Was attacked", "attacked")
 
-	src.visible_message("<span class='danger'>\The [user] has [attack_message] \the [src]!</span>")
+	visible_message(SPAN_DANGER("\The [user] has [attack_message] \the [src]!"))
 	take_damage(damage)
 	user.do_attack_animation(src)
 	return 1
@@ -330,13 +375,13 @@
 
 	fire_stacks = max(0, fire_stacks - 0.2) //I guess the fire runs out of fuel eventually
 
-	var/datum/gas_mixture/G = loc.return_air() // Check if we're standing in an oxygenless environment
-	if(G.get_by_flag(XGM_GAS_OXIDIZER) < 1)
+	var/datum/gas_mixture/G = loc?.return_air() // Check if we're standing in an oxygenless environment
+	if(G?.get_by_flag(XGM_GAS_OXIDIZER) < 1)
 		ExtinguishMob() //If there's no oxygen in the tile we're on, put out the fire
 		return TRUE
 
 	var/turf/location = get_turf(src)
-	location.hotspot_expose(fire_burn_temperature(), 50, 1)
+	location?.hotspot_expose(fire_burn_temperature(), 50, 1)
 
 	var/burn_temperature = fire_burn_temperature()
 	var/thermal_protection = get_heat_protection(burn_temperature)
@@ -436,6 +481,8 @@
 	var/obj/item/suit = get_equipped_item(slot_wear_suit_str)
 	if(suit)
 		LAZYDISTINCTADD(checking_slots, suit)
+	if(isatom(attack_text))
+		attack_text = "\the [attack_text]"
 	for(var/obj/item/shield in checking_slots)
 		if(shield.handle_shield(src, damage, damage_source, attacker, def_zone, attack_text))
 			return TRUE

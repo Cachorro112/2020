@@ -36,7 +36,7 @@ var/global/list/speech_toppings = list("|" = "i", "+" = "b", "_" = "u")
 
 		var/list/vis_mobs = list()
 		var/list/vis_objs = list()
-		get_mobs_and_objs_in_view_fast(get_turf(src),1,vis_mobs,vis_objs) //ok so the implementation on bay/neb directly mutates lists
+		get_listeners_in_range(get_turf(src), 1, vis_mobs, vis_objs) //ok so the implementation on bay/neb directly mutates lists
 
 		for(var/mob/vismob as anything in vis_mobs)
 			if(isobserver(vismob) && (get_preference_value(/datum/client_preference/show_subtle) == PREF_HIDE) && !vismob.client?.holder)
@@ -78,7 +78,7 @@ var/global/list/speech_toppings = list("|" = "i", "+" = "b", "_" = "u")
 		return
 
 	var/length = length(message)
-	var/posts = CEILING(length/MAX_MESSAGE_LEN)
+	var/posts = ceil(length/MAX_MESSAGE_LEN)
 	to_chat(user,message)
 	to_chat(user, SPAN_DANGER("^ This message was NOT SENT ^ -- It was [length] characters, and the limit is [MAX_MESSAGE_LEN]. It would fit in [posts] separate messages."))
 

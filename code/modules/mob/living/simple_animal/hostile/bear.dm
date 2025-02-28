@@ -18,6 +18,7 @@
 
 	butchery_data = /decl/butchery_data/animal/space_bear
 	ai = /datum/mob_controller/aggressive/bear
+	ability_handlers = list(/datum/ability_handler/predator)
 
 /datum/mob_controller/aggressive/bear
 	emote_speech = list("RAWR!","Rawr!","GRR!","Growl!")
@@ -49,9 +50,8 @@
 		set_stance(STANCE_ALERT)
 
 /datum/mob_controller/aggressive/bear/do_process()
-	. = ..()
 
-	if(!body || body.stat)
+	if(!(. = ..()) || body.stat)
 		return
 
 	var/atom/target = get_target()
@@ -108,7 +108,7 @@
 				var/datum/mob_controller/aggressive/bear/bearbrain = ai
 				bearbrain.stance_step = 12
 			ai.set_target(user)
-	..()
+	return ..()
 
 /mob/living/simple_animal/hostile/bear/attack_hand(mob/user)
 	if(istype(ai))

@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/terran_pk
+/decl/outfit/terran_pk
 	name = "Response Team - Terran Peacekeeper"
 	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran
@@ -12,7 +12,7 @@
 	id_pda_assignment = "Terran Organization"
 	id_desc = "Terran Peacekeeper"
 
-/decl/hierarchy/outfit/terran_sc
+/decl/outfit/terran_sc
 	name = "Response Team - Terran Security Council Agent"
 	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran/heavy

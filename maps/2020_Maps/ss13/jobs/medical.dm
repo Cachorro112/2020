@@ -43,7 +43,7 @@
 		access_maint_tunnels,
 		access_external_airlocks
 	)
-	outfit_type = /decl/hierarchy/outfit/job/medical/doctor
+	outfit_type = /decl/outfit/job/medical/doctor
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_ADEPT,
 		SKILL_MEDICAL   = SKILL_EXPERT,
@@ -91,7 +91,7 @@
 		access_maint_tunnels,
 		access_external_airlocks
 	)
-	outfit_type = /decl/hierarchy/outfit/job/medical/med_researcher
+	outfit_type = /decl/outfit/job/medical/med_researcher
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_EVA      = SKILL_BASIC,

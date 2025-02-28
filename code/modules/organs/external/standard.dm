@@ -17,7 +17,7 @@
 	parent_organ = null
 	encased = "ribcage"
 	artery_name = "aorta"
-	cavity_name = "thoracic"
+	cavity_name = "thoracic cavity"
 	limb_flags = ORGAN_FLAG_HEALS_OVERKILL | ORGAN_FLAG_CAN_BREAK
 
 /obj/item/organ/external/chest/proc/get_current_skin()
@@ -47,7 +47,7 @@
 	amputation_point = "lumbar"
 	joint = "hip"
 	artery_name = "iliac artery"
-	cavity_name = "abdominal"
+	cavity_name = "abdominal cavity"
 	limb_flags = ORGAN_FLAG_CAN_AMPUTATE | ORGAN_FLAG_CAN_BREAK
 
 /obj/item/organ/external/groin/die()
@@ -142,6 +142,7 @@
 	tendon_name = "carpal ligament"
 	arterial_bleed_severity = 0.5
 	limb_flags = ORGAN_FLAG_CAN_AMPUTATE | ORGAN_FLAG_FINGERPRINT | ORGAN_FLAG_HAS_TENDON | ORGAN_FLAG_CAN_BREAK | ORGAN_FLAG_CAN_DISLOCATE
+	is_washable = TRUE
 	var/gripper_type = /datum/inventory_slot/gripper/left_hand
 
 /obj/item/organ/external/hand/do_install(mob/living/human/target, affected, in_place, update_icon, detached)

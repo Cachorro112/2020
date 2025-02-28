@@ -34,7 +34,7 @@
 	to_chat(usr, SPAN_NOTICE("Issuing reason: [reason]."))
 
 /obj/item/card/id/guest/proc/expire()
-	color = COLOR_BLACK
+	set_color(COLOR_BLACK)
 	detail_color = COLOR_BLACK
 	update_icon()
 
@@ -74,8 +74,8 @@
 			updateUsrDialog()
 		else if(giver)
 			to_chat(user, SPAN_WARNING("There is already ID card inside."))
-		return
-	..()
+		return TRUE
+	return ..()
 
 /obj/machinery/computer/guestpass/interface_interact(var/mob/user)
 	ui_interact(user)

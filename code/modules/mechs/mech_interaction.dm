@@ -161,6 +161,7 @@
 			var/system_moved = FALSE
 			var/obj/item/temp_system
 			var/obj/item/mech_equipment/ME
+			var/temp_old_anchored
 			if(istype(selected_system, /obj/item/mech_equipment))
 				ME = selected_system
 				temp_system = ME.get_effective_obj()
@@ -169,6 +170,10 @@
 					temp_system.forceMove(src)
 			else
 				temp_system = selected_system
+			// Hackery for preventing embedding of melee weapons.
+			if(temp_system)
+				temp_old_anchored = temp_system.anchored
+				temp_system.anchored = TRUE
 
 			// Slip up and attack yourself maybe.
 			failed = FALSE
@@ -208,8 +213,12 @@
 				ME = selected_system
 				extra_delay = ME.equipment_delay
 			setClickCooldown(arms ? arms.action_delay + extra_delay : 15 + extra_delay)
-			if(system_moved)
-				temp_system.forceMove(selected_system)
+
+			if(!QDELETED(temp_system))
+				if(system_moved)
+					temp_system.forceMove(selected_system)
+				temp_system.anchored = temp_old_anchored
+
 			current_user = null
 			return
 
@@ -252,7 +261,7 @@
 		if(!silent)
 			to_chat(user, SPAN_WARNING("You cannot pilot an exosuit of this size."))
 		return FALSE
-	if(!user.Adjacent(src))
+	if(!user.Adjacent(src) || user.buckled)
 		return FALSE
 	if(hatch_locked)
 		if(!silent)
@@ -393,8 +402,7 @@
 				to_chat(user, SPAN_WARNING("The securing bolts are not visible while maintenance protocols are disabled."))
 				return TRUE
 			visible_message(SPAN_WARNING("\The [user] begins unwrenching the securing bolts holding \the [src] together."))
-			var/delay = 60 * user.skill_delay_mult(SKILL_DEVICES)
-			if(do_after(user, delay) && maintenance_protocols)
+			if(user.do_skilled(6 SECONDS, SKILL_DEVICES, src) && maintenance_protocols)
 				visible_message(SPAN_NOTICE("\The [user] loosens and removes the securing bolts, dismantling \the [src]."))
 				dismantle()
 			return TRUE
@@ -451,10 +459,10 @@
 				return TRUE
 			if(!body) //Error
 				return TRUE
-			var/delay = min(50 * user.skill_delay_mult(SKILL_DEVICES), 50 * user.skill_delay_mult(SKILL_EVA))
-			visible_message(SPAN_NOTICE("\The [user] starts forcing the \the [src]'s emergency [body.hatch_descriptor] release using \the [thing]."))
+			var/delay = min(5 SECONDS * user.skill_delay_mult(SKILL_DEVICES), 5 SECONDS * user.skill_delay_mult(SKILL_EVA))
+			visible_message(SPAN_NOTICE("\The [user] starts forcing \the [src]'s emergency [body.hatch_descriptor] release using \the [thing]."))
 			if(do_after(user, delay, src))
-				visible_message(SPAN_NOTICE("\The [user] forces \the [src]'s [body.hatch_descriptor] open using the \the [thing]."))
+				visible_message(SPAN_NOTICE("\The [user] forces \the [src]'s [body.hatch_descriptor] open using \the [thing]."))
 				playsound(user.loc, 'sound/machines/bolts_up.ogg', 25, 1)
 				hatch_locked = FALSE
 				hatch_closed = FALSE
@@ -535,3 +543,18 @@
 		if(hardpoints[h] == I)
 			return h
 	return 0
+
+/decl/interaction_handler/mech_equipment
+	abstract_type = /decl/interaction_handler/mech_equipment
+	expected_target_type = /obj/item/mech_equipment
+	interaction_flags = 0 // Mech gear is a bit special, see is_possible() below.
+
+/decl/interaction_handler/mech_equipment/is_possible(atom/target, mob/user, obj/item/prop)
+	. = ..()
+	if(.)
+		if(user.incapacitated())
+			return FALSE
+		var/obj/item/mech_equipment/gear = target
+		if(!gear.owner)
+			return FALSE
+		return gear.owner.hatch_closed && ((user in gear.owner.pilots) || user == gear.owner)

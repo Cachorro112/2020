@@ -313,14 +313,16 @@
 	voice_holder.active = 0
 
 /obj/item/rig_module/voice/installed()
-	..()
-	holder.speech = src
-	holder.verbs |= /obj/item/rig/proc/alter_voice
+	. = ..()
+	if(holder)
+		holder.speech = src
+		holder.verbs |= /obj/item/rig/proc/alter_voice
 
 /obj/item/rig_module/voice/removed()
-	..()
-	holder.speech = null
-	holder.verbs -= /obj/item/rig/proc/alter_voice
+	if(holder)
+		holder.speech = null
+		holder.verbs -= /obj/item/rig/proc/alter_voice
+	. = ..()
 
 /obj/item/rig_module/voice/engage()
 
@@ -387,7 +389,7 @@
 	if(istype(W, /obj/item/tank/jetpack/rig))
 		if(jets)
 			to_chat(user, SPAN_WARNING("There's already a propellant tank inside of \the [src]!"))
-			return
+			return TRUE
 		if(user.try_unequip(W))
 			to_chat(user, SPAN_NOTICE("You insert \the [W] into [src]."))
 			W.forceMove(src)
@@ -454,14 +456,7 @@
 	use_power_cost = 200
 	usable = 1
 	selectable = 0
-	device = /obj/item/paper_bin
-
-/obj/item/rig_module/device/paperdispenser/engage(atom/target)
-	if(!..() || !device)
-		return FALSE
-	if(!target)
-		device.attack_hand_with_interaction_checks(holder.wearer)
-		return TRUE
+	device = /obj/item/form_printer
 
 /obj/item/rig_module/device/pen
 	name = "mounted pen"

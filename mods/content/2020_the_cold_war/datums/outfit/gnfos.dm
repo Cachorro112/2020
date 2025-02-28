@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/gay_nigger
+/decl/outfit/gay_nigger
 	name = "Gay Blacks from Outer Space"
 	uniform = /obj/item/clothing/jumpsuit/nigger_uniform
 	shoes = /obj/item/clothing/shoes/jackboots/duty

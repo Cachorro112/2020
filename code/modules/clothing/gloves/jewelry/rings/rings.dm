@@ -4,6 +4,7 @@
 	name = "engagement ring"
 	desc = "An engagement ring. It certainly looks expensive."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_diamond.dmi'
+	material = /decl/material/solid/metal/silver
 
 /obj/item/clothing/gloves/ring/engagement/attack_self(mob/user)
 	user.visible_message(SPAN_WARNING("\The [user] gets down on one knee, presenting \the [src]."), SPAN_WARNING("You get down on one knee, presenting \the [src]."))
@@ -12,10 +13,12 @@
 	name = "CTI ring"
 	desc = "A ring commemorating graduation from CTI."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_cti.dmi'
+	material = /decl/material/solid/metal/silver
 
 /obj/item/clothing/gloves/ring/mariner
 	name = "Mariner University ring"
 	desc = "A ring commemorating graduation from Mariner University."
+	material = /decl/material/solid/metal/gold
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_mariner.dmi'
 
 /////////////////////////////////////////
@@ -25,6 +28,7 @@
 	name = "magic ring"
 	desc = "A strange ring with symbols carved on it in some arcane language."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_magic.dmi'
+	material = /decl/material/solid/metal/gold
 
 /obj/item/clothing/gloves/ring/magic/equipped(var/mob/living/human/H, var/slot)
 	..()
@@ -85,11 +89,17 @@
 	name = "Secretary-General's official seal"
 	desc = "The official seal of the Secretary-General of the Sol Central Government, featured prominently on a silver ring."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_seal_secgen.dmi'
+	material = /decl/material/solid/metal/silver
+
+/obj/item/clothing/gloves/ring/seal/Initialize()
+	. = ..()
+	set_extension(src, /datum/extension/tool, list(TOOL_STAMP = TOOL_QUALITY_DEFAULT))
 
 /obj/item/clothing/gloves/ring/seal/mason
 	name = "masonic ring"
 	desc = "The Square and Compasses feature prominently on this Masonic ring."
 	icon = 'icons/clothing/accessories/jewelry/rings/ring_seal_masonic.dmi'
+	material = /decl/material/solid/metal/brass
 
 /obj/item/clothing/gloves/ring/seal/signet
 	name = "signet ring"
@@ -99,10 +109,10 @@
 
 /obj/item/clothing/gloves/ring/seal/signet/attack_self(mob/user)
 	if(nameset)
-		to_chat(user, SPAN_NOTICE("The [src] has already been claimed!"))
+		to_chat(user, SPAN_NOTICE("\The [src] has already been claimed!"))
 		return
 
 	nameset = 1
-	to_chat(user, SPAN_NOTICE("You claim the [src] as your own!"))
+	to_chat(user, SPAN_NOTICE("You claim \the [src] as your own!"))
 	name = "[user]'s signet ring"
 	desc = "A signet ring belonging to [user], for when you're too sophisticated to sign letters."

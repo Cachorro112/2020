@@ -362,7 +362,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 2
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "bV" = (
 /obj/structure/table,
@@ -407,7 +407,7 @@
 	pixel_y = 4
 	},
 /obj/item/stack/material/ore/iron,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cc" = (
 /obj/machinery/firealarm{
@@ -422,12 +422,12 @@
 /turf/floor/tiled,
 /area/ministation/cargo)
 "cd" = (
-/obj/item/stack/material/rods/mapped/steel/fifty,
-/turf/floor/airless,
+/obj/item/stack/material/rods/fifty,
+/turf/floor/plating/airless,
 /area/space)
 "ce" = (
 /obj/item/ore,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -452,10 +452,10 @@
 /obj/machinery/light/small{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cl" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/industrial/loading{
 	dir = 8
 	},
@@ -463,13 +463,13 @@
 /area/ministation/cargo)
 "cm" = (
 /obj/structure/ore_box,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cn" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cp" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "2-4"
 	},
@@ -733,7 +733,7 @@
 	icon_state = "map_vent_out";
 	use_power = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/atmospherics)
 "dq" = (
 /obj/effect/floor_decal/corner/beige{
@@ -815,7 +815,7 @@
 /obj/effect/floor_decal/corner/beige{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/cargo)
 "dF" = (
@@ -944,7 +944,7 @@
 /turf/floor/tiled,
 /area/ministation/janitor)
 "ej" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/cargo)
 "ek" = (
@@ -1103,7 +1103,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/junction,
 /obj/structure/cable{
 	icon_state = "2-8"
@@ -1134,7 +1134,7 @@
 	dir = 4
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "eW" = (
 /obj/structure/cable{
 	icon_state = "0-8"
@@ -1267,7 +1267,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/floor/tiled,
 /area/ministation/cargo)
@@ -1319,7 +1319,7 @@
 /turf/floor/plating,
 /area/ministation/engine)
 "ft" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/hologram/holopad,
 /obj/item/radio/intercom/locked{
 	dir = 4;
@@ -1506,7 +1506,7 @@
 /turf/floor/plating,
 /area/ministation/ai_sat)
 "fW" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold/hidden,
 /turf/floor/tiled,
 /area/ministation/engine)
@@ -1588,11 +1588,11 @@
 	dir = 9
 	},
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /turf/floor/tiled,
 /area/ministation/cargo)
 "gk" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
@@ -1601,7 +1601,7 @@
 /area/ministation/cargo)
 "gl" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -1749,7 +1749,7 @@
 /area/ministation/hall/n)
 "gL" = (
 /obj/effect/floor_decal/industrial/hatch/yellow,
-/obj/machinery/mining/drill,
+/obj/machinery/mining_drill,
 /turf/floor/tiled,
 /area/ministation/cargo)
 "gM" = (
@@ -1865,6 +1865,12 @@
 "hf" = (
 /turf/floor/plating,
 /area/ministation/trash)
+"hi" = (
+/obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
+	dir = 1
+	},
+/turf/wall/r_wall,
+/area/ministation/ai_upload)
 "hk" = (
 /obj/machinery/atmospherics/pipe/simple/visible/black{
 	dir = 6
@@ -1897,7 +1903,7 @@
 /turf/floor/tiled,
 /area/ministation/cargo)
 "hq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -1930,7 +1936,7 @@
 	dir = 1;
 	pixel_y = -22
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
@@ -2053,7 +2059,7 @@
 	dir = 8
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -2159,6 +2165,10 @@
 	},
 /turf/floor/tiled,
 /area/ministation/hall/n)
+"ix" = (
+/obj/machinery/camera/network/ministation/sat,
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "iz" = (
 /obj/machinery/network/relay{
 	initial_network_id = "molluscnet"
@@ -2219,7 +2229,7 @@
 /area/ministation/dorms)
 "iU" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/binary/pump/on{
 	target_pressure = 200;
 	dir = 8
@@ -2415,7 +2425,7 @@
 	id_tag = "mining_transfer"
 	},
 /obj/structure/flaps/airtight,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "jT" = (
 /obj/structure/cable{
@@ -2559,7 +2569,7 @@
 /turf/floor/tiled/techfloor,
 /area/ministation/atmospherics)
 "kw" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -2624,7 +2634,7 @@
 /obj/structure/window/reinforced/tinted{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/abstract/landmark/start{
 	name = "Deck Hand"
 	},
@@ -2671,7 +2681,7 @@
 /obj/machinery/door/blast/regular{
 	id_tag = "mine_process"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "kY" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -2722,8 +2732,14 @@
 /turf/floor/plating,
 /area/ministation/ai_sat)
 "lk" = (
-/turf/wall/r_wall,
-/area/ministation/ai_sat)
+/obj/structure/cable{
+	icon_state = "4-8"
+	},
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "ll" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -2731,7 +2747,7 @@
 /turf/floor/tiled,
 /area/ministation/hall/n)
 "ln" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold4w/hidden/supply,
 /turf/floor/tiled,
 /area/ministation/engine)
@@ -2751,7 +2767,7 @@
 /turf/floor/tiled,
 /area/ministation/cargo)
 "lr" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -2853,7 +2869,7 @@
 	pixel_y = 10;
 	command = "cycle_exterior"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/maint/westatmos)
 "lN" = (
 /obj/effect/floor_decal/corner/blue,
@@ -3167,7 +3183,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random_multi/single_item/captains_spare_id,
 /obj/structure/window/reinforced/tinted{
 	dir = 8
@@ -3501,7 +3517,7 @@
 /area/ministation/atmospherics)
 "oZ" = (
 /obj/machinery/material_processing/stacker,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "pa" = (
 /obj/machinery/atmospherics/pipe/simple/hidden{
@@ -3643,6 +3659,10 @@
 	},
 /turf/floor/plating,
 /area/ministation/engine)
+"pX" = (
+/obj/machinery/atmospherics/unary/vent_pump/on,
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "pZ" = (
 /obj/effect/floor_decal/industrial/custodial/corner{
 	dir = 4
@@ -3698,7 +3718,7 @@
 /turf/floor/wood/walnut,
 /area/ministation/dorms)
 "qo" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
@@ -4467,7 +4487,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "tO" = (
 /obj/effect/floor_decal/carpet/blue2{
@@ -4482,6 +4502,9 @@
 	},
 /turf/floor/wood/walnut,
 /area/ministation/dorms)
+"tQ" = (
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "tU" = (
 /obj/effect/floor_decal/spline/fancy/wood{
 	dir = 8
@@ -4759,7 +4782,7 @@
 /obj/structure/cable{
 	icon_state = "0-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "vf" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
@@ -4838,7 +4861,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/ministation/maint/eastatmos)
 "vz" = (
@@ -4903,7 +4926,7 @@
 /area/ministation/engine)
 "vK" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/bed/chair/wood{
 	dir = 8
 	},
@@ -5037,7 +5060,7 @@
 /turf/floor/plating,
 /area/ministation/maint/l1ne)
 "wt" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/wood,
 /area/ministation/engine)
 "wu" = (
@@ -5169,7 +5192,7 @@
 /obj/item/mollusc/barnacle{
 	pixel_x = 20
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "xg" = (
 /obj/machinery/firealarm{
@@ -5229,7 +5252,7 @@
 /turf/floor/plating,
 /area/ministation/maint/l1central)
 "xr" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/sign/department/eva{
 	pixel_y = 30
 	},
@@ -5252,7 +5275,7 @@
 /turf/floor/plating,
 /area/ministation/maint/westatmos)
 "xE" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 4
 	},
@@ -5494,7 +5517,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 6
 	},
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/floor/tiled,
 /area/ministation/cargo)
@@ -5533,6 +5556,10 @@
 	},
 /turf/floor/tiled/monotile,
 /area/ministation/atmospherics)
+"yY" = (
+/obj/effect/shuttle_landmark/automatic,
+/turf/space,
+/area/space)
 "yZ" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -5818,7 +5845,7 @@
 "Aw" = (
 /obj/machinery/light,
 /obj/machinery/mech_recharger,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Ax" = (
 /obj/structure/cable{
@@ -6005,7 +6032,7 @@
 /turf/floor/wood/walnut,
 /area/ministation/dorms)
 "Bd" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Be" = (
 /obj/structure/cable{
@@ -6047,7 +6074,7 @@
 	dir = 4
 	},
 /turf/wall/r_wall,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Bj" = (
 /turf/floor/carpet/orange,
 /area/ministation/engine)
@@ -6084,7 +6111,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Bq" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
@@ -6243,7 +6270,7 @@
 /obj/machinery/conveyor{
 	id_tag = "mining_transfer"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "BS" = (
 /obj/structure/closet,
@@ -6289,7 +6316,7 @@
 /obj/machinery/light/small,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply,
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Cb" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
@@ -6318,7 +6345,7 @@
 /obj/machinery/door/airlock/highsecurity{
 	id_tag = "upload"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/ai_upload)
 "Ci" = (
 /obj/machinery/door/airlock/hatch/maintenance,
@@ -6394,7 +6421,7 @@
 	dir = 4
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Cx" = (
 /obj/structure/cable{
 	icon_state = "1-2"
@@ -6699,7 +6726,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
@@ -6880,7 +6907,7 @@
 /obj/structure/disposalpipe/trunk{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "DV" = (
 /obj/structure/table,
@@ -7014,7 +7041,7 @@
 /turf/floor/tiled,
 /area/ministation/hall/s1)
 "Eg" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold/hidden/scrubbers{
 	dir = 8
 	},
@@ -7072,7 +7099,7 @@
 /turf/floor/tiled,
 /area/ministation/engine)
 "En" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/engine)
 "Eo" = (
@@ -7220,7 +7247,7 @@
 /area/ministation/engine)
 "EK" = (
 /obj/effect/decal/cleanable/blood/oil,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 4
 	},
@@ -7261,7 +7288,7 @@
 /turf/floor/wood,
 /area/ministation/engine)
 "EO" = (
-/obj/item/chems/food/old/pizza,
+/obj/item/food/old/pizza,
 /obj/item/stack/material/puck/mapped/uranium/ten,
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
@@ -7320,7 +7347,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/segment{
 	dir = 2;
 	icon_state = "pipe-c"
@@ -7409,7 +7436,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /mob/living/simple_animal/opossum/poppy,
 /obj/item/stool/padded,
 /obj/abstract/landmark/start{
@@ -7468,7 +7495,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/wood,
 /area/ministation/engine)
 "Fn" = (
@@ -7504,7 +7531,7 @@
 /area/ministation/engine)
 "Fq" = (
 /obj/structure/ore_box,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Fr" = (
 /obj/structure/tank_rack/oxygen,
@@ -7621,7 +7648,7 @@
 	icon_state = "0-4"
 	},
 /obj/machinery/power/solar,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "FF" = (
 /obj/structure/cable{
@@ -7637,7 +7664,7 @@
 	icon_state = "0-8"
 	},
 /obj/machinery/power/solar,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "FH" = (
 /obj/machinery/light,
@@ -7912,7 +7939,7 @@
 /area/ministation/trash)
 "Ge" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/floor/tiled,
 /area/ministation/engine)
@@ -8065,7 +8092,7 @@
 /area/ministation/engine)
 "Gy" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/engine)
 "Gz" = (
@@ -8316,7 +8343,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/engine)
 "Hd" = (
@@ -8360,7 +8387,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/engine)
 "Hj" = (
@@ -8488,7 +8515,7 @@
 /obj/effect/floor_decal/corner/yellow{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/light{
 	dir = 1
 	},
@@ -8503,7 +8530,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
@@ -8544,7 +8571,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/engine)
 "HD" = (
@@ -8825,7 +8852,7 @@
 /turf/floor/plating,
 /area/ministation/ai_sat)
 "Iq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
@@ -8838,7 +8865,7 @@
 /obj/machinery/atmospherics/unary/outlet_injector{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "Iu" = (
 /obj/machinery/light/small{
@@ -8877,7 +8904,7 @@
 	dir = 4
 	},
 /turf/wall/r_wall,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "IA" = (
 /obj/machinery/camera/autoname,
 /turf/floor/pool,
@@ -8919,7 +8946,7 @@
 	pixel_y = 28
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "IK" = (
 /obj/machinery/camera/network/mining,
 /obj/machinery/atm{
@@ -8943,7 +8970,7 @@
 /obj/random/maintenance,
 /obj/structure/rack,
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "IM" = (
 /obj/machinery/power/apc{
 	name = "_South APC";
@@ -9224,6 +9251,12 @@
 	},
 /turf/floor/tiled/techmaint,
 /area/ministation/ai_core)
+"Jz" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
+	dir = 4
+	},
+/turf/wall/r_wall,
+/area/ministation/ai_upload)
 "JA" = (
 /turf/floor/tiled/techmaint,
 /area/ministation/ai_core)
@@ -10144,7 +10177,7 @@
 	dir = 8
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Ma" = (
 /obj/effect/wallframe_spawn/reinforced,
 /obj/machinery/atmospherics/pipe/simple/visible/black{
@@ -10477,7 +10510,7 @@
 	pixel_x = -32;
 	pixel_y = -32
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/manifold/hidden/supply{
 	dir = 8
 	},
@@ -10632,7 +10665,7 @@
 	pixel_y = 10;
 	command = "cycle_exterior"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/maint/l1ne)
 "NM" = (
 /obj/structure/cable{
@@ -10765,7 +10798,7 @@
 	id_tag = "mining_transfer";
 	name = "mining conveyor"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Oe" = (
 /obj/machinery/atmospherics/pipe/simple/visible/cyan,
@@ -10893,7 +10926,7 @@
 	dir = 1
 	},
 /obj/item/ore,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "Oy" = (
 /obj/effect/floor_decal/industrial/warning,
@@ -11039,7 +11072,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/cargo)
 "OS" = (
 /obj/machinery/power/terminal{
@@ -11116,7 +11149,7 @@
 /turf/floor,
 /area/ministation/maint/eastatmos)
 "OY" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/segment,
 /turf/floor/tiled,
 /area/ministation/hall/n)
@@ -11154,9 +11187,9 @@
 	dir = 4
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Pe" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden,
 /turf/floor/tiled,
 /area/ministation/cargo)
@@ -11217,7 +11250,7 @@
 /turf/space,
 /area/ministation/supply_dock)
 "Pq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/table,
 /obj/item/megaphone,
 /obj/item/box,
@@ -11360,7 +11393,7 @@
 	dir = 8;
 	icon_state = "warning"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "PT" = (
 /obj/structure/window/reinforced{
@@ -11511,6 +11544,12 @@
 	},
 /turf/floor/tiled,
 /area/ministation/engine)
+"QD" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/supply{
+	dir = 4
+	},
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "QE" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 9
@@ -11526,7 +11565,7 @@
 /area/ministation/smcontrol)
 "QG" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/hall/s1)
 "QH" = (
@@ -11716,7 +11755,7 @@
 /area/space)
 "Rm" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/machinery/mining/brace,
+/obj/structure/drill_brace,
 /obj/effect/floor_decal/industrial/hatch/yellow,
 /turf/floor/tiled,
 /area/ministation/cargo)
@@ -11738,10 +11777,10 @@
 "Rq" = (
 /obj/structure/lattice,
 /obj/machinery/mech_recharger,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Rr" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/hall/s1)
 "Rs" = (
@@ -11755,7 +11794,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/hall/s1)
 "Ru" = (
@@ -11985,7 +12024,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/scrubbers{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/segment{
 	dir = 4
 	},
@@ -12004,7 +12043,7 @@
 /area/ministation/atmospherics)
 "So" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/hall/n)
 "Sp" = (
@@ -12027,7 +12066,7 @@
 /turf/floor,
 /area/ministation/maint/eastatmos)
 "Ss" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -12071,7 +12110,7 @@
 /obj/effect/floor_decal/corner/yellow{
 	dir = 5
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/black{
 	dir = 10
 	},
@@ -12120,7 +12159,7 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "SM" = (
 /obj/machinery/light_switch{
@@ -12162,7 +12201,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
@@ -12274,6 +12313,10 @@
 /obj/machinery/camera/network/mining,
 /turf/floor/tiled,
 /area/ministation/cargo)
+"Tr" = (
+/obj/machinery/atmospherics/pipe/simple/hidden/scrubbers,
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "Tt" = (
 /obj/structure/cable{
 	icon_state = "4-8"
@@ -12399,7 +12442,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "TH" = (
 /obj/machinery/door/firedoor,
@@ -12458,7 +12501,7 @@
 /turf/floor/tiled,
 /area/ministation/engine)
 "TP" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 9
 	},
@@ -12570,7 +12613,7 @@
 /turf/floor/tiled,
 /area/ministation/engine)
 "Ul" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -12706,7 +12749,7 @@
 /turf/floor/tiled,
 /area/ministation/engine)
 "UT" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/binary/pump/on{
 	target_pressure = 200;
 	dir = 1
@@ -12888,7 +12931,7 @@
 /turf/floor/plating,
 /area/ministation/supermatter)
 "VF" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/segment,
 /turf/floor/tiled,
 /area/ministation/hall/s1)
@@ -12948,7 +12991,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "VP" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/black,
@@ -13078,7 +13121,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/ministation/maint/eastatmos)
 "Wn" = (
@@ -13120,7 +13163,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Wx" = (
 /obj/machinery/atmospherics/pipe/manifold/visible/cyan{
@@ -13156,6 +13199,12 @@
 /obj/structure/disposalpipe/segment,
 /turf/floor/plating,
 /area/ministation/trash)
+"WH" = (
+/obj/machinery/light/small{
+	dir = 1
+	},
+/turf/floor/plating,
+/area/ministation/ai_upload)
 "WJ" = (
 /obj/machinery/recharge_station,
 /turf/floor/plating,
@@ -13177,7 +13226,7 @@
 /obj/effect/floor_decal/industrial/loading{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "WR" = (
 /obj/machinery/conveyor{
@@ -13216,7 +13265,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -13229,7 +13278,7 @@
 /turf/space,
 /area/space)
 "Xb" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/green{
 	dir = 4
 	},
@@ -13299,7 +13348,7 @@
 	dir = 1
 	},
 /obj/structure/window/reinforced/tinted,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 1
 	},
@@ -13327,7 +13376,7 @@
 	dir = 1
 	},
 /turf/floor/plating,
-/area/ministation/ai_sat)
+/area/ministation/ai_upload)
 "Xu" = (
 /obj/machinery/atmospherics/pipe/manifold/hidden{
 	dir = 1
@@ -13339,7 +13388,7 @@
 /turf/floor/plating,
 /area/ministation/mining)
 "Xx" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled,
 /area/ministation/hall/n)
 "Xz" = (
@@ -13494,7 +13543,7 @@
 /obj/structure/window/reinforced{
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "Yi" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
@@ -13536,7 +13585,7 @@
 /turf/floor/plating,
 /area/ministation/engine)
 "Yu" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
@@ -13868,7 +13917,7 @@
 /area/ministation/ai_core)
 "Zz" = (
 /obj/machinery/light/small,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/ministation/mining)
 "ZA" = (
 /obj/machinery/atmospherics/pipe/simple/hidden,
@@ -13972,7 +14021,7 @@
 /area/ministation/engine)
 "ZR" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/supply,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/disposalpipe/segment,
 /turf/floor/tiled,
 /area/ministation/hall/s1)
@@ -32964,7 +33013,7 @@ aa
 aa
 aa
 aa
-aa
+yY
 aa
 aa
 aa
@@ -49057,7 +49106,7 @@ aa
 aa
 aa
 aa
-aa
+yY
 aa
 aa
 aa
@@ -57080,7 +57129,7 @@ aa
 aa
 aa
 aa
-aa
+yY
 aa
 aa
 aa
@@ -60740,8 +60789,8 @@ aa
 ad
 Ih
 Il
-Iw
-Il
+Jz
+tQ
 LZ
 JN
 Jh
@@ -60997,9 +61046,9 @@ aa
 ad
 Ih
 Il
-Iw
-Il
-KY
+Jz
+tQ
+lk
 JN
 Jm
 JC
@@ -61254,8 +61303,8 @@ aa
 ad
 Ih
 Il
-Iw
-II
+Jz
+pX
 Ca
 JN
 Jn
@@ -61511,9 +61560,9 @@ aa
 ad
 Ih
 Il
-Iw
-Il
-KY
+Jz
+tQ
+lk
 JN
 Jn
 Jn
@@ -61768,9 +61817,9 @@ aa
 ad
 aS
 Im
-Iw
-Sk
-KY
+Jz
+ix
+lk
 JN
 Jo
 JD
@@ -62025,7 +62074,7 @@ aa
 ad
 Ih
 Il
-Iw
+Jz
 IJ
 Pc
 Ch
@@ -62282,8 +62331,8 @@ aa
 ad
 aS
 Im
-Iw
-Im
+Jz
+WH
 Xt
 JN
 Jq
@@ -62539,8 +62588,8 @@ aa
 ad
 Ih
 Il
-Iy
-IG
+hi
+Tr
 Cw
 Cp
 Jn
@@ -62796,9 +62845,9 @@ ad
 ad
 aS
 Il
-Iw
-Il
-KF
+Jz
+tQ
+QD
 JN
 Jn
 Jn
@@ -63310,8 +63359,8 @@ ad
 ad
 aS
 jQ
-lk
-lk
+JN
+JN
 Bi
 JN
 JN

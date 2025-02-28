@@ -20,7 +20,7 @@
 	initial_spawn_req = 4
 	initial_spawn_target = 5
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/terran_pk
+	default_outfit = /decl/outfit/terran_pk
 	var/deployed = 0
 
 /decl/special_role/peacekeeper/create_default(var/mob/source)

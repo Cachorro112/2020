@@ -116,18 +116,13 @@
 	var/sdepth = A.storage_depth(src)
 	if((!isturf(A) && A == loc) || (sdepth != -1 && sdepth <= 1))
 		if(holding)
-
-			// AI driven mobs have a melee telegraph that needs to be handled here.
-			if(a_intent == I_HURT && istype(A) && (!do_attack_windup_checking(A) || holding != get_active_held_item()))
-				return TRUE
-
 			var/resolved = holding.resolve_attackby(A, src, params)
 			if(!resolved && A && holding)
 				holding.afterattack(A, src, 1, params) // 1 indicates adjacency
-			setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+			setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 		else
 			if(ismob(A)) // No instant mob attacking
-				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+				setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 			UnarmedAttack(A, TRUE)
 
 		trigger_aiming(TARGET_CAN_CLICK)
@@ -143,18 +138,14 @@
 		if(A.Adjacent(src)) // see adjacent.dm
 			if(holding)
 
-				// AI driven mobs have a melee telegraph that needs to be handled here.
-				if(a_intent == I_HURT && istype(A) && (!do_attack_windup_checking(A) || holding != get_active_held_item()))
-					return TRUE
-
 				// Return 1 in attackby() to prevent afterattack() effects (when safely moving items for example)
-				var/resolved = holding.resolve_attackby(A,src, params)
+				var/resolved = holding.resolve_attackby(A, src, params)
 				if(!resolved && A && holding)
 					holding.afterattack(A, src, 1, params) // 1: clicking something Adjacent
-				setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+				setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 			else
 				if(ismob(A)) // No instant mob attacking
-					setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
+					setClickCooldown(DEFAULT_QUICK_COOLDOWN)
 				UnarmedAttack(A, TRUE)
 
 			trigger_aiming(TARGET_CAN_CLICK)
@@ -217,15 +208,7 @@
 	if(istype(G) && G.Touch(A,1))
 		return TRUE
 
-	// Pick up items.
-	if(check_dexterity(DEXTERITY_HOLD_ITEM, silent = TRUE))
-		return A.attack_hand(src)
-
-	// AI driven mobs have a melee telegraph that needs to be handled here.
-	if(a_intent == I_HURT && istype(A) && !do_attack_windup_checking(A))
-		return TRUE
-
-	return FALSE
+	return A.attack_hand(src)
 
 /*
 	Ranged unarmed attack:
@@ -245,6 +228,9 @@
 	// Handle any prepared ability/spell/power invocations.
 	var/datum/extension/abilities/abilities = get_extension(src, /datum/extension/abilities)
 	if(abilities?.do_ranged_invocation(A))
+		return TRUE
+
+	if(A.attack_hand_ranged(src))
 		return TRUE
 
 	return FALSE
@@ -296,10 +282,17 @@
 	return A.CtrlClick(src)
 
 /atom/proc/CtrlClick(var/mob/user)
+	if(get_recursive_loc_of_type(/mob) == user)
+		var/decl/interaction_handler/handler = get_quick_interaction_handler(user)
+		if(handler)
+			var/using_item = user.get_active_held_item()
+			if(handler.is_possible(src, user, using_item))
+				return handler.invoked(src, user, using_item)
 	return FALSE
 
 /atom/movable/CtrlClick(var/mob/living/user)
-	return try_make_grab(user, defer_hand = TRUE) || ..()
+	if(!(. = ..()) && loc != user)
+		return try_make_grab(user, defer_hand = TRUE) || ..()
 
 /*
 	Alt click

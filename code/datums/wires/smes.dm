@@ -26,7 +26,6 @@ var/global/const/SMES_WIRE_FAILSAFES = BITFLAG(4)
 		electrocute_mob(user, storage.powernet, storage, (storage.safeties_enabled? 0.1 : 1))
 	return storage.panel_open
 
-
 /datum/wires/smes/GetInteractWindow(mob/user)
 	var/obj/machinery/power/smes/buildable/storage = holder
 	. += ..()

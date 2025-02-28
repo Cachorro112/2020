@@ -2,7 +2,7 @@
 	name = "Diving helmet"
 	desc = "An atmospheric diving suit helmet capable of withstanding the immense pressure under Europa's crust."
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/diving/diving_helmet.dmi'
-	bodytype_equip_flags = BODY_FLAG_HUMANOID
+	bodytype_equip_flags = BODY_EQUIP_FLAG_HUMANOID
 	heat_protection = SLOT_HEAD
 	armor = list(
 		ARMOR_MELEE = ARMOR_MELEE_RESISTANT,
@@ -19,7 +19,7 @@
 /obj/item/clothing/suit/space/void/diving
 	name = "Diving suit"
 	icon = 'mods/content/2020_the_cold_war/icons/clothing/generic/space_suit/diving/diving_suit.dmi'
-	bodytype_equip_flags = BODY_FLAG_HUMANOID
+	bodytype_equip_flags = BODY_EQUIP_FLAG_HUMANOID
 	w_class = ITEM_SIZE_HUGE//bulky item
 	desc = "An atmospheric diving suit capable of withstanding the immense pressure under Europa's crust."
 	armor = list(

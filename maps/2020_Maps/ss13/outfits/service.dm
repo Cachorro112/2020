@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/job/chef
+/decl/outfit/job/chef
 	name = "Job - Chef"
 	uniform = /obj/item/clothing/pants/slacks/outfit_chef
 	suit = /obj/item/clothing/suit/chef
@@ -7,7 +7,7 @@
 	shoes = /obj/item/clothing/shoes/color/black
 	l_ear = /obj/item/radio/headset/headset_service
 
-/decl/hierarchy/outfit/job/chaplain
+/decl/outfit/job/chaplain
 	name = "Job - Chaplain"
 	uniform = /obj/item/clothing/jumpsuit/chaplain
 	hands = list(/obj/item/bible)
@@ -15,7 +15,7 @@
 	shoes = /obj/item/clothing/shoes/color/black
 	l_ear = /obj/item/radio/headset/headset_service
 
-/decl/hierarchy/outfit/job/bartender
+/decl/outfit/job/bartender
 	name = "Job - Bartender"
 	uniform = /obj/item/clothing/pants/formal/black/outfit
 	id_type = /obj/item/card/id/civilian

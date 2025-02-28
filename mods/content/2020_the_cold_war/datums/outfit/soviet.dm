@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/srda
+/decl/outfit/srda
 	name = "Response Team - Soviet Rapid Deployment Agent"
 	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran
@@ -12,7 +12,7 @@
 	id_pda_assignment = "Rapid Deployment"
 	id_desc = "Rapid Deployment Agent"
 
-/decl/hierarchy/outfit/terran_sc
+/decl/outfit/terran_sc
 	name = "Spec Ops - GRU Fleet Division Operative"
 	uniform = /obj/item/clothing/jumpsuit/terran
 	suit = /obj/item/clothing/suit/armor/terran/heavy

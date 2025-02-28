@@ -374,7 +374,7 @@
 					A.overload_lighting(50)
 
 /obj/machinery/ftl_shunt/core/proc/handle_spacefloat(var/mob/living/human/H)
-	if(!H.check_space_footing())
+	if(H.can_slip(magboots_only = TRUE))
 		 //Flip a coin ...
 		to_chat(H, SPAN_WARNING("Being untethered from a ship entering FTL is a bad idea, but you roll the dice..."))
 		if(prob(50))
@@ -585,16 +585,15 @@
 	QDEL_NULL(fuel)
 
 /obj/machinery/ftl_shunt/fuel_port/attackby(var/obj/item/O, var/mob/user)
-	if(istype(O, /obj/item/fuel_assembly))
-		if(!fuel)
-			if(!do_after(user, 2 SECONDS, src) || fuel)
-				return
-			if(!user || !user.try_unequip(O, src))
-				return
-			fuel = O
-			max_fuel = get_fuel_joules(TRUE)
-			update_icon()
+	if(istype(O, /obj/item/fuel_assembly) && !fuel)
+		if(!do_after(user, 2 SECONDS, src) || fuel)
 			return TRUE
+		if(!user || !user.try_unequip(O, src))
+			return TRUE
+		fuel = O
+		max_fuel = get_fuel_joules(TRUE)
+		update_icon()
+		return TRUE
 
 	. = ..()
 

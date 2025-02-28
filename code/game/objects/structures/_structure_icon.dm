@@ -6,7 +6,7 @@ var/global/list/default_blend_typecache = zebra_typecacheof(list(/obj/machinery/
 /obj/structure/on_update_icon()
 	..()
 	if(material_alteration & MAT_FLAG_ALTERATION_COLOR)
-		update_material_colour()
+		update_material_color()
 	cut_overlays()
 	if(istype(lock))
 		update_lock_overlay()

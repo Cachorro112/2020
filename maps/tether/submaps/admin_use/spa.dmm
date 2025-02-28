@@ -514,7 +514,7 @@
 /turf/floor/holofloor/wood,
 /area/submap/spa)
 "bI" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "bJ" = (
 /obj/machinery/door/airlock{

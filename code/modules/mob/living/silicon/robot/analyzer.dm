@@ -8,7 +8,6 @@
 	icon_state = ICON_STATE_WORLD
 	obj_flags = OBJ_FLAG_CONDUCTIBLE
 	slot_flags = SLOT_LOWER_BODY
-	throwforce = 3
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 5
 	throw_range = 10
@@ -58,7 +57,7 @@
 					user.show_message(text("<span class='notice'>\t []: [][] - [] - [] - []</span>",	\
 					capitalize(org.name),					\
 					(org.installed == -1)	?	"<font color='red'><b>DESTROYED</b></font> "							:"",\
-					(org.electronics_damage > 0)	?	"<font color='#ffa500'>[org.electronics_damage]</font>"	:0,	\
+					(org.burn_damage > 0)	?	"<font color='#ffa500'>[org.burn_damage]</font>"	:0,	\
 					(org.brute_damage > 0)	?	"<font color='red'>[org.brute_damage]</font>"							:0,		\
 					(org.toggled)	?	"Toggled ON"	:	"<font color='red'>Toggled OFF</font>",\
 					(org.powered)	?	"Power ON"		:	"<font color='red'>Power OFF</font>"),1)

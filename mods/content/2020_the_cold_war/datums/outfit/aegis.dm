@@ -1,4 +1,4 @@
-/decl/hierarchy/outfit/delta_8
+/decl/outfit/delta_8
 	name = "Spec Ops - Aegis Delta-8 'Morning Sun'"
 	uniform = /obj/item/clothing/jumpsuit/aegis
 	suit = /obj/item/clothing/suit/armor/aegis_tactical
@@ -13,7 +13,7 @@
 	id_pda_assignment = "Aegis Delta-8"
 	id_desc = "Aegis Delta-8"
 
-/decl/hierarchy/outfit/alpha_3
+/decl/outfit/alpha_3
 	name = "Spec Ops - Aegis Alpha-3 'Last Line'"
 	uniform = /obj/item/clothing/jumpsuit/aegis/lastline
 	suit = /obj/item/clothing/suit/armor/aegis_heavy
@@ -28,7 +28,7 @@
 	id_pda_assignment = "Aegis Alpha-3"
 	id_desc = "Aegis Alpha-3"
 
-/decl/hierarchy/outfit/xeta_1
+/decl/outfit/xeta_1
 	name = "Spec Ops - Aegis Xeta-1 'Black Ghosts'"
 	uniform = /obj/item/clothing/jumpsuit/aegis/ghost
 	suit = /obj/item/clothing/suit/armor/aegis_ghost

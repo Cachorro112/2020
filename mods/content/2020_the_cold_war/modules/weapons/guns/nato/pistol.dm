@@ -9,7 +9,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/glock17/update_base_icon()
+/obj/item/gun/projectile/pistol/glock17/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else
@@ -31,7 +31,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/sig250/update_base_icon()
+/obj/item/gun/projectile/pistol/sig250/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else
@@ -48,7 +48,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/m1911/update_base_icon()
+/obj/item/gun/projectile/pistol/m1911/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else
@@ -65,7 +65,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/browning_hp/update_base_icon()
+/obj/item/gun/projectile/pistol/browning_hp/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else
@@ -82,7 +82,7 @@
 	safety_icon = null
 	ammo_indicator = FALSE
 
-/obj/item/gun/projectile/pistol/m9beretta/update_base_icon()
+/obj/item/gun/projectile/pistol/m9beretta/update_base_icon_state()
 	if(ammo_magazine)
 		icon_state = "[get_world_inventory_state()]"
 	else

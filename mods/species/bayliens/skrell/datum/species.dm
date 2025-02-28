@@ -1,6 +1,6 @@
 /decl/butchery_data/humanoid/skrell
 	meat_name = "calamari"
-	meat_type = /obj/item/chems/food/butchery/meat/fish/octopus/skrell
+	meat_type = /obj/item/food/butchery/meat/fish/octopus/skrell
 	bone_material = /decl/material/solid/organic/bone/cartilage
 
 /decl/species/skrell
@@ -11,13 +11,9 @@
 		/decl/bodytype/skrell
 		)
 
+	traits = list(/decl/trait/malus/intolerance/protein = TRAIT_LEVEL_MINOR)
+
 	primitive_form = "Neaera"
-	unarmed_attacks = list(
-		/decl/natural_attack/stomp,
-		/decl/natural_attack/kick,
-		/decl/natural_attack/punch,
-		/decl/natural_attack/bite
-	)
 
 	description = "The Skrell are a highly advanced race of amphibians hailing from the system known as Qerr'Vallis. Their society is regimented into \
 	five different castes which the Qerr'Katish, or Royal Caste, rules over. Skrell are strict herbivores who are unable to eat large quantities of \
@@ -32,7 +28,7 @@
 	)
 	hidden_from_codex = FALSE
 
-	preview_outfit = /decl/hierarchy/outfit/job/generic/scientist
+	preview_outfit = /decl/outfit/job/generic/scientist
 
 	burn_mod = 0.9
 	oxy_mod = 1.3
@@ -62,33 +58,33 @@
 		/decl/blood_type/skrell/nominus
 	)
 
-	available_cultural_info = list(
-		TAG_CULTURE = list(
-			/decl/cultural_info/culture/skrell,
-			/decl/cultural_info/culture/skrell/caste_malish,
-			/decl/cultural_info/culture/skrell/caste_kanin,
-			/decl/cultural_info/culture/skrell/caste_talum,
-			/decl/cultural_info/culture/skrell/caste_raskinta,
-			/decl/cultural_info/culture/skrell/caste_ue
+	available_background_info = list(
+		/decl/background_category/heritage = list(
+			/decl/background_detail/heritage/skrell,
+			/decl/background_detail/heritage/skrell/caste_malish,
+			/decl/background_detail/heritage/skrell/caste_kanin,
+			/decl/background_detail/heritage/skrell/caste_talum,
+			/decl/background_detail/heritage/skrell/caste_raskinta,
+			/decl/background_detail/heritage/skrell/caste_ue
 		),
-		TAG_HOMEWORLD = list(
-			/decl/cultural_info/location/free,
-			/decl/cultural_info/location/skrellspace,
-			/decl/cultural_info/location/other
+		/decl/background_category/homeworld = list(
+			/decl/background_detail/location/free,
+			/decl/background_detail/location/skrellspace,
+			/decl/background_detail/location/other
 		),
-		TAG_FACTION = list(
-			/decl/cultural_info/faction/skrell,
-			/decl/cultural_info/faction/skrell/qalaoa,
-			/decl/cultural_info/faction/skrell/yiitalana,
-			/decl/cultural_info/faction/skrell/krrigli,
-			/decl/cultural_info/faction/skrell/qonprri,
-			/decl/cultural_info/faction/skrell/kalimak,
-			/decl/cultural_info/faction/other
+		/decl/background_category/faction = list(
+			/decl/background_detail/faction/skrell,
+			/decl/background_detail/faction/skrell/qalaoa,
+			/decl/background_detail/faction/skrell/yiitalana,
+			/decl/background_detail/faction/skrell/krrigli,
+			/decl/background_detail/faction/skrell/qonprri,
+			/decl/background_detail/faction/skrell/kalimak,
+			/decl/background_detail/faction/other
 		),
-		TAG_RELIGION = list(
-			/decl/cultural_info/religion/skrell,
-			/decl/cultural_info/religion/skrell/starspiritual,
-			/decl/cultural_info/religion/other
+		/decl/background_category/religion = list(
+			/decl/background_detail/religion/skrell,
+			/decl/background_detail/religion/skrell/starspiritual,
+			/decl/background_detail/religion/other
 		)
 	)
 
@@ -117,7 +113,7 @@
 		var/list/bloodDNA
 		var/list/blood_data = REAGENT_DATA(H.vessel, /decl/material/liquid/blood)
 		if(blood_data)
-			bloodDNA = list(blood_data["blood_DNA"] = blood_data["blood_type"])
+			bloodDNA = list(blood_data[DATA_BLOOD_DNA] = blood_data[DATA_BLOOD_TYPE])
 		else
 			bloodDNA = list()
 		if(T.simulated)

@@ -7,7 +7,7 @@
 	economic_power = 1
 	access = list()
 	minimal_access = list()
-	outfit_type = /decl/hierarchy/outfit/job/staff_assistant
+	outfit_type = /decl/outfit/job/staff_assistant
 	department_types = list(/decl/department/security)
 
 /datum/job/tech_assistant
@@ -19,7 +19,7 @@
 	economic_power = 1
 	access = list()
 	minimal_access = list()
-	outfit_type = /decl/hierarchy/outfit/job/tech_assistant
+	outfit_type = /decl/outfit/job/tech_assistant
 	department_types = list(/decl/department/engineering)
 
 /datum/job/sci_assistant
@@ -31,7 +31,7 @@
 	economic_power = 1
 	access = list()
 	minimal_access = list()
-	outfit_type = /decl/hierarchy/outfit/job/sci_assistant
+	outfit_type = /decl/outfit/job/sci_assistant
 	department_types = list(/decl/department/science)
 
 /datum/job/med_assistant
@@ -43,5 +43,5 @@
 	economic_power = 1
 	access = list()
 	minimal_access = list()
-	outfit_type = /decl/hierarchy/outfit/job/med_assistant
+	outfit_type = /decl/outfit/job/med_assistant
 	department_types = list(/decl/department/medical)

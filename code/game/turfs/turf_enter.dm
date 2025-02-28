@@ -16,13 +16,9 @@
 #undef ENTER_PROXIMITY_LOOP_SANITY
 /turf/Entered(var/atom/movable/A, var/atom/old_loc)
 	..()
-	if(!istype(A) || !A.simulated)
-		return
-	if(isliving(A))
-		var/mob/living/walker = A
-		walker.handle_footsteps()
-	queue_temperature_atoms(A)
-	A.update_turf_alpha_mask()
+	if(istype(A) && !QDELETED(A) && A.simulated)
+		queue_temperature_atoms(A)
+		A.update_turf_alpha_mask()
 
 // If an opaque movable atom moves around we need to potentially update visibility.
 	if(A?.opacity && !has_opaque_atom)
@@ -33,7 +29,9 @@
 		regenerate_ao()
 #endif
 
-	if(isturf(old_loc) && has_gravity() && A.can_fall() && !(weakref(A) in skip_height_fall_for))
+	var/obj/structure/platform = get_supporting_platform()
+	if(isturf(old_loc) && has_gravity() && A.can_fall() && !isnull(platform) && !(weakref(A) in skip_height_fall_for))
+
 		var/turf/old_turf  = old_loc
 		var/old_height     = old_turf.get_physical_height() + old_turf.reagents?.total_volume
 		var/current_height = get_physical_height() + reagents?.total_volume
@@ -73,11 +71,11 @@
 			// Delay to allow transition to the new turf and avoid layering issues.
 			var/mob/M = A
 			M.reset_offsets()
-			if(get_physical_height() > T.get_physical_height())
+			if(platform || (get_physical_height() > T.get_physical_height()))
 				M.reset_layer()
 			else
 				// arbitrary timing value that feels good in practice. it sucks and is inconsistent:(
-				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom, reset_layer)), max(0, CEILING(M.next_move - world.time)) + 1 SECOND)
+				addtimer(CALLBACK(M, TYPE_PROC_REF(/atom, reset_layer)), max(0, ceil(M.next_move - world.time)) + 1 SECOND)
 
 	if(simulated)
 		A.OnSimulatedTurfEntered(src, old_loc)

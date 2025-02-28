@@ -4,14 +4,14 @@
 	maxbodytemp = 900;
 	ai_holder_type = /datum/ai_holder/simple_mob/melee/evasive/returnhome
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/template_noop)
 "ab" = (
 /turf/template_noop,
 /area/template_noop)
 "ac" = (
 /obj/item/remains,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rockybase)
 "ad" = (
 /turf/template_noop,
@@ -27,7 +27,7 @@
 	maxbodytemp = 900;
 	ai_holder_type = /datum/ai_holder/simple_mob/ranged/kiting/threatening/returnhome
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rockybase)
 "ag" = (
 /turf/mineral/ignore_mapgen/virgo2,
@@ -421,7 +421,7 @@
 /turf/floor/tiled,
 /area/submap/virgo2/Rockybase)
 "bz" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/template_noop)
 "bA" = (
 /obj/structure/table,
@@ -495,18 +495,18 @@
 /area/submap/virgo2/Rockybase)
 "bM" = (
 /obj/structure/table,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/chems/hypospray/autoinjector/biginjector/burn,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "bN" = (
 /obj/structure/table,
 /obj/item/clothing/mask/breath/medical,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "bO" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "bP" = (
@@ -529,21 +529,21 @@
 /area/submap/virgo2/Rockybase)
 "bS" = (
 /obj/item/stack/material/rods,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "bT" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/girder,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "bU" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "bV" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/table/frame,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
@@ -606,25 +606,25 @@
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "ch" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "ci" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "cj" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/item/shard,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "ck" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "cl" = (
@@ -690,9 +690,9 @@
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
 "ct" = (
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/blood,
 /turf/floor/plating/virgo2,
 /area/submap/virgo2/Rockybase)
@@ -766,7 +766,7 @@
 /area/submap/virgo2/Rockybase)
 "cI" = (
 /obj/item/surgicaldrill,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "cJ" = (
@@ -775,11 +775,11 @@
 /area/submap/virgo2/Rockybase)
 "cK" = (
 /obj/item/clothing/suit/space/void/medical,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "cL" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /mob/living/bot/medbot,
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
@@ -792,11 +792,11 @@
 /turf/floor/tiled/techfloor/virgo2,
 /area/submap/virgo2/Rockybase)
 "cO" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rockybase)
 "cT" = (
 /obj/item/remains,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/template_noop)
 
 (1,1,1) = {"

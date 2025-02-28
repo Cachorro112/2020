@@ -10,20 +10,21 @@
 	cosmetics_icon       = 'mods/content/fantasy/icons/hnoll/cosmetics.dmi'
 	skeletal_icon        = 'mods/content/fantasy/icons/hnoll/skeleton.dmi'
 	health_hud_intensity = 1.75
-	bodytype_flag        = BODY_FLAG_HNOLL
+	bodytype_flag        = BODY_EQUIP_FLAG_HNOLL
 	appearance_flags     = HAS_UNDERWEAR | HAS_SKIN_COLOR | HAS_EYE_COLOR
 	age_descriptor       = /datum/appearance_descriptor/age/hnoll
 	base_color           = "#ae7d32"
 	base_eye_color       = "#00aa00"
+	uid                  = "bodytype_hnoll"
 
 	default_sprite_accessories = list(
 		SAC_HAIR     = list(
-			/decl/sprite_accessory/hair/hnoll/mohawk        = "#46321c"
+			/decl/sprite_accessory/hair/hnoll/mohawk        = list(SAM_COLOR = "#46321c")
 		),
 		SAC_MARKINGS = list(
-			/decl/sprite_accessory/marking/hnoll/belly      = "#b6b0a8",
-			/decl/sprite_accessory/marking/hnoll/spots/body = "#46331d",
-			/decl/sprite_accessory/marking/hnoll/ears       = "#46331d"
+			/decl/sprite_accessory/marking/hnoll/belly      = list(SAM_COLOR = "#b6b0a8"),
+			/decl/sprite_accessory/marking/hnoll/spots/body = list(SAM_COLOR = "#46331d"),
+			/decl/sprite_accessory/marking/hnoll/ears       = list(SAM_COLOR = "#46331d")
 		)
 	)
 

@@ -6,11 +6,11 @@
 /turf/template_noop,
 /area/submap/virgo2/Rocky1)
 "c" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rocky1)
 "d" = (
 /obj/structure/boulder,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rocky1)
 "e" = (
 /turf/mineral/ignore_mapgen/virgo2,
@@ -19,7 +19,7 @@
 /obj/random/handgun/sec,
 /obj/item/remains/human,
 /obj/item/secure_storage/briefcase/money,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/submap/virgo2/Rocky1)
 
 (1,1,1) = {"

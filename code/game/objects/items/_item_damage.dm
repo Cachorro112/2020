@@ -48,19 +48,27 @@
 	. = ..()
 	take_damage(explosion_severity_damage(severity), BURN, DAM_EXPLODE | DAM_DISPERSED, "explosion")
 
+/obj/item/bash(obj/item/weapon, mob/user)
+	. = ..()
+	var/force = weapon.get_attack_force(user)
+	if(force >= 3 && .)
+		user.setClickCooldown(weapon.attack_cooldown + weapon.w_class)
+		take_damage(force, weapon.atom_damage_type)
+
 /obj/item/proc/explosion_severity_damage(var/severity)
 	var/mult = explosion_severity_damage_multiplier()
 	return (mult * (4 - severity)) + (severity != 1? rand(-(mult / severity), (mult / severity)) : 0 )
 
 /obj/item/proc/explosion_severity_damage_multiplier()
-	return CEILING(get_max_health() / 3)
+	return ceil(get_max_health() / 3)
 
 /obj/item/is_burnable()
 	return simulated
 
 /obj/item/proc/get_volume_by_throwforce_and_or_w_class()
-	if(throwforce && w_class)
-		return clamp((throwforce + w_class) * 5, 30, 100)// Add the item's throwforce to its weight class and multiply by 5, then clamp the value between 30 and 100
+	var/thrown_force = get_thrown_attack_force()
+	if(thrown_force && w_class)
+		return clamp((thrown_force + w_class) * 5, 30, 100)// Add the item's thrown force to its weight class and multiply by 5, then clamp the value between 30 and 100
 	else if(w_class)
 		return clamp(w_class * 8, 20, 100) // Multiply the item's weight class by 8, then clamp the value between 20 and 100
 	else
@@ -70,7 +78,7 @@
 	. = ..()
 	if(isliving(hit_atom)) //Living mobs handle hit sounds differently.
 		var/volume = get_volume_by_throwforce_and_or_w_class()
-		if (throwforce > 0)
+		if (get_thrown_attack_force() > 0)
 			if(hitsound)
 				playsound(hit_atom, hitsound, volume, TRUE, -1)
 			else

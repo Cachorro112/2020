@@ -139,6 +139,8 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 /datum/proximity_trigger/proc/on_turf_entered(var/turf/T, var/atom/enterer)
 	if(enterer == holder) // We have an explicit call for holder, in case it moved somewhere we're not listening to.
 		return
+	if(!enterer.simulated)
+		return
 	// For opaque movables, we need to recheck visibility on destruction, when their opacity is changed, or when they move out of range.
 	if(enterer.opacity)
 		events_repository.register(/decl/observ/opacity_set, enterer, src, TYPE_PROC_REF(/datum/proximity_trigger, update_opaque_atom))
@@ -149,7 +151,7 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 
 /datum/proximity_trigger/proc/update_opaque_atom(var/atom/opaque_atom)
 	var/turf/atom_loc = get_turf(opaque_atom)
-	if(QDELETED(opaque_atom) || !opaque_atom.opacity || !atom_loc || !(atom_loc in turfs_in_range))
+	if(QDELETED(opaque_atom) || !opaque_atom.opacity || !atom_loc || !turfs_in_range[atom_loc])
 		events_repository.unregister(/decl/observ/opacity_set, opaque_atom, src, TYPE_PROC_REF(/datum/proximity_trigger, update_opaque_atom))
 		events_repository.unregister(/decl/observ/destroyed, opaque_atom, src, TYPE_PROC_REF(/datum/proximity_trigger, update_opaque_atom))
 		events_repository.unregister(/decl/observ/moved, opaque_atom, src, TYPE_PROC_REF(/datum/proximity_trigger, update_opaque_atom))
@@ -161,15 +163,17 @@ var/global/const/PROXIMITY_EXCLUDE_HOLDER_TURF = 1 // When acquiring turfs to mo
 	if(!center)
 		return
 
-	FOR_DVIEW(var/T, range_, center, 0)
-		if (T in turfs_in_range)	// This is awful, but I don't want to refactor this to be assoc.
-			. += T
+	FOR_DVIEW(var/turf/t, range_, center, 0)
+		if (turfs_in_range[t])
+			. += t
 	END_FOR_DVIEW
 
 /datum/proximity_trigger/proc/acquire_relevant_turfs()
 	. = turf_selection.get_turfs(holder, range_, l_angle_, r_angle_)
 	if(proximity_flags & PROXIMITY_EXCLUDE_HOLDER_TURF)
 		. -= get_turf(holder)
+	for(var/T in .)
+		.[T] = TRUE
 
 /obj/item/proxy_debug
 	abstract_type = /obj/item/proxy_debug

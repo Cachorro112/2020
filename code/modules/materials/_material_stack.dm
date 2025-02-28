@@ -1,8 +1,6 @@
 // Stacked resources. They use a material datum for a lot of inherited values.
 /obj/item/stack/material
 	name = "material sheet"
-	force = 5
-	throwforce = 5
 	w_class = ITEM_SIZE_LARGE
 	throw_speed = 3
 	throw_range = 3
@@ -66,6 +64,9 @@
 /obj/item/stack/material/proc/special_crafting_check()
 	return TRUE
 
+/obj/item/stack/material/update_name()
+	update_strings()
+
 /obj/item/stack/material/proc/update_strings()
 	var/prefix_name = name_modifier ? "[name_modifier] " : ""
 	if(amount>1)
@@ -87,10 +88,6 @@
 	else
 		origin_tech = initial(origin_tech)
 
-/obj/item/stack/material/use(var/used)
-	. = ..()
-	update_strings()
-
 /obj/item/stack/material/clear_matter()
 	..()
 	reinf_material = null
@@ -111,10 +108,6 @@
 	if(!is_same(M))
 		return 0
 	. = ..(M,tamount,1)
-	if(!QDELETED(src))
-		update_strings()
-	if(!QDELETED(M))
-		M.update_strings()
 
 /obj/item/stack/material/copy_from(var/obj/item/stack/material/other)
 	..()
@@ -175,12 +168,13 @@
 		if(convert_type)
 
 			var/product_per_sheet         = matter_multiplier / initial(convert_type.matter_multiplier)
-			var/minimum_per_one_product   = CEILING(1 / product_per_sheet)
+			var/minimum_per_one_product   = ceil(1 / product_per_sheet)
 
 			if(get_amount() < minimum_per_one_product)
 				to_chat(user, SPAN_WARNING("You will need [minimum_per_one_product] [minimum_per_one_product == 1 ? singular_name : plural_name] to produce [product_per_sheet] [product_per_sheet == 1 ? initial(convert_type.singular_name) : initial(convert_type.plural_name)]."))
 			else if(W.do_tool_interaction(convert_tool, user, src, 1 SECOND, set_cooldown = TRUE) && !QDELETED(src) && get_amount() >= minimum_per_one_product)
-				var/obj/item/stack/product = new convert_type(get_turf(src), CEILING(product_per_sheet), material?.type, reinf_material?.type)
+				var/obj/item/stack/product = new convert_type(loc, ceil(product_per_sheet), material?.type, reinf_material?.type)
+				product.dropInto(loc)
 				use(minimum_per_one_product)
 				if(product.add_to_stacks(user, TRUE))
 					user.put_in_hands(product)
@@ -223,5 +217,12 @@
 	. = "[reinf_material ? "reinforced " : null][material.use_name]"
 	if(amount == 1)
 		. += " [singular_name]"
+		if(gender == PLURAL)
+			return "some [.]"
 		return indefinite_article ? "[indefinite_article] [.]" : ADD_ARTICLE(.)
 	return "[amount] [.] [plural_name]"
+
+// Horrible solution to heat damage for atoms causing logs and
+// fuel to vanish. Replace this when the atom fire system exists.
+/obj/item/stack/material/should_take_heat_damage(datum/gas_mixture/air, exposed_temperature)
+	return istype(loc, /obj/structure/fire_source) ? FALSE : ..()

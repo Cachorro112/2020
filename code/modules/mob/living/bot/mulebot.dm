@@ -116,7 +116,7 @@
 				safety = !safety
 
 /mob/living/bot/mulebot/attackby(var/obj/item/O, var/mob/user)
-	..()
+	. = ..()
 	update_icon()
 
 /mob/living/bot/mulebot/proc/obeyCommand(var/command)
@@ -172,13 +172,13 @@
 	if(target == src.loc)
 		custom_emote(2, "makes a chiming sound.")
 		playsound(loc, 'sound/machines/chime.ogg', 50, 0)
-		UnarmedAttack(target)
+		UnarmedAttack(target, TRUE)
 		resetTarget()
 		if(auto_return && home && (loc != home))
 			target = home
 			targetName = "Home"
 
-/mob/living/bot/mulebot/confirmTarget()
+/mob/living/bot/mulebot/confirmTarget(atom/target)
 	return 1
 
 /mob/living/bot/mulebot/calcTargetPath()

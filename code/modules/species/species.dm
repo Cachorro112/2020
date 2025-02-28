@@ -14,7 +14,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/roleplay_summary
 	var/ooc_codex_information
 	var/cyborg_noun = "Cyborg"
-	var/hidden_from_codex = TRUE
+	var/hidden_from_codex = FALSE
 	var/secret_codex_info
 
 	var/holder_icon
@@ -30,6 +30,8 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/list/available_accessory_categories = list(
 		SAC_HAIR,
 		SAC_FACIAL_HAIR,
+		SAC_EARS,
+		SAC_TAIL,
 		SAC_COSMETICS,
 		SAC_MARKINGS
 	)
@@ -55,7 +57,6 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/flesh_color = "#ffc896"             // Pink.
 	var/blood_oxy = 1
 
-
 	var/organs_icon		//species specific internal organs icons
 
 	var/strength = STR_MEDIUM
@@ -79,11 +80,12 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	// Combat vars.
 	var/total_health = DEFAULT_SPECIES_HEALTH  // Point at which the mob will enter crit.
 	var/list/unarmed_attacks = list(           // Possible unarmed attacks that the mob will use in combat,
-		/decl/natural_attack,
+		/decl/natural_attack/stomp,
+		/decl/natural_attack/kick,
+		/decl/natural_attack/punch,
 		/decl/natural_attack/bite
-		)
+	)
 
-	var/list/natural_armour_values            // Armour values used if naked.
 	var/brute_mod =      1                    // Physical damage multiplier.
 	var/burn_mod =       1                    // Burn damage multiplier.
 	var/toxins_mod =     1                    // Toxloss modifier
@@ -119,7 +121,9 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	// Environment tolerance/life processes vars.
 	var/breath_pressure = 16                                    // Minimum partial pressure safe for breathing, kPa
 	var/breath_type = /decl/material/gas/oxygen                 // Non-oxygen gas breathed, if any.
-	var/poison_types = list(                                    // Noticeably poisonous air - ie. updates the toxins indicator on the HUD.
+	/// Material types considered noticeably poisonous when inhaled (ie. updates the toxins indicator on the HUD).
+	/// This is an associative list for speed.
+	var/poison_types = list(
 		/decl/material/solid/phoron = TRUE,
 		/decl/material/gas/chlorine = TRUE
 		)
@@ -186,10 +190,10 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/standing_jump_range = 2
 	var/list/maneuvers = list(/decl/maneuver/leap)
 
-	var/list/available_cultural_info =            list()
-	var/list/force_cultural_info =                list()
-	var/list/default_cultural_info =              list()
-	var/list/additional_available_cultural_info = list()
+	var/list/available_background_info =            list()
+	var/list/force_background_info =                list()
+	var/list/default_background_info =              list()
+	var/list/additional_available_background_info = list()
 	var/max_players
 
 	// Order matters, higher pain level should be higher up
@@ -221,7 +225,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	var/preview_icon_width = 64
 	var/preview_icon_height = 64
 	var/preview_icon_path
-	var/preview_outfit = /decl/hierarchy/outfit/job/generic/assistant
+	var/preview_outfit = /decl/outfit/job/generic/assistant
 
 	/// List of emote types that this species can use by default.
 	var/list/default_emotes
@@ -354,28 +358,28 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	else if(length(available_pronouns) && !default_pronouns)
 		default_pronouns = available_pronouns[1]
 
-	for(var/token in ALL_CULTURAL_TAGS)
+	for(var/cat_type in global.using_map.get_background_categories())
 
-		var/force_val = force_cultural_info[token]
+		var/force_val = force_background_info[cat_type]
 		if(force_val)
-			default_cultural_info[token] = force_val
-			available_cultural_info[token] = list(force_val)
+			default_background_info[cat_type] = force_val
+			available_background_info[cat_type] = list(force_val)
 
-		else if(additional_available_cultural_info[token])
-			if(!available_cultural_info[token])
-				available_cultural_info[token] = list()
-			available_cultural_info[token] |= additional_available_cultural_info[token]
+		else if(additional_available_background_info[cat_type])
+			if(!available_background_info[cat_type])
+				available_background_info[cat_type] = list()
+			available_background_info[cat_type] |= additional_available_background_info[cat_type]
 
-		else if(!LAZYLEN(available_cultural_info[token]))
-			var/list/map_systems = global.using_map.available_cultural_info[token]
-			available_cultural_info[token] = map_systems.Copy()
+		else if(!LAZYLEN(available_background_info[cat_type]))
+			var/list/map_systems = global.using_map.available_background_info[cat_type]
+			available_background_info[cat_type] = map_systems.Copy()
 
-		if(LAZYLEN(available_cultural_info[token]) && !default_cultural_info[token])
-			var/list/avail_systems = available_cultural_info[token]
-			default_cultural_info[token] = avail_systems[1]
+		if(LAZYLEN(available_background_info[cat_type]) && !default_background_info[cat_type])
+			var/list/avail_systems = available_background_info[cat_type]
+			default_background_info[cat_type] = avail_systems[1]
 
-		if(!default_cultural_info[token])
-			default_cultural_info[token] = global.using_map.default_cultural_info[token]
+		if(!default_background_info[cat_type])
+			default_background_info[cat_type] = global.using_map.default_background_info[cat_type]
 
 	if(species_hud)
 		species_hud = new species_hud
@@ -481,7 +485,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 
 // Used for any extra behaviour when falling and to see if a species will fall at all.
 /decl/species/proc/can_fall(var/mob/living/human/H)
-	return TRUE
+	return !can_overcome_gravity(H)
 
 // Used to override normal fall behaviour. Use only when the species does fall down a level.
 /decl/species/proc/handle_fall_special(var/mob/living/human/H, var/turf/landing)
@@ -630,7 +634,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 			return
 
 	var/randn = rand(1, 100) - skill_mod + state_mod
-	if(!(check_no_slip(target)) && randn <= 25)
+	if(!target.can_slip() && randn <= 25)
 		var/armor_check = 100 * target.get_blocked_ratio(affecting, BRUTE, damage = 20)
 		target.apply_effect(push_mod, WEAKEN, armor_check)
 		playsound(target.loc, 'sound/weapons/thudswoosh.ogg', 50, 1, -1)
@@ -657,8 +661,8 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	target.visible_message("<span class='danger'>[attacker] attempted to disarm \the [target]!</span>")
 
 /decl/species/proc/disfigure_msg(var/mob/living/human/H) //Used for determining the message a disfigured face has on examine. To add a unique message, just add this onto a specific species and change the "return" message.
-	var/decl/pronouns/G = H.get_pronouns()
-	return SPAN_DANGER("[G.His] face is horribly mangled!\n")
+	var/decl/pronouns/pronouns = H.get_pronouns()
+	return SPAN_DANGER("[pronouns.His] face is horribly mangled!\n")
 
 /decl/species/proc/get_available_accessories(var/decl/bodytype/bodytype, accessory_category)
 	. = list()
@@ -677,7 +681,7 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 		var/list/all_accessories = decls_repository.get_decls_of_subtype(accessory_category_decl.base_accessory_type)
 		for(var/accessory_style in all_accessories)
 			var/decl/sprite_accessory/check_accessory = all_accessories[accessory_style]
-			if(!check_accessory || !check_accessory.accessory_is_available(null, src, bodytype))
+			if(!check_accessory || !check_accessory.accessory_is_available(null, src, bodytype, FALSE))
 				continue
 			ADD_SORTED(available_accessories, accessory_style, /proc/cmp_text_asc)
 			available_accessories[accessory_style] = check_accessory
@@ -690,8 +694,8 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 		if(31 to 45)	. = 4
 		else			. = 8
 
-/decl/species/proc/check_no_slip(var/mob/living/human/H)
-	if(can_overcome_gravity(H))
+/decl/species/proc/check_no_slip(mob/living/user, magboots_only)
+	if(can_overcome_gravity(user))
 		return TRUE
 	return (species_flags & SPECIES_FLAG_NO_SLIP)
 
@@ -772,3 +776,12 @@ var/global/const/DEFAULT_SPECIES_HEALTH = 200
 	H.mob_swap_flags = swap_flags
 	H.mob_push_flags = push_flags
 	H.pass_flags = pass_flags
+
+/decl/species/proc/modify_preview_appearance(mob/living/human/dummy/mannequin)
+	return mannequin
+
+/decl/species/proc/get_default_background_datum_by_flag(background_flag)
+	for(var/cat_type in default_background_info)
+		var/decl/background_category/background_cat = GET_DECL(cat_type)
+		if(background_cat.background_flags & background_flag)
+			return GET_DECL(default_background_info[cat_type])

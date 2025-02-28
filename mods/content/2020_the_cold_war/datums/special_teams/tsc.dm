@@ -20,7 +20,7 @@
 	initial_spawn_req = 3
 	initial_spawn_target = 4
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/terran_sc
+	default_outfit = /decl/outfit/terran_sc
 
 /decl/special_role/security_council/create_default(var/mob/source)
 	var/mob/living/human/M = ..()

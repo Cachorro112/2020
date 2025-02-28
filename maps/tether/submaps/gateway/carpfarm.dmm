@@ -23,14 +23,14 @@
 /area/space)
 "af" = (
 /obj/abstract/landmark/gateway_scatter,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/space)
 "ah" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/space)
 "aj" = (
 /obj/item/tool/hammer/jack,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/space)
 "ak" = (
 /turf/wall/natural,
@@ -572,13 +572,13 @@
 /turf/floor/tiled,
 /area/awaymission/carpfarm/base)
 "bS" = (
-/obj/item/chems/food/cubancarp,
+/obj/item/food/cubancarp,
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/structure/table/glass,
 /turf/floor/tiled,
 /area/awaymission/carpfarm/base)
 "bT" = (
-/obj/item/chems/food/carpmeat,
+/obj/item/food/carpmeat,
 /obj/effect/floor_decal/corner/white/diagonal,
 /obj/structure/table/glass,
 /turf/floor/tiled,
@@ -662,10 +662,10 @@
 /obj/machinery/light{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/carpfarm/base)
 "cd" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/carpfarm/base)
 "ce" = (
 /obj/machinery/button/access{
@@ -674,7 +674,7 @@
 	pixel_x = 26;
 	pixel_y = 26
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/awaymission/carpfarm/base)
 "cf" = (
 /obj/structure/lattice,
@@ -685,55 +685,55 @@
 /obj/effect/floor_decal/industrial/warning{
 	dir = 9
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ch" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ci" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 5
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cj" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 8
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "ck" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cl" = (
 /obj/effect/floor_decal/industrial/warning{
 	icon_state = "warning";
 	dir = 4
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cm" = (
 /obj/effect/gibspawner/human,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cn" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 10
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "co" = (
 /obj/effect/floor_decal/industrial/warning,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "cp" = (
 /obj/effect/floor_decal/industrial/warning{
 	dir = 6
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 
 (1,1,1) = {"

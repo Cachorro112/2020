@@ -24,77 +24,89 @@
 		if(length(limb.unarmed_attacks) && limb.is_usable())
 			. |= limb.unarmed_attacks
 
-/mob/living/human/default_help_interaction(mob/user)
-
-	if(user != src)
-		if(ishuman(user) && (is_asystole() || (status_flags & FAKEDEATH) || failed_last_breath) && !on_fire && !(user.get_target_zone() == BP_R_ARM || user.get_target_zone() == BP_L_ARM))
-			if (performing_cpr)
-				performing_cpr = FALSE
-			else
-				performing_cpr = TRUE
-				start_compressions(user, TRUE)
-			return TRUE
-
-		if(apply_pressure(user, user.get_target_zone()))
-			return TRUE
-
-		return ..()
-
-	var/decl/pronouns/G = get_pronouns()
-	visible_message(
-		SPAN_NOTICE("\The [src] examines [G.self]."),
-		SPAN_NOTICE("You check yourself for injuries.")
-	)
-
-	// TODO: move status strings onto the organ and handle crystal/prosthetic limbs.
-	for(var/obj/item/organ/external/org in get_external_organs())
-		var/list/status = list()
-
-		var/feels = 1 + round(org.pain/100, 0.1)
-		var/feels_brute = org.can_feel_pain() ? (org.brute_dam * feels) : 0
+/obj/item/organ/external/proc/get_injury_status(include_pain = TRUE, include_visible = TRUE)
+	. = list()
+	if(include_pain && can_feel_pain())
+		var/feels = 1 + round(get_pain()/100, 0.1)
+		var/feels_brute = brute_dam * feels
 		if(feels_brute > 0)
-			switch(feels_brute / org.max_damage)
+			switch(feels_brute / max_damage)
 				if(0 to 0.35)
-					status += "slightly sore"
+					. += "slightly sore"
 				if(0.35 to 0.65)
-					status += "very sore"
+					. += "very sore"
 				if(0.65 to INFINITY)
-					status += "throbbing with agony"
+					. += "throbbing with agony"
 
-		var/feels_burn = org.can_feel_pain() ? (org.burn_dam * feels) : 0
+		var/feels_burn = burn_dam * feels
 		if(feels_burn > 0)
-			switch(feels_burn / org.max_damage)
+			switch(feels_burn / max_damage)
 				if(0 to 0.35)
-					status += "tingling"
+					. += "tingling"
 				if(0.35 to 0.65)
-					status += "stinging"
+					. += "stinging"
 				if(0.65 to INFINITY)
-					status += "burning fiercely"
+					. += "burning fiercely"
 
-		if(org.status & ORGAN_MUTATED)
-			status += "misshapen"
-		if(org.status & ORGAN_BLEEDING)
-			status += "<b>bleeding</b>"
-		if(org.is_dislocated())
-			status += "dislocated"
-		if(org.status & ORGAN_BROKEN && org.can_feel_pain())
-			status += "painful to the touch"
+		if(status & ORGAN_BROKEN)
+			. += "painful to the touch"
 
-		if(org.status & ORGAN_DEAD)
-			if(BP_IS_PROSTHETIC(org) || BP_IS_CRYSTAL(org))
-				status += "irrecoverably damaged"
+	if(include_visible && !owner?.is_blind())
+		if(status & ORGAN_MUTATED)
+			. += "misshapen"
+		if(status & ORGAN_BLEEDING)
+			. += "<b>bleeding</b>"
+		if(is_dislocated())
+			. += "dislocated"
+		if(status & ORGAN_DEAD)
+			if(BP_IS_PROSTHETIC(src) || BP_IS_CRYSTAL(src))
+				. += "irrecoverably damaged"
 			else
-				status += "grey and necrotic"
-		else if(org.damage >= org.max_damage && org.germ_level >= INFECTION_LEVEL_TWO)
-			status += "likely beyond saving and decay has set in"
-		if(!org.is_usable() || org.is_dislocated())
-			status += "dangling uselessly"
+				. += "grey and necrotic"
+		else if(damage >= max_damage && germ_level >= INFECTION_LEVEL_TWO)
+			. += "likely beyond saving and decay has set in"
 
-		if(status.len)
-			show_message("My [org.name] is <span class='warning'>[english_list(status)].</span>",1)
+	if(!is_usable() || is_dislocated()) // This one is special and has a different message for visible/pain modes.
+		. += (!include_visible || owner?.is_blind()) ? "completely limp" : "dangling uselessly"
+
+/mob/living/human/proc/check_self_injuries(include_pain = TRUE, include_visible = TRUE)
+	if(include_visible)
+		var/decl/pronouns/pronouns = get_pronouns()
+		visible_message(
+			SPAN_NOTICE("\The [src] examines [pronouns.self]."),
+			SPAN_NOTICE("You check yourself for injuries.")
+		)
+	else if(include_pain)
+		to_chat(src, SPAN_NOTICE("You take note of how your body feels..."))
+	else
+		return // This should never happen, we should always check pain, visible status, or both.
+
+	// TODO: move status strings onto the bodytype and handle crystal/prosthetic limbs.
+	for(var/obj/item/organ/external/org in get_external_organs())
+		var/list/status = org.get_injury_status(include_pain, include_visible)
+		if(length(status))
+			to_chat(src, "Your [org.name] is <span class='warning'>[english_list(status)].</span>")
+		else if(is_blind() || !include_visible)
+			to_chat(src, "You <span class='notice'>can't feel anything wrong</span> with your [org.name].")
+		else if(!include_pain)
+			to_chat(src, "You <span class='notice'>can't see anything wrong</span> with your [org.name].")
 		else
-			show_message("My [org.name] is <span class='notice'>OK.</span>",1)
-	return TRUE
+			to_chat(src, "Your [org.name] is <span class='notice'>OK.</span>")
+
+/mob/living/human/default_help_interaction(mob/user)
+	if(apply_pressure(user, user.get_target_zone()))
+		return TRUE
+	if(user == src)
+		check_self_injuries()
+		return TRUE
+	if(ishuman(user) && (is_asystole() || (status_flags & FAKEDEATH) || failed_last_breath) && !on_fire && !(user.get_target_zone() == BP_R_ARM || user.get_target_zone() == BP_L_ARM))
+		if (performing_cpr)
+			performing_cpr = FALSE
+		else
+			performing_cpr = TRUE
+			start_compressions(user, TRUE)
+		return TRUE
+	return ..()
 
 /mob/living/human/default_disarm_interaction(mob/user)
 	var/decl/species/user_species = user.get_species()
@@ -187,8 +199,8 @@
 			if(!src.current_posture.prone)
 				attack_message = "\The [H] attempted to strike \the [src], but missed!"
 			else
-				var/decl/pronouns/G = get_pronouns()
-				attack_message = "\The [H] attempted to strike \the [src], but [G.he] rolled out of the way!"
+				var/decl/pronouns/pronouns = get_pronouns()
+				attack_message = "\The [H] attempted to strike \the [src], but [pronouns.he] rolled out of the way!"
 				src.set_dir(pick(global.cardinal))
 			miss_type = 1
 
@@ -214,9 +226,12 @@
 	rand_damage *= damage_multiplier
 	real_damage = max(1, real_damage)
 	// Apply additional unarmed effects.
-	attack.apply_effects(H, src, rand_damage, hit_zone)
+	attack.apply_attack_effects(H, src, rand_damage, hit_zone)
 	// Finally, apply damage to target
 	apply_damage(real_damage, attack.get_damage_type(), hit_zone, damage_flags=attack.damage_flags())
+	if(attack.apply_cooldown)
+		H.setClickCooldown(attack.apply_cooldown)
+
 	if(istype(ai))
 		ai.retaliate(user)
 	return TRUE
@@ -225,15 +240,13 @@
 
 	remove_cloaking_source(species)
 	if(user.a_intent != I_GRAB)
-		for (var/obj/item/grab/G in user.get_active_grabs())
-			if(G.assailant == user && G.affecting == src && G.resolve_openhand_attack())
+		for (var/obj/item/grab/grab as anything in user.get_active_grabs())
+			if(grab.assailant == user && grab.affecting == src && grab.resolve_openhand_attack())
 				return TRUE
 	// Should this all be in Touch()?
-		var/mob/living/human/H = user
-		if(istype(H))
-			if(H != src && check_shields(0, null, H, H.get_target_zone(), H.name))
-				H.do_attack_animation(src)
-				return TRUE
+		if(ishuman(user) && user != src && check_shields(0, null, user, user.get_target_zone(), user))
+			user.do_attack_animation(src)
+			return TRUE
 
 	return ..()
 
@@ -338,7 +351,7 @@
 //Breaks all grips and pulls that the mob currently has.
 /mob/living/human/proc/break_all_grabs(mob/living/user)
 	. = FALSE
-	for(var/obj/item/grab/grab in get_active_grabs())
+	for(var/obj/item/grab/grab as anything in get_active_grabs())
 		if(grab.affecting)
 			visible_message(SPAN_DANGER("\The [user] has broken \the [src]'s grip on [grab.affecting]!"))
 			. = TRUE
@@ -363,9 +376,9 @@
 		return 0
 
 	if(user == src)
-		var/decl/pronouns/G = user.get_pronouns()
+		var/decl/pronouns/pronouns = user.get_pronouns()
 		user.visible_message( \
-			SPAN_NOTICE("\The [user] starts applying pressure to [G.his] [organ.name]!"), \
+			SPAN_NOTICE("\The [user] starts applying pressure to [pronouns.his] [organ.name]!"), \
 			SPAN_NOTICE("You start applying pressure to your [organ.name]!"))
 	else
 		user.visible_message( \
@@ -380,9 +393,9 @@
 		organ.applied_pressure = null
 
 		if(user == src)
-			var/decl/pronouns/G = user.get_pronouns()
+			var/decl/pronouns/pronouns = user.get_pronouns()
 			user.visible_message( \
-				SPAN_NOTICE("\The [user] stops applying pressure to [G.his] [organ.name]!"), \
+				SPAN_NOTICE("\The [user] stops applying pressure to [pronouns.his] [organ.name]!"), \
 				SPAN_NOTICE("You stop applying pressure to your [organ.name]!"))
 		else
 			user.visible_message( \
@@ -404,7 +417,7 @@
 			var/image/radial_button = new
 			radial_button.name = capitalize(u_attack.name)
 			LAZYSET(choices, u_attack, radial_button)
-	var/decl/natural_attack/new_attack = show_radial_menu(src, (attack_selector || src), choices, radius = 42, use_labels = TRUE)
+	var/decl/natural_attack/new_attack = show_radial_menu(src, (attack_selector || src), choices, radius = 42, use_labels = RADIAL_LABELS_OFFSET)
 	if(QDELETED(src) || !istype(new_attack) || !(new_attack.type in get_natural_attacks()))
 		return
 	default_attack = new_attack
@@ -414,3 +427,12 @@
 		if(summary)
 			to_chat(src, SPAN_NOTICE(summary))
 	attack_selector?.update_icon()
+
+/mob/living/human/UnarmedAttack(atom/A, proximity_flag)
+	// Hackfix for humans trying to attack someone without hands.
+	// Dexterity ect. should be checked in these procs regardless,
+	// but unarmed attacks that don't require hands should still
+	// have the ability to be used.
+	if(!(. = ..()) && !get_active_held_item_slot() && a_intent == I_HURT && isliving(A))
+		var/mob/living/victim = A
+		return victim.default_hurt_interaction(src)

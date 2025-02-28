@@ -41,7 +41,7 @@
 	else
 		visible_message("<span class='warning'>\The [src] has been attacked with \the [W][(user ? " by [user]." : ".")]</span>")
 
-	var/damage = W.force / 4.0
+	var/damage = W.get_attack_force(user) / 4
 
 	if(W.edge)
 		damage += 5
@@ -55,6 +55,7 @@
 
 	current_health -= damage
 	healthcheck()
+	return TRUE
 
 /obj/effect/spider/bullet_act(var/obj/item/projectile/Proj)
 	..()
@@ -194,7 +195,7 @@
 	. = ..()
 
 /obj/effect/spider/spiderling/attackby(var/obj/item/W, var/mob/user)
-	..()
+	. = ..()
 	if(current_health > 0)
 		disturbed()
 

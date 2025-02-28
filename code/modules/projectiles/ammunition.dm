@@ -6,7 +6,6 @@
 	randpixel = 10
 	obj_flags = OBJ_FLAG_CONDUCTIBLE | OBJ_FLAG_HOLLOW
 	slot_flags = SLOT_LOWER_BODY | SLOT_EARS
-	throwforce = 1
 	w_class = ITEM_SIZE_TINY
 	material = /decl/material/solid/metal/brass
 	material_alteration = MAT_FLAG_ALTERATION_COLOR | MAT_FLAG_ALTERATION_NAME
@@ -45,12 +44,11 @@
 	. = BB
 	BB = null
 	set_dir(pick(global.alldirs)) //spin spent casings
-
 	// Aurora forensics port, gunpowder residue.
 	if(leaves_residue)
 		leave_residue()
-
 	update_icon()
+	update_name()
 
 /obj/item/ammo_casing/Crossed(atom/movable/AM)
 	..()
@@ -88,22 +86,23 @@
 		forensics.add_from_atom(/datum/forensics/gunshot_residue, src)
 
 /obj/item/ammo_casing/attackby(obj/item/W, mob/user)
-	if(IS_SCREWDRIVER(W))
-		if(!BB)
-			to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
-			return
+	if(!IS_SCREWDRIVER(W))
+		return ..()
+	if(!BB)
+		to_chat(user, "<span class='notice'>There is no bullet in the casing to inscribe anything into.</span>")
+		return TRUE
 
-		var/tmp_label = ""
-		var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), MAX_NAME_LEN)
-		if(length(label_text) > 20)
-			to_chat(user, "<span class='warning'>The inscription can be at most 20 characters long.</span>")
-		else if(!label_text)
-			to_chat(user, "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>")
-			BB.SetName(initial(BB.name))
-		else
-			to_chat(user, "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>")
-			BB.SetName("[initial(BB.name)] (\"[label_text]\")")
-	else ..()
+	var/tmp_label = ""
+	var/label_text = sanitize_safe(input(user, "Inscribe some text into \the [initial(BB.name)]","Inscription",tmp_label), MAX_NAME_LEN)
+	if(length(label_text) > 20)
+		to_chat(user, "<span class='warning'>The inscription can be at most 20 characters long.</span>")
+	else if(!label_text)
+		to_chat(user, "<span class='notice'>You scratch the inscription off of [initial(BB)].</span>")
+		BB.SetName(initial(BB.name))
+	else
+		to_chat(user, "<span class='notice'>You inscribe \"[label_text]\" into \the [initial(BB.name)].</span>")
+		BB.SetName("[initial(BB.name)] (\"[label_text]\")")
+	return TRUE
 
 /obj/item/ammo_casing/on_update_icon()
 	. = ..()
@@ -118,6 +117,11 @@
 			add_overlay(I)
 	else if(spent_icon && !BB)
 		icon_state = spent_icon
+
+/obj/item/ammo_casing/update_name()
+	. = ..()
+	if(!BB)
+		SetName("spent [name]")
 
 /obj/item/ammo_casing/examine(mob/user)
 	. = ..()
@@ -136,7 +140,6 @@
 	slot_flags = SLOT_LOWER_BODY
 	item_state = "syringe_kit"
 	material = /decl/material/solid/metal/steel
-	throwforce = 5
 	w_class = ITEM_SIZE_SMALL
 	throw_speed = 4
 	throw_range = 10
@@ -168,6 +171,7 @@
 		return
 	for(var/i in 1 to initial_ammo)
 		stored_ammo += new ammo_type(src)
+	contents_initialized = TRUE
 
 /obj/item/ammo_magazine/proc/get_stored_ammo_count()
 	. = length(stored_ammo)
@@ -191,20 +195,21 @@
 	update_icon()
 
 /obj/item/ammo_magazine/attackby(obj/item/W, mob/user)
-	if(istype(W, /obj/item/ammo_casing))
-		var/obj/item/ammo_casing/C = W
-		if(C.caliber != caliber)
-			to_chat(user, "<span class='warning'>[C] does not fit into [src].</span>")
-			return
-		if(get_stored_ammo_count() >= max_ammo)
-			to_chat(user, "<span class='warning'>[src] is full!</span>")
-			return
-		if(!user.try_unequip(C, src))
-			return
-		stored_ammo.Add(C)
-		playsound(user, 'sound/weapons/guns/interaction/bullet_insert.ogg', 50, 1)
-		update_icon()
-	else ..()
+	if(!istype(W, /obj/item/ammo_casing))
+		return ..()
+	var/obj/item/ammo_casing/C = W
+	if(C.caliber != caliber)
+		to_chat(user, "<span class='warning'>[C] does not fit into [src].</span>")
+		return TRUE
+	if(get_stored_ammo_count() >= max_ammo)
+		to_chat(user, "<span class='warning'>[src] is full!</span>")
+		return TRUE
+	if(!user.try_unequip(C, src))
+		return TRUE
+	stored_ammo.Add(C)
+	playsound(user, 'sound/weapons/guns/interaction/bullet_insert.ogg', 50, 1)
+	update_icon()
+	return TRUE
 
 /obj/item/ammo_magazine/attack_self(mob/user)
 	create_initial_contents()

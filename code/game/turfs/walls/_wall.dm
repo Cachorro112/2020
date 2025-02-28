@@ -29,11 +29,9 @@ var/global/list/wall_fullblend_objects = list(
 	explosion_resistance = 10
 	color = COLOR_STEEL
 	turf_flags = TURF_IS_HOLOMAP_OBSTACLE
-	initial_gas = list(
-		/decl/material/gas/oxygen = MOLES_O2STANDARD,
-		/decl/material/gas/nitrogen = MOLES_N2STANDARD
-	)
+	initial_gas = GAS_STANDARD_AIRMIX
 	zone_membership_candidate = TRUE
+	layer = TURF_OVER_EDGE_LAYER
 
 	/// If set, will prevent merges between walls with different IDs.
 	var/unique_merge_identifier
@@ -49,7 +47,6 @@ var/global/list/wall_fullblend_objects = list(
 	/// A list of connections to non-walls for each corner, used for icon generation. Can be converted to a list of dirs with corner_states_to_dirs().
 	var/list/other_connections
 	var/floor_type = /turf/floor/plating //turf it leaves after destruction
-	var/paint_color
 	var/stripe_color
 	var/handle_structure_blending = TRUE
 	var/min_dismantle_amount = 2
@@ -85,6 +82,14 @@ var/global/list/wall_fullblend_objects = list(
 /turf/wall/LateInitialize(var/ml)
 	..()
 	update_material(!ml)
+	if(!ml)
+		for(var/direction in global.alldirs)
+			var/turf/target_turf = get_step_resolving_mimic(src, direction)
+			if(istype(target_turf))
+				if(TICK_CHECK) // not CHECK_TICK -- only queue if the server is overloaded
+					target_turf.queue_icon_update()
+				else
+					target_turf.update_icon()
 
 /turf/wall/Destroy()
 	STOP_PROCESSING(SSturf, src)
@@ -118,6 +123,7 @@ var/global/list/wall_fullblend_objects = list(
 		return PROCESS_KILL
 
 /turf/wall/get_material()
+	RETURN_TYPE(/decl/material)
 	return material
 
 /turf/wall/bullet_act(var/obj/item/projectile/Proj)
@@ -142,11 +148,10 @@ var/global/list/wall_fullblend_objects = list(
 
 	take_damage(damage)
 
-/turf/wall/hitby(AM, var/datum/thrownthing/TT)
+/turf/wall/hitby(atom/movable/AM, var/datum/thrownthing/TT)
 	. = ..()
 	if(. && density && !ismob(AM))
-		var/obj/O = AM
-		var/tforce = O.throwforce * (TT.speed/THROWFORCE_SPEED_DIVISOR)
+		var/tforce = AM.get_thrown_attack_force() * (TT.speed/THROWFORCE_SPEED_DIVISOR)
 		playsound(src, hitsound, tforce >= 15 ? 60 : 25, TRUE)
 		if(tforce > 0)
 			take_damage(tforce)
@@ -301,9 +306,6 @@ var/global/list/wall_fullblend_objects = list(
 				addtimer(CALLBACK(W, TYPE_PROC_REF(/turf/wall, burn), temperature/4), 2)
 		physically_destroyed()
 
-/turf/wall/get_color()
-	return paint_color
-
 /turf/wall/set_color(new_color)
 	paint_color = new_color
 	update_icon()
@@ -322,3 +324,7 @@ var/global/list/wall_fullblend_objects = list(
 
 /turf/wall/proc/get_hit_sound()
 	return 'sound/effects/metalhit.ogg'
+
+// Mapped premade for false walls
+/turf/wall/false
+	can_open = TRUE

@@ -3,16 +3,16 @@
 /turf/template_noop,
 /area/mine/explored/underdark)
 "b" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/underdark)
 "c" = (
 /obj/tether_away_spawner/underdark_hard,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/underdark)
 "d" = (
 /obj/structure/closet/crate/mimic/safe,
 /obj/random/underdark,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/underdark)
 
 (1,1,1) = {"

@@ -345,4 +345,4 @@
 	name = "latex maid dress"
 	desc = "Squeak! A shiny outfit for cleaning, made by people with dirty minds."
 	icon = 'maps/tether/icons/obj/clothing/costumes/latex_maid.dmi'
-	bodytype_equip_flags = BODY_FLAG_HUMANOID | BODY_FLAG_AVIAN
+	bodytype_equip_flags = BODY_EQUIP_FLAG_HUMANOID | BODY_EQUIP_FLAG_AVIAN

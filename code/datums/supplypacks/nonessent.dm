@@ -15,13 +15,13 @@
 		/obj/item/camera,
 		/obj/item/camera_film = 2,
 		/obj/item/photo_album,
-		/obj/item/chems/glass/paint/red,
-		/obj/item/chems/glass/paint/green,
-		/obj/item/chems/glass/paint/blue,
-		/obj/item/chems/glass/paint/yellow,
-		/obj/item/chems/glass/paint/purple,
-		/obj/item/chems/glass/paint/black,
-		/obj/item/chems/glass/paint/white,
+		/obj/item/chems/glass/bucket/paint/red,
+		/obj/item/chems/glass/bucket/paint/green,
+		/obj/item/chems/glass/bucket/paint/blue,
+		/obj/item/chems/glass/bucket/paint/yellow,
+		/obj/item/chems/glass/bucket/paint/purple,
+		/obj/item/chems/glass/bucket/paint/black,
+		/obj/item/chems/glass/bucket/paint/white,
 		/obj/item/poster,
 		/obj/item/stack/package_wrap/fifty      = 2,
 		/obj/item/stack/package_wrap/gift/fifty = 2
@@ -73,7 +73,7 @@
 
 /decl/hierarchy/supply_pack/nonessent/wizard
 	name = "Costume - Wizard"
-	contains = list(/obj/item/staff,
+	contains = list(/obj/item/staff/crystal,
 					/obj/item/clothing/suit/wizrobe/fake,
 					/obj/item/clothing/shoes/sandal,
 					/obj/item/clothing/head/wizard/fake)

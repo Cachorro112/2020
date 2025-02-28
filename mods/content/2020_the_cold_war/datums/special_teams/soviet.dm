@@ -20,7 +20,7 @@
 	initial_spawn_req = 4
 	initial_spawn_target = 5
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/rapid_deployment
+	default_outfit = /decl/outfit/rapid_deployment
 
 /decl/special_role/soviet_rapid_d/create_default(var/mob/source)
 	var/mob/living/human/M = ..()

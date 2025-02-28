@@ -18,7 +18,7 @@
 	initial_spawn_req = 4
 	initial_spawn_target = 5
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/delta_8
+	default_outfit = /decl/outfit/delta_8
 
 /decl/special_role/aegis_delta_8/create_default(var/mob/source)
 	var/mob/living/human/M = ..()
@@ -58,7 +58,7 @@
 	initial_spawn_req = 4
 	initial_spawn_target = 5
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/xeta_1
+	default_outfit = /decl/outfit/xeta_1
 
 /decl/special_role/aegis_xeta_1/create_default(var/mob/source)
 	var/mob/living/human/M = ..()
@@ -98,7 +98,7 @@
 	initial_spawn_req = 4
 	initial_spawn_target = 5
 	show_objectives_on_creation = 0 //we are not antagonists, we do not need the antagonist shpiel/objectives
-	default_outfit = /decl/hierarchy/outfit/alpha_3
+	default_outfit = /decl/outfit/alpha_3
 
 /decl/special_role/aegis_alpha_3/create_default(var/mob/source)
 	var/mob/living/human/M = ..()

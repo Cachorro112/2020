@@ -12,7 +12,7 @@
 	minimal_player_age = 14
 	economic_power = 20
 	ideal_character_age = 70
-	outfit_type = /decl/hierarchy/outfit/job/captain
+	outfit_type = /decl/outfit/job/captain
 	guestbanned = 1
 	must_fill = 1
 	not_random_selectable = 1
@@ -134,7 +134,7 @@
 		access_keycard_auth,
 		access_gateway
 	)
-	outfit_type = /decl/hierarchy/outfit/job/hop
+	outfit_type = /decl/outfit/job/hop
 	min_skill = list(
 		SKILL_LITERACY    = SKILL_ADEPT,
 		SKILL_COMPUTER    = SKILL_BASIC,
@@ -205,7 +205,7 @@
 	guestbanned = 1
 	must_fill = 1
 	not_random_selectable = 1
-	outfit_type = /decl/hierarchy/outfit/job/science/hor
+	outfit_type = /decl/outfit/job/science/hor
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_COMPUTER = SKILL_BASIC,

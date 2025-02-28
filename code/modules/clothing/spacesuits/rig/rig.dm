@@ -171,7 +171,7 @@
 			continue
 		piece.canremove = 0
 		piece.SetName("[suit_type] [initial(piece.name)]")
-		piece.desc = "It seems to be part of a [src.name]."
+		piece.desc = "It seems to be part of \a [src]."
 		piece.min_cold_protection_temperature = min_cold_protection_temperature
 		piece.max_heat_protection_temperature = max_heat_protection_temperature
 		if(piece.siemens_coefficient > siemens_coefficient) //So that insulated gloves keep their insulation.
@@ -264,7 +264,7 @@
 			wearer.visible_message(
 				SPAN_HARDSUIT("[wearer]'s suit emits a quiet hum as it begins to adjust its seals."),
 				SPAN_HARDSUIT("With a quiet hum, the suit begins running checks and adjusting components."))
-			if(seal_delay && !do_after(wearer,seal_delay, src))
+			if(seal_delay && !do_after(wearer, seal_delay, src))
 				if(wearer) to_chat(wearer, "<span class='warning'>You must remain still while the suit is adjusting the components.</span>")
 				failed_to_seal = 1
 
@@ -299,7 +299,7 @@
 				var/obj/item/compare_piece = piece_data[2]
 				var/msg_type = piece_data[3]
 
-				if(!piece)
+				if(!piece || !compare_piece)
 					continue
 
 				if(!istype(wearer) || !istype(piece) || !istype(compare_piece) || !msg_type)
@@ -498,7 +498,7 @@
 
 	data["charge"] =       cell ? round(cell.charge,1) : 0
 	data["maxcharge"] =    cell ? cell.maxcharge : 0
-	data["chargestatus"] = cell ? FLOOR(cell.percent()/2) : 0
+	data["chargestatus"] = cell ? floor(cell.percent()/2) : 0
 
 	data["emagged"] =       subverted
 	data["coverlock"] =     locked
@@ -585,7 +585,7 @@
 		for(var/slot in update_rig_slots)
 			wearer.update_equipment_overlay(slot)
 
-/obj/item/rig/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
+/obj/item/rig/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && slot == slot_back_str && !offline && equipment_overlay_icon && LAZYLEN(installed_modules))
 		for(var/obj/item/rig_module/module in installed_modules)
 			if(module.suit_overlay)

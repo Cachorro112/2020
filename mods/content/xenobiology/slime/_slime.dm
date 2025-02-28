@@ -18,7 +18,7 @@
 	status_flags = CANPARALYSE|CANPUSH
 	butchery_data = null
 	ai = /datum/mob_controller/slime
-	hud_used = /datum/hud/slime
+	hud_used = /datum/hud/animal
 	nutrition = 800
 
 	var/is_adult = FALSE
@@ -127,7 +127,7 @@
 			if(istype(AM, /obj/structure/window) || istype(AM, /obj/structure/grille))
 				if(nutrition <= get_hunger_nutrition())
 					if (is_adult || prob(5))
-						UnarmedAttack(AM)
+						UnarmedAttack(AM, Adjacent(AM))
 
 	if(ismob(AM))
 		var/mob/tmob = AM
@@ -271,7 +271,8 @@
 	return ..()
 
 /mob/living/slime/attackby(var/obj/item/W, var/mob/user)
-	if(W.force > 0)
+	var/force = W.get_attack_force(user)
+	if(force > 0)
 		var/datum/mob_controller/slime/slime_ai = ai
 		if(istype(slime_ai))
 			slime_ai.attacked += 10
@@ -280,7 +281,7 @@
 			to_chat(user, SPAN_WARNING("\The [W] passes right through \the [src]!"))
 			return TRUE
 	. = ..()
-	if(feeding_on && prob(W.force * 5))
+	if(feeding_on && prob(force * 5))
 		set_feeding_on()
 		step_away(src, user)
 

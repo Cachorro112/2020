@@ -44,7 +44,7 @@
 		container.queue_icon_update()
 
 /mob/living/brain/proc/get_container()
-	. = loc?.loc
+	return get_recursive_loc_of_type(/obj/item/organ/internal)
 
 /mob/living/brain/Login()
 	. = ..()
@@ -107,7 +107,7 @@
 	if(emp_damage <= 0)
 		return
 	emp_damage -= 1
-	var/msg_threshold = clamp(CEILING(emp_damage / (max_emp_damage / length(emp_reboot_strings))), 1, length(emp_reboot_strings))
+	var/msg_threshold = clamp(ceil(emp_damage / (max_emp_damage / length(emp_reboot_strings))), 1, length(emp_reboot_strings))
 	if(last_emp_message != msg_threshold)
 		last_emp_message = msg_threshold
 		to_chat(src, emp_reboot_strings[msg_threshold])

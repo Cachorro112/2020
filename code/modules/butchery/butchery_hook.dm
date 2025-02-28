@@ -53,10 +53,10 @@
 		to_chat(user, SPAN_WARNING("\The [occupant] is so badly mangled that removing them from \the [initial(name)] would be pointless."))
 	return TRUE
 
-/obj/structure/meat_hook/grab_attack(var/obj/item/grab/G)
-	var/mob/victim = G.get_affecting_mob()
+/obj/structure/meat_hook/grab_attack(obj/item/grab/grab, mob/user)
+	var/mob/victim = grab.get_affecting_mob()
 	if(istype(victim) && isturf(victim.loc))
-		try_spike(victim, G.assailant)
+		try_spike(victim, user)
 		return TRUE
 	return ..()
 
@@ -80,7 +80,10 @@
 	if(delay)
 		sleep(delay)
 
-	if(!istype(target) || QDELETED(target) || !istype(user) || QDELETED(user) || !Adjacent(user) || user.incapacitated() || target.anchored || !target.Adjacent(src))
+	if(!istype(target) || QDELETED(target) || !istype(user) || QDELETED(user) || user.incapacitated() || target.anchored)
+		return
+
+	if(!Adjacent(user) || !target.Adjacent(user))
 		return
 
 	if(!anchored)
@@ -172,6 +175,8 @@
 	if(QDELETED(occupant))
 		clear_occupant()
 	else if(occupant_state == CARCASS_EMPTY)
+		for(var/obj/item/embedded in occupant.embedded)
+			occupant.remove_implant(occupant.embedded, TRUE) // surgical removal to prevent pointless damage pre-deletion
 		for(var/obj/item/W in occupant)
 			occupant.drop_from_inventory(W)
 		qdel(occupant)
@@ -190,11 +195,13 @@
 	update_icon()
 	if(!tool?.do_tool_interaction(TOOL_KNIFE, user, src, 3 SECONDS, start_message = butchery_string, success_message = butchery_string, check_skill = SKILL_COOKING))
 		return FALSE
-	if(!QDELETED(user) && !QDELETED(last_occupant) && occupant == last_occupant && occupant_state == last_state)
+	if(!QDELETED(user) && !QDELETED(last_occupant) && occupant == last_occupant && occupant_state == last_state && user.get_active_held_item() == tool)
 
 		var/decl/butchery_data/butchery_data = GET_DECL(occupant.butchery_data)
 		if(!butchery_data)
 			return FALSE
+
+		tool.add_blood(occupant)
 
 		switch(next_state)
 			if(CARCASS_SKINNED)
@@ -215,14 +222,19 @@
 	return FALSE
 
 /obj/structure/meat_hook/attackby(var/obj/item/thing, var/mob/user)
+
 	if(!IS_KNIFE(thing))
 		return ..()
+
 	if(!occupant)
 		to_chat(user, SPAN_WARNING("There is nothing on \the [src] to butcher."))
-		return
-	if(!busy)
-		busy = TRUE
+		return TRUE
 
+	if(busy)
+		to_chat(user, SPAN_WARNING("\The [src] is already in use!"))
+		return TRUE
+
+	busy = TRUE
 	if(occupant_state == CARCASS_FRESH)
 		if(occupant.currently_has_skin())
 			do_butchery_step(user, thing, CARCASS_SKINNED, "skinning")
@@ -243,11 +255,8 @@
 			do_butchery_step(user, thing, CARCASS_EMPTY,   "butchering")
 		else
 			set_carcass_state(CARCASS_EMPTY, apply_damage = FALSE)
-
 	busy = FALSE
 	return TRUE
-
-
 
 #undef CARCASS_EMPTY
 #undef CARCASS_FRESH

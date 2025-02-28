@@ -284,12 +284,12 @@
 /turf/floor/holofloor/desert,
 /area/holodeck/source_picnicarea)
 "bC" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/holostool,
 /turf/floor/holofloor/desert,
 /area/holodeck/source_picnicarea)
 "bD" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/holofloor/desert,
 /area/holodeck/source_picnicarea)
 "bE" = (
@@ -866,7 +866,7 @@
 /obj/structure/window/reinforced{
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/supply/dock)
 "dF" = (
 /turf/floor/holofloor/space,
@@ -1393,9 +1393,7 @@
 /turf/floor/holofloor/tiled,
 /area/holodeck/source_basketball)
 "fK" = (
-/turf/unsimulated/beach/sand{
-	icon_state = "beach"
-	},
+/turf/unsimulated/floor/sand,
 /area/holodeck/source_beach)
 "fL" = (
 /obj/machinery/door/window/holowindoor{
@@ -1552,9 +1550,7 @@
 /turf/floor/holofloor/snow,
 /area/holodeck/holodorm/source_snow)
 "gl" = (
-/turf/unsimulated/beach/sand{
-	icon_state = "beach"
-	},
+/turf/unsimulated/floor/sand,
 /area/holodeck/holodorm/source_beach)
 "gm" = (
 /obj/abstract/landmark{

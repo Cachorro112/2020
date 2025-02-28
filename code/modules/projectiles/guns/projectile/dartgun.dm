@@ -8,7 +8,7 @@
 	fire_sound = 'sound/weapons/empty.ogg'
 	fire_sound_text = "a metallic click"
 	screen_shake = 0
-	silenced = 1
+	silencer = TRUE
 	load_method = MAGAZINE
 	magazine_type = /obj/item/ammo_magazine/chemdart
 	allowed_magazines = /obj/item/ammo_magazine/chemdart
@@ -37,13 +37,13 @@
 /obj/item/gun/projectile/dartgun/on_update_icon()
 	..()
 	if(ammo_magazine)
-		icon_state = "[get_world_inventory_state()]-[clamp(length(ammo_magazine.get_stored_ammo_count()), 0, 5)]"
+		icon_state = "[get_world_inventory_state()]-[clamp(ammo_magazine.get_stored_ammo_count(), 0, 5)]"
 	else
 		icon_state = get_world_inventory_state()
 
 /obj/item/gun/projectile/dartgun/adjust_mob_overlay(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
 	if(overlay && (slot in user_mob?.get_held_item_slots()) && ammo_magazine)
-		overlay.icon_state += "-[clamp(length(ammo_magazine.get_stored_ammo_count()), 0, 5)]"
+		overlay.icon_state += "-[clamp(ammo_magazine.get_stored_ammo_count(), 0, 5)]"
 	. = ..()
 
 /obj/item/gun/projectile/dartgun/consume_next_projectile()
@@ -58,15 +58,20 @@
 		to_chat(user, "<span class='notice'>\The [src] contains:</span>")
 		for(var/obj/item/chems/glass/beaker/B in beakers)
 			if(B.reagents && LAZYLEN(B.reagents?.reagent_volumes))
-				for(var/rtype in B.reagents.reagent_volumes)
-					var/decl/material/R = GET_DECL(rtype)
-					to_chat(user, "<span class='notice'>[REAGENT_VOLUME(B.reagents, rtype)] units of [R.get_reagent_name(B.reagents)]</span>")
+				for(var/ltype in B.reagents.liquid_volumes)
+					var/decl/material/R = GET_DECL(ltype)
+					to_chat(user, "<span class='notice'>[LIQUID_VOLUME(B.reagents, ltype)] units of [R.get_reagent_name(B.reagents, MAT_PHASE_LIQUID)]</span>")
+
+				for(var/stype in B.reagents.solid_volumes)
+					var/decl/material/R = GET_DECL(stype)
+					to_chat(user, "<span class='notice'>[SOLID_VOLUME(B.reagents, stype)] units of [R.get_reagent_name(B.reagents, MAT_PHASE_SOLID)]</span>")
+
 
 /obj/item/gun/projectile/dartgun/attackby(obj/item/I, mob/user)
 	if(istype(I, /obj/item/chems/glass))
 		add_beaker(I, user)
-		return 1
-	..()
+		return TRUE
+	return ..()
 
 /obj/item/gun/projectile/dartgun/proc/add_beaker(var/obj/item/chems/glass/B, mob/user)
 	if(!istype(B, container_type))

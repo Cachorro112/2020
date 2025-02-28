@@ -15,15 +15,16 @@
 	desc = "Nanomachines, son."
 	action_button_name = "Toggle Nanomachines"
 	material = /decl/material/solid/metal/steel
+	origin_tech = @'{"materials":4,"magnets":4,"engineering":5,"biotech":3}'
+	var/obj/aura/nanoaura/aura = null
+	var/charges = 4
+
+/obj/item/organ/internal/augment/active/nanounit/reset_matter()
 	matter = list(
 		/decl/material/solid/fiberglass = MATTER_AMOUNT_REINFORCEMENT,
 		/decl/material/solid/metal/gold = MATTER_AMOUNT_TRACE,
 		/decl/material/solid/metal/uranium = MATTER_AMOUNT_TRACE
 	)
-	origin_tech = @'{"materials":4,"magnets":4,"engineering":5,"biotech":3}'
-
-	var/obj/aura/nanoaura/aura = null
-	var/charges = 4
 
 /obj/item/organ/internal/augment/active/nanounit/on_add_effects()
 	. = ..()
@@ -40,7 +41,7 @@
 	for(var/obj/item/organ/external/E in owner.get_external_organs())
 		if(prob(25))
 			E.status |= ORGAN_BRITTLE //Some nanites are not responding and you're out of luck
-			to_chat(owner,SPAN_DANGER("Your [E.name] feels cold and rigid"))
+			to_chat(owner, SPAN_DANGER("Your [E.name] feels cold and rigid."))
 	QDEL_NULL(aura)
 
 /obj/item/organ/internal/augment/active/nanounit/activate()
@@ -73,7 +74,7 @@
 		playsound(user,'sound/effects/basscannon.ogg',35,1)
 		unit.charges -= 1
 		if(unit.charges <= 0)
-			to_chat(user, SPAN_DANGER("Warning: Critical damage treshold passed. Shut down unit to avoid further damage"))
+			to_chat(user, SPAN_DANGER("Warning: Critical damage threshold passed. Shut down unit to avoid further damage."))
 		return AURA_FALSE|AURA_CANCEL
 	else unit.catastrophic_failure()
 

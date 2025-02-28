@@ -1,4 +1,4 @@
-/decl/material/liquid/ethanol/arak
+/decl/material/liquid/alcohol/arak
 	name = "Arak"
 	lore_text = "Arak is a distilled anise spirit popular in the Levant."
 	taste_description = "licorice"
@@ -11,7 +11,7 @@
 	glass_name = "arak"
 	glass_desc = "An unsweetened glass of arak."
 
-/decl/material/liquid/ethanol/baijiu
+/decl/material/liquid/alcohol/baijiu
 	name = "baijiu"
 	lore_text = "An alcoholic drink made from rice and sorghum, then flavoured. Popular all across Earth."
 	taste_description = "sweet fruits and nuts"
@@ -24,7 +24,7 @@
 	glass_name = "baijiu"
 	glass_desc = "a clear glass of sweet baijiu."
 
-/decl/material/liquid/ethanol/blackstrap
+/decl/material/liquid/alcohol/blackstrap
 	name = "blackstrap"
 	lore_text = "A dark rum, mixed with mollases. Extremely popular across Human Space."
 	taste_description = "strong, sweet and syrupy rum"
@@ -37,7 +37,7 @@
 	glass_name = "blackstrap rum"
 	glass_desc = "A dark glass of blackstrap rum."
 
-/decl/material/liquid/ethanol/brandy
+/decl/material/liquid/alcohol/brandy
 	name = "Brandy"
 	lore_text = "Consumed by the barrel on Luna, and the drink of choice for any wannabe aristocrat."
 	taste_description = "distilled wine and snobbery"
@@ -50,7 +50,7 @@
 	glass_name = "brandy"
 	glass_desc = "You feel more upper class just looking at it."
 
-/decl/material/liquid/ethanol/cachaca
+/decl/material/liquid/alcohol/cachaca
 	name = "cachaca"
 	lore_text = "A sweet alcoholic drink made from fermented sugarcane."
 	taste_description = "sugary tropical juice"
@@ -63,7 +63,7 @@
 	glass_name = "cachaca"
 	glass_desc = "A glass of delicious looking cachaca."
 
-/decl/material/liquid/ethanol/gin/pink
+/decl/material/liquid/alcohol/gin/pink
 	name = "pink gin"
 	lore_text = "Gin with red bitters creating a soft pinkish colour."
 	taste_description = "a pink alcoholic christmas tree"
@@ -74,7 +74,7 @@
 
 	glass_desc = "A crystal clear glass of pink gin."
 
-/decl/material/liquid/ethanol/lager
+/decl/material/liquid/alcohol/lager
 	name = "lager"
 	lore_text = "A popular kind of beer found across Europe. Dark and musty."
 	taste_description = "smooth, crisp lager"
@@ -87,7 +87,7 @@
 	glass_name = "lager"
 	glass_desc = "Just looking at it makes you want to order a pack of crisps and two pints."
 
-/decl/material/liquid/ethanol/martianbeer
+/decl/material/liquid/alcohol/martianbeer
 	name = "Martian pale ale"
 	lore_text = "A dark, hoppy beer produced all across Mars. It is a planetary favourite."
 	taste_description = "dark musty beer"
@@ -99,7 +99,7 @@
 	glass_name = "pale ale"
 	glass_desc = "An dark and hoppy beer."
 
-/decl/material/liquid/ethanol/ogogoro
+/decl/material/liquid/alcohol/ogogoro
 	name = "ogogoro"
 	lore_text = "A popular alcoholic drink from West Africa, distilled from palm juices."
 	taste_description = "sugarcane and fermented palms"
@@ -112,7 +112,7 @@
 	glass_name = "ogogoro"
 	glass_desc = "A glass of ogogoro."
 
-/decl/material/liquid/ethanol/prosecco
+/decl/material/liquid/alcohol/prosecco
 	name = "prosecco"
 	lore_text = "A refreshing type of white wine."
 	taste_description = "the trials of being a young woman in a rich man's world"
@@ -125,7 +125,7 @@
 	glass_name = "prosecco"
 	glass_desc = "A white wine native to Earth."
 
-/decl/material/liquid/ethanol/rakia
+/decl/material/liquid/alcohol/rakia
 	name = "rakia"
 	lore_text = "A popular fruit brandy from the Balkans."
 	taste_description = "dry grapes"
@@ -138,7 +138,7 @@
 	glass_name = "rakia"
 	glass_desc = "Fruit brandy. Delicious!"
 
-/decl/material/liquid/ethanol/soju
+/decl/material/liquid/alcohol/soju
 	name = "soju"
 	lore_text = "Baijiu - Sake - Soju. The trilogy of rice-derived alcohols."
 	taste_description = "subtle, mild sweetness"
@@ -151,7 +151,7 @@
 	glass_name = "soju"
 	glass_desc = "A glass of soju."
 
-/decl/material/liquid/ethanol/tej
+/decl/material/liquid/alcohol/tej
 	name = "tej"
 	lore_text = "Tej is also known as Honey Wine. Similar to Mead."
 	taste_description = "sweet and tanic alcohol"
@@ -164,7 +164,7 @@
 	glass_name = "tej"
 	glass_desc = "a glass of tej, also known as honey wine."
 
-/decl/material/liquid/ethanol/whiskey/mars
+/decl/material/liquid/alcohol/whiskey/mars
 	name = "Martian Gold whiskey"
 	lore_text = "A blend of 99 spices found across Mars."
 	taste_description = "strong, spicy fireball!"
@@ -172,7 +172,7 @@
 	strength = 20
 	uid = "chem_ethanol_mars"
 
-/decl/material/liquid/ethanol/wine/jupiter
+/decl/material/liquid/alcohol/wine/jupiter
 	name = "Jovian wine"
 	lore_text = "There's good wine. There's bad wine. Then there's Jovian Wine. Illegal to consume on Earth due to its extreme alcohol content, it is nevertheless enjoyed by spacers everywhere."
 	taste_description = "regret and liver failure"
@@ -187,7 +187,7 @@
 
 // Alien Alcohol
 
-/decl/material/liquid/ethanol/hrenti
+/decl/material/liquid/alcohol/hrenti
 	name = "Hrenti"
 	lore_text = "A curious blend of Moghsian fermented milk and grains. It produces an alcoholic, and slightly acidic drink."
 	taste_description = "your tastebuds quitting in protest at whatever this is"
@@ -200,7 +200,7 @@
 	glass_name = "hrenti"
 	glass_desc = "An alcoholic drink from Moghes."
 
-/decl/material/liquid/ethanol/wasgaelhi
+/decl/material/liquid/alcohol/wasgaelhi
 	name = "Wasgaelhi"
 	lore_text = "Wasgaelhi is a type of low-alcohol wine that is frequently consumed by the northern inhabitants of Moghes."
 	taste_description = "warm and vaguely metallic wine"
@@ -213,7 +213,7 @@
 	glass_name = "wasgaelhi"
 	glass_desc = "Wine from the northern continent of Moghes."
 
-/decl/material/liquid/ethanol/yekala
+/decl/material/liquid/alcohol/yekala
 	name = "Yek'ala"
 	lore_text = "Yek'ala is a Yeosa'Unathi delicacy, made from various Moghsian fish. It is strongly alcoholic."
 	taste_description = "alcoholic anchovies"
@@ -226,7 +226,7 @@
 	glass_name = "yekla"
 	glass_desc = "Alcoholic fish guts. Tastes better than it smells."
 
-/decl/material/liquid/ethanol/qokkhrona
+/decl/material/liquid/alcohol/qokkhrona
 	name = "Qokk'hrona"
 	lore_text = "Qokk'hrona is wine made from refined Qokk'loa. The Skrell still do not understand why humans smirk when hearing this."
 	taste_description = "a thick potion of mushroom and hard alcohol"

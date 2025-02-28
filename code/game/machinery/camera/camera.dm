@@ -177,15 +177,16 @@
 
 /obj/machinery/camera/hitby(var/atom/movable/AM)
 	. = ..()
-	if(. && istype(AM, /obj))
-		var/obj/O = AM
-		if (O.throwforce >= src.toughness)
-			visible_message(SPAN_WARNING("[src] was hit by [O]!"))
-		take_damage(O.throwforce, O.atom_damage_type)
+	if(. && isobj(AM))
+		var/thrown_force = AM.get_thrown_attack_force()
+		if (thrown_force >= toughness)
+			visible_message(SPAN_DANGER("\The [src] was hit by \the [AM]!"))
+			var/obj/O = AM
+			take_damage(thrown_force, O.atom_damage_type)
 
 /obj/machinery/camera/physical_attack_hand(mob/living/human/user)
 	if(!istype(user))
-		return
+		return TRUE
 	if(user.species.can_shred(user))
 		user.do_attack_animation(src)
 		visible_message(SPAN_WARNING("\The [user] slashes at [src]!"))
@@ -193,6 +194,7 @@
 		add_hiddenprint(user)
 		take_damage(25)
 		return TRUE
+	return FALSE
 
 /obj/machinery/camera/attackby(obj/item/W, mob/user)
 	if(istype(W, /obj/item/paper))
@@ -340,7 +342,7 @@
 /decl/public_access/public_method/toggle_camera
 	name = "toggle camera"
 	desc = "Toggles camera on or off."
-	call_proc = /obj/machinery/camera/proc/toggle_status
+	call_proc = TYPE_PROC_REF(/obj/machinery/camera, toggle_status)
 
 /decl/public_access/public_variable/camera_state
 	expected_type = /obj/machinery/camera

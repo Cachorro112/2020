@@ -72,24 +72,24 @@
 						to_chat(user, "<span class='deadsay'>[use_He] [use_has] a pulse!</span>")
 
 	var/datum/reagents/touching_reagents = get_contact_reagents()
-	if(touching_reagents?.total_volume)
+	if(touching_reagents?.total_volume >= 1)
 		var/saturation = touching_reagents.total_volume / touching_reagents.maximum_volume
 		if(saturation > 0.9)
 			msg += "[use_He] [use_is] completely saturated.\n"
 		else if(saturation > 0.6)
-			msg += "[use_He] [use_is] looking like a drowned cat.\n"
+			msg += "[use_He] [use_is] looking half-drowned.\n"
 		else if(saturation > 0.3)
 			msg += "[use_He] [use_is] looking notably soggy.\n"
 		else
-			msg += "[use_He] [use_is] looking a bit damp.\n"
+			msg += "[use_He] [use_is] looking a bit soggy.\n"
 
 	if(fire_stacks > 0)
 		msg += "[use_He] [use_is] looking highly flammable!\n"
 	else if(fire_stacks < 0)
-		msg += "[use_He] [use_is] looking rather damp.\n"
+		msg += "[use_He] [use_is] looking rather incombustible.\n"
 
 	if(on_fire)
-		msg += "<span class='warning'>[use_He] [use_is] on fire!.</span>\n"
+		msg += "<span class='warning'>[use_He] [use_is] on fire!</span>\n"
 
 	var/ssd_msg = species.get_ssd(src)
 	if(ssd_msg && (!should_have_organ(BP_BRAIN) || has_brain()) && stat != DEAD)
@@ -298,8 +298,8 @@
 	set desc = "Sets a description which will be shown when someone examines you."
 	set category = "IC"
 
-	var/decl/pronouns/G = get_pronouns()
-	pose = sanitize(input(usr, "This is [src]. [G.He]...", "Pose", null)  as text)
+	var/decl/pronouns/pronouns = get_pronouns()
+	pose = sanitize(input(usr, "This is [src]. [pronouns.He]...", "Pose", null)  as text)
 
 /mob/living/human/verb/set_flavor()
 	set name = "Set Flavour Text"

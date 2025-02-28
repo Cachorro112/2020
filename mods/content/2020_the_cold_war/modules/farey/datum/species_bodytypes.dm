@@ -61,4 +61,3 @@
 
 /obj/item/organ/external/tail/farey
 	tail_icon = 'mods/content/2020_the_cold_war/icons/mobs/species/farey/tail.dmi'
-	tail      = "farey_tail"

@@ -134,13 +134,7 @@
 	. = ..()
 	if(.)
 		visible_message(SPAN_DANGER("[src] was hit by [AM]."))
-		var/tforce = 0
-		if(ismob(AM)) // All mobs have a multiplier and a size according to mob_defines.dm
-			var/mob/I = AM
-			tforce = I.mob_size * (TT.speed/THROWFORCE_SPEED_DIVISOR)
-		else if(isobj(AM))
-			var/obj/item/I = AM
-			tforce = I.throwforce * (TT.speed/THROWFORCE_SPEED_DIVISOR)
+		var/tforce = AM.get_thrown_attack_force() * (TT.speed/THROWFORCE_SPEED_DIVISOR)
 		if(reinf_material)
 			tforce *= 0.25
 		if(current_health - tforce <= 7 && !reinf_material)
@@ -156,8 +150,7 @@
 		if (ishuman(user))
 			var/mob/living/human/H = user
 			if(H.species.can_shred(H))
-				attack_generic(H,25)
-				return
+				return attack_generic(H,25)
 
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
 		user.do_attack_animation(src)
@@ -166,8 +159,8 @@
 							"You hear a banging sound.")
 	else
 		playsound(src.loc, 'sound/effects/glassknock.ogg', 80, 1)
-		user.visible_message("[user.name] knocks on the [src.name].",
-							"You knock on the [src.name].",
+		user.visible_message("[user.name] knocks on \the [src].",
+							"You knock on \the [src].",
 							"You hear a knocking sound.")
 	return TRUE
 
@@ -213,6 +206,9 @@
 			to_chat(user, SPAN_NOTICE("You have pried the window out of the frame."))
 	playsound(loc, crowbar.get_tool_sound(TOOL_CROWBAR) || 'sound/items/Crowbar.ogg', 75, 1)
 	return TRUE
+
+/obj/structure/window/handle_default_hammer_attackby(mob/user, obj/item/hammer)
+	return FALSE
 
 /obj/structure/window/handle_default_wrench_attackby(mob/user, obj/item/wrench)
 	if(anchored || (reinf_material && construction_state > CONSTRUCTION_STATE_NO_FRAME))
@@ -288,7 +284,7 @@
 /obj/structure/window/bash(obj/item/weapon, mob/user)
 	if(isliving(user) && user.a_intent == I_HELP)
 		return FALSE
-	if(!weapon.user_can_wield(user))
+	if(!weapon.user_can_attack_with(user))
 		return FALSE
 	if(weapon.item_flags & ITEM_FLAG_NO_BLUDGEON)
 		return FALSE
@@ -296,7 +292,7 @@
 	// physical damage types that can impart force; swinging a bat or energy sword
 	if(weapon.atom_damage_type == BRUTE || weapon.atom_damage_type == BURN)
 		user.do_attack_animation(src)
-		hit(weapon.force)
+		hit(weapon.get_attack_force(user))
 		if(current_health <= 7)
 			set_anchored(FALSE)
 			step(src, get_dir(user, src))
@@ -307,7 +303,7 @@
 // TODO: generalize to matter list and parts_type.
 /obj/structure/window/create_dismantled_products(turf/T)
 	SHOULD_CALL_PARENT(FALSE)
-	. = material.create_object(loc, is_fulltile() ? 4 : 2)
+	. = material.create_object(loc, 1)
 	if(reinf_material)
 		for(var/obj/item/stack/material/S in .)
 			S.reinf_material = reinf_material
@@ -317,30 +313,30 @@
 		for(var/obj/item/thing in .)
 			thing.set_color(paint_color)
 
-/obj/structure/window/grab_attack(var/obj/item/grab/G)
-	if (G.assailant.a_intent != I_HURT)
+/obj/structure/window/grab_attack(obj/item/grab/grab, mob/user)
+	if (user.a_intent != I_HURT)
 		return TRUE
-	if (!G.force_danger())
-		to_chat(G.assailant, SPAN_DANGER("You need a better grip to do that!"))
+	if (!grab.force_danger())
+		to_chat(user, SPAN_DANGER("You need a better grip to do that!"))
 		return TRUE
-	var/mob/living/affecting_mob = G.get_affecting_mob()
+	var/mob/living/affecting_mob = grab.get_affecting_mob()
 	if(!istype(affecting_mob))
-		attackby(G.affecting, G.assailant)
+		attackby(grab.affecting, user)
 		return TRUE
 	var/def_zone = ran_zone(BP_HEAD, 20, affecting_mob)
-	if(G.damage_stage() < 2)
-		G.affecting.visible_message(SPAN_DANGER("[G.assailant] bashes [G.affecting] against \the [src]!"))
+	if(grab.damage_stage() < 2)
+		grab.affecting.visible_message(SPAN_DANGER("\The [user] bashes \the [grab.affecting] against \the [src]!"))
 		if(prob(50))
 			SET_STATUS_MAX(affecting_mob, STAT_WEAK, 2)
 		affecting_mob.apply_damage(10, BRUTE, def_zone, used_weapon = src)
 		hit(25)
-		qdel(G)
+		qdel(grab)
 	else
-		G.affecting.visible_message(SPAN_DANGER("[G.assailant] crushes [G.affecting] against \the [src]!"))
+		grab.affecting.visible_message(SPAN_DANGER("\The [user] crushes \the [grab.affecting] against \the [src]!"))
 		SET_STATUS_MAX(affecting_mob, STAT_WEAK, 5)
 		affecting_mob.apply_damage(20, BRUTE, def_zone, used_weapon = src)
 		hit(50)
-		qdel(G)
+		qdel(grab)
 	return TRUE
 
 /obj/structure/window/proc/hit(var/damage, var/sound_effect = 1)
@@ -602,7 +598,7 @@
 	return TRUE
 
 /obj/structure/window/reinforced/crescent/attackby()
-	return
+	return TRUE
 
 /obj/structure/window/reinforced/crescent/explosion_act()
 	SHOULD_CALL_PARENT(FALSE)

@@ -154,6 +154,16 @@
 /obj/item/stack/material/bundle/special_crafting_check()
 	return !dried_type || drying_wetness <= 0
 
+/obj/item/stack/material/bundle/grass
+	material = /decl/material/solid/organic/plantmatter/grass
+	drying_wetness = 50
+	dried_type = /obj/item/stack/material/bundle/grass/dry
+
+/obj/item/stack/material/bundle/grass/dry
+	material = /decl/material/solid/organic/plantmatter/grass/dry
+	drying_wetness = null
+	dried_type = null
+
 /obj/item/stack/material/strut
 	name = "struts"
 	singular_name = "strut"

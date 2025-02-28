@@ -60,7 +60,7 @@
 			if(!istype(AM, /obj/effect/effect/smoke/chem))
 				reagents.splash(AM, splash_amount, copy = 1)
 
-// Fades out the smoke smoothly using it's alpha variable.
+// Fades out the smoke smoothly using its alpha variable.
 /obj/effect/effect/smoke/chem/end_of_life()
 	if(QDELETED(src))
 		return
@@ -160,12 +160,6 @@
 	if(LAZYLEN(chemholder.reagents.reagent_volumes))
 		for(var/turf/T in (wallList|targetTurfs))
 			chemholder.reagents.touch_turf(T)
-		for(var/turf/T in targetTurfs)
-			for(var/atom/A in T.contents)
-				if(istype(A, /obj/effect/effect/smoke/chem) || ismob(A))
-					continue
-				else if(isobj(A) && !A.simulated)
-					chemholder.reagents.touch_obj(A)
 
 	var/color = chemholder.reagents.get_color() //build smoke icon
 	var/icon/I

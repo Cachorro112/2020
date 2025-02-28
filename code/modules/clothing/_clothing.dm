@@ -7,7 +7,7 @@
 	replaced_in_loadout = TRUE
 	w_class = ITEM_SIZE_SMALL
 	icon_state = ICON_STATE_WORLD
-	force = 0
+	_base_attack_force = 3
 
 	var/wizard_garb = 0
 	var/flash_protection = FLASH_PROTECTION_NONE	  // Sets the item's level of flash protection.
@@ -16,8 +16,10 @@
 
 	var/list/accessories
 
+	/// Clothing items with an accessory_slot in this list can be equipped to this item.
 	var/list/valid_accessory_slots
 
+	/// accessory_slot entries in this list will be limited to only one item at a time.
 	var/list/restricted_accessory_slots = list(
 		ACCESSORY_SLOT_UTILITY,
 		ACCESSORY_SLOT_HOLSTER,
@@ -37,9 +39,15 @@
 	var/markings_color	// for things like colored parts of labcoats or shoes
 	var/should_display_id = TRUE
 	var/fallback_slot
+	// Used to track our icon, or custom icon, for resetting when accessories are added/removed
+	var/base_clothing_icon
+	var/base_clothing_state
 
 /obj/item/clothing/get_equipment_tint()
 	return tint
+
+/obj/item/clothing/get_matter_amount_modifier()
+	return ..() * 5 // clothes are complicated and have a high surface area. todo: a better way to do this?
 
 /obj/item/clothing/Initialize()
 
@@ -80,20 +88,20 @@
 
 /obj/item/clothing/proc/setup_equip_flags()
 	if(!isnull(bodytype_equip_flags))
-		if(bodytype_equip_flags & BODY_FLAG_EXCLUDE)
-			bodytype_equip_flags |= BODY_FLAG_QUADRUPED
+		if(bodytype_equip_flags & BODY_EQUIP_FLAG_EXCLUDE)
+			bodytype_equip_flags |= BODY_EQUIP_FLAG_QUADRUPED
 		else
-			bodytype_equip_flags &= ~BODY_FLAG_QUADRUPED
+			bodytype_equip_flags &= ~BODY_EQUIP_FLAG_QUADRUPED
 
 /obj/item/clothing/can_contaminate()
 	return TRUE
 
 // Sort of a placeholder for proper tailoring.
-#define RAG_COUNT(X) CEILING((LAZYACCESS(X.matter, /decl/material/solid/organic/cloth) * 0.65) / SHEET_MATERIAL_AMOUNT)
+#define RAG_COUNT(X) ceil((LAZYACCESS(X.matter, /decl/material/solid/organic/cloth) * 0.65) / SHEET_MATERIAL_AMOUNT)
 
 /obj/item/clothing/attackby(obj/item/I, mob/user)
 	var/rags = RAG_COUNT(src)
-	if(rags && (I.edge || I.sharp) && user.a_intent == I_HURT)
+	if(istype(material) && material.default_solid_form && rags && (I.edge || I.sharp) && user.a_intent == I_HURT)
 		if(length(accessories))
 			to_chat(user, SPAN_WARNING("You should remove the accessories attached to \the [src] first."))
 			return TRUE
@@ -104,12 +112,12 @@
 		playsound(loc, 'sound/weapons/cablecuff.ogg', 30, 1)
 		user.visible_message(SPAN_DANGER("\The [user] begins ripping apart \the [src] with \the [I]."))
 		if(do_after(user, 5 SECONDS, src))
-			user.visible_message(SPAN_DANGER("\The [user] tears \the [src] into rags with \the [I]."))
-			for(var/i = 1 to rags)
-				new /obj/item/chems/glass/rag(get_turf(src))
+			user.visible_message(SPAN_DANGER("\The [user] tears \the [src] apart with \the [I]."))
+			material.create_object(get_turf(src), rags)
 			if(loc == user)
 				user.drop_from_inventory(src)
-			LAZYREMOVE(matter, /decl/material/solid/organic/cloth)
+			LAZYREMOVE(matter, material.type)
+			material = null
 			physically_destroyed()
 		return TRUE
 	. = ..()
@@ -164,29 +172,36 @@
 		if(check_state_in_icon(new_state, overlay.icon))
 			overlay.icon_state = new_state
 
-	// Apply any marking overlays that we have defined.
-	if(markings_state_modifier && markings_color)
-		new_state = JOINTEXT(list(overlay.icon_state, markings_state_modifier))
-		if(check_state_in_icon(new_state, overlay.icon))
-			overlay.overlays += mutable_appearance(overlay.icon, new_state, markings_color)
-
-	// Apply a bloodied effect if the mob has been besmirched.
-	// Don't do this for inhands as the overlay is generally not slot based.
-	// TODO: make this slot based and masked to the onmob overlay?
-	if(!(slot in user_mob?.get_held_item_slots()) && blood_DNA && blood_overlay_type)
-		var/mob_blood_overlay = user_mob?.get_bodytype()?.get_blood_overlays(user_mob)
-		if(mob_blood_overlay)
-			var/image/bloodsies = overlay_image(mob_blood_overlay, blood_overlay_type, blood_color, RESET_COLOR)
-			bloodsies.appearance_flags |= NO_CLIENT_COLOR
-			overlay.overlays += bloodsies
-
 	// We apply accessory overlays after calling parent so accessories are not offset twice.
 	overlay = ..()
 	if(overlay && length(accessories))
 		for(var/obj/item/clothing/accessory in accessories)
 			if(accessory.should_overlay())
 				overlay.overlays += accessory.get_mob_overlay(user_mob, slot, bodypart)
+
 	return overlay
+
+/obj/item/clothing/apply_additional_mob_overlays(mob/living/user_mob, bodytype, image/overlay, slot, bodypart, use_fallback_if_icon_missing = TRUE)
+
+	if(overlay)
+
+		// Apply any marking overlays that we have defined.
+		if(markings_state_modifier && markings_color)
+			var/new_state = JOINTEXT(list(overlay.icon_state, markings_state_modifier))
+			if(check_state_in_icon(new_state, overlay.icon))
+				overlay.overlays += mutable_appearance(overlay.icon, new_state, markings_color)
+
+		// Apply a bloodied effect if the mob has been besmirched.
+		// Don't do this for inhands as the overlay is generally not slot based.
+		// TODO: make this slot based and masked to the onmob overlay?
+		if(!(slot in user_mob?.get_held_item_slots()) && blood_DNA && blood_overlay_type)
+			var/mob_blood_overlay = user_mob?.get_bodytype()?.get_blood_overlays(user_mob)
+			if(mob_blood_overlay)
+				var/image/bloodsies = overlay_image(mob_blood_overlay, blood_overlay_type, blood_color, RESET_COLOR)
+				bloodsies.appearance_flags |= NO_CLIENT_COLOR
+				overlay.overlays += bloodsies
+
+	. = ..()
 
 /obj/item/clothing/set_dir(ndir)
 	// Avoid rendering the profile or back sides of the mob overlay we used when accessories are rendered.
@@ -194,29 +209,39 @@
 		ndir = SOUTH
 	return ..()
 
+/obj/item/clothing/proc/should_use_combined_accessory_appearance()
+	for(var/obj/item/clothing/accessory as anything in accessories)
+		if(accessory.draw_on_mob_when_equipped)
+			return TRUE
+	return FALSE
+
 /obj/item/clothing/on_update_icon()
 	. = ..()
 
 	// Clothing does not generally align with each other's world icons, so we just use the mob overlay in this case.
-	var/set_appearance = FALSE
-	if(length(accessories))
+	if(should_use_combined_accessory_appearance())
 		var/image/I = get_mob_overlay(ismob(loc) ? loc : null, get_fallback_slot())
-		if(I)
+		if(I?.icon) // Null or invisible overlay, we don't want to make our clothing invisible just because it has an accessory.
 			I.plane = plane
 			I.layer = layer
-			I.alpha = alpha
 			I.color = color
-			I.name = name
+			I.alpha = alpha
+			I.name  = name
 			appearance = I
 			set_dir(SOUTH)
-			set_appearance = TRUE
-	if(!set_appearance)
-		icon_state = JOINTEXT(list(get_world_inventory_state(), get_clothing_state_modifier()))
-		if(markings_state_modifier && markings_color)
-			add_overlay(mutable_appearance(icon, "[icon_state][markings_state_modifier]", markings_color))
+			update_clothing_icon()
+			return
 
+	if(!base_clothing_icon)
+		base_clothing_icon = initial(icon)
+	set_icon(base_clothing_icon)
+	if(!base_clothing_state)
+		base_clothing_state = initial(icon_state)
+	set_icon_state(base_clothing_state)
+	icon_state = JOINTEXT(list(get_world_inventory_state(), get_clothing_state_modifier()))
+	if(markings_state_modifier && markings_color)
+		add_overlay(mutable_appearance(icon, "[icon_state][markings_state_modifier]", markings_color))
 	update_clothing_icon()
-
 
 // Used by washing machines to temporarily make clothes smell
 /obj/item/clothing/proc/change_smell(decl/material/odorant, time = 10 MINUTES)
@@ -248,7 +273,7 @@
 	var/decl/bodytype/root_bodytype = user?.get_bodytype()
 	if(!root_bodytype || isnull(bodytype_equip_flags) || (slot in user.get_held_item_slots()))
 		return
-	if(bodytype_equip_flags & BODY_FLAG_EXCLUDE)
+	if(bodytype_equip_flags & BODY_EQUIP_FLAG_EXCLUDE)
 		. = !(bodytype_equip_flags & root_bodytype.bodytype_flag)
 	else
 		. = (bodytype_equip_flags & root_bodytype.bodytype_flag)
@@ -278,12 +303,12 @@
 		update_clothing_icon()
 
 /obj/item/clothing/get_examine_name()
-	var/list/ensemble = list(name)
+	var/list/ensemble = list(..())
 	for(var/obj/item/clothing/accessory in accessories)
 		if(accessory.accessory_visibility == ACCESSORY_VISIBILITY_ENSEMBLE)
-			LAZYADD(ensemble, accessory.get_examine_name())
-	if(length(ensemble) <= 1)
-		return ..()
+			ensemble += accessory.get_examine_name()
+	if(length(ensemble) == 1) // don't worry about it being empty, we always have a minimum of one
+		return ensemble[1]
 	return english_list(ensemble, summarize = TRUE)
 
 /obj/item/clothing/get_examine_line()
@@ -314,7 +339,7 @@
 
 	var/rags = RAG_COUNT(src)
 	if(rags)
-		to_chat(user, SPAN_SUBTLE("With a sharp object, you could cut \the [src] up into [rags] rag\s."))
+		to_chat(user, SPAN_SUBTLE("With a sharp object, you could cut \the [src] up into [rags] section\s."))
 
 	var/obj/item/clothing/sensor/vitals/sensor = locate() in accessories
 	if(sensor)
@@ -347,7 +372,7 @@
 				var/list/ties = list()
 				for(var/accessory in accessories)
 					ties += "[html_icon(accessory)] \a [accessory]"
-				to_chat(user, "Attached to \the [src] are [english_list(ties)].")
+				to_chat(user, "Attached to \the [src] [length(ties) == 1 ? "is" : "are"] [english_list(ties)].")
 			return TOPIC_HANDLED
 		if(href_list["list_armor_damage"] && can_see)
 			var/datum/extension/armor/ablative/armor_datum = get_extension(src, /datum/extension/armor)
@@ -427,7 +452,7 @@
 	name = "Set Sensors Level"
 	expected_target_type = /obj/item/clothing
 
-/decl/interaction_handler/clothing_set_sensors/invoked(var/atom/target, var/mob/user)
+/decl/interaction_handler/clothing_set_sensors/invoked(atom/target, mob/user, obj/item/prop)
 	var/obj/item/clothing/U = target
 	U.set_sensors(user)
 

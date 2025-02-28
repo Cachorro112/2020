@@ -1,14 +1,14 @@
-/decl/hierarchy/outfit/job/security
-	abstract_type = /decl/hierarchy/outfit/job/security
+/decl/outfit/job/security
+	abstract_type = /decl/outfit/job/security
 	l_ear = /obj/item/radio/headset/headset_sec
 	backpack_contents = list(/obj/item/handcuffs = 1)
 
-/decl/hierarchy/outfit/job/security/Initialize()
+/decl/outfit/job/security/Initialize()
 	. = ..()
 	BACKPACK_OVERRIDE_SECURITY
 
 
-/decl/hierarchy/outfit/job/security/detective
+/decl/outfit/job/security/detective
 	name = "Job - Forensic Technician"
 	uniform = /obj/item/clothing/jumpsuit/security
 	suit = /obj/item/clothing/suit/det_trench
@@ -18,14 +18,14 @@
 	r_pocket = /obj/item/radio
 	backpack_contents = list(/obj/item/box/evidence = 1)
 
-/decl/hierarchy/outfit/job/security/detective/Initialize()
+/decl/outfit/job/security/detective/Initialize()
 	. = ..()
 	backpack_overrides.Cut()
 
-/decl/hierarchy/outfit/job/security/officer
+/decl/outfit/job/security/officer
 	name = "Job - Security Officer"
 	uniform = /obj/item/clothing/jumpsuit/security
-	suit = /obj/item/clothing/suit/armor/pcarrier/nanotrasen_light
+	suit = /obj/item/clothing/suit/armor/vest/nanotrasen
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
 	shoes = /obj/item/clothing/shoes/jackboots
 	head = /obj/item/clothing/head/helmet

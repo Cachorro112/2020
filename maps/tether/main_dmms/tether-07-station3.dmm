@@ -218,7 +218,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 6
 	},
@@ -228,7 +228,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 4
 	},
@@ -331,10 +331,6 @@
 /obj/effect/floor_decal/corner/lightgrey{
 	dir = 6
 	},
-/obj/structure/sign/poster{
-	pixel_x = -32;
-	dir = 4
-	},
 /obj/effect/floor_decal/steeldecal/steel_decals6{
 	dir = 1
 	},
@@ -348,6 +344,10 @@
 	},
 /obj/structure/cable{
 	icon_state = "0-2"
+	},
+/obj/structure/sign/poster{
+	pixel_x = -32;
+	dir = 8
 	},
 /turf/floor/tiled,
 /area/hallway/station/upper)
@@ -1281,7 +1281,7 @@
 /turf/floor/tiled/dark,
 /area/security/armory/red)
 "cl" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /obj/machinery/power/apc{
 	name = "south bump";
@@ -1429,7 +1429,7 @@
 	icon_state = "1-2"
 	},
 /obj/random/junk,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/substation/security)
 "cA" = (
@@ -1702,7 +1702,7 @@
 /area/maintenance/station/sec_upper)
 "de" = (
 /obj/effect/floor_decal/rust,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "df" = (
@@ -1836,7 +1836,7 @@
 /turf/floor,
 /area/maintenance/station/ai)
 "dw" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /turf/floor,
 /area/maintenance/station/sec_upper)
@@ -1844,7 +1844,7 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /turf/floor,
 /area/maintenance/station/sec_upper)
@@ -1863,7 +1863,7 @@
 /turf/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "dA" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "dB" = (
@@ -1879,7 +1879,7 @@
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /obj/structure/catwalk,
 /turf/floor,
@@ -1907,7 +1907,7 @@
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "dG" = (
@@ -2323,7 +2323,7 @@
 /turf/floor,
 /area/maintenance/station/ai)
 "es" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -2544,7 +2544,7 @@
 /obj/item/coin/silver,
 /obj/item/bone/skull,
 /mob/living/simple_animal/hostile/mimic,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/maintenance/station/ai)
 "eN" = (
 /obj/structure/cable{
@@ -2893,7 +2893,7 @@
 /turf/floor,
 /area/maintenance/station/ai)
 "fq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 4
 	},
@@ -3312,7 +3312,7 @@
 /turf/floor/tiled/dark,
 /area/security/range)
 "gg" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "gh" = (
 /obj/machinery/light{
@@ -3334,7 +3334,7 @@
 	pixel_y = -22;
 	dir = 1
 	},
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "gk" = (
 /obj/effect/floor_decal/industrial/outline/yellow,
@@ -4006,7 +4006,7 @@
 /turf/floor/tiled,
 /area/security/eva)
 "hw" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 5
 	},
@@ -4029,7 +4029,7 @@
 /turf/floor/tiled,
 /area/hallway/station/upper)
 "hy" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/maintenance/station/ai)
 "hz" = (
 /obj/structure/closet/crate,
@@ -4238,7 +4238,7 @@
 /turf/floor/tiled,
 /area/security/eva)
 "hQ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/unary/vent_pump/on{
 	dir = 1
 	},
@@ -5274,7 +5274,7 @@
 /area/crew_quarters/heads/hos)
 "jD" = (
 /obj/random/junk,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/maintenance/station/ai)
 "jE" = (
 /obj/effect/floor_decal/borderfloorblack{
@@ -5513,7 +5513,7 @@
 /area/crew_quarters/heads/hos)
 "jY" = (
 /obj/random/loot_pile/maintenance,
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/maintenance/station/ai)
 "jZ" = (
 /obj/machinery/atmospherics/pipe/simple/hidden/cyan{
@@ -5904,7 +5904,7 @@
 /turf/floor/tiled/dark,
 /area/security/security_equiptment_storage)
 "kM" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/light/small{
 	dir = 8
 	},
@@ -6158,7 +6158,7 @@
 /turf/floor/tiled,
 /area/security/briefing_room)
 "lj" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -6422,7 +6422,7 @@
 /turf/floor/tiled,
 /area/security/briefing_room)
 "lL" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -6434,7 +6434,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 4
 	},
@@ -6781,7 +6781,7 @@
 /turf/floor/tiled,
 /area/security/briefing_room)
 "mq" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 4
 	},
@@ -7126,7 +7126,7 @@
 /turf/floor,
 /area/maintenance/cargo)
 "mT" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /turf/floor,
 /area/maintenance/cargo)
@@ -8154,7 +8154,7 @@
 	dir = 4;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor,
 /area/maintenance/cargo)
@@ -8175,7 +8175,7 @@
 	dir = 2;
 	icon_state = "pipe-c"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "oR" = (
@@ -8601,7 +8601,7 @@
 /area/maintenance/cargo)
 "pv" = (
 /obj/structure/railing/mapped,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor,
 /area/maintenance/cargo)
@@ -8610,7 +8610,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "px" = (
@@ -8623,7 +8623,7 @@
 /obj/structure/cable/green{
 	icon_state = "0-4"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "py" = (
@@ -8993,7 +8993,7 @@
 /area/security/hallway)
 "qn" = (
 /obj/machinery/door/firedoor/glass,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /obj/machinery/door/airlock/maintenance,
 /turf/floor,
@@ -9002,7 +9002,7 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "qp" = (
@@ -9360,7 +9360,7 @@
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "qV" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 4
 	},
@@ -9375,7 +9375,7 @@
 	dir = 4;
 	pixel_x = -22
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor,
 /area/maintenance/cargo)
@@ -9826,11 +9826,11 @@
 	icon_state = "1-2"
 	},
 /obj/random/junk,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "rG" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "rH" = (
@@ -10310,11 +10310,11 @@
 /obj/structure/cable{
 	icon_state = "1-4"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/cargo)
 "ss" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "4-8"
 	},
@@ -10931,7 +10931,7 @@
 /area/maintenance/station/elevator)
 "tm" = (
 /obj/machinery/atmospherics/pipe/cap/hidden,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/maintenance/station/elevator)
 "tn" = (
@@ -11041,7 +11041,7 @@
 /area/hallway/station/upper)
 "tt" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -11511,11 +11511,11 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/pipe/simple/hidden,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/maintenance/station/elevator)
 "ui" = (
-/turf/floor/holofloor/tiled/dark,
+/turf/floor/tiled/dark,
 /area/hallway/station/upper)
 "uj" = (
 /obj/abstract/level_data_spawner/virgo3b/main/space,
@@ -12050,7 +12050,7 @@
 /turf/floor,
 /area/storage/emergency_storage/emergency3)
 "vc" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/storage/emergency_storage/emergency3)
 "vd" = (
@@ -12205,10 +12205,10 @@
 /turf/floor/tiled,
 /area/quartermaster/office)
 "vs" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/mine/explored/upper_level)
 "vt" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/upper_level)
 "vu" = (
 /turf/wall,
@@ -12464,7 +12464,7 @@
 /obj/structure/cable{
 	icon_state = "0-4"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random/loot_pile/maintenance,
 /obj/structure/disposalpipe/segment{
 	dir = 4;
@@ -12494,7 +12494,7 @@
 /turf/floor,
 /area/maintenance/station/elevator)
 "vO" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/plating,
 /area/maintenance/station/elevator)
 "vP" = (
@@ -12517,7 +12517,7 @@
 /turf/floor,
 /area/storage/emergency_storage/emergency3)
 "vS" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /obj/machinery/light/small,
 /turf/floor,
@@ -12746,7 +12746,7 @@
 /obj/random/junk,
 /obj/random/tool,
 /obj/random/maintenance/clean,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /obj/item/box/lights/mixed,
 /turf/floor,
@@ -12931,7 +12931,7 @@
 	c_tag = "SEC - Vault Exterior North";
 	dir = 1
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/upper_level)
 "wM" = (
 /obj/machinery/atmospherics/unary/vent_scrubber/on,
@@ -13069,11 +13069,11 @@
 /obj/structure/reagent_dispensers/watertank,
 /obj/structure/railing/mapped,
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/elevator)
 "wX" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor/plating,
 /area/maintenance/station/elevator)
@@ -13442,7 +13442,7 @@
 /obj/machinery/light{
 	dir = 8
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/upper_level)
 "xy" = (
 /obj/effect/floor_decal/spline/plain{
@@ -16060,7 +16060,7 @@
 /turf/floor/wood,
 /area/medical/psych)
 "BH" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
@@ -16521,7 +16521,7 @@
 /turf/floor/tiled,
 /area/maintenance/station/cargo)
 "Cz" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor/tiled,
 /area/maintenance/station/cargo)
@@ -16949,7 +16949,7 @@
 	pixel_y = -32;
 	dir = 1
 	},
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/mine/explored/upper_level)
 "Ds" = (
 /obj/machinery/door/airlock/medical{
@@ -17464,7 +17464,7 @@
 /turf/floor,
 /area/maintenance/station/cargo)
 "Em" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/cable{
 	icon_state = "2-8"
 	},
@@ -17486,7 +17486,7 @@
 /obj/random/maintenance/cargo,
 /obj/random/maintenance/engineering,
 /obj/random/drinkbottle,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/cargo)
 "Ep" = (
@@ -17819,7 +17819,7 @@
 /area/medical/psych)
 "Fe" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/cargo)
 "Ff" = (
@@ -17841,8 +17841,8 @@
 /obj/structure/cable{
 	icon_state = "1-2"
 	},
-/obj/effect/decal/cleanable/dirt,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/cargo)
 "Fi" = (
@@ -19071,7 +19071,7 @@
 /obj/machinery/light/small{
 	dir = 1
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/power/apc/super{
 	dir = 8;
 	name = "west bump";
@@ -19086,7 +19086,7 @@
 /obj/structure/cable/green{
 	icon_state = "4-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/substation/cargo)
 "Hu" = (
@@ -19096,7 +19096,7 @@
 /obj/structure/cable/green{
 	icon_state = "2-8"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/substation/cargo)
 "Hv" = (
@@ -19526,7 +19526,7 @@
 	},
 /obj/structure/cable,
 /obj/effect/floor_decal/industrial/warning,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor,
 /area/maintenance/substation/cargo)
@@ -19653,7 +19653,7 @@
 /obj/random/medical/lite,
 /obj/random/tool,
 /obj/random/maintenance/medical,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random/maintenance/clean,
 /turf/floor,
 /area/medical/resleeving)
@@ -19930,7 +19930,7 @@
 /obj/random/firstaid,
 /obj/random/medical/lite,
 /obj/random/maintenance/medical,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /turf/floor,
 /area/medical/resleeving)
@@ -20385,7 +20385,7 @@
 /obj/random/maintenance/medical,
 /obj/random/maintenance/medical,
 /obj/random/toy,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random/maintenance/clean,
 /turf/floor,
 /area/medical/resleeving)
@@ -20994,7 +20994,7 @@
 /area/maintenance/station/medbay)
 "KY" = (
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/power/apc{
 	dir = 4;
 	name = "east bump";
@@ -21319,7 +21319,7 @@
 /obj/structure/cable/green{
 	icon_state = "1-4"
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/floor_decal/rust,
 /obj/structure/railing/mapped{
 	dir = 4
@@ -21596,7 +21596,7 @@
 /obj/structure/railing/mapped{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/medbay)
 "Me" = (
@@ -22597,7 +22597,7 @@
 	icon_state = "1-2"
 	},
 /obj/structure/disposalpipe/segment,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /turf/floor,
 /area/maintenance/station/medbay)
@@ -22605,7 +22605,7 @@
 /obj/structure/railing/mapped{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/random/junk,
 /turf/floor,
 /area/maintenance/station/medbay)
@@ -22761,7 +22761,7 @@
 	dir = 8
 	},
 /obj/random/loot_pile/maintenance,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor,
 /area/maintenance/station/medbay)
 "NO" = (
@@ -24884,7 +24884,7 @@
 /turf/floor/tiled/white,
 /area/medical/ward)
 "QS" = (
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/supply/station)
 "QT" = (
 /obj/abstract/map_data/tether,
@@ -24967,7 +24967,7 @@
 /turf/floor/tiled,
 /area/security/hallway)
 "QX" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/catwalk,
 /obj/machinery/light/small{
 	dir = 4
@@ -24984,7 +24984,7 @@
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "QZ" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 1
 	},
@@ -25005,7 +25005,7 @@
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "Rc" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -25015,7 +25015,7 @@
 /turf/floor,
 /area/maintenance/station/sec_upper)
 "Rd" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/structure/railing/mapped{
 	dir = 8
 	},
@@ -25348,7 +25348,7 @@
 /turf/floor/plating,
 /area/medical/ward)
 "RI" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "RK" = (
@@ -25653,7 +25653,7 @@
 	id_tag = "psych flash 2";
 	pixel_y = 25
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "SM" = (
@@ -25764,7 +25764,7 @@
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "Tf" = (
-/turf/floor/natural/barren,
+/turf/floor/barren,
 /area/space)
 "Tj" = (
 /obj/machinery/door/airlock/external/glass{
@@ -25903,7 +25903,7 @@
 /area/quartermaster/belterdock)
 "TE" = (
 /obj/machinery/shield_diffuser,
-/turf/floor/airless,
+/turf/floor/plating/airless,
 /area/space)
 "TG" = (
 /obj/structure/rack/shelf/steel,
@@ -26102,7 +26102,7 @@
 /obj/machinery/atmospherics/pipe/simple/hidden{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/atmospherics/pipe/simple/hidden/supply{
 	dir = 10
 	},
@@ -26166,7 +26166,7 @@
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "UA" = (
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/kafel_full{
 	desc = "This padded tile squishes beneath your feet.";
 	name = "padded floor"
@@ -26576,7 +26576,7 @@
 	},
 /obj/effect/floor_decal/borderfloorwhite/corner2,
 /obj/effect/floor_decal/corner/brown/bordercorner2,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "VM" = (
@@ -26778,7 +26778,7 @@
 /obj/effect/floor_decal/corner/brown/border,
 /obj/effect/floor_decal/borderfloorwhite/corner2,
 /obj/effect/floor_decal/corner/brown/bordercorner2,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/network/relay/wall_mounted/lighthouse{
 	dir = 1;
 	pixel_y = -21
@@ -27031,7 +27031,7 @@
 /obj/machinery/atmospherics/unary/vent_scrubber/on{
 	dir = 8
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/effect/decal/cleanable/cobweb2,
 /turf/floor/tiled/kafel_full{
 	desc = "This padded tile squishes beneath your feet.";
@@ -27343,7 +27343,7 @@
 /obj/machinery/light{
 	dir = 4
 	},
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /obj/machinery/button/access{
 	command = "cycle_interior";
 	name = "Psychiatric Ward Interior";
@@ -27606,7 +27606,7 @@
 	dir = 10
 	},
 /obj/machinery/atmospherics/unary/vent_pump/on,
-/obj/effect/decal/cleanable/dirt,
+/obj/effect/decal/cleanable/dirt/visible,
 /turf/floor/tiled/white,
 /area/medical/psych_ward)
 "ZA" = (

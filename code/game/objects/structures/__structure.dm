@@ -4,6 +4,7 @@
 	layer = STRUCTURE_LAYER
 	abstract_type = /obj/structure
 	max_health = 50
+	temperature_sensitive = TRUE
 
 	/// Multiplier for degree of comfort offered to mobs buckled to this furniture.
 	var/user_comfort = 0 // TODO: extremely uncomfortable chairs
@@ -17,7 +18,7 @@
 	var/mob_offset
 
 	var/paint_color
-	var/paint_verb = "painted"
+	var/paint_verb
 
 /obj/structure/get_color()
 	if(paint_color)
@@ -31,13 +32,16 @@
 		new_color = null
 	if(paint_color != new_color)
 		paint_color = new_color
+		. = TRUE
+		refresh_color()
+
+/obj/structure/refresh_color()
 	if(paint_color)
 		color = paint_color
 	else if(material && (material_alteration & MAT_FLAG_ALTERATION_COLOR))
 		color = material.color
 	else
-		color = new_color
-	return FALSE
+		color = null
 
 /obj/structure/create_matter()
 	..()
@@ -61,6 +65,7 @@
 		reinf_material = GET_DECL(reinf_material)
 	. = ..()
 	update_materials()
+	paint_verb ||= "painted" // fallback for the case of no material
 	if(lock && !istype(loc))
 		lock = new /datum/lock(src, lock)
 	if(!CanFluidPass())
@@ -79,23 +84,24 @@
 			to_chat(user, damage_desc)
 
 		if(paint_color)
-			to_chat(user, "\The [src] has been <font color='[paint_color]'>[paint_verb]</font>.")
+			var/decl/pronouns/structure_pronouns = get_pronouns() // so we can do 'have' for plural objects like sheets
+			to_chat(user, "\The [src] [structure_pronouns.has] been <font color='[paint_color]'>[paint_verb]</font>.")
 
 		if(tool_interaction_flags & TOOL_INTERACTION_ANCHOR)
 			if(anchored)
-				to_chat(user, SPAN_SUBTLE("Can be unanchored with a wrench, and moved around."))
+				to_chat(user, SPAN_SUBTLE("Can be unanchored with a wrench or hammer, and moved around."))
 			else
-				to_chat(user, SPAN_SUBTLE("Can be anchored in place with a wrench."))
+				to_chat(user, SPAN_SUBTLE("Can be anchored in place with a wrench or hammer."))
 
 		if(tool_interaction_flags & TOOL_INTERACTION_DECONSTRUCT)
-			var/removed_with = "a crowbar"
+			var/removed_with = "a crowbar or hammer"
 			if(material && material.removed_by_welder)
 				removed_with = "a welding torch"
 			if(tool_interaction_flags & TOOL_INTERACTION_ANCHOR)
 				if(anchored)
 					to_chat(user, SPAN_SUBTLE("Can be deconstructed with [removed_with]."))
 				else
-					to_chat(user, SPAN_SUBTLE("Can be deconstructed with [removed_with], if anchored down with a wrench first."))
+					to_chat(user, SPAN_SUBTLE("Can be deconstructed with [removed_with], if anchored down with a wrench or hammer first."))
 			else
 				to_chat(user, SPAN_SUBTLE("Can be deconstructed with [removed_with]."))
 
@@ -103,7 +109,7 @@
 			if(tool_interaction_flags & TOOL_INTERACTION_ANCHOR)
 				if(wired)
 					if(anchored)
-						to_chat(user, SPAN_SUBTLE("Can have its wiring removed with wirecutters"))
+						to_chat(user, SPAN_SUBTLE("Can have its wiring removed with wirecutters."))
 					else
 						to_chat(user, SPAN_SUBTLE("Can have its wiring removed with wirecutters, if anchored down with a wrench first."))
 				else
@@ -113,7 +119,7 @@
 						to_chat(user, SPAN_SUBTLE("Can have wiring installed with a cable coil, if anchored down with a wrench first."))
 			else
 				if(wired)
-					to_chat(user, SPAN_SUBTLE("Can have its wiring removed with wirecutters"))
+					to_chat(user, SPAN_SUBTLE("Can have its wiring removed with wirecutters."))
 				else
 					to_chat(user, SPAN_SUBTLE("Can have wiring installed with a cable coil."))
 
@@ -132,7 +138,7 @@
 		else
 			damage *= STRUCTURE_BRITTLE_MATERIAL_DAMAGE_MULTIPLIER
 
-	playsound(loc, hitsound, 75, 1)
+	playsound(loc, hitsound, 60, 1)
 	var/current_max_health = get_max_health()
 	current_health = clamp(current_health - damage, 0, current_max_health)
 	show_damage_message(current_health/current_max_health)
@@ -154,7 +160,7 @@
 		last_damage_message = 0.75
 
 /obj/structure/physically_destroyed(var/skip_qdel)
-	if(..(TRUE))
+	if((. = ..(TRUE)))
 		return dismantle_structure()
 
 /obj/structure/fire_act(datum/gas_mixture/air, exposed_temperature, exposed_volume)
@@ -214,24 +220,26 @@
 				AM.reset_offsets()
 				AM.reset_plane_and_layer()
 
-/obj/structure/grab_attack(var/obj/item/grab/G)
-	if (!G.force_danger())
-		to_chat(G.assailant, SPAN_WARNING("You need a better grip to do that!"))
-		return TRUE
-	var/mob/living/affecting_mob = G.get_affecting_mob()
-	if(G.assailant.a_intent == I_HURT)
+/obj/structure/grab_attack(obj/item/grab/grab, mob/user)
 
-		if(!istype(affecting_mob))
-			to_chat(G.assailant, SPAN_WARNING("You need to be grabbing a living creature to do that!"))
+	if (!grab.force_danger())
+		to_chat(user, SPAN_WARNING("You need a better grip to do that!"))
+		return TRUE
+
+	var/mob/living/victim = grab.get_affecting_mob()
+	if(user.a_intent == I_HURT)
+
+		if(!istype(victim))
+			to_chat(user, SPAN_WARNING("You need to be grabbing a living creature to do that!"))
 			return TRUE
 
 		// Slam their face against the table.
-		var/blocked = affecting_mob.get_blocked_ratio(BP_HEAD, BRUTE, damage = 8)
+		var/blocked = victim.get_blocked_ratio(BP_HEAD, BRUTE, damage = 8)
 		if (prob(30 * (1 - blocked)))
-			SET_STATUS_MAX(affecting_mob, STAT_WEAK, 5)
+			SET_STATUS_MAX(victim, STAT_WEAK, 5)
 
-		affecting_mob.apply_damage(8, BRUTE, BP_HEAD)
-		visible_message(SPAN_DANGER("[G.assailant] slams [affecting_mob]'s face against \the [src]!"))
+		victim.apply_damage(8, BRUTE, BP_HEAD)
+		visible_message(SPAN_DANGER("[user] slams [victim]'s face against \the [src]!"))
 		if (material)
 			playsound(loc, material.tableslam_noise, 50, 1)
 		else
@@ -239,19 +247,22 @@
 		var/list/L = take_damage(rand(1,5))
 		for(var/obj/item/shard/S in L)
 			if(S.sharp && prob(50))
-				affecting_mob.visible_message(SPAN_DANGER("\The [S] slices into [affecting_mob]'s face!"), SPAN_DANGER("\The [S] slices into your face!"))
-				affecting_mob.standard_weapon_hit_effects(S, G.assailant, S.force*2, BP_HEAD)
-		qdel(G)
+				victim.visible_message(
+					SPAN_DANGER("\The [S] slices into [victim]'s face!"),
+					SPAN_DANGER("\The [S] slices into your face!")
+				)
+				victim.standard_weapon_hit_effects(S, user, S.get_attack_force()*2, BP_HEAD)
+		qdel(grab)
 	else if(atom_flags & ATOM_FLAG_CLIMBABLE)
 		var/obj/occupied = turf_is_crowded()
 		if (occupied)
-			to_chat(G.assailant, SPAN_WARNING("There's \a [occupied] in the way."))
+			to_chat(user, SPAN_WARNING("There's \a [occupied] in the way."))
 			return TRUE
-		G.affecting.forceMove(src.loc)
-		if(affecting_mob)
-			SET_STATUS_MAX(affecting_mob, STAT_WEAK, rand(2,5))
-		visible_message(SPAN_DANGER("[G.assailant] puts [G.affecting] on \the [src]."))
-		qdel(G)
+		grab.affecting.forceMove(src.loc)
+		if(victim)
+			SET_STATUS_MAX(victim, STAT_WEAK, rand(2,5))
+		visible_message(SPAN_DANGER("\The [user] puts \the [grab.affecting] on \the [src]."))
+		qdel(grab)
 		return TRUE
 
 /obj/structure/explosion_act(severity)
@@ -299,9 +310,27 @@ Note: This proc can be overwritten to allow for different types of auto-alignmen
 	// Calculation to apply new pixelshift.
 	var/mouse_x = text2num(click_data["icon-x"])-1 // Ranging from 0 to 31
 	var/mouse_y = text2num(click_data["icon-y"])-1
-	var/cell_x = clamp(round(mouse_x/CELLSIZE), 0, CELLS-1) // Ranging from 0 to CELLS-1
-	var/cell_y = clamp(round(mouse_y/CELLSIZE), 0, CELLS-1)
+	var/span_x = CELLS
+	var/span_y = CELLS
+	// In case we're a multitile object.
+	if(bound_width > world.icon_size)
+		span_x = bound_width / CELLSIZE
+	if(bound_height > world.icon_size)
+		span_y = bound_height / CELLSIZE
+	var/cell_x = clamp(round(mouse_x/CELLSIZE), 0, span_x-1) // Ranging from 0 to span_x-1
+	var/cell_y = clamp(round(mouse_y/CELLSIZE), 0, span_y-1)
 	var/list/center = cached_json_decode(W.center_of_mass)
 	W.pixel_x = (CELLSIZE * (cell_x + 0.5)) - center["x"]
 	W.pixel_y = (CELLSIZE * (cell_y + 0.5)) - center["y"]
 	W.pixel_z = 0
+
+// Does this structure override turf depth for the purposes of mob offsets?
+/obj/structure/proc/is_platform()
+	return FALSE
+
+/obj/structure/proc/is_z_passable()
+	return TRUE
+
+/obj/structure/on_turf_height_change(new_height)
+	 // We may be a fixed point.
+	return !is_platform() && ..()

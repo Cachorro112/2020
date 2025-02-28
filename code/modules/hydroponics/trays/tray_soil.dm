@@ -10,7 +10,23 @@
 	matter = null
 	pixel_z = 8
 	color = "#7c5e42"
+
+	// Not actually a machine, per se.
+	frame_type                = null
+	uncreated_component_parts = list()
+	maximum_component_parts   = list()
+	construct_state           = /decl/machine_construction/noninteractive
+
 	var/obj/item/stack/material/brick/reinforced_with
+
+/obj/machinery/portable_atmospherics/hydroponics/soil/get_alt_interactions(var/mob/user)
+	. = ..()
+	. -= /decl/interaction_handler/drink
+	. -= /decl/interaction_handler/wash_hands
+
+/obj/machinery/portable_atmospherics/hydroponics/soil/get_growth_rate()
+	var/turf/my_turf = get_turf(src)
+	return max(0, my_turf?.get_plant_growth_rate())
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/Initialize()
 
@@ -27,11 +43,10 @@
 	pixel_y = rand(-1,1)
 	update_icon()
 
-/obj/machinery/portable_atmospherics/hydroponics/soil/physically_destroyed()
-	if(reinforced_with)
-		reinforced_with.dropInto(loc)
-		reinforced_with = null
-	return ..()
+/obj/machinery/portable_atmospherics/hydroponics/soil/dismantle()
+	dump_contents()
+	qdel(src)
+	return null
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/Destroy()
 	var/oldloc = loc
@@ -52,19 +67,28 @@
 		return
 	if(prob(25))
 		return
-	to_chat(walker, SPAN_DANGER("You trample \the [seed]!"))
+	to_chat(walker, SPAN_DANGER("You trample \the [seed.display_name]!"))
 	plant_health = max(0, plant_health - rand(3,5))
 	check_plant_health()
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/Process()
-	var/turf/T = get_turf(src)
-	if(istype(T) && !closed_system)
-		var/space_left = reagents ? (reagents.maximum_volume - reagents.total_volume) : 0
-		if(waterlevel < 100 && space_left > 0 && reagents.total_volume < 10)
-			for(var/step_dir in global.alldirs)
-				var/turf/neighbor = get_step_resolving_mimic(src, step_dir)
-				if(neighbor != loc && neighbor?.reagents?.total_volume && Adjacent(neighbor))
-					neighbor.reagents.trans_to_obj(src, rand(2,3))
+	. = ..()
+	if(. == PROCESS_KILL || QDELETED(src))
+		return
+	var/turf/my_turf = get_turf(src)
+	if(!istype(my_turf))
+		return
+	if(closed_system || !reagents || waterlevel >= 100)
+		return
+	if((reagents.maximum_volume - reagents.total_volume) <= 0 || reagents.total_volume >= 10)
+		return
+	for(var/step_dir in global.alldirs)
+		var/turf/neighbor = get_step_resolving_mimic(src, step_dir)
+		if(neighbor == my_turf || !neighbor?.reagents?.total_volume || !Adjacent(neighbor))
+			continue
+		neighbor.reagents.trans_to_obj(src, rand(2,3))
+		if((reagents.maximum_volume - reagents.total_volume) <= 0 || reagents.total_volume >= 10)
+			break
 	return ..()
 
 /obj/machinery/portable_atmospherics/hydroponics/soil/attackby(var/obj/item/O, var/mob/user)
@@ -142,7 +166,6 @@
 	dead = 0
 	age = start_mature ? seed.get_trait(TRAIT_MATURATION) : 1
 	plant_health = seed.get_trait(TRAIT_ENDURANCE)
-	lastcycle = world.time
 	if(isnull(default_pixel_y))
 		default_pixel_y = rand(-12,12)
 	if(isnull(default_pixel_y))
@@ -180,3 +203,6 @@
 		if(plant.invisibility == INVISIBILITY_MAXIMUM)
 			plant.set_invisibility(initial(plant.invisibility))
 	. = ..()
+
+/obj/machinery/portable_atmospherics/hydroponics/soil/invisible/get_growth_rate()
+	return max(..(), 1)

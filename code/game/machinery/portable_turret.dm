@@ -236,6 +236,7 @@ var/global/list/turret_icons
 		new /obj/item/assembly/prox_sensor(loc)
 	. = ..()
 
+// TODO: remove these or refactor to use construct states
 /obj/machinery/porta_turret/attackby(obj/item/I, mob/user)
 	if(stat & BROKEN)
 		if(IS_CROWBAR(I))
@@ -248,17 +249,19 @@ var/global/list/turret_icons
 					physically_destroyed()
 				else
 					to_chat(user, "<span class='notice'>You remove the turret but did not manage to salvage anything.</span>")
+			return TRUE
+		return FALSE
 
 	else if(IS_WRENCH(I))
 		if(enabled || raised)
 			to_chat(user, "<span class='warning'>You cannot unsecure an active turret!</span>")
-			return
+			return TRUE
 		if(wrenching)
 			to_chat(user, "<span class='warning'>Someone is already [anchored ? "un" : ""]securing the turret!</span>")
-			return
+			return TRUE
 		if(!anchored && isspaceturf(get_turf(src)))
 			to_chat(user, "<span class='warning'>Cannot secure turrets in space!</span>")
-			return
+			return TRUE
 
 		user.visible_message( \
 				"<span class='warning'>[user] begins [anchored ? "un" : ""]securing the turret.</span>", \
@@ -266,19 +269,14 @@ var/global/list/turret_icons
 			)
 
 		wrenching = 1
-		if(do_after(user, 50, src))
+		if(do_after(user, 5 SECONDS, src))
 			//This code handles moving the turret around. After all, it's a portable turret!
-			if(!anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				anchored = TRUE
-				update_icon()
-				to_chat(user, "<span class='notice'>You secure the exterior bolts on the turret.</span>")
-			else if(anchored)
-				playsound(loc, 'sound/items/Ratchet.ogg', 100, 1)
-				anchored = FALSE
-				to_chat(user, "<span class='notice'>You unsecure the exterior bolts on the turret.</span>")
-				update_icon()
+			playsound(loc, 'sound/items/Ratchet.ogg', 100, TRUE)
+			anchored = !anchored
+			update_icon()
+			to_chat(user, "<span class='notice'>You [anchored ? "secure" : "unsecure"] the exterior bolts on [src].</span>")
 		wrenching = 0
+		return TRUE
 
 	else if(istype(I, /obj/item/card/id)||istype(I, /obj/item/modular_computer))
 		//Behavior lock/unlock mangement
@@ -288,18 +286,20 @@ var/global/list/turret_icons
 			updateUsrDialog()
 		else
 			to_chat(user, "<span class='notice'>Access denied.</span>")
+		return TRUE
 
 	else
 		//if the turret was attacked with the intention of harming it:
+		var/force = I.get_attack_force(user) * 0.5
 		user.setClickCooldown(DEFAULT_ATTACK_COOLDOWN)
-		take_damage(I.force * 0.5, I.atom_damage_type)
-		if(I.force * 0.5 > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
+		take_damage(force, I.atom_damage_type)
+		if(force > 1) //if the force of impact dealt at least 1 damage, the turret gets pissed off
 			if(!attacked && !emagged)
 				attacked = 1
 				spawn()
-					sleep(60)
+					sleep(6 SECONDS)
 					attacked = 0
-		..()
+		return TRUE
 
 /obj/machinery/porta_turret/emag_act(var/remaining_charges, var/mob/user)
 	if(!emagged)
@@ -383,6 +383,7 @@ var/global/list/turret_icons
 	atom_flags |= ATOM_FLAG_CLIMBABLE // they're now climbable
 
 /obj/machinery/porta_turret/Process()
+
 	if(stat & (NOPOWER|BROKEN))
 		//if the turret has no power or is broken, make the turret pop down if it hasn't already
 		popDown()
@@ -399,9 +400,8 @@ var/global/list/turret_icons
 	for(var/mob/M in mobs_in_view(world.view, src))
 		assess_and_assign(M, targets, secondarytargets)
 
-	if(!tryToShootAt(targets))
-		if(!tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
-			popDown() // no valid targets, close the cover
+	if(!tryToShootAt(targets) && !tryToShootAt(secondarytargets)) // if no valid targets, go for secondary targets
+		popDown() // no valid targets, close the cover
 
 	var/current_max_health = get_max_health()
 	if(auto_repair && (current_health < current_max_health))
@@ -416,13 +416,10 @@ var/global/list/turret_icons
 			secondarytargets += L
 
 /obj/machinery/porta_turret/proc/assess_living(var/mob/living/L)
-	if(!istype(L))
+	if(!istype(L) || !L.simulated)
 		return TURRET_NOT_TARGET
 
 	if(L.invisibility >= INVISIBILITY_LEVEL_ONE) // Cannot see him. see_invisible is a mob-var
-		return TURRET_NOT_TARGET
-
-	if(!L)
 		return TURRET_NOT_TARGET
 
 	if(!emagged && issilicon(L))	// Don't target silica
@@ -454,34 +451,29 @@ var/global/list/turret_icons
 	if(isanimal(L) || issmall(L)) // Animals are not so dangerous
 		return check_anomalies ? TURRET_SECONDARY_TARGET : TURRET_NOT_TARGET
 
-	if(ishuman(L))	//if the target is a human, analyze threat level
-		if(assess_perp(L) < 4)
-			return TURRET_NOT_TARGET	//if threat level < 4, keep going
+	if(assess_perp(L) < 4) //if the target is a human, analyze threat level
+		return TURRET_NOT_TARGET	//if threat level < 4, keep going
 
 	if(L.current_posture.prone)		//if the perp is lying down, it's still a target but a less-important target
 		return lethal ? TURRET_SECONDARY_TARGET : TURRET_NOT_TARGET
 
 	return TURRET_PRIORITY_TARGET	//if the perp has passed all previous tests, congrats, it is now a "shoot-me!" nominee
 
-/obj/machinery/porta_turret/proc/assess_perp(var/mob/living/human/H)
-	if(!H || !istype(H))
+/obj/machinery/porta_turret/proc/assess_perp(var/mob/living/perp)
+	if(!istype(perp))
 		return 0
-
 	if(emagged)
 		return 10
-
-	return H.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
+	return perp.assess_perp(src, check_access, check_weapons, check_records, check_arrest)
 
 /obj/machinery/porta_turret/proc/tryToShootAt(var/list/mob/living/targets)
-	if(targets.len && last_target && (last_target in targets) && target(last_target))
+	if(length(targets) && last_target && (last_target in targets) && target(last_target))
 		return 1
 
-	while(targets.len > 0)
-		var/mob/living/M = pick(targets)
-		targets -= M
+	while(length(targets))
+		var/mob/living/M = pick_n_take(targets)
 		if(target(M))
-			return 1
-
+			return TRUE
 
 /obj/machinery/porta_turret/proc/popUp()	//pops the turret up
 	if(disabled)

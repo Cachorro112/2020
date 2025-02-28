@@ -1,15 +1,17 @@
-/obj/item/clothing/suit/cloak // A colorable cloak
-	name = "plain cloak"
-	desc = "A simple, bland cloak."
-	icon = 'icons/clothing/suits/cloaks/_cloak.dmi'
-	w_class = ITEM_SIZE_NORMAL
-	slot_flags = SLOT_OVER_BODY
-	allowed = list(/obj/item/tank/emergency/oxygen)
-	armor = list(ARMOR_MELEE = 0, ARMOR_BULLET = 0, ARMOR_LASER = 0,ARMOR_ENERGY = 0, ARMOR_BOMB = 0, ARMOR_BIO = 0, ARMOR_RAD = 0)
-	body_parts_covered = SLOT_UPPER_BODY|SLOT_LOWER_BODY|SLOT_ARMS|SLOT_LEGS
-	siemens_coefficient = 0.9
-	accessory_slot = ACCESSORY_SLOT_OVER
+// A colorable cloak
+/obj/item/clothing/suit/cloak
+	name                 = "plain cloak"
+	desc                 = "A simple, bland cloak."
+	icon                 = 'icons/clothing/suits/cloaks/_cloak.dmi'
+	w_class              = ITEM_SIZE_NORMAL
+	slot_flags           = SLOT_OVER_BODY
+	allowed              = list(/obj/item/tank/emergency/oxygen)
+	armor                = null
+	body_parts_covered   = SLOT_UPPER_BODY|SLOT_LOWER_BODY|SLOT_ARMS|SLOT_LEGS
+	siemens_coefficient  = 0.9
+	accessory_slot       = ACCESSORY_SLOT_OVER
 	accessory_visibility = ACCESSORY_VISIBILITY_ATTACHMENT
+	storage              = /datum/storage/pockets/suit
 
 /obj/item/clothing/suit/cloak/on_update_icon()
 	. = ..()
@@ -22,6 +24,12 @@
 /obj/item/clothing/suit/cloak/random/Initialize()
 	color = get_random_colour(TRUE)
 	. = ..()
+
+// Takes material colour. TODO: Crafting recipe for cloth, fur, leather, etc. cloaks.
+/obj/item/clothing/suit/cloak/crafted
+	material = /decl/material/solid/organic/cloth
+	color = /decl/material/solid/organic/cloth::color
+	material_alteration = MAT_FLAG_ALTERATION_COLOR | MAT_FLAG_ALTERATION_NAME
 
 // Cloaks should layer over and under everything, so set the layer directly rather
 // than relying on overlay order. This also overlays over inhands but it looks ok.
@@ -128,6 +136,7 @@
 	desc = "A ragged cloak made of some sort of thick hide."
 	icon = 'icons/clothing/suits/cloaks/cloak_hide.dmi'
 	material = /decl/material/solid/organic/leather
+	color = /decl/material/solid/organic/leather::color
 	material_alteration = MAT_FLAG_ALTERATION_COLOR | MAT_FLAG_ALTERATION_NAME
 	armor_type = /datum/extension/armor/ablative
 	body_parts_covered = SLOT_UPPER_BODY|SLOT_LOWER_BODY
