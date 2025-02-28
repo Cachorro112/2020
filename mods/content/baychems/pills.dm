@@ -36,7 +36,7 @@
 
 ////Bottles
 
-/obj/item/pill_bottle/antitox
+/obj/item/pill_bottle/antitoxins
 	labeled_name = "dylovene"
 
 /obj/item/pill_bottle/brute_meds

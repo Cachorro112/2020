@@ -1,22 +1,24 @@
 /obj/item/stack/material/rods
-	name = "rod"
-	desc = "Some rods. Can be used for building, or something."
-	singular_name = "rod"
-	plural_name = "rods"
-	icon_state = "rod"
-	plural_icon_state = "rod-mult"
-	max_icon_state = "rod-max"
-	w_class = ITEM_SIZE_LARGE
-	attack_cooldown = 21
+	name                 = "rod"
+	desc                 = "Some rods. Can be used for building, or something."
+	singular_name        = "rod"
+	plural_name          = "rods"
+	icon_state           = "rod"
+	plural_icon_state    = "rod-mult"
+	max_icon_state       = "rod-max"
+	w_class              = ITEM_SIZE_LARGE
+	attack_cooldown      = 21
 	melee_accuracy_bonus = -20
-	throw_speed = 5
-	throw_range = 20
-	max_amount = 100
-	attack_verb = list("hit", "bludgeoned", "whacked")
-	lock_picking_level = 3
-	matter_multiplier = 0.3
-	material = /decl/material/solid/metal/steel
-	is_spawnable_type = TRUE
+	throw_speed          = 5
+	throw_range          = 20
+	max_amount           = 100
+	attack_verb          = list("hit", "bludgeoned", "whacked")
+	lock_picking_level   = 3
+	matter_multiplier    = 0.3
+	material             = /decl/material/solid/metal/steel
+	crafting_stack_type  = /obj/item/stack/material/rods
+	pickup_sound         = 'sound/foley/tooldrop3.ogg'
+	drop_sound           = 'sound/foley/tooldrop2.ogg'
 
 	pickup_sound = 'sound/foley/tooldrop3.ogg'
 	drop_sound = 'sound/foley/tooldrop2.ogg'
@@ -25,21 +27,14 @@
 	. = ..()
 	. += "narrow"
 
-/obj/item/stack/material/rods/ten
-	amount = 10
-
-/obj/item/stack/material/rods/fifty
-	amount = 50
-
 /obj/item/stack/material/rods/cyborg
-	name = "metal rod synthesizer"
-	desc = "A device that makes metal rods."
-	gender = NEUTER
-	matter = null
-	uses_charge = 1
-	charge_costs = list(500)
-	max_health = ITEM_HEALTH_NO_DAMAGE
-	is_spawnable_type = FALSE
+	name                 = "metal rod synthesizer"
+	desc                 = "A device that makes metal rods."
+	gender               = NEUTER
+	matter               = null
+	uses_charge          = 1
+	charge_costs         = list(500)
+	max_health           = ITEM_HEALTH_NO_DAMAGE
 
 /obj/item/stack/material/rods/Initialize()
 	. = ..()
@@ -54,7 +49,9 @@
 	else
 		icon_state = base_state
 
+// TODO: slapcrafting recipes to replace this block.
 /obj/item/stack/material/rods/attackby(obj/item/W, mob/user)
+
 	if(IS_WELDER(W))
 		var/obj/item/weldingtool/WT = W
 

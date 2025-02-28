@@ -106,7 +106,7 @@
 /turf/floor/plating/airless,
 /area/space)
 "ao" = (
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/space,
 /area/space)
 "ap" = (
@@ -529,7 +529,7 @@
 /turf/space,
 /area/magshield/smes_storage)
 "bF" = (
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/space,
 /area/magshield/smes_storage)
 "bG" = (
@@ -733,7 +733,8 @@
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "EngineBlast";
-	name = "Engine Monitoring Room Blast Doors"
+	name = "Engine Monitoring Room Blast Doors";
+
 	},
 /obj/effect/wallframe_spawn/reinforced,
 /obj/structure/cable/yellow{
@@ -2750,11 +2751,11 @@
 /turf/floor/carpet/blue,
 /area/magshield/west)
 "ic" = (
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/floor/tiled/dark,
 /area/magshield/west)
 "id" = (
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/space,
 /area/magshield/west)
 "ie" = (
@@ -3769,7 +3770,7 @@
 /turf/floor/tiled,
 /area/magshield/south)
 "lg" = (
-/obj/item/stack/material/rods,
+/obj/item/stack/material/rods/mapped/steel,
 /turf/space,
 /area/magshield/south)
 "lh" = (

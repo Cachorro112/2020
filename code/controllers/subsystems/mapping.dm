@@ -430,7 +430,3 @@ SUBSYSTEM_DEF(mapping)
 		if(!P)
 			continue
 		P.begin_processing()
-
-/hook/roundstart/proc/start_processing_all_planets()
-	SSmapping.start_processing_all_planets()
-	return TRUE

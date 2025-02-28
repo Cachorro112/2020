@@ -194,12 +194,7 @@ INITIALIZE_IMMEDIATE(/obj/abstract/landmark/map_load_mark)
 
 /obj/abstract/landmark/proc_caller/floor_burner
 	type_to_find = /turf/floor
-	proc_to_call = TYPE_PROC_REF(/turf/floor, burn_tile)
-	arguments_to_pass = null
-
-/obj/abstract/landmark/proc_caller/floor_breaker
-	type_to_find = /turf/floor
-	proc_to_call = TYPE_PROC_REF(/turf/floor, break_tile)
+	proc_to_call = /turf/floor/proc/burn_tile
 	arguments_to_pass = null
 
 /// Used to tell pipe leak unit tests that a leak is intentional. Placed over the pipe that leaks, not the tile missing a pipe.

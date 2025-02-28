@@ -1828,7 +1828,8 @@
 "eW" = (
 /obj/machinery/door/blast/regular/open{
 	id_tag = "rescuedock";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+
 	},
 /obj/effect/wallframe_spawn/reinforced/titanium,
 /obj/effect/paint/blue,
@@ -2059,7 +2060,8 @@
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "rescuebridge";
-	name = "Cockpit Blast Shutters"
+	name = "Cockpit Blast Shutters";
+
 	},
 /obj/effect/wallframe_spawn/reinforced/titanium,
 /obj/effect/paint/blue,
@@ -2118,7 +2120,8 @@
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "rescueeva";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+
 	},
 /obj/effect/wallframe_spawn/reinforced/titanium,
 /obj/effect/paint/blue,
@@ -2521,7 +2524,8 @@
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "rescuebridge";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+
 	},
 /obj/effect/paint/blue,
 /turf/floor/plating,
@@ -2571,7 +2575,8 @@
 /obj/machinery/door/blast/regular/open{
 	dir = 4;
 	id_tag = "rescueinfirm";
-	name = "Blast Shutters"
+	name = "Blast Shutters";
+
 	},
 /obj/effect/paint/blue,
 /turf/floor/plating,

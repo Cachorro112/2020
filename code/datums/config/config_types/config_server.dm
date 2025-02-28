@@ -54,9 +54,7 @@
 		/decl/config/toggle/disable_webhook_embeds,
 		/decl/config/toggle/delist_when_no_admins,
 		/decl/config/toggle/wait_for_sigusr1_reboot,
-		/decl/config/toggle/use_irc_bot,
 		/decl/config/toggle/show_typing_indicator_for_whispers,
-		/decl/config/toggle/announce_shuttle_dock_to_irc,
 		/decl/config/toggle/guests_allowed,
 		/decl/config/toggle/on/jobs_have_minimal_access,
 		/decl/config/toggle/on/admin_legacy_system,
@@ -335,17 +333,9 @@
 	uid = "wait_for_sigusr1_reboot"
 	desc = "Determines if Dream Daemon should refuse to reboot for any reason other than SIGUSR1."
 
-/decl/config/toggle/use_irc_bot
-	uid = "use_irc_bot"
-	desc = "Determines if data is sent to the IRC bot. Generally requires MAIN_IRC and associated setup."
-
 /decl/config/toggle/show_typing_indicator_for_whispers
 	uid = "show_typing_indicator_for_whispers"
 	desc = "Determinese if a typing indicator shows overhead for people currently writing whispers."
-
-/decl/config/toggle/announce_shuttle_dock_to_irc
-	uid = "announce_shuttle_dock_to_irc"
-	desc = "Determines if announce shuttle dock announcements are sent to the main IRC channel, if MAIN_IRC has also been setup."
 
 /decl/config/toggle/guests_allowed
 	uid = "guests_allowed"

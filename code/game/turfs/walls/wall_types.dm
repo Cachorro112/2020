@@ -1,11 +1,11 @@
 //Commonly used
 /turf/wall/prepainted
 	color = COLOR_GUNMETAL
-	paint_color = COLOR_WALL_GUNMETAL
+	paint_color = COLOR_GUNMETAL
 	stripe_color = COLOR_GUNMETAL
 /turf/wall/r_wall/prepainted
 	color = COLOR_GUNMETAL
-	paint_color = COLOR_WALL_GUNMETAL
+	paint_color = COLOR_GUNMETAL
 	stripe_color = COLOR_GUNMETAL
 
 /turf/wall/r_wall

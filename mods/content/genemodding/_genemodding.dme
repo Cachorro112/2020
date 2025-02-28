@@ -1,9 +1,0 @@
-#ifndef CONTENT_PACK_GENEMODDING
-#define CONTENT_PACK_GENEMODDING
-// BEGIN_INCLUDE
-#include "genemodding.dm"
-#include "decl\ears.dm"
-#include "decl\marking.dm"
-#include "decl\tail.dm"
-// END_INCLUDE
-#endif

@@ -137,17 +137,11 @@
 		pref.be_random_name = !pref.be_random_name
 		return TOPIC_REFRESH
 
-	else if(href_list["gender"])
-		var/decl/pronouns/new_gender = locate(href_list["gender"])
-		if(istype(new_gender) && CanUseTopic(user) && (new_gender in S.available_pronouns))
-			pref.gender = new_gender.name
-		return TOPIC_REFRESH_UPDATE_PREVIEW
-
 	else if(href_list["bodytype"])
 		var/decl/bodytype/new_body = locate(href_list["bodytype"])
 		if(istype(new_body) && CanUseTopic(user) && (new_body in S.available_bodytypes))
 			pref.set_bodytype(new_body.name)
-			if(get_config_value(/decl/config/toggle/on/cisnormativity) && new_body.associated_gender) // Let servers stuck in the 2010s set bodytype default to avoid "confusing" people
+			if(get_config_value(/decl/config/toggle/on/cisnormativity) && new_body.associated_gender) // :)
 				pref.gender = new_body.associated_gender
 		return TOPIC_REFRESH_UPDATE_PREVIEW
 
