@@ -10,7 +10,6 @@
 	#include "../../../mods/content/baychems/_baychems.dme"
 	#include "../../../mods/content/fov_module/_fov_module.dme"
 
-	#include "asteroid.dm"
 	#include "ss13_areas.dm"
 	#include "ss13_departments.dm"
 	#include "ss13_jobs.dm"
@@ -18,12 +17,9 @@
 	#include "ss13_security_state.dm"
 	#include "ss13_setup.dm"
 	#include "ss13_shuttles.dm"
-	#include "asteroid_new.dmm" // New asteroid! its just the mining-corporated.dmm from Baystation12 that i port to neb.
+	#include "asteroid.dmm" // New asteroid! its just the mining-corporated.dmm from Baystation12 that i port to neb.
 	#include "cent_com.dmm"
 	#include "ss13.dmm"
-
-	#include "geology/ores.dm"
-	#include "geology/stone.dm"
 
 	#include "jobs/assistants.dm"
 	#include "jobs/engineering.dm"

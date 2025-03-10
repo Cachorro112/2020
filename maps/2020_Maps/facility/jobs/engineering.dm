@@ -68,7 +68,7 @@
 		access_mining_station
 	)
 	minimal_player_age = 14
-	outfit_type = /decl/hierarchy/outfit/job/engineering/eng_director
+	outfit_type = /decl/outfit/job/engineering/eng_director
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_ADEPT,
@@ -141,8 +141,8 @@
 		access_mining_station
 	)
 	alt_titles = list(
-		"Hazardous Environments Engineer" = /decl/hierarchy/outfit/job/engineering/engineer/hazard)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/engineer
+		"Hazardous Environments Engineer" = /decl/outfit/job/engineering/engineer/hazard)
+	outfit_type = /decl/outfit/job/engineering/engineer
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_BASIC,
@@ -210,7 +210,7 @@
 		access_mining,
 		access_mining_station
 	)
-	outfit_type = /decl/hierarchy/outfit/job/engineering/technician
+	outfit_type = /decl/outfit/job/engineering/technician
 	min_skill = list(
 		SKILL_LITERACY     = SKILL_ADEPT,
 		SKILL_COMPUTER     = SKILL_EXPERT,

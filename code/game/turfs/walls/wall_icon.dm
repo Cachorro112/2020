@@ -49,7 +49,7 @@
 		desc = "It seems to be a section of hull plated with [material.solid_name]."
 
 /turf/wall/proc/get_wall_icon()
-	. = (istype(material) && material.icon_base) || 'mods/content/2020_the_cold_war/icons/turf/walls/wall.dmi'
+	. = (istype(material) && material.icon_base) || 'icons/turf/walls/solid.dmi'
 
 /turf/wall/proc/apply_reinf_overlay()
 	. = istype(reinf_material)

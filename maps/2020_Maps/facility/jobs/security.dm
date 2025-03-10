@@ -63,7 +63,7 @@
 	guestbanned = 1
 	must_fill = 1
 	not_random_selectable = 1
-	outfit_type = /decl/hierarchy/outfit/job/security/commander
+	outfit_type = /decl/outfit/job/security/commander
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_ADEPT,
 		SKILL_COMBAT    = SKILL_BASIC,
@@ -112,7 +112,7 @@
 		access_maint_tunnels
 	)
 	minimal_player_age = 7
-	outfit_type = /decl/hierarchy/outfit/job/security/intel
+	outfit_type = /decl/outfit/job/security/intel
 	guestbanned = 1
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_ADEPT,
@@ -158,7 +158,7 @@
 		access_external_airlocks
 	)
 	minimal_player_age = 7
-	outfit_type = /decl/hierarchy/outfit/job/security/guard
+	outfit_type = /decl/outfit/job/security/guard
 	guestbanned = 1
 	min_skill = list(
 		SKILL_LITERACY  = SKILL_BASIC,

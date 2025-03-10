@@ -2,7 +2,7 @@
 	name = "Gay Blacks from Outer Space"
 	antag_indicator = "hudsyndicate"
 	name_plural = "Gay Blacks from Outer Space"
-	landmark_id = "Nigger-Spawn"
+	landmark_id = "Black-Spawn"
 	leader_welcome_text = "You are the leader of the Gay Blacks Expedition forces."
 	welcome_text = "You're a Gay Blacks from Outer Space, your job is help male humans to free themselves from the female opression."
 	flags = ANTAG_OVERRIDE_JOB | ANTAG_OVERRIDE_MOB | ANTAG_CLEAR_EQUIPMENT | ANTAG_CHOOSE_NAME | ANTAG_HAS_LEADER

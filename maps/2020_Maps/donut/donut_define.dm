@@ -59,52 +59,52 @@
 		list("name" = "Supply",        "key" = "u", "frequency" = 1347, "color" = COMMS_COLOR_SUPPLY,    "span_class" = "supradio", "secured" = list(access_cargo))
 		)
 
-	available_cultural_info = list(
-		TAG_HOMEWORLD = list(
-			/decl/cultural_info/location/human/earth/usa,
-			/decl/cultural_info/location/human/earth/sov,
-			/decl/cultural_info/location/human/earth/uk,
-			/decl/cultural_info/location/human/earth/ger,
-			/decl/cultural_info/location/human/earth/frc,
-			/decl/cultural_info/location/human/earth/eu,
-			/decl/cultural_info/location/human/earth/chn,
-			/decl/cultural_info/location/human/earth/jap
+	available_background_info = list(
+		/decl/background_category/homeworld = list(
+			/decl/background_detail/location/human/earth/usa,
+			/decl/background_detail/location/human/earth/sov,
+			/decl/background_detail/location/human/earth/uk,
+			/decl/background_detail/location/human/earth/ger,
+			/decl/background_detail/location/human/earth/frc,
+			/decl/background_detail/location/human/earth/eu,
+			/decl/background_detail/location/human/earth/chn,
+			/decl/background_detail/location/human/earth/jap
 		),
-		TAG_FACTION = list(/decl/cultural_info/faction/remote/nanotrasen),
+		/decl/background_category/faction = list(/decl/background_detail/faction/remote/nanotrasen),
 
-		TAG_CULTURE = list(
-			/decl/cultural_info/culture/human_2020/yankee,
-			/decl/cultural_info/culture/human_2020/russian,
-			/decl/cultural_info/culture/human_2020/english,
-			/decl/cultural_info/culture/human_2020/german,
-			/decl/cultural_info/culture/human_2020/french,
-			/decl/cultural_info/culture/human_2020/chinese,
-			/decl/cultural_info/culture/human_2020/ukrainian,
-			/decl/cultural_info/culture/human_2020/japan
+		/decl/background_category/heritage = list(
+			/decl/background_detail/heritage/human_2020/yankee,
+			/decl/background_detail/heritage/human_2020/russian,
+			/decl/background_detail/heritage/human_2020/english,
+			/decl/background_detail/heritage/human_2020/german,
+			/decl/background_detail/heritage/human_2020/french,
+			/decl/background_detail/heritage/human_2020/chinese,
+			/decl/background_detail/heritage/human_2020/ukrainian,
+			/decl/background_detail/heritage/human_2020/japan
 		),
 
-		TAG_RELIGION =  list(
-			/decl/cultural_info/religion/jewish,
-			/decl/cultural_info/religion/hindu,
-			/decl/cultural_info/religion/buddhist,
-			/decl/cultural_info/religion/jain,
-			/decl/cultural_info/religion/sikh,
-			/decl/cultural_info/religion/muslim,
-			/decl/cultural_info/religion/christian,
-			/decl/cultural_info/religion/bahai,
-			/decl/cultural_info/religion/agnostic,
-			/decl/cultural_info/religion/deist,
-			/decl/cultural_info/religion/atheist,
-			/decl/cultural_info/religion/thelemite,
-			/decl/cultural_info/religion/spiritualism,
-			/decl/cultural_info/religion/shinto,
-			/decl/cultural_info/religion/taoist,
-			/decl/cultural_info/religion/other)
+		/decl/background_category/religion =  list(
+			/decl/background_detail/religion/jewish,
+			/decl/background_detail/religion/hindu,
+			/decl/background_detail/religion/buddhist,
+			/decl/background_detail/religion/jain,
+			/decl/background_detail/religion/sikh,
+			/decl/background_detail/religion/muslim,
+			/decl/background_detail/religion/christian,
+			/decl/background_detail/religion/bahai,
+			/decl/background_detail/religion/agnostic,
+			/decl/background_detail/religion/deist,
+			/decl/background_detail/religion/atheist,
+			/decl/background_detail/religion/thelemite,
+			/decl/background_detail/religion/spiritualism,
+			/decl/background_detail/religion/shinto,
+			/decl/background_detail/religion/taoist,
+			/decl/background_detail/religion/other)
 		)
 
-	default_cultural_info = list(
-		TAG_HOMEWORLD = /decl/cultural_info/location/human/earth/usa,
-		TAG_FACTION =   /decl/cultural_info/faction/remote/nanotrasen,
-		TAG_CULTURE =   /decl/cultural_info/culture/human_2020/yankee,
-		TAG_RELIGION =  /decl/cultural_info/religion/christian
+	default_background_info = list(
+		/decl/background_category/homeworld = /decl/background_detail/location/human/earth/usa,
+		/decl/background_category/faction =   /decl/background_detail/faction/remote/nanotrasen,
+		/decl/background_category/heritage =   /decl/background_detail/heritage/human_2020/yankee,
+		/decl/background_category/religion  =  /decl/background_detail/religion/christian
 	)

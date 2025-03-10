@@ -8,7 +8,7 @@
 	economic_power = 1
 	access = list()
 	minimal_access = list()
-	outfit_type = /decl/hierarchy/outfit/job/subject
+	outfit_type = /decl/outfit/job/subject
 	department_types = list(/decl/department/civilian)
 
 ///// Logistic /////
@@ -39,7 +39,7 @@
 	)
 	minimal_player_age = 3
 	ideal_character_age = 40
-	outfit_type = /decl/hierarchy/outfit/job/logistic/logistic_officer
+	outfit_type = /decl/outfit/job/logistic/logistic_officer
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 	    SKILL_FINANCE  = SKILL_BASIC,
@@ -78,7 +78,7 @@
 		access_cargo_bot,
 		access_mailsorting
 	)
-	outfit_type = /decl/hierarchy/outfit/job/logistic/logistic_spec
+	outfit_type = /decl/outfit/job/logistic/logistic_spec
 	min_skill = list(
 		SKILL_LITERACY = SKILL_ADEPT,
 		SKILL_FINANCE  = SKILL_BASIC,

@@ -47,11 +47,14 @@
 	waypoint_station = "nav_cargo_station"
 
 /obj/effect/shuttle_landmark/supply/start
+	base_turf = /turf/floor/plating
+	base_area = /area/centcom
 	landmark_tag = "nav_cargo_start"
 
 /obj/effect/shuttle_landmark/supply/station
+	base_turf = /turf/floor/plating
+	base_area = /area/ss13/quartermaster/dock
 	landmark_tag = "nav_cargo_station"
-	docking_controller = "cargo_dock"
 
 /datum/shuttle/autodock/multi/centcom
 	name = "Auxiliary Shuttle"

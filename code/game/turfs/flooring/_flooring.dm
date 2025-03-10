@@ -190,9 +190,9 @@ var/global/list/flooring_cache = list()
 
 	if(color)
 		target.color = color
-	else if(!can_paint || isnull(target.paint_color))
-		var/decl/material/use_material = target.get_material()
-		target.color = use_material?.color
+//	else if(!can_paint || isnull(target.paint_color))
+//		var/decl/material/use_material = target.get_material()
+//		target.color = use_material?.color
 
 	var/edge_layer = (icon_edge_layer != FLOOR_EDGE_NONE) ? target.layer + icon_edge_layer : target.layer
 	var/list/edge_overlays = list()

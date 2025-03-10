@@ -78,3 +78,7 @@
 
 /obj/machinery/vending/assist/antag
 	icon = 'mods/content/2020_the_cold_war/icons/machinery/vending/generic.dmi'
+
+//////Not a vending, but, fuck it.
+/obj/machinery/seed_storage
+	icon = 'mods/content/2020_the_cold_war/icons/machinery/vending/seeds_green.dmi'

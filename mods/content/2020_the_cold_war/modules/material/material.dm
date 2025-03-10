@@ -56,7 +56,7 @@
 /decl/material/solid/metal/steel
 	icon_base = 'mods/content/2020_the_cold_war/icons/turf/walls/wall.dmi'
 	icon_reinf = 'mods/content/2020_the_cold_war/icons/turf/walls/reinforced.dmi'
-	color = COLOR_GRAY40
+	color = "#666666"
 
 /decl/material/solid/metal/stainlesssteel
 	icon_base = 'mods/content/2020_the_cold_war/icons/turf/walls/wall.dmi'
@@ -111,3 +111,9 @@
 
 /decl/material/solid/metal/plasteel/ocp
 	temperature_damage_threshold = 150000
+
+/decl/material/solid/stone
+	wall_blend_icons = list(
+		'mods/content/2020_the_cold_war/icons/turf/walls/stone.dmi' = TRUE,
+		'mods/content/2020_the_cold_war/icons/turf/walls/metal.dmi' = TRUE
+	)

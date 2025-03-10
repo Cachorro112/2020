@@ -38,6 +38,11 @@
 	name = "\improper Central Hallway"
 	icon_state = "hallC3"
 
+/area/ss13/hallway/engineering_access
+	name = "\improper Engineering Access"
+	icon_state = "hallF2"
+	sound_env = SMALL_ENCLOSED
+
 
 //Quartermaster.
 /area/ss13/quartermaster_entrace
@@ -50,12 +55,12 @@
 	req_access = list(access_cargo)
 	holomap_color = HOLOMAP_AREACOLOR_CARGO
 
-/area/ss13/quartermaster/storage
-	name = "\improper Quartermasters Storage"
-	icon_state = "quartstorage"
+/area/ss13/quartermaster/mining
+	name = "\improper Mining Dock"
+	icon_state = "mining"
 
 /area/ss13/quartermaster/dock
-	name = "\improper Quartermasters Dock"
+	name = "\improper Quartermasters Hangar"
 	icon_state = "quart"
 
 //Engineering.
@@ -217,7 +222,7 @@
 	icon_state = "armory"
 	req_access = list(access_armory)
 
-/area/ss13/security/annex
+/area/ss13/hallway/security_annex
 	name = "\improper Security Annex"
 	icon_state = "checkpoint1"
 
@@ -249,6 +254,10 @@
 /area/ss13/crew_quarters/kitchen
 	name = "\improper Kitchen"
 	icon_state = "kitchen"
+
+/area/ss13/crew_quarters/kitchen/freezer
+	name = "\improper Freezer"
+	icon_state = "restrooms" // Rest room for some creatures...
 
 /area/ss13/crew_quarters/hydro
 	name = "\improper Hydrophonics"
@@ -403,12 +412,3 @@
 
 /area/mining/relay // Will be not used, yet.
 	name = "Mining Outpost Communication Relay"
-
-/area/mine_asteroid
-	name = "Asteroid"
-	icon_state = "cave"
-	ambience = list('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
-	sound_env = ASTEROID
-	base_turf = /turf/floor/barren
-	area_flags = AREA_FLAG_IS_BACKGROUND | AREA_FLAG_HIDE_FROM_HOLOMAP | AREA_FLAG_EXTERNAL
-	is_outside = OUTSIDE_YES

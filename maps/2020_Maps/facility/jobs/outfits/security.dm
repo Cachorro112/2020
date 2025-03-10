@@ -1,12 +1,12 @@
-/decl/hierarchy/outfit/job/security
-	abstract_type = /decl/hierarchy/outfit/job/security
+/decl/outfit/job/security
+	abstract_type = /decl/outfit/job/security
 	backpack_contents = list(/obj/item/handcuffs = 1)
 
-/decl/hierarchy/outfit/job/security/Initialize()
+/decl/outfit/job/security/Initialize()
 	. = ..()
 	BACKPACK_OVERRIDE_SECURITY
 
-/decl/hierarchy/outfit/job/security/commander
+/decl/outfit/job/security/commander
 	name = "Job - Guard Commander"
 	uniform = /obj/item/clothing/jumpsuit/security/facility/guardcom
 	glasses = /obj/item/clothing/glasses/sunglasses/sechud
@@ -17,7 +17,7 @@
 	id_type = /obj/item/card/id/security/head
 	backpack_contents = list(/obj/item/handcuffs = 1)
 
-/decl/hierarchy/outfit/job/security/intel
+/decl/outfit/job/security/intel
 	name = "Job - Internal Security Agent"
 	head = /obj/item/clothing/head/det
 	uniform = /obj/item/clothing/jumpsuit/security/facility/isd
@@ -27,11 +27,11 @@
 	id_type = /obj/item/card/id/security
 	backpack_contents = list(/obj/item/ammo_magazine/pistol/browninghp = 1)
 
-/decl/hierarchy/outfit/job/security/detective/Initialize()
+/decl/outfit/job/security/detective/Initialize()
 	. = ..()
 	backpack_overrides.Cut()
 
-/decl/hierarchy/outfit/job/security/guard
+/decl/outfit/job/security/guard
 	name = "Job - Guard"
 	uniform = /obj/item/clothing/jumpsuit/security/facility
 	suit = /obj/item/clothing/suit/armor/facility/guard

@@ -12,7 +12,7 @@
 	use_global_exterior_ambience = FALSE
 	base_area = null
 	abstract_type = /datum/level_data/default_asteroid
-	level_flags = (ZLEVEL_PLAYER|ZLEVEL_SEALED)
+	level_flags = (ZLEVEL_PLAYER|ZLEVEL_SEALED|ZLEVEL_CONTACT)
 	ambient_light_level = 0.3
 	strata = /decl/strata/default_asteroid
 	level_generators = list(
@@ -24,9 +24,6 @@
 
 /obj/abstract/level_data_spawner/default_asteroid
 	level_data_type = /datum/level_data/default_asteroid
-
-/decl/material/solid/stone/sandstone/asteroid
-	color = "#7A0000"
 
 ///////////// ASTEROID ORES ///////////////
 /decl/strata/default_asteroid
@@ -54,4 +51,31 @@
 
 ///////// STONE
 /decl/material/solid/stone/sandstone/asteroid
+	name = "Asteroid Stone"
 	color = "#7A0000"
+
+/area/mine_asteroid
+	name = "Asteroid"
+	icon_state = "cave"
+	ambience = list('sound/ambience/ambimine.ogg', 'sound/ambience/song_game.ogg')
+	sound_env = ASTEROID
+	base_turf = /turf/floor/barren
+	area_flags = AREA_FLAG_IS_BACKGROUND | AREA_FLAG_HIDE_FROM_HOLOMAP | AREA_FLAG_EXTERNAL
+	is_outside = OUTSIDE_YES
+
+//OVERMAP AND SHUTTLE
+/obj/effect/overmap/visitable/sector/asteroid
+	name = "Asteroid"
+	desc = "A medium-sized asteroid full of minerals. Mining facility detected at one of sides, owner - NanoTrasen."
+	icon_state = "sector"
+	start_x = 5
+	start_y = 5
+	initial_generic_waypoints = list(
+		"nav_mining_asteroid"
+		)
+
+/obj/effect/shuttle_landmark/mine/asteroid
+	name = "Mining Outpost Hangar"
+	landmark_tag = "nav_mining_asteroid"
+	base_turf = /turf/floor/plating
+	base_area = /area/mining/hangar

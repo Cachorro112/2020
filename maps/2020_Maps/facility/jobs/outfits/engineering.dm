@@ -1,13 +1,13 @@
-/decl/hierarchy/outfit/job/engineering
+/decl/outfit/job/engineering
 	l_ear = /obj/item/radio/headset/headset_eng
-	abstract_type = /decl/hierarchy/outfit/job/engineering
+	abstract_type = /decl/outfit/job/engineering
 	outfit_flags = OUTFIT_HAS_BACKPACK|OUTFIT_EXTENDED_SURVIVAL | OUTFIT_HAS_VITALS_SENSOR
 
-/decl/hierarchy/outfit/job/engineering/Initialize()
+/decl/outfit/job/engineering/Initialize()
 	. = ..()
 	BACKPACK_OVERRIDE_ENGINEERING
 
-/decl/hierarchy/outfit/job/engineering/eng_director
+/decl/outfit/job/engineering/eng_director
 	name = "Job - Engineering Director"
 	head = /obj/item/clothing/head/hardhat/white
 	uniform = /obj/item/clothing/jumpsuit/chief_engineer
@@ -16,7 +16,7 @@
 	gloves = /obj/item/clothing/gloves/thick
 	id_type = /obj/item/card/id/engineering/head
 
-/decl/hierarchy/outfit/job/engineering/engineer
+/decl/outfit/job/engineering/engineer
 	name = "Job - Engineer"
 	head = /obj/item/clothing/head/hardhat
 	uniform = /obj/item/clothing/jumpsuit/engineer
@@ -26,7 +26,7 @@
 	gloves = /obj/item/clothing/gloves/thick
 	id_type = /obj/item/card/id/engineering
 
-/decl/hierarchy/outfit/job/engineering/engineer/hazard
+/decl/outfit/job/engineering/engineer/hazard
 	name = "Job - Hazardous Environments Engineer"
 	head = /obj/item/clothing/head/hardhat/damage_control
 	uniform = /obj/item/clothing/jumpsuit/hazard
@@ -36,7 +36,7 @@
 	gloves = /obj/item/clothing/gloves/thick
 	id_type = /obj/item/card/id/engineering
 
-/decl/hierarchy/outfit/job/engineering/technician
+/decl/outfit/job/engineering/technician
 	name = "Job - IT Technician"
 	uniform = /obj/item/clothing/jumpsuit/engineer
 	shoes = /obj/item/clothing/shoes/workboots

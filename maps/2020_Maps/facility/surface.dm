@@ -12,6 +12,7 @@
 	level_id = "facility_surface"
 	base_area = null
 	abstract_type = /datum/level_data/player_level/facility
+	level_flags = (ZLEVEL_STATION|ZLEVEL_CONTACT|ZLEVEL_PLAYER)
 	ambient_light_level = 1
 	ambient_light_color = "#f3e6ca"
 	strata = /decl/strata/facility
@@ -41,7 +42,7 @@
 ///Random Map
 /datum/random_map/automata/cave_system/facility
 	descriptor          = "facility caves"
-	floor_type          = /turf/floor/natural/rock/basalt
+	floor_type          = /turf/floor/rock/basalt
 	wall_type           = /turf/wall/natural/basalt
 	sparse_mineral_turf = /turf/wall/natural/random/basalt
 	rich_mineral_turf   = /turf/wall/natural/random/high_chance/basalt
