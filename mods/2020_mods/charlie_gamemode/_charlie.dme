@@ -1,0 +1,10 @@
+#ifndef GAMEMODE_PACK_CHARLIE
+#define GAMEMODE_PACK_CHARLIE
+// BEGIN_INCLUDE
+#include "_charlie.dm"
+#include "gamemode.dm"
+#include "insane_things.dm"
+#include "monolith.dm"
+#include "special_role.dm"
+// END_INCLUDE
+#endif

@@ -24,7 +24,7 @@
 	/decl/music_track/thunderdome,
 	/decl/music_track/title_2)
 
-	credit_sound = list('mods/content/2020_the_cold_war/sounds/music/title3_og.ogg')
+	credit_sound = list('mods/2020_mods/2020_main/sounds/music/title3_og.ogg')
 
 	map_admin_faxes = list(
 	"TERRAN.COM" = list("name" = "Terran Organization", "color" = "#75CCD1", "access" = list(list(access_heads))),

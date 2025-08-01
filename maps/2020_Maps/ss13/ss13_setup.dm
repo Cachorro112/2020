@@ -6,10 +6,9 @@
 	required_language = /decl/language/human/english
 
 /obj/effect/overmap/visitable/generate_skybox()
-	return overlay_image('mods/content/2020_the_cold_war/icons/effects/misc/plasma_giant.dmi', "plasma_giant", null, RESET_COLOR)
+	return overlay_image('mods/2020_mods/2020_main/icons/effects/misc/plasma_giant.dmi', "plasma_giant", null, RESET_COLOR)
 
 /datum/map/ss13
-
 	lobby_tracks = list(
 	/decl/music_track/title_3,
 	/decl/music_track/title_3_og,
@@ -18,7 +17,7 @@
 	/decl/music_track/title_2,
 	/decl/music_track/dawsons_christian)
 
-	credit_sound = list('mods/content/2020_the_cold_war/sounds/music/title3_og.ogg')
+	credit_sound = list('mods/2020_mods/2020_main/sounds/music/title3_og.ogg')
 
 	available_background_info = list(
 		/decl/background_category/homeworld = list(

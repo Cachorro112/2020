@@ -13,11 +13,11 @@
 
 	#include "../../../mods/species/ascent/_ascent.dme"
 
-	#include "../../../mods/content/2020_the_cold_war/_2020_the_cold_war.dme"
+	#include "../../../mods/2020_mods/2020_main/_2020_the_cold_war.dme"
 	#include "../../../mods/content/baychems/_baychems.dme"
 	#include "../../../mods/content/fov_module/_fov_module.dme"
 
-	#include "../../../mods/content/2020_the_cold_war/maps/away_sites/usv_voyager/usv_voyager.dm"
+	#include "../../../mods/2020_mods/2020_main/maps/away_sites/usv_voyager/usv_voyager.dm"
 
 	#include "jobs/command.dm"
 	#include "jobs/crew.dm"

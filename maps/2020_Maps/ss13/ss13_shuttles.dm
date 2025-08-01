@@ -86,14 +86,8 @@
 	warmup_time = 10
 	waypoint_offsite = "nav_mining_asteroid"
 	waypoint_station = "nav_mining_station"
-	shuttle_area = /area/shuttle/mining
 	current_location = "nav_mining_station"
-
-/obj/effect/shuttle_landmark/mine/asteroid
-	name = "Mining Outpost Hangar"
-	landmark_tag = "nav_mining_asteroid"
-	base_turf = /turf/floor/plating
-	base_area = /area/mining/hangar
+	shuttle_area = /area/shuttle/mining
 
 /obj/effect/shuttle_landmark/mine/station
 	name = "Space Station 13 North Dock"

@@ -102,6 +102,8 @@
 			. = /decl/material/gas/nitrous_oxide
 		if(7)
 			. = /decl/material/gas/hydrogen
+		if(8)
+			. = /decl/material/solid/phoron
 
 /obj/machinery/atmospherics/omni/get_initialize_directions()
 	. = 0

@@ -68,4 +68,4 @@
 		'maps/2020_Maps/facility/lobby.dmi'
 	)
 
-	window_icon = 'mods/content/2020_the_cold_war/icons/mortensen_64.dmi'
+	window_icon = 'mods/2020_mods/2020_main/icons/mortensen_64.dmi'

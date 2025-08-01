@@ -240,7 +240,7 @@
 	difficulty = EVENT_LEVEL_MAJOR
 	weaknesses = OVERMAP_WEAKNESS_EMP
 	colors = list("#02faee", "#34d1c9", "#1b9ce7")
-
+/*
 /obj/effect/overmap/event/carp
 	name = "carp shoal"
 	events = list(/datum/event/carp_migration/overmap)
@@ -255,7 +255,7 @@
 	difficulty = EVENT_LEVEL_MAJOR
 	event_icon_states = list("carp3", "carp4")
 	colors = list("#a709db", "#c228c7", "#c444e4")
-
+*/
 //These now are basically only used to spawn hazards. Will be useful when we need to spawn group of moving hazards
 /datum/overmap_event
 	var/name = "map event"
@@ -293,6 +293,7 @@
 	opacity = FALSE
 	hazards = /obj/effect/overmap/event/ion
 
+/*
 /datum/overmap_event/carp
 	name = "carp shoal"
 	count = 8
@@ -306,3 +307,4 @@
 	count = 5
 	radius = 4
 	hazards = /obj/effect/overmap/event/carp/major
+*/
