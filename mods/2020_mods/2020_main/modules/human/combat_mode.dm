@@ -1,6 +1,9 @@
 /mob
 	var/combat_mode = 0
 
+/proc/is_insane(mob/living/human/M) //bosta, só para carregar esse lixo. ver charlie_gamemode/special_role.dm para o proc de verdade.
+	return
+
 /mob/living/human/verb/combat_mode()
 	set name = "CombatModeToggle"
 	set instant = 1

@@ -21,17 +21,19 @@
 
 /datum/hud/human/FinalizeInstantiation()
 	..()
-	combat_mode_icon = new(combat_mode_icon, mymob)
-	adding += combat_mode_icon
+//	combat_mode_icon = new(combat_mode_icon, mymob)
+//	adding += combat_mode_icon
 
 	film_grain2 = new(null, mymob)
 	film_grain2.icon_state = "[rand(1,9)]h"
 	adding += film_grain2
 
-	var/mob/living/human/H = mymob
-	H.hovertext = new /obj/screen/text
-	H.hovertext.maptext = ""
-	H.hovertext.screen_loc = "CENTER-7, CENTER+6"
+//	var/mob/living/human/H = mymob
+//	H.hovertext = new /obj/screen/text/atm
+//	H.hovertext.maptext = ""
+//	H.hovertext.maptext_height = 100
+//	H.hovertext.maptext_width = 480
+//	H.hovertext.screen_loc = "CENTER-7, CENTER+6"
 	..()
 
 //Hovertext
@@ -47,6 +49,7 @@
 	maptext = ""
 	requires_ui_style = FALSE
 
+/*
 /mob/living/human
 	var/obj/screen/text/hovertext = null
 
@@ -58,6 +61,8 @@
 	O.maptext_width = maptext_width
 	O.screen_loc = screen_loc
 	return O
+
+/obj/screen/text/atm
 
 /client/MouseEntered(var/atom/a)
 	if(mob && ishuman(mob))
@@ -79,3 +84,4 @@
 			</font></span></center>"
 		else
 			H.hovertext.maptext = ""  // ui is blank, sad!
+*/

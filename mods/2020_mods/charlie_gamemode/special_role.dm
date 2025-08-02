@@ -1,7 +1,7 @@
 /datum/objective/insane
 	explanation_text = "Follow your mind."
 
-/proc/is_insane(mob/living/human/M)
+is_insane(mob/living/human/M)
 	return (M && M.mind && M.mind.assigned_special_role == "Insane")
 
 /decl/special_role/insane
